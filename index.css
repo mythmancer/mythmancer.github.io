@@ -48,6 +48,10 @@ body {
   margin-top: 10px;
 }
 
+.transparent {
+  color: var(--bg);
+}
+
 .contents-subitem {
   font-size: 25px;
   margin-top: 10px;
