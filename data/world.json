@@ -1,0 +1,8 @@
+{
+  "template": "template_writing.html",
+  "contents": [
+    {"route": "factions", "title": "factions"},
+    {"route": "locations", "title": "locations"},
+    {"route": "lore", "title": "lore"}
+  ]
+}

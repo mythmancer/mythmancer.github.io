@@ -1,0 +1,25 @@
+{
+  "title": "here be mythmancer",
+  "tab_title": "home of mythmancer",
+  "template": "template_index.html",
+  "route": "",
+  "children": [
+    {
+      "title": "character sheet",
+      "route": "character-sheet",
+      "template": "template_character_sheet.html"
+    },
+    {
+      "title": "character creation",
+      "route": "character-creation",
+      "template": "template_contents.html",
+      "children": "character-creation.json"
+    },
+    {
+      "title": "world",
+      "route": "world",
+      "template": "template_contents.html",
+      "children": "world.json"
+    }
+  ]
+}
