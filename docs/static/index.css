@@ -25,6 +25,10 @@ body {
   background-position: center center;
 }
 
+#notopmargin {
+  padding-top: 0 !important;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -219,12 +223,57 @@ input {
   border: 0;
   margin-left: 10px;
   margin-right: 15px;
-  border-bottom: 1px solid #ACE16E;
+  border-bottom: 1px solid rgba(172, 225, 110, 0.5);
   outline: none;
   width: 100%;
   font-size: inherit;
   font-family: "Libre Caslon Text";
-  color: white;
+  color: #ACE16E;
   background-color: transparent;
-  opacity: 50%;
+}
+
+.cs-control-panel, #die-set {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.cs-control-button {
+  width: 70px;
+
+  font-size: 60px;
+  font-weight: bold;
+  color: var(--text);
+}
+
+#cs-saved-names, #cs-armor-proficiency {
+  font-family: "Libre Caslon Text";
+  padding: 12px;
+  border: none;
+  font-size: 20px;
+  outline: none;
+  background: rgba(96, 112, 215, 0.5);
+  border-radius: 10px;
+  align-self: center;
+  color: white;
+  width: fit-content;
+}
+
+.die {
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+#die-result {
+  font-family: "Libre Caslon Text";
+  font-size: 60px;
+  width: 200px;
+  background-color: rgba(96, 112, 215, 0.5);
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+  display: flex;
 }
