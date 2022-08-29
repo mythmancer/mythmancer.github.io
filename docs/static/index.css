@@ -164,12 +164,17 @@ a {
 
 .table-header {
   border-bottom: 1px solid white;
-  background-color: white;
+  background-color: white !important;
   color: black;
 }
 
 .table .table-row:nth-child(even){
   background-color: #353C39;
+  max-width: 84vw;
+}
+
+.table .table-row.non-alternating:nth-child(even) {
+  background-color: var(--bg) !important;
   max-width: 84vw;
 }
 

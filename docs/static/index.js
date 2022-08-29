@@ -153,6 +153,9 @@ window.onload = function() {
   }
 
   document.getElementById("cs-armor-proficiency").addEventListener('change', save);
+  document.getElementById("cs-name").addEventListener('change', function() {
+    document.getElementById('cs-saved-names').value = document.getElementById("cs-name").value;
+  });
 
   const dice = document.getElementsByClassName("die");
   for (let i = 0; i < dice.length; i++) {
