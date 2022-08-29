@@ -6,13 +6,14 @@ COLLECTIONS = [
   "cs-weapon-proficiency",
   "inventory",
   "notes",
-]
+];
 
 CHARACTERISTICS = [
   "cs-armor",
   "cs-armor-class",
   "cs-armor-other-1",
   "cs-armor-other-2",
+  "cs-armor-proficiency",
   "cs-base-bonus-to-hit",
   "cs-boots",
   "cs-cha",
@@ -46,7 +47,9 @@ CHARACTERISTICS = [
   "cs-will-save-bonus",
   "cs-wis",
   "cs-wisdom",
-]
+];
+
+POPULATED_NAMES = [];
 
 function exportData() {
   const characterData = {};
@@ -84,24 +87,21 @@ function loadFromMap(map) {
   loadFromName(name);
 }
 
-function loadFromName(name) {
-    console.log(name);
+function loadFromName() {
+  const name = document.getElementById('cs-saved-names').value;
+
+  console.log(name);
 
   const characterDataStr = window.localStorage.getItem(name);
 
   if (characterDataStr == null) {
+    document.getElementById("character-sheet").reset();
     return;
   }
 
   const characterData = JSON.parse(characterDataStr);
 
-  console.log(characterData);
-  console.log(characterData["cs-hit-points"])
-
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
-    console.log(i);
-    console.log(CHARACTERISTICS[i]);
-    console.log(characterData[CHARACTERISTICS[i]]);
     document.getElementById(CHARACTERISTICS[i]).value = characterData[CHARACTERISTICS[i]];
   }
 
@@ -117,10 +117,33 @@ function loadFromName(name) {
 function save() {
   const map = exportData();
   window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
+  populateNameSelector();
 }
 
 function importData(jsonStr) {
-  load(jsonStr);
+  loadFromMap(jsonStr);
+}
+
+function populateNameSelector() {
+  const availableNames = Object.keys(window.localStorage);
+  const nameSelector = document.getElementById('cs-saved-names');
+  for (var i = 0; i < availableNames.length; i++){
+    if (POPULATED_NAMES.includes(availableNames[i])) {
+      continue;
+    }
+    var opt = document.createElement('option');
+    opt.value = availableNames[i];
+    opt.innerHTML = availableNames[i];
+    nameSelector.appendChild(opt);
+    POPULATED_NAMES.push(availableNames[i]);
+  }
+}
+
+function rollDice(event) {
+  console.log(event.target);
+  const max = parseInt(event.target.title.substr(1));
+  const result = Math.floor(Math.random() * max) + 1;
+  document.getElementById("die-result").textContent = result;
 }
 
 window.onload = function() {
@@ -128,4 +151,16 @@ window.onload = function() {
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener('change', save);
   }
-}
+
+  document.getElementById("cs-armor-proficiency").addEventListener('change', save);
+
+  const dice = document.getElementsByClassName("die");
+  for (let i = 0; i < dice.length; i++) {
+    dice[i].addEventListener('click', rollDice);
+  }
+
+  populateNameSelector();
+
+  const nameSelector = document.getElementById('cs-saved-names');
+  nameSelector.addEventListener('change', loadFromName);
+};
