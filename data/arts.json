@@ -1,13 +1,35 @@
 {
   "drawings": [
     {
-      "link": "https://media.discordapp.net/attachments/456186056509882379/1013148133187932170/IMG_0041.jpg?width=1822&height=1367"
+      "link": "https://media.discordapp.net/attachments/456186056509882379/1013148133187932170/IMG_0041.jpg?width=1822&height=1367",
+      "artist_img": "https://i.imgur.com/YZkoorj.jpg",
+      "artist_link": ""
     },
     {
-      "link": "https://media.discordapp.net/attachments/456186056509882379/1012880806122881074/689059FE-9006-4DD5-8012-36B980C449C1.jpg?width=1024&height=1365"
+      "link": "https://media.discordapp.net/attachments/456186056509882379/1012880806122881074/689059FE-9006-4DD5-8012-36B980C449C1.jpg?width=1024&height=1365",
+      "artist_img": "https://i.imgur.com/YZkoorj.jpg",
+      "artist_link": ""
     },
     {
-      "link": "https://media.discordapp.net/attachments/456186056509882379/936480184062849074/photo_2022-01-27_20.36.23.jpeg"
+      "link": "https://media.discordapp.net/attachments/456186056509882379/936480184062849074/photo_2022-01-27_20.36.23.jpeg",
+      "artist_img": "https://i.imgur.com/YZkoorj.jpg",
+      "artist_link": ""
+    },
+
+    {
+      "link": "https://media.discordapp.net/attachments/1013534716571426926/1013581724359340123/Guisarme_v_bagman_6-11-22.png?width=2520&height=1231",
+      "artist_img": "https://i.imgur.com/STjwtKx.jpg",
+      "artist_link": "https://twitter.com/Capn_Seth"
+    },
+    {
+      "link": "https://media.discordapp.net/attachments/456186056509882379/989737747482828830/Danny_DeVitoad.png?width=1366&height=1366",
+      "artist_img": "https://i.imgur.com/STjwtKx.jpg",
+      "artist_link": "https://twitter.com/Capn_Seth"
+    },
+    {
+      "link": "https://media.discordapp.net/attachments/456186056509882379/976347323850457118/Guisarme_5-15-22.png?width=1240&height=1366",
+      "artist_img": "https://i.imgur.com/STjwtKx.jpg",
+      "artist_link": "https://twitter.com/Capn_Seth"
     }
   ],
   "assets": [
