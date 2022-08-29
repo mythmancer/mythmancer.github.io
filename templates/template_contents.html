@@ -1,3 +1,12 @@
-{% include './header.html' %}
-{% include './template_content_table.html' %}
-{% include './footer.html' %}
+<!DOCTYPE html>
+{% include 'head.html' %}
+<body id="bgimg1">
+    <div id="main">
+        <div id="name">
+            <a href="{{ previous_page }}">←</a>
+            {{ title }}</div>
+        <div id="contents">
+            {% include 'template_content_table.html' %}
+        </div>
+    </div>
+</body>
