@@ -1,14 +1,17 @@
 {% include './header.html' %}
 <div class="gallery-container">
-<div class="contents-item hgallery">
-    {% for art in arts['assets'] %}
-    <img class="art" src="{{ art['link'] }}"></a>
-    {% endfor %}
+    <div class="contents-item hgallery">
+        {% for art in arts['assets'] %}
+        <img class="art" src="{{ art['link'] }}">
+        {% endfor %}
+    </div>
+    <div class="contents-item vgallery">
+        {% for art in arts['drawings'] %}
+        <div class="artwork">
+            <img class="art" src="{{ art['link'] }}">
+            <a class="avatar" href="{{ art['artist_link'] }}"  target="_blank"><img class="avatar-image" src="{{ art['artist_img'] }}"></a>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-<div class="contents-item vgallery">
-{% for art in arts['drawings'] %}
-    <img class="art" src="{{ art['link'] }}"></a>
-{% endfor %}
-</div>
-<div>
 {% include './footer.html' %}

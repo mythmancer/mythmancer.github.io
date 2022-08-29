@@ -16,6 +16,7 @@ body {
   padding-right: 8%;
   padding-top: 8%;
   min-width: fit-content;
+  margin: 0;
 }
 
 #main {
@@ -94,9 +95,27 @@ a {
 }
 
 .art {
-  align-self: center;
   max-width: 84vw;
   max-height: 84vh;
+}
+
+.artwork {
+  position: relative;
+  display: inline;
+  width: fit-content;
+  align-self: center;
+}
+
+.avatar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+}
+
+.avatar-image {
+  width: 100px;
+  border-radius: 50px;
 }
 
 /* tables */
