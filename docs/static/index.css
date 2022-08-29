@@ -150,6 +150,10 @@ a {
   padding-left: 10px;
 }
 
+#character-sheet .table-column {
+  white-space: nowrap;
+}
+
 .table-column:not(:nth-last-of-type(1)) {
   border-right: 1px solid white;
 }
@@ -209,4 +213,18 @@ h2 {
 .weapon-prof-table {
   width: 30%;
   margin-left: 10px;
+}
+
+input {
+  border: 0;
+  margin-left: 10px;
+  margin-right: 15px;
+  border-bottom: 1px solid #ACE16E;
+  outline: none;
+  width: 100%;
+  font-size: inherit;
+  font-family: "Libre Caslon Text";
+  color: white;
+  background-color: transparent;
+  opacity: 50%;
 }
