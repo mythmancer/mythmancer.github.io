@@ -62,6 +62,16 @@ a {
   text-decoration: none;
 }
 
+.hyperlink {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.hyperlink:visited {
+  color: inherit;
+  text-decoration: underline;
+ }
+
 .fav-music {
   width: 15%;
 }
