@@ -19,6 +19,12 @@ body {
   margin: 0;
 }
 
+#bgimg1 {
+  background-image: url('/static/images/map1.png');
+  background-size: contain;
+  background-position: center center;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -46,7 +52,13 @@ body {
 
 .contents-item {
   font-size: 45px;
+  width: fit-content;
   margin-top: 10px;
+}
+
+#bgimg1 .contents-item {
+  background-color: var(--bg);
+  padding: 10px 10px 10px 10px;
 }
 
 .contents-subitem {
