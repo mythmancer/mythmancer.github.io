@@ -1,7 +1,7 @@
 {
   "template": "template_writing.html",
   "contents": [
-    {"route": "equipment", "title": "equipment"},
-    {"route": "rogue-skills", "title": "rogue skills"}
+    {"route": "character-creation", "title": "character creation"},
+    {"route": "tables", "title": "tables"}
   ]
 }

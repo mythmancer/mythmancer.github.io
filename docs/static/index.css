@@ -88,3 +88,31 @@ a {
   height: 100px;
   width: auto;
 }
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  flex: 1;
+  padding-left: 5px;
+}
+
+.column:not(:nth-last-of-type(1)) {
+  border-right: 1px solid white;
+}
+
+.header {
+  border-bottom: 1px solid white;
+}
+
+.table .row:nth-child(even){
+  background-color: #333333;
+  width: 84vw;
+}
