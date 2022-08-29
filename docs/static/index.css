@@ -15,7 +15,7 @@ body {
   padding-left: 8%;
   padding-right: 8%;
   padding-top: 8%;
-  width: fit-content;
+  min-width: fit-content;
 }
 
 #main {
@@ -89,30 +89,79 @@ a {
   width: auto;
 }
 
+/* tables */
 .table {
   display: flex;
   flex-direction: column;
 }
 
-.row {
+.table-row {
   display: flex;
   flex-direction: row;
 }
 
-.column {
+.table-column {
   flex: 1;
-  padding-left: 5px;
+  border: 1px solid white;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 }
 
-.column:not(:nth-last-of-type(1)) {
+.table-column:not(:nth-last-of-type(1)) {
   border-right: 1px solid white;
 }
 
-.header {
+.table-header {
   border-bottom: 1px solid white;
+  background-color: white;
+  color: black;
 }
 
-.table .row:nth-child(even){
+.table .table-row:nth-child(even){
   background-color: #333333;
-  width: 84vw;
+  max-width: 84vw;
+}
+
+/* Character sheet-specific */
+
+.character-sheet-heading {
+  text-align: center;
+}
+
+.block-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.block-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
+  width: 100%;
+}
+
+h2 {
+  white-space: nowrap;
+}
+
+.character-tables {
+  width: 60%;
+}
+
+.ability-table {
+  width: 40%;
+  margin-left: 10px;
+}
+
+.weapons-table {
+  width: 70%;
+}
+
+.weapon-prof-table {
+  width: 30%;
+  margin-left: 10px;
 }
