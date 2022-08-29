@@ -148,195 +148,280 @@ You can either assign one Class Level to any combination of two classes you are 
 So in summary:
 <ul><li>Set your Character Level to 2</li><li>Set your Experience to 0</li><li>Either:<ul><li>Set a Class Level to 1 for any combination of two from the four classes e.g. Fighter 1, Mage 1</li><li>Set a Class Level to 2 for any one class e.g. Warlock 2</li></ul></li></ul><h2>Roll your Hit Points</h2>Your Hit Points depend on your current classes and your Constitution modifier (CON).
 Each class has a different Hit Dice which determines the hit points gained per level:
-Class
-Hit Dice (Hit Points per Level)
-Fighter
-d10 + CON, can reroll values of 1-2 one time
-Rogue
-d6 + CON, can reroll values of 1 one time
-Warlock
-d8 + CON, can reroll values of 1-2 one time
-Mage
-d4 + CON, can reroll values of 1 one time
+
+<div class="table">
+  <div class="table-row table-header">
+    <div class="table-column">Class</div>
+    <div class="table-column">Hit Dice (Hit Points per Level)</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Fighter</div>
+    <div class="table-column">d10 + CON, can reroll values of 1-2 one time</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Rogue</div>
+    <div class="table-column">d6 + CON, can reroll values of 1 one time</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Warlock</div>
+    <div class="table-column">d8 + CON, can reroll values of 1-2 one time</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Mage</div>
+    <div class="table-column">d4 + CON, can reroll values of 1 one time</div>
+  </div>
+</div>
 Since you begin initially at Character Level 2, you will have two Hit Dice worth of Hit Points to roll. So if you start out as Fighter 1 / Mage 1, your two Hit Dice to roll are d10 and d4 respectively. During character creation, you can use the max value of one of your largest Hit Dice instead of rolling. In this case, you would just use 10 for your Fighter Hit Dice instead of rolling 1d10 but will still roll d4 for the Mage Hit Dice. If you started out as Fighter 2, you would use 10 for just one of your d10 Hit Die and would roll the other d10.
+
 For each level you add your CON modifier to your roll. You will never gain fewer than 1 Hit Point per Level. So even if you are an Elf with a -4 CON modifier taking a Mage Level (d4 Hit Dice), you will still gain 1 Hit Point upon leveling up even if the best possible value to roll in this case is a 0.
 <h2>Set your Armor Class</h2>Your Armor Class is ultimately going to be affected by your equipment but that will be determined later. Your Armor Class is calculated as follows:
-Armor Class = 10 + DEX+ Equipment Armor Class
+
+<i>Armor Class = 10 + DEX+ Equipment Armor Class</i>
+
 So for now, you can just fill in 10 + DEX for your Armor Class.
 <h2>Calculate your Save Throws</h2>In Mythmancer, we use something similar to the D&D 3.5 or Pathfinder Save Throws which are Reflex, Fortitude, and Will which are just sort of fancy ways of saying DEX, CON, and WIS. Each class improves in these save throw bonuses differently:
-Class
-Save Throw Progression
-Fighter
-Reflex: starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
-Fortitude: starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
-Will: starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
-Rogue
-Reflex: starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
-Fortitude: starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
-Will: starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
-Warlock
-Reflex: starts at +0, increases by 1 every 4th Level (4, 8, 12, etc)
-Fortitude: starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
-Will: starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
-Mage
-Reflex: starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
-Fortitude: starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
-Will: starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
+
+<div class="table">
+  <div class="table-row table-header">
+    <div class="table-column">Class</div>
+    <div class="table-column">Save Throw Progression</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Fighter</div>
+    <div class="table-column"><ul><li><b>Reflex:</b> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li><li><b>Fortitude:</b> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li><li><b>Will:</b> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li></ul>
+</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Rogue</div>
+    <div class="table-column"><ul><li><b><b>Reflex:</b></b> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li><li><b>Fortitude:</b> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li><li><b>Will:</b> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li></ul>
+</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Warlock</div>
+    <div class="table-column"><ul><li><b><b>Reflex:</b></b> starts at +0, increases by 1 every 4th Level (4, 8, 12, etc)</li><li><b>Fortitude:</b> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li><li><b>Will:</b> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li></ul>
+</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Mage</div>
+    <div class="table-column"><ul><li><b><b>Reflex:</b></b> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li><li><b>Fortitude:</b> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li><li><b>Will:</b> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li></ul>
+</div>
+  </div>
+</div>
 In addition to your Class's contribution to your Save Throws, your DEX Modifier applies to your Reflex, CON to Fortitude, and WIS to Will.
-So your character was a Human Fighter 1 / Mage 1 with 16 Constitution (+2 Modifier), 12 Dexterity (0 Modifier), and 13 Wisdom (+1 Modifier), your Save Throws would be as follows:
-Reflex: +0
-Fortitude: +4 (Comes from CON of +2 and Initial Fighter Fortitude Save)
-Will: +3 (Comes from WIS of +1 and initial Mage Will Save)
-<h2>Calculate your Base Bonus to Hit and your Non Proficient Penalty</h2>Your Base Bonus to Hit is a bonus applied when you attack with any weapon. This bonus is related to your Class Levels:
-Class
-Bonus to Hit
-Fighter
-+1 per Fighter Level
-Rogue
-+0.5 per Rogue Level
-Warlock
-+0.5 per Warlock Level
-Mage
-+0.25 per Mage Level
+
+So your character was a Human Fighter 1 / Mage 1 with 16 Constitution (+2 Modifier), 12 Dexterity (0 Modifier), and 13 Wisdom (+1 Modifier), your Save Throws would be as follows:<ul><li><b>Reflex:</b> +0</li><li><b>Fortitude:</b> +4 (Comes from CON of +2 and Initial Fighter Fortitude Save)</li><li><b>Will:</b> +3 (Comes from WIS of +1 and initial Mage Will Save)</li></ul><h2>Calculate your Base Bonus to Hit and your Non Proficient Penalty</h2>Your <b>Base Bonus to Hit</b> is a bonus applied when you attack with any weapon. This bonus is related to your Class Levels:
+
+<div class="table">
+  <div class="table-row table-header">
+    <div class="table-column">Class</div>
+    <div class="table-column">Bonus to Hit</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Fighter</div>
+    <div class="table-column">+1 per Fighter Level</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Rogue</div>
+    <div class="table-column">+0.5 per Rogue Level</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Warlock</div>
+    <div class="table-column">+0.5 per Warlock Level</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Mage</div>
+    <div class="table-column">+0.25 per Mage Level</div>
+  </div>
+</div>
 Your bonus needs to be a whole number, so you will round it down to the nearest whole number when applying it to an attack roll.
+
 If your character is Fighter 2, then your Base Bonus to Hit should be +2.
 If your character is Rogue 1 / Warlock 1, your Base Bonus to Hit should be +1.
 If your character is Fighter 1 / Warlock 1, your Base Bonus to Hit should be +1.
 If your character is Rogue 1 / Mage 1, your Base Bonus to Hit should be +0.
-Your Non Proficient Penalty to Hit is a penalty applied when you attack with any weapon you are not Proficient with. You will select Weapon Proficiencies in the next section. Your Non Proficient Penalty to Hit is calculated as follows:
-Non Proficient Penalty to Hit = DEX - 5
+
+Your <b>Non Proficient Penalty to Hit</b> is a penalty applied when you attack with any weapon you are not Proficient with. You will select Weapon Proficiencies in the next section. Your Non Proficient Penalty to Hit is calculated as follows:
+
+<i>Non Proficient Penalty to Hit = DEX - 5</i>
 <h2>Select your Weapon Proficiencies</h2>If you try to use a weapon you aren't proficient with, you suffer the Non Proficient Penalty to Hit described in the previous section. To prevent this, you can gain Weapon Proficiency Points each level to gain a Weapon Proficiency.
+
 Each class gains Weapon Proficiency Points at different rates:
-Class
-Weapon Proficiency Points gained
-Fighter
-+1 per Level
-Rogue
-+1 every 3rd Level (3, 6, 9)
-Warlock
-+1 every 3rd Level (3, 6, 9)
-Mage
-+1 every 5th Level (5, 10, 15)
+
+<div class="table">
+  <div class="table-row table-header">
+    <div class="table-column">Class</div>
+    <div class="table-column">Weapon Proficiency Points gained</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Fighter</div>
+    <div class="table-column">+1 per Level</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Rogue</div>
+    <div class="table-column">+1 every 3rd Level (3, 6, 9)</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Warlock</div>
+    <div class="table-column">+1 every 3rd Level (3, 6, 9)</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Mage</div>
+    <div class="table-column">+1 every 5th Level (5, 10, 15)</div>
+  </div>
+</div>
 Certain weapons require specialized training and are only attainable when leveling up in certain classes. Furthermore, some weapons are especially difficult to learn to use and require 2 Weapon Proficiency Points to become fully Proficient, becoming only Partially Proficient if you use 1 Weapon Proficiency Point.
+
 All characters start with at least 2 Weapon Proficiency Points in addition to any Weapon Proficiency Points their classes provide. The list of Weapon Proficiencies are:
-Weapon
-Classes Allowed
-Weapon Proficiency Points Required
-Clubs and Staffs
-All
-1
-Crossbows
-All
-1
-Daggers
-All
-1
-Slings
-All
-1
-Spears
-All
-1
-Thrown Knives and Darts
-All
-1
-1h Axes
-Non Mages
-1
-2h Axes
-Non Mages
-1
-Thrown Axes
-Non Mages
-1
-1h Flails
-Non Mages
-1
-2h Flails
-Non Mages
-1
-1h Maces and Hammers
-Non Mages
-1
-2h Maces and Hammers
-Non Mages
-1
-Javelin
-Non Mages
-1
-Polearms
-Non Mages
-1
-Bows
-Fighters
-2
-1h Swords
-Fighters
-2
-2h Swords
-Fighters
-2
-Unarmed Strike
-Fighters
-2
+
+<div class="table">
+  <div class="table-row table-header">
+    <div class="table-column">Weapon</div>
+    <div class="table-column">Classes Allowed</div>
+    <div class="table-column">Weapon Proficiency Points Required</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Clubs and Staffs</div>
+    <div class="table-column">All</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Crossbows</div>
+    <div class="table-column">All</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Daggers</div>
+    <div class="table-column">All</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Slings</div>
+    <div class="table-column">All</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Spears</div>
+    <div class="table-column">All</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Thrown Knives and Darts</div>
+    <div class="table-column">All</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">1h Axes</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">2h Axes</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Thrown Axes</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">1h Flails</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">2h Flails</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">1h Maces and Hammers</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">2h Maces and Hammers</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Javelin</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Polearms</div>
+    <div class="table-column">Non Mages</div>
+    <div class="table-column">1</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Bows</div>
+    <div class="table-column">Fighters</div>
+    <div class="table-column">2</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">1h Swords</div>
+    <div class="table-column">Fighters</div>
+    <div class="table-column">2</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">2h Swords</div>
+    <div class="table-column">Fighters</div>
+    <div class="table-column">2</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Unarmed Strike</div>
+    <div class="table-column">Fighters</div>
+    <div class="table-column">2</div>
+  </div>
+</div>
 For weapons requiring 2 Weapon Proficiency Points, you can become Partially Proficient in use of that weapon for just 1 Weapon Proficiency Point. When Partially Proficient, your Non Proficient Penalty to Hit for that weapon is cut in half, rounding in your favor (i.e. -5 rounds to -2, -1 rounds to 0). Items in Additional Non Proficient Penalties still apply.
-Take Aim - for Crossbows and Bows, you can Take Aim which means you spend one attack to instead carefully wait for an opportunity to fire at a specific target. Your next attack after taking aim will not be subject to rules relating to Firing into Traffic which means you will not risk shooting your allies except in cases such as critical failures. This attack also gains +1 to hit and +1 to damage.
+
+<b>Take Aim</b> - for Crossbows and Bows, you can Take Aim which means you spend one attack to instead carefully wait for an opportunity to fire at a specific target. Your next attack after taking aim will not be subject to rules relating to Firing into Traffic which means you will not risk shooting your allies except in cases such as critical failures. This attack also gains +1 to hit and +1 to damage.
 <h2>Set your Armor Proficiencies</h2>Your Armor Proficiencies are related to your selected Classes:
-Class
-Armor Proficiencies
-Fighter
-Light, Medium, Heavy, and Shields
-Rogue
-Light
-Warlock
-Light and Shields
-Mage
-None
+
+<div class="table">
+  <div class="table-row table-header">
+    <div class="table-column">Class</div>
+    <div class="table-column">Armor Proficiencies</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Fighter</div>
+    <div class="table-column">Light, Medium, Heavy, and Shields</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Rogue</div>
+    <div class="table-column">Light</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Warlock</div>
+    <div class="table-column">Light and Shields</div>
+  </div>
+  <div class="table-row">
+    <div class="table-column">Mage</div>
+    <div class="table-column">None</div>
+  </div>
+</div>
 You can gain other Armor Proficiencies as a part of your Character's background.
 <h2>Buy your Equipment</h2>TODO
 <h1>Character Class Reference</h1>The attributes for each class were broken up over each sub-section in Creating your Character. In this section, the attributes for each class are all together which will be more useful as your character levels up.
 <h2>Fighter</h2>Fighters focus solely on improving their combat prowess over all other skills. Fighters gain more hit points, weapon proficiencies, armor proficiencies, and use their weapons better than anyone else.
-At Fighter Level 1, a Fighter:
-Becomes proficient in all types of armor: Light, Medium, Heavy, and Shields
-Gains +2 to Fortitude Saving Throws (CON)
-A Fighter's progression in as follows:
-Gains 1d10+CON Hit Points per level
-Gains +1 to their Base Bonus to Hit per level
-Gains 1 Weapon Proficiency Point per level
-Gains +1 to Reflex Saving Throws (DEX) every 3rd Fighter level i.e. 3, 6, 9
-Gains +1 to Fortitude Saving Throws (CON) every 2nd Fighter level i.e. 2, 4, 6
-Gains +1 to Will Saving Throws (WIS) every 3rd Fighter level i.e. 3, 6, 9
-There is a wide variety of specialized training in certain fighting styles a Fighter can receive. Based on their training, a Fighter might progress slightly differently as seen above. This special training is going to depend ultimately on the current campaign. Some standard specialized trainings a Fighter can receive independent of campaign are:
-Weapon Specialization - at Fighter Level 3 and beyond, a Fighter may spend 1 Weapon Proficiency Point on a weapon they are already fully proficient in to further improve their skill with that weapon. A Fighter may only take this or similar training once. What this does exactly varies by weapon.
-Weapon Mastery - at Fighter Level 5 and beyond, a Fighter may spend 1 Weapon Proficiency Point on the weapon they previously chose Weapon Specialization for to once again improve their skills with that weapon. As with Weapon Specialization, this training can only be taken once and varies in function per weapon.
-<h2>Rogue</h2>Rogues focus primarily on learning and improving useful skills.
+
+At Fighter Level 1, a Fighter:<ul><li>Becomes proficient in all types of armor: Light, Medium, Heavy, and Shields</li><li>Gains +2 to <b>Fortitude Saving Throws (CON)</b></li></ul>A Fighter's progression in as follows:
+<ul><li>Gains 1d10+CON <b>Hit Points</b> per level</li><li>Gains +1 to their <b>Base Bonus to Hit</b> per level</li><li>Gains 1 <b>Weapon Proficiency Point</b> per level</li><li>Gains +1 to <b>Reflex Saving Throws (DEX)</b> every 3rd Fighter level i.e. 3, 6, 9</li><li>Gains +1 to <b>Fortitude Saving Throws (CON)</b> every 2nd Fighter level i.e. 2, 4, 6</li><li>Gains +1 to <b>Will Saving Throws (WIS)</b> every 3rd Fighter level i.e. 3, 6, 9</li></ul>There is a wide variety of specialized training in certain fighting styles a Fighter can receive. Based on their training, a Fighter might progress slightly differently as seen above. This special training is going to depend ultimately on the current campaign. Some standard specialized trainings a Fighter can receive independent of campaign are:
+<ul><li><b>Weapon Specialization</b> - at Fighter Level 3 and beyond, a Fighter may spend 1 Weapon Proficiency Point on a weapon they are already fully proficient in to further improve their skill with that weapon. A Fighter may only take this or similar training once. What this does exactly varies by weapon.</li>
+<li><b>Weapon Mastery</b> - at Fighter Level 5 and beyond, a Fighter may spend 1 Weapon Proficiency Point on the weapon they previously chose <b>Weapon Specialization</b> for to once again improve their skills with that weapon. As with <b>Weapon Specialization</b>, this training can only be taken once and varies in function per weapon.</li></ul><h2>Rogue</h2>Rogues focus primarily on learning and improving useful skills.
+
 At Rogue Level 1, a Rogue:
-Becomes proficient in using Light Armor
-Gains +2 to Reflex Saving Throws (DEX)
-Become proficient in the Rogue Skill Check. This is a skill check that can do a very wide variety of things. The standard actions that may be performed using Rogue Skills are:
-Climbing* - climb especially difficult surfaces without the aid of tools. Usually requires all limbs to be able to freely move.
-Find Traps - detect the presence of traps without the aid of tools. If the trap is principally mechanical, then you also can determine the nature of the trap such as the trigger and may attempt another check to disarm the trap. If the trap is magical, you will most likely only be able to discern the presence of the trap but not know what it does.
-Listen* - hear minute or muffled noises when eavesdropping or detecting ambush
-Sneak* - hide out of sight or sneak up on someone without being detected
-Pick Locks - use lockpicks
-Pick Pockets and Sleight of Hand* - take or hide an object undetected
-Decipher Codes - literacy rates are relatively low in Mythmancer, Rogues are often the most practically literate members of a group. This skill will often be used against rudimentary writing systems but to also decipher more complex mundane text. For example, using this skill might help a Rogue identify the presence of a group's signs or symbols in graffiti.
-Other Skills - there are many other skills a Rogue may perform with the Rogue Skill Check depending on the Rogue's background or training. For example, many of the guilds of Mythmancer teach tracking in their biome of choice and some guilds teach a Rogue the use of poison. Keep track of these extra skills your Rogue learns.
-(The abilities marked with an asterisk do not gain the Rogue's Rogue Skill Check Bonus if performed while the Rogue is wearing Medium or Heavier armor or if the Rogue is currently holding a shield)
-Gains the ability to Backstab which is a melee attack performed on an enemy who is unaware of your presence. This attack gains +4 to hit and deals 2x damage.
-A Rogue's progression is as follows:
-Gains 1d6+CON Hit Points per level
-Gains +0.5 to their Base Bonus to Hit per level
-Gains +1 to Rogue Skill Checks per level
-Gains 1 Weapon Proficiency Point every 3rd Rogue level i.e. 3, 6, 9
-Gains +1 to Reflex Saving Throws (DEX) every 2nd Rogue level i.e. 2, 4, 6
-Gains +1 to Fortitude Saving Throws (CON) every 3rd Rogue level i.e. 3, 6, 9
-Gains +1 to Will Saving Throws (WIS) every 3rd Rogue level i.e. 3, 6, 9
-Whenever a Rogue gains Fighter levels, they also get:
-Rogue Skills while Armored - when wearing medium or heavy armor or when holding a shield, a Rogue gains a bonus equal to their Fighter level UP TO BUT NOT EXCEEDING their Rogue Level when performing a Rogue Skill that typically requires the Rogue to be unarmored or wearing light armor.
+<ul><li>Becomes proficient in using Light Armor</li><li>Gains +2 to <b>Reflex Saving Throws (DEX)</b></li><li>Gains the ability to <b>Backstab</b> which is a melee attack performed on an enemy who is unaware of your presence. This attack gains +4 to hit and deals 2x damage.</li><li>Become proficient in the <b>Rogue Skill Check</b>. This is a skill check that can do a very wide variety of things. The standard actions that may be performed using Rogue Skills are:<ul><li><b>Climbing*</b> - climb especially difficult surfaces without the aid of tools. Usually requires all limbs to be able to freely move.</li><li><b>Find Traps</b> - detect the presence of traps without the aid of tools. If the trap is principally mechanical, then you also can determine the nature of the trap such as the trigger and may attempt another check to disarm the trap. If the trap is magical, you will most likely only be able to discern the presence of the trap but not know what it does.</li><li><b>Listen*</b> - hear minute or muffled noises when eavesdropping or detecting ambush</li><li><b>Sneak*</b> - hide out of sight or sneak up on someone without being detected</li><li><b>Pick Locks</b> - use lockpicks</li><li><b>Pick Pockets and Sleight of Hand*</b> - take or hide an object undetected</li><li><b>Decipher Codes</b> - literacy rates are relatively low in Mythmancer, Rogues are often the most practically literate members of a group. This skill will often be used against rudimentary writing systems but to also decipher more complex mundane text. For example, using this skill might help a Rogue identify the presence of a group's signs or symbols in graffiti.</li><li><b>Other Skills</b> - there are many other skills a Rogue may perform with the Rogue Skill Check depending on the Rogue's background or training. For example, many of the guilds of Mythmancer teach tracking in their biome of choice and some guilds teach a Rogue the use of poison. Keep track of these extra skills your Rogue learns.</li>
+
+(The abilities marked with an asterisk do not gain the Rogue's Rogue Skill Check Bonus if performed while the Rogue is wearing Medium or Heavier armor or if the Rogue is currently holding a shield)</ul></li></ul>A Rogue's progression is as follows:
+<ul><li>Gains 1d6+CON <b>Hit Points</b> per level</li><li>Gains +0.5 to their <b>Base Bonus to Hit</b> per level</li><li>Gains +1 to <b>Rogue Skill Checks</b> per level</li><li>Gains 1 <b>Weapon Proficiency Point</b> every 3rd Rogue level i.e. 3, 6, 9</li><li>Gains +1 to <b>Reflex Saving Throws (DEX)</b> every 2nd Rogue level i.e. 2, 4, 6</li><li>Gains +1 to <b>Fortitude Saving Throws (CON)</b> every 3rd Rogue level i.e. 3, 6, 9</li><li>Gains +1 to <b>Will Saving Throws (WIS)</b> every 3rd Rogue level i.e. 3, 6, 9</li></ul>Whenever a Rogue gains Fighter levels, they also get:
+<ul><li><b>Rogue Skills while Armored</b> - when wearing medium or heavy armor or when holding a shield, a Rogue gains a bonus equal to their Fighter level UP TO BUT NOT EXCEEDING their Rogue Level when performing a Rogue Skill that typically requires the Rogue to be unarmored or wearing light armor.
+
 So a character who is Rogue 5, Fighter 3 when wearing light armor gains +5 to all Rogue Skills. However, if they wear medium armor and attempt a skill such as climbing which typically requires unarmored or light armor, they only gain +3.
-A character who is Rogue 3, Fighter 5 gains +3 to all Rogue Skills regardless of what armor they are wearing as the bonus to Rogue skills can never exceed their Rogue Level.
-<h2>Warlock</h2><h2>Mage</h2><h1>Builds and Guilds</h1>This section lists ideas on how to build common archetypical classes. You do not need to adhere to any of these specific builds as they just describe how common archetypes fit within the Mythmancer system. It also may make sense through your character's journey that they pivot to a new path as they gain experience and knowledge of the world around them.
+
+A character who is Rogue 3, Fighter 5 gains +3 to all Rogue Skills regardless of what armor they are wearing as the bonus to Rogue skills can never exceed their Rogue Level.</li></ul><h2>Warlock</h2><h2>Mage</h2><h1>Builds and Guilds</h1>This section lists ideas on how to build common archetypical classes. You do not need to adhere to any of these specific builds as they just describe how common archetypes fit within the Mythmancer system. It also may make sense through your character's journey that they pivot to a new path as they gain experience and knowledge of the world around them.
 <h2>Cleric</h2>This class is conspicuously missing from the four core classes of Mythmancer. This is because the Cleric is deemed a type of Warlock. <i>All</i> Clerics are Warlocks who adhere (nearly) exclusively to the Imperial Church of the Seven Saints.
 
 Patrons for non-cleric Warlocks typically operate on much smaller scales sometimes granting their powers to only a single individual, but the patrons of the Imperial Church seem to be able to maintain thousands of petitioners.
