@@ -162,6 +162,10 @@ h2 {
   width: 60%;
 }
 
+.character-tables > h3 {
+  margin: 10px 0px 10px 0px;
+}
+
 .ability-table {
   width: 40%;
   margin-left: 10px;
