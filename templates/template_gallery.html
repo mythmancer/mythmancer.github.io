@@ -1,0 +1,14 @@
+{% include './header.html' %}
+<div class="gallery-container">
+<div class="contents-item hgallery">
+    {% for art in arts['assets'] %}
+    <img class="art" src="{{ art['link'] }}"></a>
+    {% endfor %}
+</div>
+<div class="contents-item vgallery">
+{% for art in arts['drawings'] %}
+    <img class="art" src="{{ art['link'] }}"></a>
+{% endfor %}
+</div>
+<div>
+{% include './footer.html' %}

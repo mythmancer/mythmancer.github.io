@@ -20,6 +20,14 @@
       "route": "world",
       "template": "template_contents.html",
       "children": "world.json"
+    },
+    {
+      "title": "art",
+      "route": "art",
+      "template": "template_gallery.html",
+      "data": {
+        "arts": "arts.json"
+      }
     }
   ]
 }
