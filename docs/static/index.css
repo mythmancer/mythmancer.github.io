@@ -317,3 +317,11 @@ input {
   display: flex;
   margin-left: 30px;
 }
+
+#uploader-label {
+  cursor: pointer;
+}
+
+#uploader {
+  display: none;
+}

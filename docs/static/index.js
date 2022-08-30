@@ -181,17 +181,25 @@ function dragover(e) {
   e.preventDefault();
 }
 
-function drop(e) {
-  console.log("ASDF");
+function handleDropUpload(e) {
   e.stopPropagation();
   e.preventDefault();
 
   const dt = e.dataTransfer;
   const files = dt.files;
 
-  console.log(files);
+  console.log(files[0]);
   importData(files[0]);
 }
+
+function handleFileUpload(e) {
+  e.stopPropagation();
+  e.preventDefault();
+
+  console.log(e.target.files[0]);
+  importData(e.target.files[0]);
+}
+
 
 window.onload = function() {
   const inputs = document.getElementsByTagName("input");
@@ -199,10 +207,13 @@ window.onload = function() {
     inputs[i].addEventListener("change", save);
   }
 
-  let dropbox = document.getElementById("cs-import");
+  const dropbox = document;
   dropbox.addEventListener("dragenter", dragenter, false);
   dropbox.addEventListener("dragover", dragover, false);
-  dropbox.addEventListener("drop", drop, false);
+  dropbox.addEventListener("drop", handleDropUpload, false);
+
+  const uploader = document.getElementById("uploader");
+  uploader.addEventListener("change", handleFileUpload, false);
 
   document.getElementById("cs-export").addEventListener("click", exportToFile);
   document.getElementById("cs-armor-proficiency").addEventListener("change", save);
