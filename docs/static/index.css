@@ -320,6 +320,7 @@ input {
 
 #uploader-label {
   cursor: pointer;
+  height: 0px;
 }
 
 #uploader {
