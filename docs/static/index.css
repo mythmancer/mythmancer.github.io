@@ -171,6 +171,7 @@ a {
   display: flex;
   align-items: center;
   padding-left: 10px;
+  overflow: hidden;
 }
 
 #character-sheet .table-column {
