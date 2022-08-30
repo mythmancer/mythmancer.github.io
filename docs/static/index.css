@@ -3,6 +3,11 @@
   src: local('Libre Caslon Text Regular'), url(/static/LibreCaslonText-Regular.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'MSDOS';
+  src: local('MSDOS'), url(/static/MSDOS.ttf) format('truetype');
+}
+
 :root {
   --bg: #222033;
   --text: #e8e6e3;
@@ -11,7 +16,7 @@
 body {
   color: var(--text);
   background-color: var(--bg);
-  font-family: "Libre Caslon Text";
+  font-family: "MSDOS";
   padding-left: 8%;
   padding-right: 8%;
   padding-top: 8%;
@@ -202,12 +207,16 @@ h2 {
   white-space: nowrap;
 }
 
+#armor-h2 {
+  align-self: center;
+}
+
 .character-tables {
   width: 60%;
 }
 
 .character-tables > h3 {
-  margin: 10px 0px 10px 0px;
+  margin: 12px 0px 12px 0px;
 }
 
 .ability-table {
@@ -232,7 +241,7 @@ input {
   outline: none;
   width: 100%;
   font-size: inherit;
-  font-family: "Libre Caslon Text";
+  font-family: "MSDOS";
   color: #ACE16E;
   background-color: transparent;
 }
@@ -258,7 +267,7 @@ input {
 }
 
 #cs-saved-names, #cs-armor-proficiency {
-  font-family: "Libre Caslon Text";
+  font-family: "MSDOS";
   padding: 12px;
   border: none;
   font-size: 20px;
@@ -281,7 +290,7 @@ input {
 }
 
 #die-result {
-  font-family: "Libre Caslon Text";
+  font-family: "MSDOS";
   font-size: 60px;
   width: 200px;
   background-color: rgba(96, 112, 215, 0.5);
