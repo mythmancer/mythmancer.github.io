@@ -27,6 +27,7 @@ body {
   background-image: url('/static/images/map2.png');
   background-size: 50%;
   background-position: center center;
+  position: absolute;
 }
 
 .notopmargin {
