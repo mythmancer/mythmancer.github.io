@@ -242,6 +242,7 @@ input {
   flex-direction: row;
   justify-content: center;
   margin-bottom: 10px;
+  height: 90px;
 }
 
 .cs-control-button {
