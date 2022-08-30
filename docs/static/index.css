@@ -242,6 +242,9 @@ input {
   flex-direction: row;
   justify-content: center;
   margin-bottom: 10px;
+}
+
+#die-set {
   height: 90px;
 }
 
