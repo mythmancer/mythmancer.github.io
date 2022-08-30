@@ -77,18 +77,34 @@ function exportData() {
   return characterData;
 }
 
-function loadFromMap(map) {
+function exportToFile() {
+  const text = JSON.stringify(window.localStorage);
+  var element = document.createElement("a");
+  element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+  element.setAttribute("download", `mythmancer-character-sheets-${new Date().toISOString().replaceAll(":", "-")}.json`);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
+function loadFromJsonString(mapString) {
   let name = "";
-  console.log(map);
-  if (map != null) {
-    window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
-    name = map["cs-name"];
+  console.log(mapString);
+  if (mapString == null || mapString == "") {
+    return;
   }
-  loadFromName(name);
+  const map = JSON.parse(mapString);
+  for (var prop in map) {
+    if (Object.prototype.hasOwnProperty.call(map, prop)) {
+      window.localStorage.setItem(prop, map[prop]);
+    }
+  }
 }
 
 function loadFromName() {
-  const name = document.getElementById('cs-saved-names').value;
+  const name = document.getElementById("cs-saved-names").value;
 
   console.log(name);
 
@@ -116,22 +132,31 @@ function loadFromName() {
 
 function save() {
   const map = exportData();
+  if (map["cs-name"] == "") {
+    return;
+  }
   window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
   populateNameSelector();
 }
 
-function importData(jsonStr) {
-  loadFromMap(jsonStr);
+function importData(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    console.log(e.target.result);
+    loadFromJsonString(e.target.result);
+    populateNameSelector();
+  };
+  reader.readAsText(file);
 }
 
 function populateNameSelector() {
   const availableNames = Object.keys(window.localStorage);
-  const nameSelector = document.getElementById('cs-saved-names');
+  const nameSelector = document.getElementById("cs-saved-names");
   for (var i = 0; i < availableNames.length; i++){
     if (POPULATED_NAMES.includes(availableNames[i])) {
       continue;
     }
-    var opt = document.createElement('option');
+    var opt = document.createElement("option");
     opt.value = availableNames[i];
     opt.innerHTML = availableNames[i];
     nameSelector.appendChild(opt);
@@ -146,24 +171,52 @@ function rollDice(event) {
   document.getElementById("die-result").textContent = result;
 }
 
+function dragenter(e) {
+  e.stopPropagation();
+  e.preventDefault();
+}
+
+function dragover(e) {
+  e.stopPropagation();
+  e.preventDefault();
+}
+
+function drop(e) {
+  console.log("ASDF");
+  e.stopPropagation();
+  e.preventDefault();
+
+  const dt = e.dataTransfer;
+  const files = dt.files;
+
+  console.log(files);
+  importData(files[0]);
+}
+
 window.onload = function() {
   const inputs = document.getElementsByTagName("input");
   for (let i = 0; i < inputs.length; i++) {
-    inputs[i].addEventListener('change', save);
+    inputs[i].addEventListener("change", save);
   }
 
-  document.getElementById("cs-armor-proficiency").addEventListener('change', save);
-  document.getElementById("cs-name").addEventListener('change', function() {
-    document.getElementById('cs-saved-names').value = document.getElementById("cs-name").value;
+  let dropbox = document.getElementById("cs-import");
+  dropbox.addEventListener("dragenter", dragenter, false);
+  dropbox.addEventListener("dragover", dragover, false);
+  dropbox.addEventListener("drop", drop, false);
+
+  document.getElementById("cs-export").addEventListener("click", exportToFile);
+  document.getElementById("cs-armor-proficiency").addEventListener("change", save);
+  document.getElementById("cs-name").addEventListener("change", function() {
+    document.getElementById("cs-saved-names").value = document.getElementById("cs-name").value;
   });
 
   const dice = document.getElementsByClassName("die");
   for (let i = 0; i < dice.length; i++) {
-    dice[i].addEventListener('click', rollDice);
+    dice[i].addEventListener("click", rollDice);
   }
 
   populateNameSelector();
 
-  const nameSelector = document.getElementById('cs-saved-names');
-  nameSelector.addEventListener('change', loadFromName);
+  const nameSelector = document.getElementById("cs-saved-names");
+  nameSelector.addEventListener("change", loadFromName);
 };

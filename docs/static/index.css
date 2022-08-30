@@ -26,7 +26,7 @@ body {
 }
 
 #notopmargin {
-  padding-top: 0 !important;
+  padding-top: 1% !important;
 }
 
 #main {
@@ -249,7 +249,8 @@ input {
 }
 
 .cs-control-button {
-  width: 70px;
+  cursor: pointer;
+  width: 50px;
 
   font-size: 60px;
   font-weight: bold;
@@ -267,6 +268,11 @@ input {
   align-self: center;
   color: white;
   width: fit-content;
+}
+
+#cs-saved-names {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .die {
