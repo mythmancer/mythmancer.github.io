@@ -32,7 +32,7 @@ body {
 }
 
 .notopmargin {
-  padding-top: 1% !important;
+  margin-top: 1% !important;
 }
 
 #main {
@@ -175,12 +175,10 @@ a {
 
 .table .table-row:nth-child(even) {
   background-color: #353C39;
-  max-width: 84vw;
 }
 
 .table .table-row.non-alternating:nth-child(even) {
   background-color: transparent !important;
-  max-width: 84vw;
 }
 
 /* Character sheet-specific */
@@ -319,6 +317,7 @@ input {
   height: 60vh;
   position: relative;
   padding-top: 40px;
+  padding-bottom: 40px;
   background-color: var(--bg);
 }
 
