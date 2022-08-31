@@ -78,7 +78,6 @@ body {
 }
 
 .contents-subitem.writing {
-  white-space: pre-wrap;
   background: black;
   padding: 10px 10px 10px 10px;
 }
@@ -160,10 +159,6 @@ a {
   overflow: hidden;
 }
 
-#character-sheet .table-column {
-  white-space: nowrap;
-}
-
 .table-column:not(:nth-last-of-type(1)) {
   border-right: 1px solid white;
 }
@@ -182,6 +177,9 @@ a {
 }
 
 /* Character sheet-specific */
+#character-sheet .table-column {
+  white-space: nowrap;
+}
 
 .character-sheet-heading {
   text-align: center;
@@ -199,10 +197,6 @@ a {
 
 .spacer {
   width: 100%;
-}
-
-h2 {
-  white-space: nowrap;
 }
 
 #armor-h2 {
