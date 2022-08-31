@@ -1,4 +1,4 @@
-<h1>Mages and Arcane Magic</h1>
+<h1 id="mages">Mages and Arcane Magic</h1>
 Mages in Mythmancer cast spells using their own will and know-how. Magic performed by Mages is termed Arcane Magic. Mages spend years learning the intricacies of their craft, demanding great discipline to cast even the simplest of spells.<br/><br/>
 Arcane magic is organized into various degrees. A mage is capable of casting spells of a greater degree for each odd-numbered level. So level 1 and 2 mages may cast 1st degree spells, level 3 and 4 mages may cast 2nd degree spells, and so on.<br/><br/>
 Arcane magic's greatest strength is that it is teachable. A truly great mage understands how to record their findings so that other mages may learn from them.<br/><br/>
@@ -7,42 +7,42 @@ Due to the ephemerality of arcane scrolls as well as limited access to papyrus, 
 Spells can be written in several "languages", though these languages don't really have a verbal equivalent. It is most appropriate to consider the action of casting a spell to be the verbal equivalent of these arcane languages.<br/><br/>
 As the history of Mythmancer is short, high level arcane spells are astonishingly rare as few have been discovered and even fewer written down. Acquiring and using arcane spells beyond the 3rd degree is both exceptionally difficult and illegal within the Empire.
 
-<h2>Imperial Arcanum</h2>
+<h2 id="imperial-alliance">Imperial Arcanum</h2>
 The Imperial Arcanum University is the premier way for an imperial citizen to learn the arcane arts. Nearly every mage in Mythmancer can at least trace some of their craft to the teachings of the University.<br/><br/>
 When referring to spell degrees, the Empire uses the term "Circle". This terminology traces its origin to the architecture of the University. Constructed within the upper layers of the Imperial Catacombs, the University features a sequence of descending ring-shaped halls stacked one upon the other, each termed a "Circle" with the 1st Circle being the uppermost floor, the 2nd Circle directly below that, and the 3rd Circle being the bottom floor. On the inner and outer walls of these ring-shaped hallways are the Instructional Slabs for the various spells of the corresponding degree.<br/><br/>
 Any visiting Imperial Citizen with the requisite combined Mage levels and experience may pay the tuition cost and time requirement to learn any spell the University offers.<br/><br/>
 The Imperial Arcanum focuses on spells that deal direct damage and thus teaches a few variants of common spells that are slightly superior than those offered in the general spell list.
 
-<h2>Umonic Divination</h2>
+<h2 id="umonic-divination">Umonic Divination</h2>
 
-<h2>Mirror City Illusionism</h2>
+<h2 id="mirror-city-illusionism">Mirror City Illusionism</h2>
 
-<h2>Borderlands Mesmerism</h2>
+<h2 id="borderlands-mesmerism">Borderlands Mesmerism</h2>
 
-<h2>Hexarunic Artificery</h2>
+<h2 id="hexarunic-artificery">Hexarunic Artificery</h2>
 
-<h2>Horology</h2>
+<h2 id="horology">Horology</h2>
 Horology is perhaps the least understood discipline of arcane magic of all. Tutors of Horology are exceptionally rare and the practice is often scoffed at by other mages.<br/><br/>
 The pursuit of Horology often must be approached with a great deal of faith and moxie. Very few practitioners make discoveries and even fewer share their findings. Still, if even a small percent of their claims are true, Horology may be the key to true power.<br/><br/>
 As a discipline, Horology is fundamentally related to measuring time and the practice of creating timepieces. Practitioners of Horology view the universe itself as a grand collection of timepieces called the Clockwork. They feverishly seek out ancient artifacts of great power they call Remnants of the Clockwork to attain enlightenment.<br/><br/>
 There are no defined spells which Horologists learn and there is no set path. Spells in this discipline are enormously powerful but rarely discovered and performed at great cost.
 
-<h1>Warlocks and Patron Magic</h1>
+<h1 id="warlocks">Warlocks and Patron Magic</h1>
 
-<h2>Clerical Order of Mida</h2>
+<h2 id="mida">Clerical Order of Mida</h2>
 
-<h2>Clerical Order of Vash</h2>
+<h2 id="vash">Clerical Order of Vash</h2>
 
-<h2>Clerical Order of Rath</h2>
+<h2 id="rath">Clerical Order of Rath</h2>
 
-<h2>Fire Geomancy</h2>
+<h2 id="fire-geomancy">Fire Geomancy</h2>
 
-<h2>Water Geomancy</h2>
+<h2 id="water-geomancy">Water Geomancy</h2>
 
-<h2>Wood Geomancy</h2>
+<h2 id="wood-geomancy">Wood Geomancy</h2>
 
-<h2>Earth Geomancy</h2>
+<h2 id="earth-geomancy">Earth Geomancy</h2>
 
-<h2>Metal Geomancy</h2>
+<h2 id="metal-geomancy">Metal Geomancy</h2>
 
-<h2>Ancestral Spirit</h2>
+<h2 id="ancestral-spirit">Ancestral Spirit</h2>
