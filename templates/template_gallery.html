@@ -1,19 +1,31 @@
-{% include './header.html' %}
-<div class="gallery-container">
-    <div class="contents-item">
-        <div class="hgallery">
+<!DOCTYPE html>
+{% include 'head.html' %}
+<script src="/static/slideshow.js"></script>
+<body class="bgimg">
+    <div id="main">
+        <div class="gallery-titlebar">
+            <div id="name">
+                <a href="{{ previous_page }}"><-</a>
+                {{ title }}
+            </div>
             {% for art in arts['assets'] %}
-            <img class="art" src="{{ art['link'] }}">
+            <img class="titleart" src="{{ art['link'] }}">
             {% endfor %}
         </div>
-        <div class="vgallery">
-            {% for art in arts['drawings'] %}
-            <div class="artwork">
-                <img class="art" src="{{ art['link'] }}">
-                <a class="avatar" href="{{ art['artist_link'] }}"  target="_blank"><img class="avatar-image" src="{{ art['artist_img'] }}"></a>
+        <div id="contents">
+            <div class="slideshow-container">
+                {% for art in arts['drawings'] %}
+                <div class="slide">
+                    <div class="artwork">
+                        <img class="art slideimg" src="{{ art['link'] }}">
+                        <a class="avatar" href="{{ art['artist_link'] }}"  target="_blank"><img class="avatar-image" src="{{ art['artist_img'] }}"></a>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <a id="slideprev">&#10094;</a>
+                <a id="slidenext">&#10095;</a>
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
-{% include './footer.html' %}
+</body>
