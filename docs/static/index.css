@@ -99,14 +99,17 @@ a {
   text-decoration: none;
 }
 
+.highlight {
+  color: #CF7641;
+}
+
 .hyperlink {
-  color: inherit;
+  color: #729CF5;
   text-decoration: underline;
 }
 
 .hyperlink:visited {
-  color: inherit;
-  text-decoration: underline;
+  color: #729CF5;
  }
 
 .hgallery {
@@ -188,6 +191,7 @@ a {
 .block-row {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .block-col {
@@ -195,12 +199,17 @@ a {
   flex-direction: column;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .spacer {
   width: 100%;
 }
 
-#armor-h2 {
+.left-heading {
   align-self: center;
+  margin-right: auto;
 }
 
 .character-tables {
