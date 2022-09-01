@@ -437,7 +437,7 @@ TODO
 <h1>Character Class Reference</h1>
 The attributes for each class were broken up over each sub-section in Creating your Character. In this section, the attributes for each class are all together which will be more useful as your character levels up.
 
-<h2>Fighter</h2>Fighters focus solely on improving their combat prowess over all other skills. Fighters gain more hit points, weapon proficiencies, armor proficiencies, and use their weapons better than anyone else.<br/><br/>
+<h2 id="fighter">Fighter</h2>Fighters focus solely on improving their combat prowess over all other skills. Fighters gain more hit points, weapon proficiencies, armor proficiencies, and use their weapons better than anyone else.<br/><br/>
 At Fighter Level 1, a Fighter:
 <ul>
   <li>Becomes proficient in all types of armor: Light, Medium, Heavy, and Shields</li>
@@ -460,7 +460,7 @@ There is a wide variety of specialized training in certain fighting styles a Fig
   <li><span class="terminology">Weapon Mastery</span> - at Fighter Level 5 and beyond, a Fighter may spend 1 Weapon Proficiency Point on the weapon they previously chose <span class="terminology">Weapon Specialization</span> for to once again improve their skills with that weapon. As with <span class="terminology">Weapon Specialization</span>, this training can only be taken once and varies in function per weapon.</li>
 </ul>
 
-<h2>Rogue</h2>
+<h2 id="rogue">Rogue</h2>
 Rogues focus primarily on learning and improving useful skills.<br/><br/>
 At Rogue Level 1, a Rogue:
 <ul>
@@ -502,9 +502,9 @@ So a character who is Rogue 5, Fighter 3 when wearing light armor gains +5 to al
     A character who is Rogue 3, Fighter 5 gains +3 to all Rogue Skills regardless of what armor they are wearing as the bonus to Rogue skills can never exceed their Rogue Level.</li>
 </ul>
 
-<h2>Warlock</h2>
+<h2 id="warlock">Warlock</h2>
 
-<h2>Mage</h2>
+<h2 id="mage">Mage</h2>
 
 <h1>Builds and Guilds</h1>
 This section lists ideas on how to build common archetypical classes. You do not need to adhere to any of these specific builds as they just describe how common archetypes fit within the Mythmancer system. It also may make sense through your character's journey that they pivot to a new path as they gain experience and knowledge of the world around them.
@@ -513,53 +513,53 @@ This section lists ideas on how to build common archetypical classes. You do not
 This class is conspicuously missing from the four core classes of Mythmancer. This is because the Cleric is deemed a type of <a class="hyperlink" href="/world/magic#warlocks">Warlock</a>. <i>All</i> Clerics are Warlocks who adhere (nearly) exclusively to the Imperial Church of the <a class="hyperlink" href="/world/factions#seven-saints">Seven Saints</a>.<br/><br/>
 Patrons for non-cleric Warlocks typically operate on much smaller scales sometimes granting their powers to only a single individual, but the patrons of the Imperial Church seem to be able to maintain thousands of petitioners.<br/><br/>
 Gods do not yet exist within Mythmancer as the universe is too young, but the Seven Saints seem to be the closest facsimile.<br/><br/>
-Charisma isn't as important for Clerics as it is for other Warlocks as the Cleric's relationship is connected more to the Church itself rather than an individual relationship with their Patron. Charisma still might help a Cleric politically at higher stations.<br/><br/>
+<span class="terminology">Charisma</span> isn't as important for Clerics as it is for other Warlocks as the Cleric's relationship is connected more to the Church itself rather than an individual relationship with their Patron. Charisma still might help a Cleric politically at higher stations.<br/><br/>
 Of the Seven Saints, only three act as clerical patrons: <a class="hyperlink" href="/world/factions#vash">Vash of Commerce</a>, <a class="hyperlink" href="/world/factions#rath">Rath of Fertility</a>, and <a class="hyperlink" href="/world/factions#mida">Mida of Death</a>. Clerics typically "attune" to one of these Saints gaining access to their domain-specific spells. A Cleric isn't exclusively beholden to the Saint they are currently attuned, they would be allowed in the future to change their attunement if they expect one domain will be more useful for a specific campaign.<br/><br/>
 Thanks to Mida's development of powerful restorative magic, all Clerics possess the greatest amount of access to healing miracles. Especially high-level and devoted followers of Mida wield the unique ability to raise the dead and cure diseases.
 
 <h2>Monk</h2>
-A Monk can be built using a mix of Fighter and Rogue levels but focusing primarily on Fighter to gain proficiency in Unarmed Strikes.<br/><br/>
+A Monk can be built using a mix of <a class="hyperlink" href="#fighter">Fighter</a> and <a class="hyperlink" href="#rogue">Rogue</a> levels but focusing primarily on Fighter to gain proficiency in Unarmed Strikes.<br/><br/>
 Monasteries offering Monk training may offer specialized training to sufficiently advanced Monks to improve their offensive and defensive abilities in less armor.<br/><br/>
 A Monk might also build Mage or Warlock levels to magically augment their martial abilities.
 
 <h2>Ranger - Forest Ranger</h2>
-The archetypical Ranger is most commonly associated with the Forest Elves of the <a class="hyperlink" href="/world/locations#the-borderlands">Borderlands</a>. These Rangers commonly learn skills important in navigating within forests as well as two-weapon combat and natural patron magic. A Ranger would primarily take Fighter levels but would have a significant amount of Warlock levels as well in addition to a small amount of Rogue levels.
+The archetypical Ranger is most commonly associated with the Forest Elves of the <a class="hyperlink" href="/world/locations#the-borderlands">Borderlands</a>. These Rangers commonly learn skills important in navigating within forests as well as two-weapon combat and natural patron magic. A Ranger would primarily take <a class="hyperlink" href="#fighter">Fighter</a> levels but would have a significant amount of <a class="hyperlink" href="#warlock">Warlock</a> levels as well in addition to a small amount of <a class="hyperlink" href="#rogue">Rogue</a> levels.
 
 <h2 id="tracker-plains-ranger">Tracker - Plains Ranger</h2>
-The <a class="hyperlink" href="/world/factions#knightly-order-trackers">Knightly Order of Trackers</a> are the Empire's version of Ranger. Trackers focus their skills primarily in the Plains and commonly use horses. This order offers special training in cartography, tracking and pathfinding while in the plains, and mounted combat. A Tracker might be primarily built as a Fighter with just a small splash of Rogue.
+The <a class="hyperlink" href="/world/factions#knightly-order-trackers">Knightly Order of Trackers</a> are the Empire's version of Ranger. Trackers focus their skills primarily in the Plains and commonly use horses. This order offers special training in cartography, tracking and pathfinding while in the plains, and mounted combat. A Tracker might be primarily built as a <a class="hyperlink" href="#fighter">Fighter</a> with just a small splash of <a class="hyperlink" href="#rogue">Rogue</a>.
 
 <h2>Pathfinder - Desert Ranger</h2>
-The Pathfinders of <a class="hyperlink" href="/world/locations#city-of-umon">Umon</a> are skilled in navigating and surviving deserts, canyons, and crags. Pathfinders heavily leverage divination magic to assist their pathfinding abilities and to douse for water. A successful Pathfinder could be built with an even combination of Fighter and Mage levels.
+The Pathfinders of <a class="hyperlink" href="/world/locations#city-of-umon">Umon</a> are skilled in navigating and surviving deserts, canyons, and crags. Pathfinders heavily leverage divination magic to assist their pathfinding abilities and to douse for water. A successful Pathfinder could be built with an even combination of <a class="hyperlink" href="#fighter">Fighter</a> and <a class="hyperlink" href="#mage">Mage</a> levels.
 
 <h2>Falconer - Mountain Ranger</h2>
-The <a class="hyperlink" href="/world/locations#the-flying-city">Flying City</a> Falconers specialize in traversing mountainous terrain. Some Falconers eventually may become trusted enough to use specially-bred semi-intelligent birds in their line of duty. Unlike other types of rangers, Falconers are primarily Rogues and leverage either Warlock or Mage levels to help them more effectively interact with their birds. (Note - you are probably unlikely to bring birds into a dungeon).<br/><br/>
+The <a class="hyperlink" href="/world/locations#the-flying-city">Flying City</a> Falconers specialize in traversing mountainous terrain. Some Falconers eventually may become trusted enough to use specially-bred semi-intelligent birds in their line of duty. Unlike other types of rangers, Falconers are primarily <a class="hyperlink" href="#rogue">Rogues</a> and leverage either <a class="hyperlink" href="#warlock">Warlock</a> or <a class="hyperlink" href="#mage">Mage</a> levels to help them more effectively interact with their birds. (Note - you are probably unlikely to bring birds into a dungeon).<br/><br/>
 The Flying City Falconers is also a good name for a football team.
 
 <h2>Delver - Cave Ranger</h2>
-The Delvers of <a class="hyperlink" href="/world/locations#hive">Hive</a> hone their skills deep underground and are primarily versed in navigating caves. A Delver must never lose their sense of direction, either cardinally or vertically. A Delver might be built as an even mix of Fighter, Rogue, and either Warlock or Mage.
+The Delvers of <a class="hyperlink" href="/world/locations#hive">Hive</a> hone their skills deep underground and are primarily versed in navigating caves. A Delver must never lose their sense of direction, either cardinally or vertically. A Delver might be built as an even mix of <a class="hyperlink" href="#fighter">Fighter</a>, <a class="hyperlink" href="#rogue">Rogue</a>, and either <a class="hyperlink" href="#warlock">Warlock</a> or <a class="hyperlink" href="#mage">Mage</a>.
 
 <h2>Miner</h2>
-The Dwarven Miners of <a class="hyperlink" href="/world/locations#hive">Hive</a> have to be capable of martial combat as well as climbing and engineering skills to safely traverse the subterrane. Some Miners even study up on Divination to assist them in finding treasure, often resulting in a mix of Fighter, Rogue, and Mage but focusing primarily on Fighter. The exact line of difference between a Miner and a Delver primarily is related to Guild, Dwarven Clan, and that Miners focus more on Fighter levels.
+The Dwarven Miners of <a class="hyperlink" href="/world/locations#hive">Hive</a> have to be capable of martial combat as well as climbing and engineering skills to safely traverse the subterrane. Some Miners even study up on Divination to assist them in finding treasure, often resulting in a mix of <a class="hyperlink" href="#fighter">Fighter</a>, <a class="hyperlink" href="#rogue">Rogue</a>, and <a class="hyperlink" href="#mage">Mage</a> but focusing primarily on Fighter. The exact line of difference between a Miner and a Delver primarily is related to Guild, Dwarven Clan, and that Miners focus more on Fighter levels.
 
 <h2>Sapper</h2>
-While Delvers focus on scouting and Miners focus on combat (and mining), the Sappers of <a class="hyperlink" href="/world/locations#hive">Hive</a> focus the most on engineering. Sappers use their knowledge of engineering to set and disable traps, and dig tunnels under walls in times of war. A Sapper focuses primarily on Rogue levels but will often take some Fighter levels as well.
+While Delvers focus on scouting and Miners focus on combat (and mining), the Sappers of <a class="hyperlink" href="/world/locations#hive">Hive</a> focus the most on engineering. Sappers use their knowledge of engineering to set and disable traps, and dig tunnels under walls in times of war. A Sapper focuses primarily on <a class="hyperlink" href="#rogue">Rogue</a> levels but will often take some <a class="hyperlink" href="#fighter">Fighter</a> levels as well.
 
 <h2>Artificer</h2>
-An Artificer is going to be any Mage who focuses primarily on the creation, use, and identification of magical items.<br/><br/>
+An Artificer is going to be any <a class="hyperlink" href="#mage">Mage</a> who focuses primarily on the creation, use, and identification of magical items.<br/><br/>
 Dwarven Artificers from <a class="hyperlink" href="/world/locations#hive">Hive</a> use their abilities to make superior steel resulting in especially sharp pickaxes, and the oft-sought-after Plate Armor.<br/><br/>
 Elven Artificers from the <a class="hyperlink" href="/world/locations#the-borderlands">Borderlands</a> delicately weave together special silk into excellent bowstrings and interlocked chains to make high draw-weight bows and Elfin Chainmail.<br/><br/>
 A certain specialized subset of Artificers, sometimes called <a class="hyperlink" href="/world/magic#horology">Horologists</a>, search exclusively for remnants of the Clockwork, the supposed scaffolding of the universe's creation.
 
 <h2>Bard</h2>
 The jaunty jester character who plays a lute during battle to inspire allies is less likely to be found in Mythmancer except possibly for war drummers to synchronize the marching of military formations. This may be a different story if a character finds an actual magical lute which when played during combat inspires allies.<br/><br/>
-However, there's so much more to the Bard character. The Bard is likely to be a relatively flexible build. One Bard may be exclusively a Rogue who does like to in fact jauntily play lute while the group travels to improve morale (toss a coin to your witcher!). Another may be mostly a Mage who has figured out how to weave magic into their performance to put a listening crowd into a stupor or fervor. Another Bard might be a Warlock who likes to recite the poetry of their patron; their patron <i>might</i> even be a good poet!<br/><br/>
+However, there's so much more to the Bard character. The Bard is likely to be a relatively flexible build. One Bard may be exclusively a <a class="hyperlink" href="#rogue">Rogue</a> who does like to in fact jauntily play lute while the group travels to improve morale (toss a coin to your witcher!). Another may be mostly a <a class="hyperlink" href="#mage">Mage</a> who has figured out how to weave magic into their performance to put a listening crowd into a stupor or fervor. Another Bard might be a <a class="hyperlink" href="#warlock">Warlock</a> who likes to recite the poetry of their patron; their patron <i>might</i> even be a good poet!<br/><br/>
 Ultimately, the Bard character is an attitude and <span class="terminology">Charisma</span> score. At least one Rogue level is probably necessary to be a Bard to reflect the character's time learning their performance of choice.
 
 <h2>Barbarian</h2>
-The archetypical Barbarian is going to mostly be a Fighter. Barbarians might also take a Rogue level or two to survive better in the Wilds. Some Barbarians may take Warlock levels to channel ancestral spirits.<br/><br/>
-The classic Barbarian Rage ability might be facilitated by the proper mix of psychoactive substances and/or magic. Learning this proper mix as well as how to leverage the attained mental state requires specialized training (i.e. a Rogue Level). After all, if an untrained individual were to take these substances to enter a rage, they may lose the ability to discern friend and foe.
+The archetypical Barbarian is going to mostly be a <a class="hyperlink" href="#fighter">Fighter</a>. Barbarians might also take a <a class="hyperlink" href="#rogue">Rogue</a> level or two to survive better in the <a class="hyperlink" href="/world/locations#the-wilds">Wilds</a>. Some Barbarians may take Warlock levels to channel ancestral spirits.<br/><br/>
+The classic Barbarian <span class="terminology">Rage</span> ability might be facilitated by the proper mix of psychoactive substances and/or magic. Learning this proper mix as well as how to leverage the attained mental state requires specialized training (i.e. a <span class="terminology">Rogue Level</span>). After all, if an untrained individual were to take these substances to enter a rage, they may lose the ability to discern friend and foe.
 
-<h2>Knight (i.e. Paladin)</h2>
+<h2 id="knight">Knight (i.e. Paladin)</h2>
 The Paladin archetype essentially describes a divine-select warrior who often embodies some form of righteous ideal. In Mythmancer, this type of class is termed a Knight which is attained by adherence to an Imperial Knightly Order. A righteous ideal is not a requirement as the Empire does not have a monopoly on righteousness. An ideal, righteous or otherwise, is still a requirement. Each Knightly Order embodies an ideal.<br/><br/>
 There are 10 Knightly Orders at any specific point in history. The only Knightly Order which is fixed is the Trackers which was described previously at <a class="hyperlink" href="#tracker-plains-ranger">Tracker - Plains Ranger</a>. In each Knightly Order, there might be righteous and corrupt embodiments of the ideal.<br/><br/>
 Gaining membership into a Knightly order ranges in difficulty. Knights primarily take Fighter levels but may need to mix in levels of other classes to meet the requirements. Devotion to a Knightly Order and their ideal can reward a Knight with the innate powers often associated with Paladins, but this must be earned through the character becoming an embodiment of an ideal over time.<br/><br/>
@@ -572,29 +572,29 @@ Some example Knightly Orders are:
 </ul>
 
 <h2>Monastic Fighter</h2>
-The dividing line between Knights and Fighters is primarily a political one. There are a large number of Fighter's Guilds who are also deeply religious.  These Fighter's Guilds make up the churning constituency of the Knightly Orders. A Monastic Fighter's Guild becomes a Knightly Order when the Guild's master becomes a Judge, but also loses its status if its Judge dies and the other Judges do not decide to appoint a successor from that guild.<br/><br/>
+The dividing line between <a class="hyperlink" href="#knight">Knights</a> and <a class="hyperlink" href="#fighter">Fighters</a> is primarily a political one. There are a large number of Fighter's Guilds who are also deeply religious.  These Fighter's Guilds make up the churning constituency of the Knightly Orders. A Monastic Fighter's Guild becomes a Knightly Order when the Guild's master becomes a Judge, but also loses its status if its Judge dies and the other Judges do not decide to appoint a successor from that guild.<br/><br/>
 Whether a Monastic Fighter's Guild is a Knightly Order at a given point in time does not necessarily indicate if members of that guild are more powerful or not, it primarily is just an indicator of how popular or politically important that guild is.<br/><br/>
-Monastic Fighter's Guilds whose members feverishly pursue an ideal are more likely to have been or become Knightly Orders. In addition, Knightly Orders are exclusive to Tara.<br/><br/>
-Monastic Fighters typically mix Fighter and Warlock levels. Patrons of Monastic Fighter's Guilds do not typically offer especially high level patron spells so most emphasize Fighter training.<br/><br/>
+Monastic Fighter's Guilds whose members feverishly pursue an ideal are more likely to have been or become Knightly Orders. In addition, Knightly Orders are exclusive to <a class="hyperlink" href="/world/factions#tara">Tara</a>.<br/><br/>
+Monastic Fighters typically mix Fighter and <a class="hyperlink" href="#warlock">Warlock</a> levels. Patrons of Monastic Fighter's Guilds do not typically offer especially high level patron spells so most emphasize Fighter training.<br/><br/>
 Mechanically, Knights and Monastic Fighters are identical.
 
 <h2>Diviner</h2>
-A Diviner is any Mage who focuses primarily on divination magic. Diviners also frequently learn defensive Abjuration magic to protect themselves and allies.<br/><br/>
+A Diviner is any <a class="hyperlink" href="#mage">Mage</a> who focuses primarily on divination magic. Diviners also frequently learn defensive <span class="terminology">Abjuration</span> magic to protect themselves and allies.<br/><br/>
 The Elves of the <a class="hyperlink" href="/world/locations#city-of-umon">City of Umon</a> are some of the most notable diviners in Mythmancer. Divination has a significant amount of integration into daily life within the City of Umon.
 
 <h2>Illusionist</h2>
-Like Diviners, an Illusionist is any Mage who focuses primarily on illusion magic. This may be redundant however, because Illusionism is in many ways one and the same as Divination. The discipline of Illusionism stems from strategies developed by Diviners in the <a class="hyperlink" href="/world/locations#city-of-umon">City of Umon</a> to hide secrets from the prying eyes of other Diviners.<br/><br/>
+Like Diviners, an Illusionist is any <a class="hyperlink" href="#mage">Mage</a> who focuses primarily on illusion magic. This may be redundant however, because Illusionism is in many ways one and the same as Divination. The discipline of Illusionism stems from strategies developed by Diviners in the <a class="hyperlink" href="/world/locations#city-of-umon">City of Umon</a> to hide secrets from the prying eyes of other Diviners.<br/><br/>
 Most of the innovation in Illusion magic now comes from the <a class="hyperlink" href="/world/locations#the-mirror-city">Mirror City</a>.
 
 <h2>Magician</h2>
 A Magician is an expert in sleight of hand in addition to magic. A character who takes the time to improve their skills in both thievery and illusionism can become a very effective magician.
 
 <h2>Battle Mage or Spellsword</h2>
-Those who train themselves both martially and in destructive forms of magic might call themselves a Battle Mage. Since the Empire does not allow the mastery of arcane magic, many imperial Mages round their weaknesses off with the intense physical training of a Fighter. Due to their even levels in both classes, Battle Mages are capable of casting their strongest spells even while wearing armor.<br/><br/>
+Those who train themselves both martially and in destructive forms of magic might call themselves a Battle Mage. Since the Empire does not allow the mastery of arcane magic, many imperial <a class="hyperlink" href="#mage">Mages</a> round their weaknesses off with the intense physical training of a <a class="hyperlink" href="#fighter">Fighter</a>. Due to their even levels in both classes, Battle Mages are capable of casting their strongest spells even while wearing armor.<br/><br/>
 Some aspiring Battle Mages who can't quite hack it in spellcasting might end up becoming <a class="hyperlink" href="/world/factions#knightly-order-mage-mashers">Mage Mashers</a>.
 
 <h2>Legionnaire</h2>
-In Mythmancer, the Legionnaire's are members of <a class="hyperlink" href="/world/factions#kalis-legion">Kali's Legion</a>. A Legionnaire is exclusively a Fighter, though higher level Legionnaires end up with powers similar to a Knight when they earn the title of Centurion. Kali's Legion is heavily hierarchical, and enforces a "might makes right" mentality. To eventually attain the title of Centurion, a Legionnaire must get to a high level and then sequentially duel up their entire chain of command in single combat until they manage to defeat a Centurion themselves.<br/><br/>
+In Mythmancer, the <span class="terminology">Legionnaire</span>'s are members of <a class="hyperlink" href="/world/factions#kalis-legion">Kali's Legion</a>. A Legionnaire is exclusively a <a class="hyperlink" href="#fighter">Fighter</a>, though higher level Legionnaires end up with powers similar to a <a class="hyperlink" href="#knight">Knight</a> when they earn the title of <span class="terminology">Centurion</span>. Kali's Legion is heavily hierarchical, and enforces a "might makes right" mentality. To eventually attain the title of Centurion, a Legionnaire must get to a high level and then sequentially duel up their entire chain of command in single combat until they manage to defeat a Centurion themselves.<br/><br/>
 What makes the Legionnaire is primarily training. Fighters who train with Kali's Legion end up learning a very defensive combat style and learn how to use their shield with far more proficiency.
 
 <h2>War Priest</h2>
