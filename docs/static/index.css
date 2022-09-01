@@ -66,32 +66,26 @@ body {
   font-size: 45px;
   width: fit-content;
   margin-top: 10px;
-}
-
-.bgimg .contents-item {
-  background-color: var(--bg);
+  background-color: black;
   padding: 10px 10px 10px 10px;
 }
 
-.contents-subitem {
+.writing {
   font-size: 25px;
   margin-top: 10px;
-}
-
-.contents-subitem.writing {
   background: black;
   padding: 10px 10px 10px 10px;
 }
 
-.contents-subitem.writing > h1 {
+.writing > h1 {
   color: #ACE16E;
 }
 
-.contents-subitem.writing > h2 {
+.writing > h2 {
   color: #80BA50;
 }
 
-.contents-subitem.writing > h3 {
+.writing > h3 {
   color: #549171;
 }
 
