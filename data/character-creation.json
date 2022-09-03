@@ -1,7 +1,0 @@
-{
-  "template": "template_writing.html",
-  "contents": [
-    {"route": "character-creation", "title": "character creation"},
-    {"route": "tables", "title": "tables"}
-  ]
-}

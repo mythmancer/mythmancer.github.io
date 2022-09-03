@@ -8,13 +8,13 @@
                 <a href="{{ previous_page }}"><-</a>
                 {{ title }}
             </div>
-            {% for art in arts['assets'] %}
+            {% for art in data['assets'] %}
             <img class="titleart" src="{{ art['link'] }}">
             {% endfor %}
         </div>
         <div id="contents">
             <div class="slideshow-container">
-                {% for art in arts['drawings'] %}
+                {% for art in data['drawings'] %}
                 <div class="slide">
                     <div class="artwork">
                         <img class="art slideimg" src="{{ art['link'] }}">

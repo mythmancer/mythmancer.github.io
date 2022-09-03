@@ -13,21 +13,51 @@
       "title": "character creation",
       "route": "character-creation",
       "template": "template_contents.html",
-      "children": "character-creation.json"
+      "children": [
+        {
+          "route": "character-creation",
+          "title": "character creation",
+          "template": "template_writing.html",
+          "data_type": "text"
+        },
+        {
+          "route": "tables",
+          "title": "tables",
+          "template": "template_writing.html",
+          "data_type": "text"
+        }
+      ]
     },
     {
       "title": "world",
       "route": "world",
       "template": "template_contents.html",
-      "children": "world.json"
+      "children": [
+        {
+          "route": "factions",
+          "title": "factions",
+          "template": "template_writing.html",
+          "data_type": "text"
+        },
+        {
+          "route": "locations",
+          "title": "locations",
+          "template": "template_writing.html",
+          "data_type": "text"
+        },
+        {
+          "route": "magic",
+          "title": "magic",
+          "template": "template_writing.html",
+          "data_type": "text"
+        }
+      ]
     },
     {
       "title": "art",
       "route": "art",
       "template": "template_gallery.html",
-      "data": {
-        "arts": "arts.json"
-      }
+      "data_type": "json"
     }
   ]
 }
