@@ -31,13 +31,10 @@ def render_and_write(template_file, params, output_file):
 def generate_page_params(level_path, level_data):
     params = {}
     if level_data.get("data_type"):
-        print("a1")
         with open(os.path.join(DATA_DIR, level_path)) as f:
             params["data"] = f.read()
             if level_data.get("data_type") == "json":
-                print("a2")
                 params["data"] = json.loads(params["data"])
-                print(params["data"])
 
     return params
 
@@ -47,13 +44,13 @@ def generate_level(level_map, previous_level_path):
     level_path = os.path.join(previous_level_path, level_name)
     output_file = os.path.join(level_path, 'index.html')
     link = os.path.join("/", level_path)
-    LOG.info(f"{previous_level_path} | {level_path} | {output_file} | {link}")
+    template = level_map.get("template", "template_contents.html")
+    LOG.info(f"{previous_level_path} | {level_path} | {output_file} | {link} | {template}")
 
     os.makedirs(os.path.join(SITE_DIR, level_path), exist_ok=True)
 
     if "children" in level_map:
         # generate children and get table of contents
-        level_map["template"] = "template_contents.html"
         additional_params = {
             "contents": [
                 generate_level(child, level_path) for child in level_map["children"]
@@ -71,7 +68,7 @@ def generate_level(level_map, previous_level_path):
         **additional_params
     }
 
-    render_and_write(level_map["template"], params, output_file)
+    render_and_write(template, params, output_file)
 
     return {
         "title": level_map["title"],
