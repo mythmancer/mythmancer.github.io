@@ -24,3 +24,8 @@ make generate-pages
 
 Check-in all files, including the generated ones. I used to have a GHA that ran the generation, but that's a bit wonkier with branch
 protection.
+
+If you're a collaborator, you can easily merge changes by creating a commit locally, and running
+```sh
+gh pr create --fill && sleep 2 && gh pr merge --auto -r -d
+```
