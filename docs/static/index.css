@@ -4,6 +4,16 @@
 }
 
 @font-face {
+  font-family: 'Iosevka Comfy';
+  src: local('iosevka-comfy-regular'), url(/static/iosevka-comfy-regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'HammerBro';
+  src: local('HammerBro101MovieReg-Regular'), url(/static/HammerBro101MovieReg-Regular.ttf) format('truetype');
+}
+
+@font-face {
   font-family: 'MSDOS';
   src: local('MSDOS'), url(/static/MSDOS.ttf) format('truetype');
 }
@@ -16,7 +26,7 @@
 body {
   color: var(--text);
   background-color: var(--bg);
-  font-family: "MSDOS";
+  font-family: "HammerBro";
   margin-left: 8%;
   margin-right: 8%;
   margin-top: 8%;
