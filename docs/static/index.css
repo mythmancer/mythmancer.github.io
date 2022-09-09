@@ -21,12 +21,13 @@
 :root {
   --bg: #222033;
   --text: #e8e6e3;
+  --font-family: "HammerBro";
 }
 
 body {
   color: var(--text);
   background-color: var(--bg);
-  font-family: "HammerBro";
+  font-family: var(--font-family);
   margin-left: 8%;
   margin-right: 8%;
   margin-top: 8%;
@@ -224,7 +225,7 @@ input {
   outline: none;
   width: 100%;
   font-size: inherit;
-  font-family: "MSDOS";
+  font-family: var(--font-family);
   color: #ACE16E;
   background-color: transparent;
 }
@@ -250,7 +251,7 @@ input {
 }
 
 #cs-saved-names, #cs-armor-proficiency {
-  font-family: "MSDOS";
+  font-family: var(--font-family);
   padding: 12px;
   border: none;
   font-size: 20px;
@@ -273,7 +274,7 @@ input {
 }
 
 #die-result {
-  font-family: "MSDOS";
+  font-family: var(--font-family);
   font-size: 60px;
   width: 200px;
   background-color: rgba(96, 112, 215, 0.5);
