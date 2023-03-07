@@ -64,6 +64,31 @@ CHARACTERISTICS = [
   "cs-max-minor-patrons",
 ];
 
+DERIVED_CHARACTERISTICS = [
+  "cs-total-hit-die",
+
+  "cs-charisma-modifier",
+  "cs-constitution-modifier",
+  "cs-constitution-save-throw",
+  "cs-dexterity-modifier",
+  "cs-dexterity-save-throw",
+  "cs-intelligence-modifier",
+  "cs-strength-modifier",
+  "cs-wisdom-modifier",
+  "cs-wisdom-save-throw",
+
+  "cs-base-attack-bonus",
+  "cs-number-of-attacks",
+
+  "cs-allowed-armor",
+  "cs-allowed-weapons",
+  "cs-skill-check-bonus",
+  "cs-skill-proficiencies",
+
+  "cs-max-spells-learnable-per-degree",
+  "cs-max-minor-patrons",
+];
+
 CLASSES = [
   "fighter",
   "mage",
@@ -187,6 +212,7 @@ function loadFromName() {
     const elements = document.getElementsByClassName(COLLECTIONS[i]);
     console.log(COLLECTIONS[i])
     for (let j = 0; j < elementDatas.length; j++) {
+      console.log(j);
       elements[j].value = elementDatas[j];
     }
   }
