@@ -99,6 +99,8 @@ CLASSES = [
 
 POPULATED_NAMES = [];
 
+VERSION = "0.2.1"
+
 function exportData() {
   const characterData = {};
 
