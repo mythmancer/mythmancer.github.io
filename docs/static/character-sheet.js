@@ -301,6 +301,11 @@ DERIVED_CHARACTERISTICS = {
       const armorType = armor.armorType.trim().toLowerCase();
       console.log(equipmentAC);
       console.log(dexMod);
+
+      if (!ARMOR.hasOwnProperty(armorType)) {
+        continue;
+      }
+
       if (ARMOR[armorType].hasOwnProperty("max_dex_mod")) {
         dexMod = Math.min(dexMod, ARMOR[armorType]["max_dex_mod"]);
       }
