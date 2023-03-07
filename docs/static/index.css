@@ -336,8 +336,12 @@ input {
   display: none;
 }
 
-#cs-import {
+#cs-lock-sheet {
+  margin-right: 10px;
+}
 
+#cs-unlock-sheet {
+    margin-right: 10px;
 }
 
 /* art page */
