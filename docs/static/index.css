@@ -269,20 +269,21 @@ input {
   background-color: transparent;
 }
 
-.cs-control-panel, #die-set {
+.cs-control-panel {
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-bottom: 10px;
+
+  position: sticky;
+  top: 0;
+  background-color: var(--bg);
 }
 
-#die-set {
-  height: 90px;
-}
-
-.cs-control-button {
+.cs-control-button, .die {
   cursor: pointer;
   width: 50px;
+  height: 50px;
 
   font-size: 60px;
   font-weight: bold;
@@ -304,21 +305,19 @@ input {
   margin-right: 10px;
 }
 
-.die {
-  padding-right: 5px;
-  cursor: pointer;
+.filler {
+  width: 100%;
 }
 
 #die-result {
   font-family: var(--font-family);
-  font-size: 60px;
+  font-size: 40px;
   width: 200px;
   background-color: rgba(96, 112, 215, 0.5);
   border-radius: 10px;
   text-align: center;
   justify-content: center;
   align-items: center;
-  font-size: 60px;
   display: flex;
   margin-left: 30px;
 }
