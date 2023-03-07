@@ -444,11 +444,17 @@ input {
     width: 100%;
     position: fixed;
     margin-top: auto;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+#character-cards {
+    display: flex;
+    width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    z-index: 1000;
 }
 
 #character-sheet.blurred {
@@ -468,4 +474,22 @@ input {
     justify-content: center;
     align-content: center;
     font-size: 30px;
+}
+
+#character-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    margin-top: 30px;
+}
+
+#character-controls .cs-control-button {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+
+    font-size: 60px;
+    font-weight: bold;
+    color: var(--text);
 }
