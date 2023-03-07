@@ -1,52 +1,61 @@
 COLLECTIONS = [
-  "cs-bonus-to-hit",
-  "cs-damage",
-  "cs-rate-of-fire",
-  "cs-weapon",
-  "cs-weapon-proficiency",
-  "inventory",
-  "notes",
+  "cs-inventory",
+  "cs-misc",
+  "cs-weapon-bonus-to-hit",
+  "cs-weapon-damage",
+  "cs-weapon-features",
+  "cs-weapon-name",
 ];
 
 CHARACTERISTICS = [
-  "cs-armor",
   "cs-armor-class",
-  "cs-armor-other-1",
-  "cs-armor-other-2",
-  "cs-armor-proficiency",
-  "cs-base-bonus-to-hit",
-  "cs-boots",
-  "cs-cha",
-  "cs-charisma",
-  "cs-cloak",
-  "cs-con",
-  "cs-constitution",
-  "cs-dex",
-  "cs-dexterity",
   "cs-experience",
-  "cs-fighter-level",
-  "cs-fortitude-save-bonus",
-  "cs-gloves",
   "cs-hit-points",
-  "cs-int",
-  "cs-intelligence",
-  "cs-mage-level",
   "cs-name",
-  "cs-neck",
-  "cs-non-proficient-penalty-to-hit",
   "cs-race",
-  "cs-reflex-save-bonus",
-  "cs-ring-1",
-  "cs-ring-2",
-  "cs-rogue-level",
-  "cs-shield",
-  "cs-str",
+  "cs-total-hit-die",
+
+  "cs-level-fighter",
+  "cs-level-mage",
+  "cs-level-rogue",
+  "cs-level-warlock",
+
+  "cs-charisma",
+  "cs-charisma-modifier",
+  "cs-constitution",
+  "cs-constitution-modifier",
+  "cs-constitution-save-throw",
+  "cs-dexterity",
+  "cs-dexterity-modifier",
+  "cs-dexterity-save-throw",
+  "cs-intelligence",
+  "cs-intelligence-modifier",
   "cs-strength",
-  "cs-total-character-level",
-  "cs-warlock-level",
-  "cs-will-save-bonus",
-  "cs-wis",
+  "cs-strength-modifier",
   "cs-wisdom",
+  "cs-wisdom-modifier",
+  "cs-wisdom-save-throw",
+
+  "cs-equipment-armor",
+  "cs-equipment-boots",
+  "cs-equipment-cloak",
+  "cs-equipment-gloves",
+  "cs-equipment-neck",
+  "cs-equipment-other-1",
+  "cs-equipment-other-2",
+  "cs-equipment-ring-1",
+  "cs-equipment-ring-2",
+  "cs-equipment-shield",
+
+  "cs-base-attack-bonus",
+  "cs-number-of-attacks",
+
+  "cs-allowed-armor",
+  "cs-allowed-weapons",
+  "cs-skill-check-bonus",
+  "cs-skill-proficiencies",
+
+  "cs-silver",
 ];
 
 POPULATED_NAMES = [];
@@ -55,6 +64,7 @@ function exportData() {
   const characterData = {};
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
+    console.log(CHARACTERISTICS[i]);
     const data = document.getElementById(CHARACTERISTICS[i]).value;
     characterData[CHARACTERISTICS[i]] = data;
   }
@@ -118,6 +128,7 @@ function loadFromName() {
   const characterData = JSON.parse(characterDataStr);
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
+    console.log(CHARACTERISTICS[i]);
     document.getElementById(CHARACTERISTICS[i]).value = characterData[CHARACTERISTICS[i]];
   }
 
@@ -216,7 +227,6 @@ window.onload = function() {
   uploader.addEventListener("change", handleFileUpload, false);
 
   document.getElementById("cs-export").addEventListener("click", exportToFile);
-  document.getElementById("cs-armor-proficiency").addEventListener("change", save);
   document.getElementById("cs-name").addEventListener("change", function() {
     document.getElementById("cs-saved-names").value = document.getElementById("cs-name").value;
   });

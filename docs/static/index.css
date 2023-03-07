@@ -47,6 +47,12 @@ body {
   margin-top: 1% !important;
 }
 
+.lesssidemargin {
+    margin-left: 1% !important;
+    margin-right: 1% !important;
+    width: 98% !important;
+}
+
 #main {
   display: flex;
   flex-direction: column;
@@ -121,11 +127,15 @@ a {
 .race {
   color: #85703E;
 }
-
 /* tables */
 .table {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+.table.table-as-rows {
+    display: flex;
+    flex-direction: column;
 }
 
 .table-row {
@@ -135,8 +145,8 @@ a {
 
 .table-column {
   flex: 1;
-  border: 1px solid white;
-  min-height: 40px;
+  outline: rgb(160,160,255) solid 0.1px;
+  min-height: 30px;
   display: flex;
   align-items: center;
   padding-left: 10px;
@@ -162,6 +172,15 @@ a {
   background-color: transparent !important;
 }
 
+.empty-column {
+    background-color: grey;
+}
+
+.heading-column {
+    background-color: white;
+    color: black;
+}
+
 /* character sheet page */
 #character-sheet .table-column {
   white-space: nowrap;
@@ -180,6 +199,7 @@ a {
 .block-col {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .nowrap {
@@ -250,7 +270,7 @@ input {
   color: var(--text);
 }
 
-#cs-saved-names, #cs-armor-proficiency {
+#cs-saved-names {
   font-family: var(--font-family);
   padding: 12px;
   border: none;
@@ -261,9 +281,7 @@ input {
   align-self: center;
   color: white;
   width: fit-content;
-}
 
-#cs-saved-names {
   margin-left: 10px;
   margin-right: 10px;
 }
