@@ -138,18 +138,19 @@ function exportToFile() {
 }
 
 function loadFromJsonString(mapString) {
-  let name = "";
+  let names = [];
   console.log(mapString);
   if (mapString == null || mapString == "") {
-    return;
+    return names;
   }
   const map = JSON.parse(mapString);
   for (var prop in map) {
+    names.push(prop);
     if (Object.prototype.hasOwnProperty.call(map, prop)) {
       window.localStorage.setItem(prop, map[prop]);
     }
   }
-}
+  return names;}
 
 function lockSensitiveFields() {
   const divs = document.getElementsByClassName("sensitive-field");
@@ -248,8 +249,13 @@ function importData(file) {
   const reader = new FileReader();
   reader.onload = (e) => {
     console.log(e.target.result);
-    loadFromJsonString(e.target.result);
+    const names = loadFromJsonString(e.target.result);
     populateNameSelector();
+    alert(
+      `Imported ${names.length} characters:`
+        + "\n• " + names.join("\n• ")
+        + "\nUse the selector the choose one"
+    );
   };
   reader.readAsText(file);
 }
