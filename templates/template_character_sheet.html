@@ -24,7 +24,7 @@
                     <div id="die-result">
                     </div>
                 </div>
-                <div class="table">
+                <div class="table" id="page-main-character-sheet">
                     <div class="block-col">
                         <div class="block-row">
                             <div class="table-column heading-column">Character</div>
@@ -327,6 +327,472 @@
                             <div class="table-column"><input class="cs-inventory"></div>
                             <div class="table-column">Silver</div>
                             <div class="table-column"><input id="cs-silver"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="page-spellbook" class="class-specific for-mage for-warlock">
+                    <div class="table for-warlock">
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">Warlock Spells</div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">1st Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">Max Minor Patrons</div>
+                                <div class="table-column"><input id="cs-max-minor-patrons"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">2nd Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column empty-column"></div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">3rd Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column empty-column"></div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">4th Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column empty-column"></div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">5th Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table for-mage">
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">Mage Spells</div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">1st Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">Max Spells Learnable per Degree</div>
+                                <div class="table-column"><input id="cs-max-spells-learnable-per-degree"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">2nd Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column empty-column"></div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">3rd Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column empty-column"></div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">4th Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                        </div>
+                        <div class="block-col">
+                            <div class="table-row non-alternating">
+                                <div class="table-column empty-column"></div>
+                                <div class="table-column empty-column"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column heading-column">5th Degree Spell</div>
+                                <div class="table-column heading-column">Qty</div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column"><input class="cs-spell-name"></div>
+                                <div class="table-column"><input class="cs-spell-qty"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

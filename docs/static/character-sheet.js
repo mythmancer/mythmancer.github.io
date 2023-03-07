@@ -5,6 +5,9 @@ COLLECTIONS = [
   "cs-weapon-damage",
   "cs-weapon-features",
   "cs-weapon-name",
+
+  "cs-spell-name",
+  "cs-spell-qty",
 ];
 
 CHARACTERISTICS = [
@@ -56,7 +59,17 @@ CHARACTERISTICS = [
   "cs-skill-proficiencies",
 
   "cs-silver",
+
+  "cs-max-spells-learnable-per-degree",
+  "cs-max-minor-patrons",
 ];
+
+CLASSES = [
+  "fighter",
+  "mage",
+  "rogue",
+  "warlock",
+]
 
 POPULATED_NAMES = [];
 
@@ -113,6 +126,43 @@ function loadFromJsonString(mapString) {
   }
 }
 
+function hideClassDivs(className) {
+  console.log(`hiding ${className}`);
+  const divs = document.getElementsByClassName(className);
+  for(let i = 0; i < divs.length; i++) {
+    divs[i].classList.add("hidden");
+  }
+}
+
+function showClassDivs(className) {
+  console.log(`showing ${className}`);
+  const divs = document.getElementsByClassName(className);
+  for(let i = 0; i < divs.length; i++) {
+    divs[i].classList.remove("hidden");
+  }
+}
+
+function hideSpecifics() {
+  hideClassDivs("race-specific");
+  hideClassDivs("class-specific");
+  for (let i = 0; i < CLASSES.length; i++) {
+    hideClassDivs(`for-${CLASSES[i]}`);
+  }
+}
+
+function showAppropriateSpecifics(characterData) {
+  hideSpecifics();
+
+  showClassDivs(`for-${characterData["cs-race"].toLowerCase()}`)
+  for (let i = 0; i < CLASSES.length; i++) {
+    console.log(CLASSES[i])
+    const classLevel = characterData[`cs-level-${CLASSES[i]}`];
+    if (classLevel && parseInt(classLevel) > 0) {
+      showClassDivs(`for-${CLASSES[i]}`);
+    }
+  }
+}
+
 function loadFromName() {
   const name = document.getElementById("cs-saved-names").value;
 
@@ -133,12 +183,15 @@ function loadFromName() {
   }
 
   for (let i = 0; i < COLLECTIONS.length; i++) {
-    const elementDatas = characterData[COLLECTIONS[i]];
+    const elementDatas = characterData[COLLECTIONS[i]] || [];
     const elements = document.getElementsByClassName(COLLECTIONS[i]);
+    console.log(COLLECTIONS[i])
     for (let j = 0; j < elementDatas.length; j++) {
       elements[j].value = elementDatas[j];
     }
   }
+
+  showAppropriateSpecifics(characterData);
 }
 
 function save() {
@@ -147,7 +200,9 @@ function save() {
     return;
   }
   window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
+
   populateNameSelector();
+  showAppropriateSpecifics(map);
 }
 
 function importData(file) {
@@ -237,6 +292,7 @@ window.onload = function() {
   }
 
   populateNameSelector();
+  hideSpecifics();
 
   const nameSelector = document.getElementById("cs-saved-names");
   nameSelector.addEventListener("change", loadFromName);

@@ -181,6 +181,10 @@ a {
     color: black;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* character sheet page */
 #character-sheet .table-column {
   white-space: nowrap;
@@ -388,4 +392,8 @@ input {
 .avatar-image {
   width: 100px;
   border-radius: 50px;
+}
+
+#page-spellbook {
+    margin-top: 50px;
 }
