@@ -10,13 +10,14 @@
         <div id="contents">
             <form id="character-sheet">
                 <div class="cs-control-panel">
-                    <img id="cs-export" class="cs-control-button" title="Download" src="/static/images/download.png">
                     <select id="cs-saved-names">
                         <option selected>New character</option>
                     </select>
-
+                    <img id="cs-export" class="cs-control-button" title="Download" src="/static/images/download.png">
                     <label id="uploader-label" for="uploader"><img id="cs-import" class="cs-control-button" title="Upload" src="/static/images/upload.png"></label>
                     <input type="file" id="uploader" name="uploader"/>
+                    <img id="cs-unlock-sheet" class="cs-control-button" title="Unlock sheet" src="/static/images/unlock.png">
+                    <img id="cs-lock-sheet" class="cs-control-button hidden" title="Lock sheet" src="/static/images/lock.png">
                 </div>
                 <div id="die-set">
                     <img title="d4" class="die" src="/static/images/d4.png">
@@ -39,33 +40,33 @@
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Name</div>
-                            <div class="table-column"><input id="cs-name"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-name"></div>
                             <div class="table-column">Hit Points</div>
-                            <div class="table-column"><input id="cs-hit-points-current">/<input id="cs-hit-points"></div>
+                            <div class="table-column"><input id="cs-hit-points-current">/<input class="sensitive-field" id="cs-hit-points"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Race</div>
-                            <div class="table-column"><input id="cs-race"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-race"></div>
                             <div class="table-column">Armor Class</div>
-                            <div class="table-column"><input id="cs-armor-class"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-armor-class"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Total Hit Die</div>
-                            <div class="table-column"><input id="cs-total-hit-die"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-total-hit-die"></div>
                             <div class="table-column">Experience</div>
-                            <div class="table-column"><input id="cs-experience"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-experience"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Fighter Level</div>
-                            <div class="table-column"><input id="cs-level-fighter"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-level-fighter"></div>
                             <div class="table-column">Warlock Level</div>
-                            <div class="table-column"><input id="cs-level-warlock"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-level-warlock"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Rogue Level</div>
-                            <div class="table-column"><input id="cs-level-rogue"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-level-rogue"></div>
                             <div class="table-column">Mage Level</div>
-                            <div class="table-column"><input id="cs-level-mage"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-level-mage"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column heading-column">Ability Score</div>
@@ -75,37 +76,37 @@
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Strength</div>
-                            <div class="table-column"><input id="cs-strength"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-strength"></div>
                             <div class="table-column"><input id="cs-strength-modifier"></div>
                             <div class="table-column empty-column"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Dexterity</div>
-                            <div class="table-column"><input id="cs-dexterity"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-dexterity"></div>
                             <div class="table-column"><input id="cs-dexterity-modifier"></div>
                             <div class="table-column"><input id="cs-dexterity-save-throw"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Constitution</div>
-                            <div class="table-column"><input id="cs-constitution"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-constitution"></div>
                             <div class="table-column"><input id="cs-constitution-modifier"></div>
                             <div class="table-column"><input id="cs-constitution-save-throw"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Wisdom</div>
-                            <div class="table-column"><input id="cs-wisdom"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-wisdom"></div>
                             <div class="table-column"><input id="cs-wisdom-modifier"></div>
                             <div class="table-column"><input id="cs-wisdom-save-throw"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Intelligence</div>
-                            <div class="table-column"><input id="cs-intelligence"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-intelligence"></div>
                             <div class="table-column"><input id="cs-intelligence-modifier"></div>
                             <div class="table-column empty-column"></div>
                         </div>
                         <div class="table-row non-alternating">
                             <div class="table-column">Charisma</div>
-                            <div class="table-column"><input id="cs-charisma"></div>
+                            <div class="table-column"><input class="sensitive-field" id="cs-charisma"></div>
                             <div class="table-column"><input id="cs-charisma-modifier"></div>
                             <div class="table-column empty-column"></div>
                         </div>

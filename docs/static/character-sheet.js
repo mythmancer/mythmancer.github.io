@@ -103,7 +103,6 @@ function exportData() {
   const characterData = {};
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
-    console.log(CHARACTERISTICS[i]);
     const data = document.getElementById(CHARACTERISTICS[i]).value;
     characterData[CHARACTERISTICS[i]] = data;
   }
@@ -152,8 +151,25 @@ function loadFromJsonString(mapString) {
   }
 }
 
+function lockSensitiveFields() {
+  const divs = document.getElementsByClassName("sensitive-field");
+  for(let i = 0; i < divs.length; i++) {
+    divs[i].readOnly = true;
+  }
+  document.getElementById("cs-unlock-sheet").classList.remove("hidden");
+  document.getElementById("cs-lock-sheet").classList.add("hidden");
+}
+
+function unlockSensitiveFields() {
+  const divs = document.getElementsByClassName("sensitive-field");
+  for(let i = 0; i < divs.length; i++) {
+    divs[i].readOnly = false;
+  }
+  document.getElementById("cs-unlock-sheet").classList.add("hidden");
+  document.getElementById("cs-lock-sheet").classList.remove("hidden");
+}
+
 function hideClassDivs(className) {
-  console.log(`hiding ${className}`);
   const divs = document.getElementsByClassName(className);
   for(let i = 0; i < divs.length; i++) {
     divs[i].classList.add("hidden");
@@ -161,7 +177,6 @@ function hideClassDivs(className) {
 }
 
 function showClassDivs(className) {
-  console.log(`showing ${className}`);
   const divs = document.getElementsByClassName(className);
   for(let i = 0; i < divs.length; i++) {
     divs[i].classList.remove("hidden");
@@ -181,7 +196,6 @@ function showAppropriateSpecifics(characterData) {
 
   showClassDivs(`for-${characterData["cs-race"].toLowerCase()}`)
   for (let i = 0; i < CLASSES.length; i++) {
-    console.log(CLASSES[i])
     const classLevel = characterData[`cs-level-${CLASSES[i]}`];
     if (classLevel && parseInt(classLevel) > 0) {
       showClassDivs(`for-${CLASSES[i]}`);
@@ -204,21 +218,19 @@ function loadFromName() {
   const characterData = JSON.parse(characterDataStr);
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
-    console.log(CHARACTERISTICS[i]);
     document.getElementById(CHARACTERISTICS[i]).value = characterData[CHARACTERISTICS[i]];
   }
 
   for (let i = 0; i < COLLECTIONS.length; i++) {
     const elementDatas = characterData[COLLECTIONS[i]] || [];
     const elements = document.getElementsByClassName(COLLECTIONS[i]);
-    console.log(COLLECTIONS[i])
     for (let j = 0; j < elementDatas.length; j++) {
-      console.log(j);
       elements[j].value = elementDatas[j];
     }
   }
 
   showAppropriateSpecifics(characterData);
+  lockSensitiveFields();
 }
 
 function save() {
@@ -258,7 +270,6 @@ function populateNameSelector() {
 }
 
 function rollDice(event) {
-  console.log(event.target);
   const max = parseInt(event.target.title.substr(1));
   const result = Math.floor(Math.random() * max) + 1;
   document.getElementById("die-result").textContent = result;
@@ -309,6 +320,8 @@ window.onload = function() {
   uploader.addEventListener("change", handleFileUpload, false);
 
   document.getElementById("cs-export").addEventListener("click", exportToFile);
+  document.getElementById("cs-lock-sheet").addEventListener("click", lockSensitiveFields);
+  document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
   document.getElementById("cs-name").addEventListener("change", function() {
     document.getElementById("cs-saved-names").value = document.getElementById("cs-name").value;
   });
