@@ -17,7 +17,6 @@ CHARACTERISTICS = [
   "cs-hit-points-current",
   "cs-name",
   "cs-race",
-  "cs-total-hit-die",
 
   "cs-level-fighter",
   "cs-level-mage",
@@ -25,20 +24,11 @@ CHARACTERISTICS = [
   "cs-level-warlock",
 
   "cs-charisma",
-  "cs-charisma-modifier",
   "cs-constitution",
-  "cs-constitution-modifier",
-  "cs-constitution-save-throw",
   "cs-dexterity",
-  "cs-dexterity-modifier",
-  "cs-dexterity-save-throw",
   "cs-intelligence",
-  "cs-intelligence-modifier",
   "cs-strength",
-  "cs-strength-modifier",
   "cs-wisdom",
-  "cs-wisdom-modifier",
-  "cs-wisdom-save-throw",
 
   "cs-equipment-armor",
   "cs-equipment-boots",
@@ -51,43 +41,7 @@ CHARACTERISTICS = [
   "cs-equipment-ring-2",
   "cs-equipment-shield",
 
-  "cs-base-attack-bonus",
-  "cs-number-of-attacks",
-
-  "cs-allowed-armor",
-  "cs-allowed-weapons",
-  "cs-skill-check-bonus",
-  "cs-skill-proficiencies",
-
   "cs-silver",
-
-  "cs-max-spells-learnable-per-degree",
-  "cs-max-minor-patrons",
-];
-
-DERIVED_CHARACTERISTICS = [
-  "cs-total-hit-die",
-
-  "cs-charisma-modifier",
-  "cs-constitution-modifier",
-  "cs-constitution-save-throw",
-  "cs-dexterity-modifier",
-  "cs-dexterity-save-throw",
-  "cs-intelligence-modifier",
-  "cs-strength-modifier",
-  "cs-wisdom-modifier",
-  "cs-wisdom-save-throw",
-
-  "cs-base-attack-bonus",
-  "cs-number-of-attacks",
-
-  "cs-allowed-armor",
-  "cs-allowed-weapons",
-  "cs-skill-check-bonus",
-  "cs-skill-proficiencies",
-
-  "cs-max-spells-learnable-per-degree",
-  "cs-max-minor-patrons",
 ];
 
 CLASSES = [
@@ -100,6 +54,198 @@ CLASSES = [
 POPULATED_NAMES = [];
 
 VERSION = "0.2.1"
+
+// derived fields
+ATTRIBUTE_MODIFIER_TABLE = {
+  2: -4,
+  3: -3,
+  4: -2,
+  5: -2,
+  6: -1,
+  7: -1,
+  8: -1,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0,
+  13: 1,
+  14: 1,
+  15: 1,
+  16: 2,
+  17: 2,
+  18: 3,
+  19: 4,
+}
+
+SKILL_PROFICIENCY_TABLE = {
+  0: {
+    "rogue": 0,
+    "mage": 0,
+  },
+  1: {
+    "rogue": 3,
+    "mage": 1,
+  },
+  2: {
+    "rogue": 5,
+    "mage": 1,
+  },
+  3: {
+    "rogue": 5,
+    "mage": 1,
+  },
+  4: {
+    "rogue": 6,
+    "mage": 2,
+  },
+  5: {
+    "rogue": 7,
+    "mage": 2,
+  },
+  6: {
+    "rogue": 8,
+    "mage": 2,
+  },
+  7: {
+    "rogue": 8,
+    "mage": 2,
+  },
+  8: {
+    "rogue": 9,
+    "mage": 3,
+  },
+  9: {
+    "rogue": 10,
+    "mage": 3,
+  },
+}
+
+DERIVED_CHARACTERISTICS = {
+  // save throws and attribute modifiers
+  "cs-charisma-modifier": function(characterData) {
+    // table
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-charisma"])];
+  },
+  "cs-constitution-modifier": function(characterData) {
+    // table
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-constitution"])];
+  },
+  "cs-constitution-save-throw": function(characterData) {
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-constitution"])]
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 2)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 4)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 3);
+  },
+  "cs-dexterity-modifier": function(characterData) {
+    // table
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-dexterity"])];
+  },
+  "cs-dexterity-save-throw": function(characterData) {
+    // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-dexterity"])]
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 3)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 3)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4);
+  },
+  "cs-intelligence-modifier": function(characterData) {
+    // table
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-intelligence"])];
+  },
+  "cs-strength-modifier": function(characterData) {
+    // table
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-strength"])];
+  },
+  "cs-wisdom-modifier": function(characterData) {
+    // table
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-wisdom"])];
+  },
+  "cs-wisdom-save-throw": function(characterData) {
+    // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
+    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-wisdom"])]
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 3)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2);
+  },
+
+  // class-based calculations
+  "cs-total-hit-die": function(characterData) {
+    // FGT + MAG + ROG + WAR
+    return getNumericalCharacteristic(characterData["cs-level-fighter"])
+      + getNumericalCharacteristic(characterData["cs-level-mage"])
+      + getNumericalCharacteristic(characterData["cs-level-rogue"])
+      + getNumericalCharacteristic(characterData["cs-level-warlock"]);
+  },
+
+  "cs-base-attack-bonus": function(characterData) {
+    // FGT + MAG/4 + ROG/2 + WAR/2
+    return getNumericalCharacteristic(characterData["cs-level-fighter"])
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2);
+  },
+  "cs-number-of-attacks": function(characterData) {
+    // max(1 + (FGT-1)/4, 1)
+    return Math.max(
+      Math.floor(1 + (getNumericalCharacteristic(characterData["cs-level-fighter"]) - 1) / 4),
+      1,
+    )
+  },
+  "cs-allowed-armor": function(characterData) {
+    // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
+    if (getNumericalCharacteristic(characterData["cs-level-fighter"]) > 0) {
+      return "Heavy + Shields";
+    } else if (getNumericalCharacteristic(characterData["cs-level-warlock"]) > 0) {
+      return "Medium";
+    } else if (getNumericalCharacteristic(characterData["cs-level-rogue"]) > 0) {
+      return "Light";
+    } else {
+      return "None";
+    }
+  },
+  "cs-allowed-weapons": function(characterData) {
+    // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
+    if (getNumericalCharacteristic(characterData["cs-level-fighter"]) > 0) {
+      return "Martial";
+    } else if (getNumericalCharacteristic(characterData["cs-level-warlock"]) > 0) {
+      return "Standard";
+    } else if (getNumericalCharacteristic(characterData["cs-level-rogue"]) > 0) {
+      return "Standard";
+    } else {
+      return "Simple";
+    }
+  },
+  "cs-skill-check-bonus": function(characterData) {
+    // ROG + MAG/2
+    return Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
+      + getNumericalCharacteristic(characterData["cs-level-rogue"])
+  },
+  "cs-skill-proficiencies": function(characterData) {
+    // table
+    return SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-mage"])]["mage"]
+      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["rogue"];
+  },
+
+  // spell casters
+  "cs-max-spells-learnable-per-degree": function(characterData) {
+    // 5 + INT
+    return 5 + ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-intelligence"])];
+  },
+  "cs-max-minor-patrons": function(characterData) {
+    // min(1 + CHA, (WAR+1)/2)
+    // TODO
+    return Math.min(
+      1 + ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-charisma"])],
+      Math.floor((getNumericalCharacteristic(characterData["cs-level-warlock"]) + 1) / 2)
+    );
+  },
+}
+
+function getNumericalCharacteristic(val) {
+  return parseInt(val | "0");
+}
 
 // lock/unlock sensitive fields, which are fields that don't change day-to-day
 // sheet can be unlocked to make changes. page always loads with these locked
@@ -158,6 +304,13 @@ function showAppropriateSpecifics(characterData) {
   }
 }
 
+// autocalculate and populate derived characteristics
+function populateDerivedCharacteristics(characterData) {
+  for (var prop in DERIVED_CHARACTERISTICS) {
+    document.getElementById(prop).value = DERIVED_CHARACTERISTICS[prop](characterData);
+  }
+}
+
 // update UI from a name
 function loadFromName(name) {
   console.log(name);
@@ -179,6 +332,8 @@ function loadFromName(name) {
   const characterData = JSON.parse(characterDataStr);
 
   // populate page
+  populateDerivedCharacteristics(characterData);
+
   document.getElementById("cs-name-heading").textContent = name;
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
@@ -350,6 +505,7 @@ function save() {
 
   populateCharacterSwitcher();
   showAppropriateSpecifics(map);
+  populateDerivedCharacteristics(map);
 }
 
 // main initializer
