@@ -323,7 +323,7 @@ window.onload = function() {
   document.getElementById("cs-lock-sheet").addEventListener("click", lockSensitiveFields);
   document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
   document.getElementById("cs-fullscreen").addEventListener("click", function() {
-    document.body.requestFullscreen();
+    document.documentElement.requestFullscreen();
     document.getElementById("cs-exit-fullscreen").classList.remove("hidden");
     document.getElementById("cs-fullscreen").classList.add("hidden");
   });
