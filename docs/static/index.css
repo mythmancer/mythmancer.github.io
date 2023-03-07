@@ -145,7 +145,8 @@ a {
 
 .table-column {
   flex: 1;
-  outline: rgb(160,160,255) solid 0.1px;
+  border-left: 1px solid grey;
+  border-top: 1px solid grey;
   min-height: 30px;
   display: flex;
   align-items: center;
@@ -153,8 +154,12 @@ a {
   overflow: hidden;
 }
 
-.table-column:not(:nth-last-of-type(1)) {
-  border-right: 1px solid white;
+.table-column:nth-last-of-type(1) {
+    border-right: 1px solid grey;
+}
+
+.table-row:nth-last-of-type(1) {
+    border-bottom: 1px solid grey;
 }
 
 .table-header {
@@ -173,16 +178,26 @@ a {
 }
 
 .empty-column {
-    background-color: grey;
+    background: repeating-linear-gradient(
+        -45deg,
+        gray 0px 1px,
+        transparent 0px 10px
+    );
 }
 
 .heading-column {
     background-color: white;
     color: black;
+    font-weight: bold;
 }
 
 .hidden {
     display: none !important;
+}
+
+.big-left-border .table-column:first-of-type {
+    border-left-width: 10px;
+    border-left-color: grey;
 }
 
 /* character sheet page */
@@ -394,6 +409,6 @@ input {
   border-radius: 50px;
 }
 
-#page-spellbook {
+#page-spellbook .table {
     margin-top: 50px;
 }
