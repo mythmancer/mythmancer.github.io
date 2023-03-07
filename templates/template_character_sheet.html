@@ -4,6 +4,7 @@
     <div id="main">
         <div id="contents">
             <div id="character-switcher">
+                <div id="character-cards">
                 <div class="character-card" id="cs-new-character">
                     <div class="character-letter">
                         +
@@ -12,13 +13,16 @@
                         New Character
                     </div>
                 </div>
+                </div>
+                <div id="character-controls">
+                    <img id="cs-export" class="cs-control-button" title="Download" src="/static/images/download.png">
+                    <label id="uploader-label" for="uploader"><img id="cs-import" class="cs-control-button" title="Upload" src="/static/images/upload.png"></label>
+                    <input type="file" id="uploader" name="uploader"/>
+                </div>
             </div>
             <form id="character-sheet" class="blurred">
                 <div class="cs-control-panel">
                     <div id="cs-name-heading"></div>
-                    <img id="cs-export" class="cs-control-button" title="Download" src="/static/images/download.png">
-                    <label id="uploader-label" for="uploader"><img id="cs-import" class="cs-control-button" title="Upload" src="/static/images/upload.png"></label>
-                    <input type="file" id="uploader" name="uploader"/>
                     <img id="cs-unlock-sheet" class="cs-control-button" title="Unlock sheet" src="/static/images/unlock.png">
                     <img id="cs-lock-sheet" class="cs-control-button hidden" title="Lock sheet" src="/static/images/lock.png">
                     <img id="cs-switch-character" class="cs-control-button" title="Switch character" src="/static/images/switch-character.png">

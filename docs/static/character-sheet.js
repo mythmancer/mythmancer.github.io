@@ -288,7 +288,7 @@ function createSwitcherElement(name) {
 function populateNameSelector() {
   const availableNames = Object.keys(window.localStorage);
   const newCharacterIcon = document.getElementById("cs-new-character");
-  const characterSwitcher = document.getElementById("character-switcher");
+  const characterCards = document.getElementById("character-cards");
   for (var i = 0; i < availableNames.length; i++){
     if (POPULATED_NAMES.includes(availableNames[i])) {
       continue;
@@ -297,7 +297,7 @@ function populateNameSelector() {
     opt.value = availableNames[i];
     opt.innerHTML = availableNames[i];
     const switcherElement = createSwitcherElement(availableNames[i]);
-    characterSwitcher.insertBefore(switcherElement, newCharacterIcon);
+    characterCards.insertBefore(switcherElement, newCharacterIcon);
     POPULATED_NAMES.push(availableNames[i]);
   }
 }
