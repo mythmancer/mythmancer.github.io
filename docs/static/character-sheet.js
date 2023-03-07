@@ -656,6 +656,10 @@ window.onload = function() {
     dice[i].addEventListener("click", rollDice);
   }
 
+  // make derived fields readonly
+  for(var prop in DERIVED_CHARACTERISTICS) {
+    document.getElementById(prop).readOnly = true;
+  }
   populateCharacterSwitcher();
   hideSpecifics();
 };
