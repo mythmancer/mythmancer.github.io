@@ -11,7 +11,6 @@ COLLECTIONS = [
 ];
 
 CHARACTERISTICS = [
-  "cs-armor-class",
   "cs-experience",
   "cs-hit-points",
   "cs-hit-points-current",
@@ -55,7 +54,55 @@ POPULATED_NAMES = [];
 
 VERSION = "0.2.1"
 
-// derived fields
+// example, "Chain Mail (+2)"
+EQUIPMENT_RE = /(?<armorType>[a-zA-Z ]*)(\(\+(?<acMod>\d+)\))?/;
+
+// Databases
+ARMOR = {
+  "padded": {
+    "ac": 1,
+  },
+  "leather": {
+    "ac": 2,
+  },
+  "reinforced": {
+    "ac": 3,
+  },
+  "ring mail": {
+    "ac": 4,
+    "max_dex_mod": 3,
+  },
+  "scale mail": {
+    "ac": 5,
+    "max_dex_mod": 3,
+  },
+  "chain mail": {
+    "ac": 6,
+    "max_dex_mod": 2,
+  },
+  "shield": {
+    "ac": 2,
+  },
+  "elfin chain mail": {
+    "ac": 5,
+  },
+  "dwarven mail": {
+    "ac": 7,
+    "max_dex_mod": 2,
+  },
+  "hoplon": {
+    "ac": function(characterData) {
+      console.log(characterData);
+      console.log(characterData["cs-strength"]);
+      console.log(getNumericalCharacteristic(characterData["cs-strength"]));
+      console.log(ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])]);
+      return 2 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])];
+    },
+    "max_dex_mod": 0,
+  },
+}
+
+// Derived fields
 ATTRIBUTE_MODIFIER_TABLE = {
   2: -4,
   3: -3,
@@ -124,14 +171,14 @@ DERIVED_CHARACTERISTICS = {
   // save throws and attribute modifiers
   "cs-charisma-modifier": function(characterData) {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-charisma"])];
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])];
   },
   "cs-constitution-modifier": function(characterData) {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-constitution"])];
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])];
   },
   "cs-constitution-save-throw": function(characterData) {
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-constitution"])]
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])]
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 2)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 4)
@@ -139,11 +186,11 @@ DERIVED_CHARACTERISTICS = {
   },
   "cs-dexterity-modifier": function(characterData) {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-dexterity"])];
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
   },
   "cs-dexterity-save-throw": function(characterData) {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-dexterity"])]
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])]
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 3)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 3)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
@@ -151,19 +198,19 @@ DERIVED_CHARACTERISTICS = {
   },
   "cs-intelligence-modifier": function(characterData) {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-intelligence"])];
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])];
   },
   "cs-strength-modifier": function(characterData) {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-strength"])];
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])];
   },
   "cs-wisdom-modifier": function(characterData) {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-wisdom"])];
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])];
   },
   "cs-wisdom-save-throw": function(characterData) {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
-    return ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-wisdom"])]
+    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])]
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 3)
@@ -231,16 +278,53 @@ DERIVED_CHARACTERISTICS = {
   // spell casters
   "cs-max-spells-learnable-per-degree": function(characterData) {
     // 5 + INT
-    return 5 + ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-intelligence"])];
+    return 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])];
   },
   "cs-max-minor-patrons": function(characterData) {
     // min(1 + CHA, (WAR+1)/2)
-    // TODO
     return Math.min(
-      1 + ATTRIBUTE_MODIFIER_TABLE[parseInt(characterData["cs-charisma"])],
+      1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])],
       Math.floor((getNumericalCharacteristic(characterData["cs-level-warlock"]) + 1) / 2)
     );
   },
+
+  // AC
+  "cs-armor-class": function(characterData) {
+    let equipmentAC = 0;
+    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
+    for (var prop in characterData) {
+      if (!prop.startsWith("cs-equipment-") || characterData[prop] === "") {
+        continue;
+      }
+
+      const armor = characterData[prop].match(EQUIPMENT_RE).groups;
+      const armorType = armor.armorType.trim().toLowerCase();
+      console.log(equipmentAC);
+      console.log(dexMod);
+      if (ARMOR[armorType].hasOwnProperty("max_dex_mod")) {
+        dexMod = Math.min(dexMod, ARMOR[armorType]["max_dex_mod"]);
+      }
+      console.log(equipmentAC);
+      console.log(dexMod);
+      if (typeof ARMOR[armorType]["ac"] === 'function') {
+        console.log("asdf ");
+        console.log(characterData);
+        equipmentAC += ARMOR[armorType]["ac"](characterData);
+      } else {
+        equipmentAC += ARMOR[armorType]["ac"];
+      }
+      console.log(equipmentAC);
+      console.log(dexMod);
+
+      equipmentAC += parseInt(armor.acMod || 0);
+      console.log(equipmentAC);
+      console.log(dexMod);
+    }
+
+    console.log(equipmentAC);
+    console.log(dexMod);
+    return 10 + dexMod + equipmentAC;
+  }
 }
 
 function getNumericalCharacteristic(val) {
