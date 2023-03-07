@@ -8,6 +8,16 @@
 <body class="notopmargin nobg lesssidemargin">
     <div id="main">
         <div id="contents">
+            <div id="character-switcher" class="hidden">
+                <div class="character-card" id="cs-new-character">
+                    <div class="character-letter">
+                        +
+                    </div>
+                    <div class="character-name">
+                        New Character
+                    </div>
+                </div>
+            </div>
             <form id="character-sheet">
                 <div class="cs-control-panel">
                     <select id="cs-saved-names">
@@ -18,6 +28,7 @@
                     <input type="file" id="uploader" name="uploader"/>
                     <img id="cs-unlock-sheet" class="cs-control-button" title="Unlock sheet" src="/static/images/unlock.png">
                     <img id="cs-lock-sheet" class="cs-control-button hidden" title="Lock sheet" src="/static/images/lock.png">
+                    <img id="cs-switch-character" class="cs-control-button" title="Switch character" src="/static/images/switch-character.png">
                     <img id="cs-fullscreen" class="cs-control-button" title="Fullscreen" src="/static/images/fullscreen.png">
                     <img id="cs-exit-fullscreen" class="cs-control-button hidden" title="Exit fullscreen" src="/static/images/exit-fullscreen.png">
                     <div class="filler"></div>

@@ -211,12 +211,17 @@ function loadFromName() {
 
   const characterDataStr = window.localStorage.getItem(name);
 
+  lockSensitiveFields();
+  document.getElementById("character-sheet").classList.remove("blurred");
+  document.getElementById("character-switcher").classList.add("hidden");
+
   if (characterDataStr == null) {
     document.getElementById("character-sheet").reset();
     return;
   }
 
   const characterData = JSON.parse(characterDataStr);
+  showAppropriateSpecifics(characterData);
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
     document.getElementById(CHARACTERISTICS[i]).value = characterData[CHARACTERISTICS[i]];
@@ -229,9 +234,6 @@ function loadFromName() {
       elements[j].value = elementDatas[j];
     }
   }
-
-  showAppropriateSpecifics(characterData);
-  lockSensitiveFields();
 }
 
 function save() {
@@ -260,9 +262,33 @@ function importData(file) {
   reader.readAsText(file);
 }
 
+function createSwitcherElement(name) {
+  let d = document.createElement('div');
+  d.classList.add("character-card");
+
+  let letterD = document.createElement('div');
+  letterD.classList.add("character-letter");
+  letterD.textContent = name[0].toUpperCase();
+  let nameD = document.createElement('div');
+  nameD.classList.add("character-name");
+  nameD.textContent = name;
+
+  d.appendChild(letterD);
+  d.appendChild(nameD);
+
+  d.addEventListener("click", function() {
+    document.getElementById("cs-saved-names").value = name;
+    loadFromName();
+  });
+
+  return d;
+}
+
 function populateNameSelector() {
   const availableNames = Object.keys(window.localStorage);
   const nameSelector = document.getElementById("cs-saved-names");
+  const newCharacterIcon = document.getElementById("cs-new-character");
+  const characterSwitcher = document.getElementById("character-switcher");
   for (var i = 0; i < availableNames.length; i++){
     if (POPULATED_NAMES.includes(availableNames[i])) {
       continue;
@@ -271,6 +297,8 @@ function populateNameSelector() {
     opt.value = availableNames[i];
     opt.innerHTML = availableNames[i];
     nameSelector.appendChild(opt);
+    const switcherElement = createSwitcherElement(availableNames[i]);
+    characterSwitcher.insertBefore(switcherElement, newCharacterIcon);
     POPULATED_NAMES.push(availableNames[i]);
   }
 }
@@ -328,6 +356,10 @@ window.onload = function() {
   document.getElementById("cs-export").addEventListener("click", exportToFile);
   document.getElementById("cs-lock-sheet").addEventListener("click", lockSensitiveFields);
   document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
+  document.getElementById("cs-switch-character").addEventListener("click", function() {
+    document.getElementById("character-sheet").classList.add("blurred");
+    document.getElementById("character-switcher").classList.remove("hidden");
+  });
   document.getElementById("cs-fullscreen").addEventListener("click", function() {
     document.documentElement.requestFullscreen();
     document.getElementById("cs-exit-fullscreen").classList.remove("hidden");
@@ -352,4 +384,10 @@ window.onload = function() {
 
   const nameSelector = document.getElementById("cs-saved-names");
   nameSelector.addEventListener("change", loadFromName);
+
+  const newCharacterIcon = document.getElementById("cs-new-character");
+  newCharacterIcon.addEventListener("click", function() {
+    document.getElementById("cs-saved-names").value = "New character";
+    loadFromName();
+  });
 };
