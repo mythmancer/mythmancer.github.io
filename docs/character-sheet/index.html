@@ -8,7 +8,7 @@
 <body class="notopmargin nobg lesssidemargin">
     <div id="main">
         <div id="contents">
-            <div id="character-switcher" class="hidden">
+            <div id="character-switcher">
                 <div class="character-card" id="cs-new-character">
                     <div class="character-letter">
                         +
@@ -18,11 +18,9 @@
                     </div>
                 </div>
             </div>
-            <form id="character-sheet">
+            <form id="character-sheet" class="blurred">
                 <div class="cs-control-panel">
-                    <select id="cs-saved-names">
-                        <option selected>New character</option>
-                    </select>
+                    <div id="cs-name-heading"></div>
                     <img id="cs-export" class="cs-control-button" title="Download" src="/static/images/download.png">
                     <label id="uploader-label" for="uploader"><img id="cs-import" class="cs-control-button" title="Upload" src="/static/images/upload.png"></label>
                     <input type="file" id="uploader" name="uploader"/>

@@ -290,18 +290,15 @@ input {
   color: var(--text);
 }
 
-#cs-saved-names {
+#cs-name-heading {
   font-family: var(--font-family);
-  padding: 12px;
   border: none;
-  font-size: 20px;
+  font-size: 50px;
   outline: none;
-  background: rgba(96, 112, 215, 0.5);
-  border-radius: 10px;
   align-self: center;
   color: white;
   width: fit-content;
-
+  white-space: nowrap;
   margin-right: 10px;
 }
 

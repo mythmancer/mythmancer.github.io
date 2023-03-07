@@ -204,9 +204,7 @@ function showAppropriateSpecifics(characterData) {
   }
 }
 
-function loadFromName() {
-  const name = document.getElementById("cs-saved-names").value;
-
+function loadFromName(name) {
   console.log(name);
 
   const characterDataStr = window.localStorage.getItem(name);
@@ -216,9 +214,13 @@ function loadFromName() {
   document.getElementById("character-switcher").classList.add("hidden");
 
   if (characterDataStr == null) {
+    document.getElementById("cs-name-heading").textContent = "";
     document.getElementById("character-sheet").reset();
+    unlockSensitiveFields();
     return;
   }
+
+  document.getElementById("cs-name-heading").textContent = name;
 
   const characterData = JSON.parse(characterDataStr);
   showAppropriateSpecifics(characterData);
@@ -277,8 +279,7 @@ function createSwitcherElement(name) {
   d.appendChild(nameD);
 
   d.addEventListener("click", function() {
-    document.getElementById("cs-saved-names").value = name;
-    loadFromName();
+    loadFromName(name);
   });
 
   return d;
@@ -286,7 +287,6 @@ function createSwitcherElement(name) {
 
 function populateNameSelector() {
   const availableNames = Object.keys(window.localStorage);
-  const nameSelector = document.getElementById("cs-saved-names");
   const newCharacterIcon = document.getElementById("cs-new-character");
   const characterSwitcher = document.getElementById("character-switcher");
   for (var i = 0; i < availableNames.length; i++){
@@ -296,7 +296,6 @@ function populateNameSelector() {
     var opt = document.createElement("option");
     opt.value = availableNames[i];
     opt.innerHTML = availableNames[i];
-    nameSelector.appendChild(opt);
     const switcherElement = createSwitcherElement(availableNames[i]);
     characterSwitcher.insertBefore(switcherElement, newCharacterIcon);
     POPULATED_NAMES.push(availableNames[i]);
@@ -371,7 +370,7 @@ window.onload = function() {
     document.getElementById("cs-fullscreen").classList.remove("hidden");
   });
   document.getElementById("cs-name").addEventListener("change", function() {
-    document.getElementById("cs-saved-names").value = document.getElementById("cs-name").value;
+    document.getElementById("cs-name-heading").textContent = document.getElementById("cs-name").value;
   });
 
   const dice = document.getElementsByClassName("die");
@@ -382,12 +381,8 @@ window.onload = function() {
   populateNameSelector();
   hideSpecifics();
 
-  const nameSelector = document.getElementById("cs-saved-names");
-  nameSelector.addEventListener("change", loadFromName);
-
   const newCharacterIcon = document.getElementById("cs-new-character");
   newCharacterIcon.addEventListener("click", function() {
-    document.getElementById("cs-saved-names").value = "New character";
-    loadFromName();
+    loadFromName(null);
   });
 };
