@@ -14,6 +14,7 @@ CHARACTERISTICS = [
   "cs-armor-class",
   "cs-experience",
   "cs-hit-points",
+  "cs-hit-points-current",
   "cs-name",
   "cs-race",
   "cs-total-hit-die",
