@@ -464,6 +464,7 @@ input {
 
 .character-card {
     display: flex;
+    cursor: pointer;
     flex-direction: column;
     justify-contet: center;
     align-content: center;
