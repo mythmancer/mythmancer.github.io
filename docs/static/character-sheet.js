@@ -293,8 +293,7 @@ DERIVED_CHARACTERISTICS = {
 
       const armor = characterData[prop].match(EQUIPMENT_RE).groups;
       const armorType = armor.armorType.trim().toLowerCase();
-      console.log(equipmentAC);
-      console.log(dexMod);
+      equipmentAC += parseInt(armor.acMod || 0);
 
       if (!ARMOR.hasOwnProperty(armorType)) {
         continue;
@@ -303,25 +302,14 @@ DERIVED_CHARACTERISTICS = {
       if (ARMOR[armorType].hasOwnProperty("max_dex_mod")) {
         dexMod = Math.min(dexMod, ARMOR[armorType]["max_dex_mod"]);
       }
-      console.log(equipmentAC);
-      console.log(dexMod);
+
       if (typeof ARMOR[armorType]["ac"] === 'function') {
-        console.log("asdf ");
-        console.log(characterData);
         equipmentAC += ARMOR[armorType]["ac"](characterData);
       } else {
         equipmentAC += ARMOR[armorType]["ac"];
       }
-      console.log(equipmentAC);
-      console.log(dexMod);
-
-      equipmentAC += parseInt(armor.acMod || 0);
-      console.log(equipmentAC);
-      console.log(dexMod);
     }
 
-    console.log(equipmentAC);
-    console.log(dexMod);
     return 10 + dexMod + equipmentAC;
   }
 }
