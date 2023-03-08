@@ -259,6 +259,7 @@ a {
 input {
   border: 0;
   margin-right: 15px;
+  padding: 0;
   border-bottom: 1px solid rgba(172, 225, 110, 0.5);
   outline: none;
   width: 100%;
