@@ -96,7 +96,79 @@ ARMOR = {
   },
 }
 
-// Derived fields
+SPELL_SLOTS = {
+  0: {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  1: {
+    1: 2,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  2: {
+    1: 3,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  3: {
+    1: 3,
+    2: 1,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  4: {
+    1: 3,
+    2: 2,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  5: {
+    1: 4,
+    2: 2,
+    3: 1,
+    4: 0,
+    5: 0,
+  },
+  6: {
+    1: 4,
+    2: 3,
+    3: 2,
+    4: 0,
+    5: 0,
+  },
+  7: {
+    1: 4,
+    2: 3,
+    3: 2,
+    4: 1,
+    5: 0,
+  },
+  8: {
+    1: 4,
+    2: 3,
+    3: 3,
+    4: 2,
+    5: 0,
+  },
+  9: {
+    1: 4,
+    2: 4,
+    3: 3,
+    4: 2,
+    5: 1,
+  },
+}
+
 ATTRIBUTE_MODIFIER_TABLE = {
   2: -4,
   3: -3,
@@ -311,7 +383,39 @@ DERIVED_CHARACTERISTICS = {
     }
 
     return 10 + dexMod + equipmentAC;
-  }
+  },
+
+  // spell slots
+  "cs-slots-w1": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][1];
+  },
+  "cs-slots-w2": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][2];
+  },
+  "cs-slots-w3": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][3];
+  },
+  "cs-slots-w4": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][4];
+  },
+  "cs-slots-w5": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][5];
+  },
+  "cs-slots-m1": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][1];
+  },
+  "cs-slots-m2": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][2];
+  },
+  "cs-slots-m3": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][3];
+  },
+  "cs-slots-m4": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][4];
+  },
+  "cs-slots-m5": function(characterData) {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][5];
+  },
 }
 
 function getNumericalCharacteristic(val) {
