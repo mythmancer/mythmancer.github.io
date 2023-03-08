@@ -7,7 +7,8 @@
     {
       "title": "character sheet",
       "route": "character-sheet",
-      "template": "template_character_sheet.html"
+      "template": "template_character_sheet.html",
+      "data_type": "json"
     },
     {
       "title": "character creation",
