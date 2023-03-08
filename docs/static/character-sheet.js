@@ -358,7 +358,7 @@ DERIVED_CHARACTERISTICS = {
   "cs-armor-class": function(characterData) {
     let equipmentAC = 0;
     let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
-    for (var prop in characterData) {
+    for (let prop in characterData) {
       if (!prop.startsWith("cs-equipment-") || characterData[prop] === "") {
         continue;
       }
@@ -419,7 +419,7 @@ DERIVED_CHARACTERISTICS = {
 }
 
 function getNumericalCharacteristic(val) {
-  return parseInt(val | "0");
+  return parseInt(val || "0");
 }
 
 // lock/unlock sensitive fields, which are fields that don't change day-to-day
@@ -427,7 +427,7 @@ function getNumericalCharacteristic(val) {
 // prevents accidental mess-ups
 function lockSensitiveFields() {
   const divs = document.getElementsByClassName("sensitive-field");
-  for(let i = 0; i < divs.length; i++) {
+  for (let i = 0; i < divs.length; i++) {
     divs[i].readOnly = true;
   }
   document.getElementById("cs-unlock-sheet").classList.remove("hidden");
@@ -436,7 +436,7 @@ function lockSensitiveFields() {
 
 function unlockSensitiveFields() {
   const divs = document.getElementsByClassName("sensitive-field");
-  for(let i = 0; i < divs.length; i++) {
+  for (let i = 0; i < divs.length; i++) {
     divs[i].readOnly = false;
   }
   document.getElementById("cs-unlock-sheet").classList.add("hidden");
@@ -446,14 +446,14 @@ function unlockSensitiveFields() {
 // utilities for hiding/showing race- and class-specific sections
 function hideClassDivs(className) {
   const divs = document.getElementsByClassName(className);
-  for(let i = 0; i < divs.length; i++) {
+  for (let i = 0; i < divs.length; i++) {
     divs[i].classList.add("hidden");
   }
 }
 
 function showClassDivs(className) {
   const divs = document.getElementsByClassName(className);
-  for(let i = 0; i < divs.length; i++) {
+  for (let i = 0; i < divs.length; i++) {
     divs[i].classList.remove("hidden");
   }
 }
@@ -481,9 +481,14 @@ function showAppropriateSpecifics(characterData) {
 
 // autocalculate and populate derived characteristics
 function populateDerivedCharacteristics(characterData) {
-  for (var prop in DERIVED_CHARACTERISTICS) {
+  for (let prop in DERIVED_CHARACTERISTICS) {
     document.getElementById(prop).value = DERIVED_CHARACTERISTICS[prop](characterData);
   }
+}
+
+function clearSheet() {
+  document.getElementById("cs-name-heading").textContent = "";
+  document.getElementById("character-sheet").reset();
 }
 
 // update UI from a name
@@ -493,13 +498,12 @@ function loadFromName(name) {
   const characterDataStr = window.localStorage.getItem(name);
 
   lockSensitiveFields();
-  document.getElementById("character-sheet").classList.remove("blurred");
-  document.getElementById("character-switcher").classList.add("hidden");
+  hideCharacterSwitcher();
+  clearSheet();
 
   // new character form. keep fields unlocked in this view for ease of use
   if (characterDataStr == null) {
-    document.getElementById("cs-name-heading").textContent = "";
-    document.getElementById("character-sheet").reset();
+    document.getElementById("cs-delete-sheet").classList.add("hidden");
     unlockSensitiveFields();
     return;
   }
@@ -524,43 +528,7 @@ function loadFromName(name) {
   }
 
   showAppropriateSpecifics(characterData);
-}
-
-function createSwitcherElement(name) {
-  let d = document.createElement('div');
-  d.classList.add("character-card");
-
-  let letterD = document.createElement('div');
-  letterD.classList.add("character-letter");
-  letterD.textContent = name[0].toUpperCase();
-  let nameD = document.createElement('div');
-  nameD.classList.add("character-name");
-  nameD.textContent = name;
-
-  d.appendChild(letterD);
-  d.appendChild(nameD);
-
-  d.addEventListener("click", function() {
-    loadFromName(name);
-  });
-
-  return d;
-}
-
-// check if any new character sheets are present in localStorage, and add them
-// to the character switcher
-function populateCharacterSwitcher() {
-  const availableNames = Object.keys(window.localStorage);
-  const newCharacterIcon = document.getElementById("cs-new-character");
-  const characterCards = document.getElementById("character-cards");
-  for (var i = 0; i < availableNames.length; i++){
-    if (POPULATED_NAMES.includes(availableNames[i])) {
-      continue;
-    }
-    const switcherElement = createSwitcherElement(availableNames[i]);
-    characterCards.insertBefore(switcherElement, newCharacterIcon);
-    POPULATED_NAMES.push(availableNames[i]);
-  }
+  document.getElementById("cs-delete-sheet").classList.remove("hidden");
 }
 
 function rollDice(event) {
@@ -599,7 +567,7 @@ function exportData() {
 function exportToFile() {
   // fake a download request
   const text = JSON.stringify(window.localStorage);
-  var element = document.createElement("a");
+  const element = document.createElement("a");
   element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
   element.setAttribute("download", `mythmancer-character-sheets-${new Date().toISOString().replaceAll(":", "-")}.json`);
 
@@ -627,7 +595,7 @@ function loadFromJsonString(mapString) {
     return names;
   }
   const map = JSON.parse(mapString);
-  for (var prop in map) {
+  for (let prop in map) {
     names.push(prop);
     if (Object.prototype.hasOwnProperty.call(map, prop)) {
       window.localStorage.setItem(prop, map[prop]);
@@ -678,9 +646,73 @@ function save() {
   }
   window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
 
+  try {
+    showAppropriateSpecifics(map);
+    populateDerivedCharacteristics(map);
+  } catch(err) {
+    console.log("error");
+    alert("Fix the mistake in the most recently edited field");
+  }
+}
+
+// character switcher stuff
+function createSwitcherElement(name) {
+  let d = document.createElement('div');
+  d.classList.add("character-card");
+
+  let letterD = document.createElement('div');
+  letterD.classList.add("character-letter");
+  letterD.textContent = name[0].toUpperCase();
+  let nameD = document.createElement('div');
+  nameD.classList.add("character-name");
+  nameD.textContent = name;
+
+  d.appendChild(letterD);
+  d.appendChild(nameD);
+
+  d.addEventListener("click", function() {
+    loadFromName(name);
+  });
+
+  return d;
+}
+
+function populateCharacterSwitcher() {
+  // TODO: sort local storage by created at? Alphabetical?
+  // Insert any newly available names to the character switcher
+  const availableNames = Object.keys(window.localStorage);
+  const newCharacterIcon = document.getElementById("cs-new-character");
+  const characterCardsDiv = document.getElementById("character-cards");
+  for (let i = 0; i < availableNames.length; i++) {
+    if (POPULATED_NAMES.includes(availableNames[i])) {
+      continue;
+    }
+    const switcherElement = createSwitcherElement(availableNames[i]);
+    characterCardsDiv.insertBefore(switcherElement, newCharacterIcon);
+    POPULATED_NAMES.push(availableNames[i]);
+  }
+
+  // Remove any non-present names from the switcher
+  const namesToRemove = POPULATED_NAMES.filter(name => !availableNames.includes(name));
+  const characterNameDivs = characterCardsDiv.getElementsByClassName("character-name");
+  for (let i = 0; i < characterNameDivs.length; i++) {
+    if (namesToRemove.includes(characterNameDivs[i].textContent)) {
+      characterNameDivs[i].parentElement.remove();
+    }
+  }
+
+  POPULATED_NAMES = [...availableNames];
+}
+
+function hideCharacterSwitcher() {
+  document.getElementById("character-sheet").classList.remove("blurred");
+  document.getElementById("character-switcher").classList.add("hidden");
+}
+
+function showCharacterSwitcher() {
   populateCharacterSwitcher();
-  showAppropriateSpecifics(map);
-  populateDerivedCharacteristics(map);
+  document.getElementById("character-sheet").classList.add("blurred");
+  document.getElementById("character-switcher").classList.remove("hidden");
 }
 
 // main initializer
@@ -709,9 +741,15 @@ window.onload = function() {
     loadFromName(null);
   });
   document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
+  document.getElementById("cs-delete-sheet").addEventListener("click", function() {
+    const name = document.getElementById("cs-name").value;
+    window.localStorage.removeItem(name);
+    clearSheet();
+    // once deleted, open switcher
+    showCharacterSwitcher();
+  });
   document.getElementById("cs-switch-character").addEventListener("click", function() {
-    document.getElementById("character-sheet").classList.add("blurred");
-    document.getElementById("character-switcher").classList.remove("hidden");
+    showCharacterSwitcher()
   });
 
   // fullscreening, display appropriate button
@@ -743,9 +781,10 @@ window.onload = function() {
   }
 
   // make derived fields readonly
-  for(var prop in DERIVED_CHARACTERISTICS) {
+  for (let prop in DERIVED_CHARACTERISTICS) {
     document.getElementById(prop).readOnly = true;
   }
-  populateCharacterSwitcher();
+
+  showCharacterSwitcher();
   hideSpecifics();
 };
