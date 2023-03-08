@@ -326,7 +326,6 @@ input {
 #uploader-label {
   cursor: pointer;
   height: 0px;
-  margin-right: 10px;
 }
 
 #uploader {
@@ -472,12 +471,14 @@ input {
     flex-direction: column;
     justify-contet: center;
     align-content: center;
+    width: 220px; /* 200 + 10 + 10 for margins */
 }
 
 .character-name {
     display: flex;
     justify-content: center;
     align-content: center;
+    text-align: center;
     font-size: 30px;
 }
 
