@@ -156,30 +156,14 @@
                             <div class="table-column heading-column">Damage</div>
                             <div class="table-column heading-column">Features</div>
                         </div>
+                        {%- for _ in range(data["num_weapons"]) %}
                         <div class="table-row non-alternating">
                             <div class="table-column"><input class="cs-weapon-name"></div>
                             <div class="table-column"><input class="cs-weapon-bonus-to-hit"></div>
                             <div class="table-column"><input class="cs-weapon-damage"></div>
                             <div class="table-column"><input class="cs-weapon-features"></div>
                         </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-weapon-name"></div>
-                            <div class="table-column"><input class="cs-weapon-bonus-to-hit"></div>
-                            <div class="table-column"><input class="cs-weapon-damage"></div>
-                            <div class="table-column"><input class="cs-weapon-features"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-weapon-name"></div>
-                            <div class="table-column"><input class="cs-weapon-bonus-to-hit"></div>
-                            <div class="table-column"><input class="cs-weapon-damage"></div>
-                            <div class="table-column"><input class="cs-weapon-features"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-weapon-name"></div>
-                            <div class="table-column"><input class="cs-weapon-bonus-to-hit"></div>
-                            <div class="table-column"><input class="cs-weapon-damage"></div>
-                            <div class="table-column"><input class="cs-weapon-features"></div>
-                        </div>
+                        {%- endfor %}
                         <div class="table-row non-alternating">
                             <div class="table-column">Base Attack Bonus</div>
                             <div class="table-column"><input inputmode="numeric" id="cs-base-attack-bonus"></div>
@@ -199,66 +183,14 @@
                             <div class="table-column">Allowed Armor</div>
                             <div class="table-column"><input id="cs-allowed-armor"></div>
                         </div>
+                        {%- for _ in range(data["num_misc_rows"]) %}
                         <div class="table-row non-alternating">
                             <div class="table-column"><input class=cs-misc></div>
                             <div class="table-column"><input class=cs-misc></div>
                             <div class="table-column"><input class=cs-misc></div>
                             <div class="table-column"><input class=cs-misc></div>
                         </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                            <div class="table-column"><input class=cs-misc></div>
-                        </div>
+                        {%- endfor %}
                         <div class="table-row non-alternating">
                             <div class="table-column">Skill Proficiencies</div>
                             <div class="table-column"><input inputmode="numeric" id="cs-skill-proficiencies"></div>
@@ -268,66 +200,14 @@
                         <div class="table-row non-alternating">
                             <div class="table-column heading-column">Inventory</div>
                         </div>
+                        {%- for _ in range(data["num_inventory_rows"]) %}
                         <div class="table-row non-alternating">
                             <div class="table-column"><input class="cs-inventory"></div>
                             <div class="table-column"><input class="cs-inventory"></div>
                             <div class="table-column"><input class="cs-inventory"></div>
                             <div class="table-column"><input class="cs-inventory"></div>
                         </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                            <div class="table-column"><input class="cs-inventory"></div>
-                        </div>
+                        {%- endfor %}
                         <div class="table-row non-alternating">
                             <div class="table-column"><input class="cs-inventory"></div>
                             <div class="table-column"><input class="cs-inventory"></div>
@@ -659,42 +539,12 @@
                                 <div class="table-column heading-column">1st Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
+                            {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
                                 <div class="table-column"><input class="cs-spell-name"></div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
+                            {%- endfor %}
                             <div class="table-row non-alternating">
                                 <div class="table-column heading-column">Maximum Slots</div>
                                 <div class="table-column"><input id="cs-slots-m1"></div>
@@ -709,42 +559,12 @@
                                 <div class="table-column heading-column">2nd Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
+                            {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
                                 <div class="table-column"><input class="cs-spell-name"></div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
+                            {%- endfor %}
                             <div class="table-row non-alternating">
                                 <div class="table-column heading-column">Maximum Slots</div>
                                 <div class="table-column"><input id="cs-slots-m2"></div>
@@ -759,42 +579,12 @@
                                 <div class="table-column heading-column">3rd Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
+                            {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
                                 <div class="table-column"><input class="cs-spell-name"></div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
+                            {%- endfor %}
                             <div class="table-row non-alternating">
                                 <div class="table-column heading-column">Maximum Slots</div>
                                 <div class="table-column"><input id="cs-slots-m3"></div>
@@ -809,42 +599,12 @@
                                 <div class="table-column heading-column">4th Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
+                            {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
                                 <div class="table-column"><input class="cs-spell-name"></div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
+                            {%- endfor %}
                             <div class="table-row non-alternating">
                                 <div class="table-column heading-column">Maximum Slots</div>
                                 <div class="table-column"><input id="cs-slots-m4"></div>
@@ -859,42 +619,12 @@
                                 <div class="table-column heading-column">5th Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
+                            {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
                                 <div class="table-column"><input class="cs-spell-name"></div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
-                            <div class="table-row non-alternating">
-                                <div class="table-column"><input class="cs-spell-name"></div>
-                                <div class="table-column"><input class="cs-spell-qty"></div>
-                            </div>
+                            {%- endfor %}
                             <div class="table-row non-alternating">
                                 <div class="table-column heading-column">Maximum Slots</div>
                                 <div class="table-column"><input id="cs-slots-m5"></div>
