@@ -11,8 +11,11 @@ run-server:
 enter-server:
 	docker exec -w /usr/share/nginx/html -it mythmancer.com sh
 
-generate-pages:
-	./generators/generate
+generate-pages-local:
+	./generators/generate "/static"
+
+generate-pages-prod:
+	./generators/generate "https://assets.mythmancer.com"
 
 clean:
 	git clean -fd
