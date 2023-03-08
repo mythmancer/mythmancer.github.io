@@ -91,14 +91,8 @@ ARMOR = {
     "max_dex_mod": 2,
   },
   "hoplon": {
-    "ac": function(characterData) {
-      console.log(characterData);
-      console.log(characterData["cs-strength"]);
-      console.log(getNumericalCharacteristic(characterData["cs-strength"]));
-      console.log(ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])]);
-      return 2 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])];
-    },
-    "max_dex_mod": 0,
+    "ac": 3,
+    "max_dex_mod": 2,
   },
 }
 
