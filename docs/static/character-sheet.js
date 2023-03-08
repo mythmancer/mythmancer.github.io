@@ -670,8 +670,9 @@ function createSwitcherElement(name) {
   d.appendChild(letterD);
   d.appendChild(nameD);
 
-  d.addEventListener("click", function() {
+  d.addEventListener("click", function(event) {
     loadFromName(name);
+    event.stopPropagation();
   });
 
   return d;
@@ -723,9 +724,25 @@ window.onload = function() {
     inputs[i].addEventListener("change", save);
   }
 
-  // control panel on character switcher
-  document.getElementById("cs-export").addEventListener("click", exportToFile);
-  document.getElementById("cs-lock-sheet").addEventListener("click", lockSensitiveFields);
+  // control panel on character switcher. Click shouldn't propagate so that clicking anywhere else closes the switcher
+  document.getElementById("cs-export").addEventListener("click", function(event) {
+    exportToFile();
+    event.stopPropagation();
+  });
+  document.getElementById("cs-lock-sheet").addEventListener("click", function(event) {
+    lockSensitiveFields();
+    event.stopPropagation();
+  });
+  const newCharacterIcon = document.getElementById("cs-new-character");
+  newCharacterIcon.addEventListener("click", function(event) {
+    loadFromName(null);
+    event.stopPropagation();
+  });
+  document.body.addEventListener('mouseup', function() {
+    if (document.getElementById("character-sheet").classList.contains("blurred")) {
+      hideCharacterSwitcher();
+    }
+  });
 
   // uploader
   const dropbox = document;
@@ -736,10 +753,6 @@ window.onload = function() {
   uploader.addEventListener("change", handleFileUpload, false);
 
   // control panel on character sheet
-  const newCharacterIcon = document.getElementById("cs-new-character");
-  newCharacterIcon.addEventListener("click", function() {
-    loadFromName(null);
-  });
   document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
   document.getElementById("cs-delete-sheet").addEventListener("click", function() {
     const name = document.getElementById("cs-name").value;
@@ -749,7 +762,7 @@ window.onload = function() {
     showCharacterSwitcher();
   });
   document.getElementById("cs-switch-character").addEventListener("click", function() {
-    showCharacterSwitcher()
+    showCharacterSwitcher();
   });
 
   // fullscreening, display appropriate button
@@ -766,6 +779,11 @@ window.onload = function() {
     } else {
       document.getElementById("cs-exit-fullscreen").classList.add("hidden");
       document.getElementById("cs-fullscreen").classList.remove("hidden");
+    }
+  });
+  document.documentElement.addEventListener("keyup", function(event) {
+    if (event.keyCode == 27 && document.getElementById("character-sheet").classList.contains("blurred")) {
+      hideCharacterSwitcher();
     }
   });
 
