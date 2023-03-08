@@ -10,10 +10,10 @@ The structure is defined in `data/sitemap.json`. All templates are in `templates
 served out of `docs/`. The data used to generate the site is in `data/`
 
 ## Generating the website
-When you make statics changes (including css/js), just refreshing the page will show you the updates. If you made changes to the 
+When you make statics changes (including css/js), just refreshing the page will show you the updates. If you made changes to the
 page contents, regenerate the site with
 ```sh
-make generate-pages
+make generate-pages-local
 ```
 
 ## Running the website locally
