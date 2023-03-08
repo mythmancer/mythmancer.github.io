@@ -337,12 +337,16 @@ input {
   margin-right: 10px;
 }
 
+#cs-delete-sheet {
+  margin-right: 10px;
+}
+
 #cs-unlock-sheet {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 #cs-switch-character {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 /* art page */
