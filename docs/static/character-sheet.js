@@ -11,10 +11,14 @@ COLLECTIONS = [
 ];
 
 CHARACTERISTICS = [
+  // populate cs-name first, since that's what's used to identify the current state
+  // so even if anything goes wrong in later rendering, we have something to go to
+  // TODO: store current character in localStorage so that we don't need this?
+  "cs-name",
+
   "cs-experience",
   "cs-hit-points",
   "cs-hit-points-current",
-  "cs-name",
   "cs-race",
 
   "cs-level-fighter",
@@ -511,8 +515,6 @@ function loadFromName(name) {
   const characterData = JSON.parse(characterDataStr);
 
   // populate page
-  populateDerivedCharacteristics(characterData);
-
   document.getElementById("cs-name-heading").textContent = name;
 
   for (let i = 0; i < CHARACTERISTICS.length; i++) {
@@ -527,6 +529,7 @@ function loadFromName(name) {
     }
   }
 
+  populateDerivedCharacteristics(characterData);
   showAppropriateSpecifics(characterData);
   document.getElementById("cs-delete-sheet").classList.remove("hidden");
 }
