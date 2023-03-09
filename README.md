@@ -42,4 +42,4 @@ If you're a collaborator, you can easily merge changes by creating a commit loca
 gh pr create --fill && sleep 2 && gh pr merge --auto -r -d
 ```
 
-Follow [the GHA](https://github.com/mythmancer/mythmancer.github.io/actions/workflows/deploy.yml) to track the deploy.
+Follow [this GHA](https://github.com/mythmancer/mythmancer.github.io/actions/workflows/deploy.yml) to track the deploy - we use a custom deploy workflow that saves us 50%+ compared to the default workflow.
