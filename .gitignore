@@ -1,0 +1,9 @@
+# since most of docs/ is generated on-the-fly, ignore everything,
+docs/*
+
+# except:
+!docs/CNAME
+!docs/static
+
+# but do ignore this one symlink lol
+docs/static/assets
