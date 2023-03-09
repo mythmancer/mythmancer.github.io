@@ -612,7 +612,7 @@ function importData(file) {
   reader.onload = (e) => {
     console.log(e.target.result);
     const names = loadFromJsonString(e.target.result);
-    populateCharacterSwitcher();
+    showCharacterSwitcher();
     alert(
       `Imported ${names.length} characters:`
         + "\n• " + names.join("\n• ")
