@@ -32,6 +32,7 @@ a, a:visited {
 /* character sheet is as wide as possible*/
 body.character-sheet {
     margin: 0% 1% 0% 1% !important;
+    width: 98%; /* minus the margins */
 }
 
 .bgimg {
