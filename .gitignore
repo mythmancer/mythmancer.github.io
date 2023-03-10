@@ -5,6 +5,7 @@ generate_site.py
 docs/*
 
 # except:
+!docs/404.html
 !docs/CNAME
 !docs/static
 
