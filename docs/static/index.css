@@ -84,26 +84,26 @@ body.character-sheet {
 }
 
 /* take full control of bare html elements in text-y pages*/
-.writing > h1 {
+.writing h1 {
     color: #ACE16E;
     margin: 0;
 }
 
-.writing > h2 {
+.writing h2 {
     color: #80BA50;
     margin: 0;
 }
 
-.writing > h3 {
+.writing h3 {
     color: #549171;
     margin: 0;
 }
 
-.writing > p {
+.writing p {
     margin: 0;
 }
 
-.writing > ul {
+.writing ul {
     margin: 0;
 }
 
