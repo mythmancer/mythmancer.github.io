@@ -33,6 +33,7 @@
     <div class="table-column">20</div>
   </div>
 </div>
+
 # Currency & Conversions
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -60,7 +61,7 @@
     <div class="table-column">hx</div>
     <div class="table-column">Hive-exclusive currency, related to number of hexagonal dwarven cells exhumed</div>
   </div>
-</div><br/>
+</div>
 <div class="table table-as-rows">
   <div class="table-row table-header">
     <div class="table-column">Quantity</div>
@@ -78,8 +79,10 @@
     <div class="table-column">hx</div>
     <div class="table-column">Inconsistent</div>
   </div>
-</div><br/>
+</div>
+
 Starting funds are typically 500s.
+
 # Weapons
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -314,6 +317,7 @@ Starting funds are typically 500s.
     <div class="table-column"></div>
   </div>
 </div>
+
 # Armor
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -397,6 +401,7 @@ Starting funds are typically 500s.
     <div class="table-column"></div>
   </div>
 </div>
+
 # Spell Slots Per Level
 <div class="table table-as-rows">
   <div class="table-row table-header">
