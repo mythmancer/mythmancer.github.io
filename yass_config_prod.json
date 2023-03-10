@@ -1,4 +1,4 @@
 {
-  "permanent_paths": "404.html",
+  "permanent_paths": ["404.html", "CNAME", "static"],
   "static_url": "https://assets.mythmancer.com"
 }
