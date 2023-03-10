@@ -1,16 +1,18 @@
-<h1>Creating your Character</h1>
-<h2>Decide what kind of character you might want to play</h2>
+# Creating your Character
+
+## Decide what kind of character you might want to play
+
 Before starting, you should read up on the Mythmancer world lore to get an idea of what kind of character you might want to play.
-<h2>Roll Ability Scores</h2>
+
+## Roll Ability Scores
 The six abilities are the same as they are in most D&D editions:
-<ul>
-<li><span class="terminology">Strength</span> - affects your bonus to hit with melee weapons as well as damage for all melee and many ranged weapons. Strength is important for most fighters and some warlocks.</li>
-<li><span class="terminology">Dexterity</span> - affects your armor class, your bonus to hit with ranged weapons, your Non-Proficient penalty to hit, your Reflex Save throw, and many Rogue Skills. Dexterity is most useful for Rogues and Fighters.</li>
-<li><span class="terminology">Constitution</span> - affects your Hit Points per level, and your Fortitude Save Throw. Constitution is useful for everyone, but especially Fighters.</li>
-<li><span class="terminology">Intelligence</span> - affects many Rogue skills and determines your ability to cast and memorize arcane spells. Intelligence is most important for Mages and then Rogues.</li>
-<li><span class="terminology">Wisdom</span> - affects your Will Save Throw and your ability to cast Patron Spells. Wisdom is most useful for Warlocks. For Warlocks, Wisdom is the "quality" attribute in terms of Patron Spellcasting as high Wisdom is required to maintain control over their Patron and not get harmed by their Patrons powers.</li>
-<li><span class="terminology">Charisma</span> - affects most of your roleplay interactions, the number of followers you can easily maintain, and the number of Patrons you can maintain. Charisma is the "quantity" attribute in terms of Patron Spellcasting as high Charisma is required to maintain relationships with multiple Patrons thus expanding your repertoire.</li>
-</ul>
+* <span class="terminology">Strength</span> - affects your bonus to hit with melee weapons as well as damage for all melee and many ranged weapons. Strength is important for most fighters and some warlocks.
+* <span class="terminology">Dexterity</span> - affects your armor class, your bonus to hit with ranged weapons, your Non-Proficient penalty to hit, your Reflex Save throw, and many Rogue Skills. Dexterity is most useful for Rogues and Fighters.
+* <span class="terminology">Constitution</span> - affects your Hit Points per level, and your Fortitude Save Throw. Constitution is useful for everyone, but especially Fighters.
+* <span class="terminology">Intelligence</span> - affects many Rogue skills and determines your ability to cast and memorize arcane spells. Intelligence is most important for Mages and then Rogues.
+* <span class="terminology">Wisdom</span> - affects your Will Save Throw and your ability to cast Patron Spells. Wisdom is most useful for Warlocks. For Warlocks, Wisdom is the "quality" attribute in terms of Patron Spellcasting as high Wisdom is required to maintain control over their Patron and not get harmed by their Patrons powers.
+* <span class="terminology">Charisma</span> - affects most of your roleplay interactions, the number of followers you can easily maintain, and the number of Patrons you can maintain. Charisma is the "quantity" attribute in terms of Patron Spellcasting as high Charisma is required to maintain relationships with multiple Patrons thus expanding your repertoire.
+
 Roll and assign your <span class="terminology">Ability Scores</span> based on the usual 4d6 drop low rules which are to roll 4d6 and add together the 3 largest values and note down the number. Do this 6 times in total and assign the rolled values however you want to your ability scores. If none of the scores you rolled were 13 or greater, reroll all six scores.<br/><br/><br/>
 After you have rolled and assigned your six <span class="terminology">Ability Scores</span>, fill out your <span class="terminology">Ability Score Modifier</span> according to the following table:<br/><br/>
 <div class="table table-as-rows">
@@ -49,7 +51,9 @@ After you have rolled and assigned your six <span class="terminology">Ability Sc
 </div><br/>
 You might adjust some of your <span class="terminology">Ability Score Modifiers</span> based on the Race you select in the next section.<br/><br/>
 There are also some <span class="terminology">Save Throws</span> associated with your <span class="terminology">Ability Scores</span>. We will fill those out later.
-<h2>Select a Race</h2>The playable character races in Mythmancer are the usual suspects:<br/><br/>
+
+## Select a Race
+The playable character races in Mythmancer are the usual suspects:
 <div class="table table-as-rows">
   <div class="table-row table-header">
     <div class="table-column">Race</div>
@@ -62,59 +66,59 @@ There are also some <span class="terminology">Save Throws</span> associated with
   <div class="table-row">
     <div class="table-column">Elf</div>
     <div class="table-column">+1 DEX Mod, -1 CON Mod<br/>
-+4 to Will Saves vs Sleep and Charm<br/>
-Cannot wear iron armor (Bronze armor is available but more expensive)</div>
+      +4 to Will Saves vs Sleep and Charm<br/>
+      Cannot wear iron armor (Bronze armor is available but more expensive)</div>
   </div>
   <div class="table-row">
     <div class="table-column">Orc</div>
     <div class="table-column">+1 STR Mod, -1 DEX Mod<br/>
-+4 to Will Saves vs Fear<br/>
-Consumes 20% more rations on average
-</div>
+      +4 to Will Saves vs Fear<br/>
+      Consumes 20% more rations on average
+    </div>
   </div>
   <div class="table-row">
     <div class="table-column">Dwarf</div>
     <div class="table-column">+1 CON Mod, -1 DEX Mod<br/>
-+4 to Fortitude Saves vs Spells and Poison<br/>
-Cannot use Polearms<br/>
-Has Light, Medium, and Shield Proficiency
-</div>
+      +4 to Fortitude Saves vs Spells and Poison<br/>
+      Cannot use Polearms<br/>
+      Has Light, Medium, and Shield Proficiency
+    </div>
   </div>
   <div class="table-row">
     <div class="table-column">Gnome</div>
     <div class="table-column">+1 WIS Mod, -1 STR Mod<br/>
-+4 to Will Saves vs Spells<br/>
-Cannot use larger weapons such as two-handed swords and pole weapons. Medium weapons are used with two hands.
-</div>
+      +4 to Will Saves vs Spells<br/>
+      Cannot use larger weapons such as two-handed swords and pole weapons. Medium weapons are used with two hands.
+    </div>
   </div>
   <div class="table-row">
     <div class="table-column">Halfling</div>
     <div class="table-column">+1 DEX Mod, -1 STR Mod<br/>
-+1 to all Save Throws<br/>
-Cannot use larger weapons such as two-handed swords and pole weapons. Medium weapons are used with two hands.
-</div>
+      +1 to all Save Throws<br/>
+      Cannot use larger weapons such as two-handed swords and pole weapons. Medium weapons are used with two hands.
+    </div>
   </div>
 </div><br/>
 Based on the race you picked, you should now adjust the relevant <span class="terminology">Ability Score Modifiers</span> if any need to be changed. For example, if you are an Elf with 15 Dexterity, your modifier should increase from +1 to +2. Similarly if your Constitution was 10, your modifier should decrease from 0 to -1.<br/><br/>
-Note how it is the <i>modifiers</i> that are adjusted and not the base ability score itself.
+Note how it is the _modifiers_ that are adjusted and not the base ability score itself.
 
-<h2>Select your Classes</h2>
+## Select your Classes
 In Mythmancer, all Player Characters are considered talented which means they start at Character Level 2 but have 0 <span class="terminology">Experience</span>.<br/><br/>
 For each <span class="terminology">Character Level</span> you gain, you increase one <span class="terminology">Class Level</span>. Since you start at Character Level 2, you have two Class Levels to increase. There are only four classes in Mythmancer:
 
-<h3>Fighter</h3>
+### Fighter
 Fighters focus solely on improving themselves in combat. Fighters gain the most <span class="terminology">Hit Points</span>, know how to use the most armor, learn how to use the most weapons, and use those weapons better than anyone else.
 
-<h3>Rogue</h3>
+### Rogue
 Rogues focus primarily on learning and improving useful skills. The most common <span class="terminology">Rogue Skills</span> are: climbing, finding traps, eavesdropping, sneaking, lock picking, picking pockets, and deciphering codes although these aren't the only skills Rogues learn. A Rogue's combat skills are only superior to Mages.
 
-<h3>Warlock</h3>
+### Warlock
 Warlocks interact with and maintain relationships with powerful magical spirits called <a class="hyperlink" href="/world/magic#warlocks">Patrons</a>. Through these relationships, Warlocks become vessels to channel their Patron's power. In Mythmancer, the most common types of Warlock are called Clerics who interact exclusively with the <a class="hyperlink" href="/world/factions#seven-saints">Seven Saints</a>. Warlocks who interact primarily with the spirits of nature are often called Druids or Geomancers. Most characters with some mystical abilities not stemming from themselves will at least have a few Warlock levels. Warlocks fare slightly better in combat than Rogues.
 
-<h3>Mage</h3>
+### Mage
 Where Warlocks leverage magical abilities from Patrons, Mages look inward and seek to manifest magical abilities using their own will and knowledge of the universe. However, these skills take an enormous amount of discipline and time to learn. As such, Mages are by far the worst in martial combat. Mages who survive long enough however, eventually unlock abilities to surpass even the Patrons which Warlocks channel their abilities from. Some Mages have even grown so great to become Patrons themselves. Most mages die due to stray arrows though...
 
-<h3>Ability Score Requirements</h3>
+### Ability Score Requirements
 Each of the four classes have certain ability score requirements to gain <span class="terminology">Class Levels</span> in them:<br/><br/>
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -141,18 +145,13 @@ Each of the four classes have certain ability score requirements to gain <span c
 You can either assign one <span class="terminology">Class Level</span> to any combination of two classes you are eligible, or both Class Levels to a single class.
 
 So in summary:
-<ul>
-  <li>Set your Character Level to 2</li>
-  <li>Set your Experience to 0</li>
-  <li>Either:
-    <ul>
-      <li>Set a Class Level to 1 for any combination of two from the four classes e.g. Fighter 1, Mage 1</li>
-      <li>Set a Class Level to 2 for any one class e.g. Warlock 2</li>
-    </ul>
-  </li>
-</ul>
+* Set your Character Level to 2
+* Set your Experience to 0
+* Either:
+    * Set a Class Level to 1 for any combination of two from the four classes e.g. Fighter 1, Mage 1
+    * Set a Class Level to 2 for any one class e.g. Warlock 2
 
-<h2>Roll your Hit Points</h2>
+## Roll your Hit Points
 Your <span class="terminology">Hit Points</span> depend on your current classes and your <span class="terminology">Constitution</span> modifier (CON).
 Each class has a different <span class="terminology">Hit Dice</span> which determines the hit points gained per level:<br/><br/>
 <div class="table table-as-rows">
@@ -180,12 +179,12 @@ Each class has a different <span class="terminology">Hit Dice</span> which deter
 Since you begin initially at Character Level 2, you will have two <span class="terminology">Hit Dice</span> worth of <span class="terminology">Hit Points</span> to roll. So if you start out as Fighter 1 / Mage 1, your two Hit Dice to roll are d10 and d4 respectively. During character creation, you can use the max value of one of your largest Hit Dice instead of rolling. In this case, you would just use 10 for your Fighter Hit Dice instead of rolling 1d10 but will still roll d4 for the Mage Hit Dice. If you started out as Fighter 2, you would use 10 for just one of your d10 Hit Die and would roll the other d10.<br/><br/>
 For each level you add your CON modifier to your roll. You will never gain fewer than 1 Hit Point per Level. So even if you are an Elf with a -4 CON modifier taking a Mage Level (d4 Hit Dice), you will still gain 1 Hit Point upon leveling up even if the best possible value to roll in this case is a 0.
 
-<h2>Set your Armor Class</h2>
+## Set your Armor Class
 Your <span class="terminology">Armor Class</span> is ultimately going to be affected by your equipment but that will be determined later. Your Armor Class is calculated as follows:<br/><br/>
-<i>Armor Class = 10 + DEX + Equipment Armor Class</i><br/><br/>
-So for now, you can just fill in <i>10 + DEX</i> for your Armor Class.
+_Armor Class = 10 + DEX + Equipment Armor Class_<br/><br/>
+So for now, you can just fill in _10 + DEX_ for your Armor Class.
 
-<h2>Calculate your Save Throws</h2>
+## Calculate your Save Throws
 In Mythmancer, we use something similar to the D&D 3.5 or Pathfinder <span class="terminology">Save Throws</span> which are <span class="terminology">Reflex</span>, <span class="terminology">Fortitude</span>, and <span class="terminology">Will</span> which are just sort of fancy ways of saying DEX, CON, and WIS. Each class improves in these save throw bonuses differently:<br/><br/>
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -195,53 +194,44 @@ In Mythmancer, we use something similar to the D&D 3.5 or Pathfinder <span class
   <div class="table-row">
     <div class="table-column">Fighter</div>
     <div class="table-column">
-      <ul>
-        <li><span class="terminology">Reflex:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li>
-        <li><span class="terminology">Fortitude:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li>
-        <li><span class="terminology">Will:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li>
-      </ul>
-</div>
+    * <span class="terminology">Reflex:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
+    * <span class="terminology">Fortitude:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
+    * <span class="terminology">Will:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
+    </div>
   </div>
   <div class="table-row">
     <div class="table-column">Rogue</div>
     <div class="table-column">
-      <ul>
-        <li><span class="terminology"><span class="terminology">Reflex:</span></span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li>
-        <li><span class="terminology">Fortitude:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li>
-        <li><span class="terminology">Will:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li>
-      </ul>
-</div>
+      * <span class="terminology"><span class="terminology">Reflex:</span></span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
+      * <span class="terminology">Fortitude:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
+      * <span class="terminology">Will:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
+    </div>
   </div>
   <div class="table-row">
     <div class="table-column">Warlock</div>
     <div class="table-column">
-      <ul>
-        <li><span class="terminology"><span class="terminology">Reflex:</span></span> starts at +0, increases by 1 every 4th Level (4, 8, 12, etc)</li>
-        <li><span class="terminology">Fortitude:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li>
-        <li><span class="terminology">Will:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li>
-      </ul>
-</div>
+      * <span class="terminology"><span class="terminology">Reflex:</span></span> starts at +0, increases by 1 every 4th Level (4, 8, 12, etc)
+      * <span class="terminology">Fortitude:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
+      * <span class="terminology">Will:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
+    </div>
   </div>
   <div class="table-row">
     <div class="table-column">Mage</div>
     <div class="table-column">
-      <ul>
-        <li><span class="terminology"><span class="terminology">Reflex:</span></span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li>
-        <li><span class="terminology">Fortitude:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)</li>
-        <li><span class="terminology">Will:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)</li>
-      </ul>
-</div>
+      * <span class="terminology"><span class="terminology">Reflex:</span></span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
+      * <span class="terminology">Fortitude:</span> starts at +0, increases by 1 every 3rd Level (3, 6, 9, etc)
+      * <span class="terminology">Will:</span> starts at +2, increases by 1 every 2nd level (2, 4, 6, etc)
+    </div>
   </div>
 </div><br/>
 In addition to your Class's contribution to your <span class="terminology">Save Throws</span>, your DEX Modifier applies to your <span class="terminology">Reflex</span>, CON to <span class="terminology">Fortitude</span>, and WIS to <span class="terminology">Will</span>.<br/><br/>
 So your character was a Human Fighter 1 / Mage 1 with 16 Constitution (+2 Modifier), 12 Dexterity (0 Modifier), and 13 Wisdom (+1 Modifier), your Save Throws would be as follows:
-<ul>
-  <li><span class="terminology">Reflex:</span> +0</li>
-  <li><span class="terminology">Fortitude:</span> +4 (Comes from CON of +2 and Initial Fighter Fortitude Save)</li>
-  <li><span class="terminology">Will:</span> +3 (Comes from WIS of +1 and initial Mage Will Save)</li>
-</ul>
 
-<h2>Calculate your Base Bonus to Hit and your Non Proficient Penalty</h2>
+* <span class="terminology">Reflex:</span> +0
+* <span class="terminology">Fortitude:</span> +4 (Comes from CON of +2 and Initial Fighter Fortitude Save)
+* <span class="terminology">Will:</span> +3 (Comes from WIS of +1 and initial Mage Will Save)
+
+## Calculate your Base Bonus to Hit and your Non Proficient Penalty
 Your <span class="terminology">Base Bonus to Hit</span> is a bonus applied when you attack with any weapon. This bonus is related to your <span class="terminology">Class Levels</span>:<br/><br/>
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -271,9 +261,9 @@ If your character is Rogue 1 / Warlock 1, your Base Bonus to Hit should be +1.<b
 If your character is Fighter 1 / Warlock 1, your Base Bonus to Hit should be +1.<br/>
 If your character is Rogue 1 / Mage 1, your Base Bonus to Hit should be +0.<br/><br/>
 Your <span class="terminology">Non Proficient Penalty to Hit</span> is a penalty applied when you attack with any weapon you are not Proficient with. You will select Weapon Proficiencies in the next section. Your Non Proficient Penalty to Hit is calculated as follows:<br/><br/>
-<i>Non Proficient Penalty to Hit = DEX - 5</i><br/>
+_Non Proficient Penalty to Hit = DEX - 5_<br/>
 
-<h2>Select your Weapon Proficiencies</h2>
+## Select your Weapon Proficiencies
 If you try to use a weapon you aren't proficient with, you suffer the <span class="terminology">Non Proficient Penalty to Hit</span> described in the previous section. To prevent this, you can gain <span class="terminology">Weapon Proficiency Points</span> each level to gain a <span class="terminology">Weapon Proficiency</span>.<br/><br/>
 Each class gains Weapon Proficiency Points at different rates:<br/><br/>
 <div class="table table-as-rows">
@@ -405,7 +395,7 @@ All characters start with at least 2 Weapon Proficiency Points in addition to an
 For weapons requiring 2 Weapon Proficiency Points, you can become <span class="terminology">Partially Proficient</span> in use of that weapon for just 1 Weapon Proficiency Point. When Partially Proficient, your Non Proficient Penalty to Hit for that weapon is cut in half, rounding in your favor (i.e. -5 rounds to -2, -1 rounds to 0). Items in Additional Non Proficient Penalties still apply.<br/><br/>
 <span class="terminology">Take Aim</span> - for Crossbows and Bows, you can Take Aim which means you spend one attack to instead carefully wait for an opportunity to fire at a specific target. Your next attack after taking aim will not be subject to rules relating to Firing into Traffic which means you will not risk shooting your allies except in cases such as critical failures. This attack also gains +1 to hit and +1 to damage.
 
-<h2>Set your Armor Proficiencies</h2>
+## Set your Armor Proficiencies
 Your <span class="terminology">Armor Proficiencies</span> are related to your selected Classes:<br/><br/>
 <div class="table table-as-rows">
   <div class="table-row table-header">
@@ -431,171 +421,151 @@ Your <span class="terminology">Armor Proficiencies</span> are related to your se
 </div><br/>
 You can gain other <span class="terminology">Armor Proficiencies</span> as a part of your Character's background.
 
-<h2>Buy your Equipment</h2>
+## Buy your Equipment
 TODO
 
-<h1>Character Class Reference</h1>
+# Character Class Reference
 The attributes for each class were broken up over each sub-section in Creating your Character. In this section, the attributes for each class are all together which will be more useful as your character levels up.
 
-<h2 id="fighter">Fighter</h2>Fighters focus solely on improving their combat prowess over all other skills. Fighters gain more hit points, weapon proficiencies, armor proficiencies, and use their weapons better than anyone else.<br/><br/>
+## <a name="fighter"></a>Fighter
+Fighters focus solely on improving their combat prowess over all other skills. Fighters gain more hit points, weapon proficiencies, armor proficiencies, and use their weapons better than anyone else.<br/><br/>
 At Fighter Level 1, a Fighter:
-<ul>
-  <li>Becomes proficient in all types of armor: Light, Medium, Heavy, and Shields</li>
-  <li>Gains +2 to <span class="terminology">Fortitude Saving Throws (CON)</span></li>
-</ul>
+* Becomes proficient in all types of armor: Light, Medium, Heavy, and Shields
+* Gains +2 to <span class="terminology">Fortitude Saving Throws (CON)</span>
 
 A Fighter's progression in as follows:
-<ul>
-  <li>Gains 1d10+CON <span class="terminology">Hit Points</span> per level</li>
-  <li>Gains +1 to their <span class="terminology">Base Bonus to Hit</span> per level</li>
-  <li>Gains 1 <span class="terminology">Weapon Proficiency Point</span> per level</li>
-  <li>Gains +1 to <span class="terminology">Reflex Saving Throws (DEX)</span> every 3rd Fighter level i.e. 3, 6, 9</li>
-  <li>Gains +1 to <span class="terminology">Fortitude Saving Throws (CON)</span> every 2nd Fighter level i.e. 2, 4, 6</li>
-  <li>Gains +1 to <span class="terminology">Will Saving Throws (WIS)</span> every 3rd Fighter level i.e. 3, 6, 9</li>
-</ul>
+* Gains 1d10+CON <span class="terminology">Hit Points</span> per level
+* Gains +1 to their <span class="terminology">Base Bonus to Hit</span> per level
+* Gains 1 <span class="terminology">Weapon Proficiency Point</span> per level
+* Gains +1 to <span class="terminology">Reflex Saving Throws (DEX)</span> every 3rd Fighter level i.e. 3, 6, 9
+* Gains +1 to <span class="terminology">Fortitude Saving Throws (CON)</span> every 2nd Fighter level i.e. 2, 4, 6
+* Gains +1 to <span class="terminology">Will Saving Throws (WIS)</span> every 3rd Fighter level i.e. 3, 6, 9
 
 There is a wide variety of specialized training in certain fighting styles a Fighter can receive. Based on their training, a Fighter might progress slightly differently as seen above. This special training is going to depend ultimately on the current campaign. Some standard specialized trainings a Fighter can receive independent of campaign are:
-<ul>
-  <li><span class="terminology">Weapon Specialization</span> - at Fighter Level 3 and beyond, a Fighter may spend 1 Weapon Proficiency Point on a weapon they are already fully proficient in to further improve their skill with that weapon. A Fighter may only take this or similar training once. What this does exactly varies by weapon.</li>
-  <li><span class="terminology">Weapon Mastery</span> - at Fighter Level 5 and beyond, a Fighter may spend 1 Weapon Proficiency Point on the weapon they previously chose <span class="terminology">Weapon Specialization</span> for to once again improve their skills with that weapon. As with <span class="terminology">Weapon Specialization</span>, this training can only be taken once and varies in function per weapon.</li>
-</ul>
+* <span class="terminology">Weapon Specialization</span> - at Fighter Level 3 and beyond, a Fighter may spend 1 Weapon Proficiency Point on a weapon they are already fully proficient in to further improve their skill with that weapon. A Fighter may only take this or similar training once. What this does exactly varies by weapon.
+* <span class="terminology">Weapon Mastery</span> - at Fighter Level 5 and beyond, a Fighter may spend 1 Weapon Proficiency Point on the weapon they previously chose <span class="terminology">Weapon Specialization</span> for to once again improve their skills with that weapon. As with <span class="terminology">Weapon Specialization</span>, this training can only be taken once and varies in function per weapon.
 
-<h2 id="rogue">Rogue</h2>
+## <a name="rogue"></a>Rogue
 Rogues focus primarily on learning and improving useful skills.<br/><br/>
 At Rogue Level 1, a Rogue:
-<ul>
-  <li>Becomes proficient in using Light Armor</li>
-  <li>Gains +2 to <span class="terminology">Reflex Saving Throws (DEX)</span></li>
-  <li>Gains the ability to <span class="terminology">Backstab</span> which is a melee attack performed on an enemy who is unaware of your presence. This attack gains +4 to hit and deals 2x damage.</li>
-  <li>Become proficient in the <span class="terminology">Rogue Skill Check</span>. This is a skill check that can do a very wide variety of things. The standard actions that may be performed using Rogue Skills are:
-    <ul>
-      <li><span class="terminology">Climbing*</span> - climb especially difficult surfaces without the aid of tools. Usually requires all limbs to be able to freely move.</li>
-      <li><span class="terminology">Find Traps</span> - detect the presence of traps without the aid of tools. If the trap is principally mechanical, then you also can determine the nature of the trap such as the trigger and may attempt another check to disarm the trap. If the trap is magical, you will most likely only be able to discern the presence of the trap but not know what it does.</li>
-      <li><span class="terminology">Listen*</span> - hear minute or muffled noises when eavesdropping or detecting ambush</li>
-      <li><span class="terminology">Sneak*</span> - hide out of sight or sneak up on someone without being detected</li>
-      <li><span class="terminology">Pick Locks</span> - use lockpicks</li>
-      <li><span class="terminology">Pick Pockets and Sleight of Hand*</span> - take or hide an object undetected</li>
-      <li><span class="terminology">Decipher Codes</span> - literacy rates are relatively low in Mythmancer, Rogues are often the most practically literate members of a group. This skill will often be used against rudimentary writing systems but to also decipher more complex mundane text. For example, using this skill might help a Rogue identify the presence of a group's signs or symbols in graffiti.</li>
-      <li><span class="terminology">Other Skills</span> - there are many other skills a Rogue may perform with the Rogue Skill Check depending on the Rogue's background or training. For example, many of the guilds of Mythmancer teach tracking in their biome of choice and some guilds teach a Rogue the use of poison. Keep track of these extra skills your Rogue learns.<br/><br/>
-      (The abilities marked with an asterisk do not gain the Rogue's Rogue Skill Check Bonus if performed while the Rogue is wearing Medium or Heavier armor or if the Rogue is currently holding a shield)</li>
-    </ul>
-  </li>
-</ul>
+* Becomes proficient in using Light Armor
+* Gains +2 to <span class="terminology">Reflex Saving Throws (DEX)</span>
+* Gains the ability to <span class="terminology">Backstab</span> which is a melee attack performed on an enemy who is unaware of your presence. This attack gains +4 to hit and deals 2x damage.
+* Become proficient in the <span class="terminology">Rogue Skill Check</span>. This is a skill check that can do a very wide variety of things. The standard actions that may be performed using Rogue Skills are:
+    * <span class="terminology">Climbing*</span> - climb especially difficult surfaces without the aid of tools. Usually requires all limbs to be able to freely move.
+    * <span class="terminology">Find Traps</span> - detect the presence of traps without the aid of tools. If the trap is principally mechanical, then you also can determine the nature of the trap such as the trigger and may attempt another check to disarm the trap. If the trap is magical, you will most likely only be able to discern the presence of the trap but not know what it does.
+    * <span class="terminology">Listen*</span> - hear minute or muffled noises when eavesdropping or detecting ambush
+    * <span class="terminology">Sneak*</span> - hide out of sight or sneak up on someone without being detected
+    * <span class="terminology">Pick Locks</span> - use lockpicks
+    * <span class="terminology">Pick Pockets and Sleight of Hand*</span> - take or hide an object undetected
+    * <span class="terminology">Decipher Codes</span> - literacy rates are relatively low in Mythmancer, Rogues are often the most practically literate members of a group. This skill will often be used against rudimentary writing systems but to also decipher more complex mundane text. For example, using this skill might help a Rogue identify the presence of a group's signs or symbols in graffiti.
+    * <span class="terminology">Other Skills</span> - there are many other skills a Rogue may perform with the Rogue Skill Check depending on the Rogue's background or training. For example, many of the guilds of Mythmancer teach tracking in their biome of choice and some guilds teach a Rogue the use of poison. Keep track of these extra skills your Rogue learns.  
+(The abilities marked with an asterisk do not gain the Rogue's Rogue Skill Check Bonus if performed while the Rogue is wearing Medium or Heavier armor or if the Rogue is currently holding a shield)
 
 A Rogue's progression is as follows:
-<ul>
-  <li>Gains 1d6+CON <span class="terminology">Hit Points</span> per level</li>
-  <li>Gains +0.5 to their <span class="terminology">Base Bonus to Hit</span> per level</li>
-  <li>Gains +1 to <span class="terminology">Rogue Skill Checks</span> per level</li>
-  <li>Gains 1 <span class="terminology">Weapon Proficiency Point</span> every 3rd Rogue level i.e. 3, 6, 9</li>
-  <li>Gains +1 to <span class="terminology">Reflex Saving Throws (DEX)</span> every 2nd Rogue level i.e. 2, 4, 6</li>
-  <li>Gains +1 to <span class="terminology">Fortitude Saving Throws (CON)</span> every 3rd Rogue level i.e. 3, 6, 9</li>
-  <li>Gains +1 to <span class="terminology">Will Saving Throws (WIS)</span> every 3rd Rogue level i.e. 3, 6, 9</li>
-</ul>
+* Gains 1d6+CON <span class="terminology">Hit Points</span> per level
+* Gains +0.5 to their <span class="terminology">Base Bonus to Hit</span> per level
+* Gains +1 to <span class="terminology">Rogue Skill Checks</span> per level
+* Gains 1 <span class="terminology">Weapon Proficiency Point</span> every 3rd Rogue level i.e. 3, 6, 9
+* Gains +1 to <span class="terminology">Reflex Saving Throws (DEX)</span> every 2nd Rogue level i.e. 2, 4, 6
+* Gains +1 to <span class="terminology">Fortitude Saving Throws (CON)</span> every 3rd Rogue level i.e. 3, 6, 9
+* Gains +1 to <span class="terminology">Will Saving Throws (WIS)</span> every 3rd Rogue level i.e. 3, 6, 9
 
 Whenever a Rogue gains Fighter levels, they also get:
-<ul>
-  <li><span class="terminology">Rogue Skills while Armored</span> - when wearing medium or heavy armor or when holding a shield, a Rogue gains a bonus equal to their Fighter level UP TO BUT NOT EXCEEDING their Rogue Level when performing a Rogue Skill that typically requires the Rogue to be unarmored or wearing light armor.
+* <span class="terminology">Rogue Skills while Armored</span> - when wearing medium or heavy armor or when holding a shield, a Rogue gains a bonus equal to their Fighter level UP TO BUT NOT EXCEEDING their Rogue Level when performing a Rogue Skill that typically requires the Rogue to be unarmored or wearing light armor. So a character who is Rogue 5, Fighter 3 when wearing light armor gains +5 to all Rogue Skills. However, if they wear medium armor and attempt a skill such as climbing which typically requires unarmored or light armor, they only gain +3. A character who is Rogue 3, Fighter 5 gains +3 to all Rogue Skills regardless of what armor they are wearing as the bonus to Rogue skills can never exceed their Rogue Level.
 
-So a character who is Rogue 5, Fighter 3 when wearing light armor gains +5 to all Rogue Skills. However, if they wear medium armor and attempt a skill such as climbing which typically requires unarmored or light armor, they only gain +3.
+## <a name="warlock"></a>Warlock
 
-    A character who is Rogue 3, Fighter 5 gains +3 to all Rogue Skills regardless of what armor they are wearing as the bonus to Rogue skills can never exceed their Rogue Level.</li>
-</ul>
+## <a name="mage"></a>Mage
 
-<h2 id="warlock">Warlock</h2>
-
-<h2 id="mage">Mage</h2>
-
-<h1>Builds and Guilds</h1>
+# Builds and Guilds
 This section lists ideas on how to build common archetypical classes. You do not need to adhere to any of these specific builds as they just describe how common archetypes fit within the Mythmancer system. It also may make sense through your character's journey that they pivot to a new path as they gain experience and knowledge of the world around them.
 
-<h2>Cleric</h2>
-This class is conspicuously missing from the four core classes of Mythmancer. This is because the Cleric is deemed a type of <a class="hyperlink" href="/world/magic#warlocks">Warlock</a>. <i>All</i> Clerics are Warlocks who adhere (nearly) exclusively to the Imperial Church of the <a class="hyperlink" href="/world/factions#seven-saints">Seven Saints</a>.<br/><br/>
+## Cleric
+This class is conspicuously missing from the four core classes of Mythmancer. This is because the Cleric is deemed a type of <a class="hyperlink" href="/world/magic#warlocks">Warlock</a>. _All_ Clerics are Warlocks who adhere (nearly) exclusively to the Imperial Church of the <a class="hyperlink" href="/world/factions#seven-saints">Seven Saints</a>.<br/><br/>
 Patrons for non-cleric Warlocks typically operate on much smaller scales sometimes granting their powers to only a single individual, but the patrons of the Imperial Church seem to be able to maintain thousands of petitioners.<br/><br/>
 Gods do not yet exist within Mythmancer as the universe is too young, but the Seven Saints seem to be the closest facsimile.<br/><br/>
 <span class="terminology">Charisma</span> isn't as important for Clerics as it is for other Warlocks as the Cleric's relationship is connected more to the Church itself rather than an individual relationship with their Patron. Charisma still might help a Cleric politically at higher stations.<br/><br/>
 Of the Seven Saints, only three act as clerical patrons: <a class="hyperlink" href="/world/factions#vash">Vash of Commerce</a>, <a class="hyperlink" href="/world/factions#rath">Rath of Fertility</a>, and <a class="hyperlink" href="/world/factions#mida">Mida of Death</a>. Clerics typically "attune" to one of these Saints gaining access to their domain-specific spells. A Cleric isn't exclusively beholden to the Saint they are currently attuned, they would be allowed in the future to change their attunement if they expect one domain will be more useful for a specific campaign.<br/><br/>
 Thanks to Mida's development of powerful restorative magic, all Clerics possess the greatest amount of access to healing miracles. Especially high-level and devoted followers of Mida wield the unique ability to raise the dead and cure diseases.
 
-<h2>Monk</h2>
+## Monk
 A Monk can be built using a mix of <a class="hyperlink" href="#fighter">Fighter</a> and <a class="hyperlink" href="#rogue">Rogue</a> levels but focusing primarily on Fighter to gain proficiency in Unarmed Strikes.<br/><br/>
 Monasteries offering Monk training may offer specialized training to sufficiently advanced Monks to improve their offensive and defensive abilities in less armor.<br/><br/>
 A Monk might also build Mage or Warlock levels to magically augment their martial abilities.
 
-<h2>Ranger - Forest Ranger</h2>
+## Ranger - Forest Ranger
 The archetypical Ranger is most commonly associated with the Forest Elves of the <a class="hyperlink" href="/world/locations#the-borderlands">Borderlands</a>. These Rangers commonly learn skills important in navigating within forests as well as two-weapon combat and natural patron magic. A Ranger would primarily take <a class="hyperlink" href="#fighter">Fighter</a> levels but would have a significant amount of <a class="hyperlink" href="#warlock">Warlock</a> levels as well in addition to a small amount of <a class="hyperlink" href="#rogue">Rogue</a> levels.
 
-<h2 id="tracker-plains-ranger">Tracker - Plains Ranger</h2>
+## <a name="tracker-plains-ranger"></a>Tracker - Plains Ranger
 The <a class="hyperlink" href="/world/factions#knightly-order-trackers">Knightly Order of Trackers</a> are the Empire's version of Ranger. Trackers focus their skills primarily in the Plains and commonly use horses. This order offers special training in cartography, tracking and pathfinding while in the plains, and mounted combat. A Tracker might be primarily built as a <a class="hyperlink" href="#fighter">Fighter</a> with just a small splash of <a class="hyperlink" href="#rogue">Rogue</a>.
 
-<h2>Pathfinder - Desert Ranger</h2>
+## Pathfinder - Desert Ranger
 The Pathfinders of <a class="hyperlink" href="/world/locations#city-of-umon">Umon</a> are skilled in navigating and surviving deserts, canyons, and crags. Pathfinders heavily leverage divination magic to assist their pathfinding abilities and to douse for water. A successful Pathfinder could be built with an even combination of <a class="hyperlink" href="#fighter">Fighter</a> and <a class="hyperlink" href="#mage">Mage</a> levels.
 
-<h2>Falconer - Mountain Ranger</h2>
+## Falconer - Mountain Ranger
 The <a class="hyperlink" href="/world/locations#the-flying-city">Flying City</a> Falconers specialize in traversing mountainous terrain. Some Falconers eventually may become trusted enough to use specially-bred semi-intelligent birds in their line of duty. Unlike other types of rangers, Falconers are primarily <a class="hyperlink" href="#rogue">Rogues</a> and leverage either <a class="hyperlink" href="#warlock">Warlock</a> or <a class="hyperlink" href="#mage">Mage</a> levels to help them more effectively interact with their birds. (Note - you are probably unlikely to bring birds into a dungeon).<br/><br/>
 The Flying City Falconers is also a good name for a football team.
 
-<h2>Delver - Cave Ranger</h2>
+## Delver - Cave Ranger
 The Delvers of <a class="hyperlink" href="/world/locations#hive">Hive</a> hone their skills deep underground and are primarily versed in navigating caves. A Delver must never lose their sense of direction, either cardinally or vertically. A Delver might be built as an even mix of <a class="hyperlink" href="#fighter">Fighter</a>, <a class="hyperlink" href="#rogue">Rogue</a>, and either <a class="hyperlink" href="#warlock">Warlock</a> or <a class="hyperlink" href="#mage">Mage</a>.
 
-<h2>Miner</h2>
+## Miner
 The Dwarven Miners of <a class="hyperlink" href="/world/locations#hive">Hive</a> have to be capable of martial combat as well as climbing and engineering skills to safely traverse the subterrane. Some Miners even study up on Divination to assist them in finding treasure, often resulting in a mix of <a class="hyperlink" href="#fighter">Fighter</a>, <a class="hyperlink" href="#rogue">Rogue</a>, and <a class="hyperlink" href="#mage">Mage</a> but focusing primarily on Fighter. The exact line of difference between a Miner and a Delver primarily is related to Guild, Dwarven Clan, and that Miners focus more on Fighter levels.
 
-<h2>Sapper</h2>
+## Sapper
 While Delvers focus on scouting and Miners focus on combat (and mining), the Sappers of <a class="hyperlink" href="/world/locations#hive">Hive</a> focus the most on engineering. Sappers use their knowledge of engineering to set and disable traps, and dig tunnels under walls in times of war. A Sapper focuses primarily on <a class="hyperlink" href="#rogue">Rogue</a> levels but will often take some <a class="hyperlink" href="#fighter">Fighter</a> levels as well.
 
-<h2>Artificer</h2>
+## Artificer
 An Artificer is going to be any <a class="hyperlink" href="#mage">Mage</a> who focuses primarily on the creation, use, and identification of magical items.<br/><br/>
 Dwarven Artificers from <a class="hyperlink" href="/world/locations#hive">Hive</a> use their abilities to make superior steel resulting in especially sharp pickaxes, and the oft-sought-after Plate Armor.<br/><br/>
 Elven Artificers from the <a class="hyperlink" href="/world/locations#the-borderlands">Borderlands</a> delicately weave together special silk into excellent bowstrings and interlocked chains to make high draw-weight bows and Elfin Chainmail.<br/><br/>
 A certain specialized subset of Artificers, sometimes called <a class="hyperlink" href="/world/magic#horology">Horologists</a>, search exclusively for remnants of the Clockwork, the supposed scaffolding of the universe's creation.
 
-<h2>Bard</h2>
+## Bard
 The jaunty jester character who plays a lute during battle to inspire allies is less likely to be found in Mythmancer except possibly for war drummers to synchronize the marching of military formations. This may be a different story if a character finds an actual magical lute which when played during combat inspires allies.<br/><br/>
-However, there's so much more to the Bard character. The Bard is likely to be a relatively flexible build. One Bard may be exclusively a <a class="hyperlink" href="#rogue">Rogue</a> who does like to in fact jauntily play lute while the group travels to improve morale (toss a coin to your witcher!). Another may be mostly a <a class="hyperlink" href="#mage">Mage</a> who has figured out how to weave magic into their performance to put a listening crowd into a stupor or fervor. Another Bard might be a <a class="hyperlink" href="#warlock">Warlock</a> who likes to recite the poetry of their patron; their patron <i>might</i> even be a good poet!<br/><br/>
+However, there's so much more to the Bard character. The Bard is likely to be a relatively flexible build. One Bard may be exclusively a <a class="hyperlink" href="#rogue">Rogue</a> who does like to in fact jauntily play lute while the group travels to improve morale (toss a coin to your witcher!). Another may be mostly a <a class="hyperlink" href="#mage">Mage</a> who has figured out how to weave magic into their performance to put a listening crowd into a stupor or fervor. Another Bard might be a <a class="hyperlink" href="#warlock">Warlock</a> who likes to recite the poetry of their patron; their patron _might_ even be a good poet!<br/><br/>
 Ultimately, the Bard character is an attitude and <span class="terminology">Charisma</span> score. At least one Rogue level is probably necessary to be a Bard to reflect the character's time learning their performance of choice.
 
-<h2>Barbarian</h2>
+## Barbarian
 The archetypical Barbarian is going to mostly be a <a class="hyperlink" href="#fighter">Fighter</a>. Barbarians might also take a <a class="hyperlink" href="#rogue">Rogue</a> level or two to survive better in the <a class="hyperlink" href="/world/locations#the-wilds">Wilds</a>. Some Barbarians may take Warlock levels to channel ancestral spirits.<br/><br/>
 The classic Barbarian <span class="terminology">Rage</span> ability might be facilitated by the proper mix of psychoactive substances and/or magic. Learning this proper mix as well as how to leverage the attained mental state requires specialized training (i.e. a <span class="terminology">Rogue Level</span>). After all, if an untrained individual were to take these substances to enter a rage, they may lose the ability to discern friend and foe.
 
-<h2 id="knight">Knight (i.e. Paladin)</h2>
+## <a name="knight"></a>Knight (i.e. Paladin)
 The Paladin archetype essentially describes a divine-select warrior who often embodies some form of righteous ideal. In Mythmancer, this type of class is termed a Knight which is attained by adherence to an Imperial Knightly Order. A righteous ideal is not a requirement as the Empire does not have a monopoly on righteousness. An ideal, righteous or otherwise, is still a requirement. Each Knightly Order embodies an ideal.<br/><br/>
 There are 10 Knightly Orders at any specific point in history. The only Knightly Order which is fixed is the Trackers which was described previously at <a class="hyperlink" href="#tracker-plains-ranger">Tracker - Plains Ranger</a>. In each Knightly Order, there might be righteous and corrupt embodiments of the ideal.<br/><br/>
 Gaining membership into a Knightly order ranges in difficulty. Knights primarily take Fighter levels but may need to mix in levels of other classes to meet the requirements. Devotion to a Knightly Order and their ideal can reward a Knight with the innate powers often associated with Paladins, but this must be earned through the character becoming an embodiment of an ideal over time.<br/><br/>
 Some example Knightly Orders are:
-<ul>
-  <li><span class="terminology">The Fire Breakers</span> - Fire Breakers do not hate fire, but they must control it. They are commonly in charge of fire departments. Fire Breakers must not use fire offensively and they must be able to climb and break into buildings in the name of rescuing imperial citizens. A Knight who comes to embody this ideal may find themselves resistant to fire, increased skills with axes, defenestration, and the ability to break down doors with ease.</li>
-  <li><span class="terminology">The Mage Mashers</span> - just as Fire Breakers must control fire, Mage Mashers must control the use of magic. There has been past turmoil within the Empire in regards to high-level Mages especially in the struggle for power against the Church of the Seven Saints. Mages are allowed in the Empire, but the legal progression has limits. The Mage Mashers have taken it upon themselves to enforce this specific subsection of the law. High level Mage Mashers can <i>deal</i> with Mages more efficiently.</li>
-  <li><span class="terminology">The Courtiers</span> - the Courtiers embody the ideal of noblesse oblige - specifically they love to organize and host expensive charity galas for the rich nobles of the empire. Player Characters won't often be able to join this Knightly Order as it requires noble birth and a large amount of funds.</li>
-  <li><span class="terminology">The Reavers</span> - this Knightly order focuses solely on the destruction of evil entities such as the undead and the demons of the wilds. The Reavers are most similar to a classic paladin and they are held to incredibly high behavioral standards in exchange for abilities to repel and destroy evil. This may be the most difficult Knightly order to qualify for and maintain membership in.</li>
-</ul>
+* <span class="terminology">The Fire Breakers</span> - Fire Breakers do not hate fire, but they must control it. They are commonly in charge of fire departments. Fire Breakers must not use fire offensively and they must be able to climb and break into buildings in the name of rescuing imperial citizens. A Knight who comes to embody this ideal may find themselves resistant to fire, increased skills with axes, defenestration, and the ability to break down doors with ease.
+* <span class="terminology">The Mage Mashers</span> - just as Fire Breakers must control fire, Mage Mashers must control the use of magic. There has been past turmoil within the Empire in regards to high-level Mages especially in the struggle for power against the Church of the Seven Saints. Mages are allowed in the Empire, but the legal progression has limits. The Mage Mashers have taken it upon themselves to enforce this specific subsection of the law. High level Mage Mashers can _deal_ with Mages more efficiently.
+* <span class="terminology">The Courtiers</span> - the Courtiers embody the ideal of noblesse oblige - specifically they love to organize and host expensive charity galas for the rich nobles of the empire. Player Characters won't often be able to join this Knightly Order as it requires noble birth and a large amount of funds.
+* <span class="terminology">The Reavers</span> - this Knightly order focuses solely on the destruction of evil entities such as the undead and the demons of the wilds. The Reavers are most similar to a classic paladin and they are held to incredibly high behavioral standards in exchange for abilities to repel and destroy evil. This may be the most difficult Knightly order to qualify for and maintain membership in.
 
-<h2>Monastic Fighter</h2>
+## Monastic Fighter
 The dividing line between <a class="hyperlink" href="#knight">Knights</a> and <a class="hyperlink" href="#fighter">Fighters</a> is primarily a political one. There are a large number of Fighter's Guilds who are also deeply religious.  These Fighter's Guilds make up the churning constituency of the Knightly Orders. A Monastic Fighter's Guild becomes a Knightly Order when the Guild's master becomes a Judge, but also loses its status if its Judge dies and the other Judges do not decide to appoint a successor from that guild.<br/><br/>
 Whether a Monastic Fighter's Guild is a Knightly Order at a given point in time does not necessarily indicate if members of that guild are more powerful or not, it primarily is just an indicator of how popular or politically important that guild is.<br/><br/>
 Monastic Fighter's Guilds whose members feverishly pursue an ideal are more likely to have been or become Knightly Orders. In addition, Knightly Orders are exclusive to <a class="hyperlink" href="/world/factions#tara">Tara</a>.<br/><br/>
 Monastic Fighters typically mix Fighter and <a class="hyperlink" href="#warlock">Warlock</a> levels. Patrons of Monastic Fighter's Guilds do not typically offer especially high level patron spells so most emphasize Fighter training.<br/><br/>
 Mechanically, Knights and Monastic Fighters are identical.
 
-<h2>Diviner</h2>
+## Diviner
 A Diviner is any <a class="hyperlink" href="#mage">Mage</a> who focuses primarily on divination magic. Diviners also frequently learn defensive <span class="terminology">Abjuration</span> magic to protect themselves and allies.<br/><br/>
 The Elves of the <a class="hyperlink" href="/world/locations#city-of-umon">City of Umon</a> are some of the most notable diviners in Mythmancer. Divination has a significant amount of integration into daily life within the City of Umon.
 
-<h2>Illusionist</h2>
+## Illusionist
 Like Diviners, an Illusionist is any <a class="hyperlink" href="#mage">Mage</a> who focuses primarily on illusion magic. This may be redundant however, because Illusionism is in many ways one and the same as Divination. The discipline of Illusionism stems from strategies developed by Diviners in the <a class="hyperlink" href="/world/locations#city-of-umon">City of Umon</a> to hide secrets from the prying eyes of other Diviners.<br/><br/>
 Most of the innovation in Illusion magic now comes from the <a class="hyperlink" href="/world/locations#the-mirror-city">Mirror City</a>.
 
-<h2>Magician</h2>
+## Magician
 A Magician is an expert in sleight of hand in addition to magic. A character who takes the time to improve their skills in both thievery and illusionism can become a very effective magician.
 
-<h2>Battle Mage or Spellsword</h2>
+## Battle Mage or Spellsword
 Those who train themselves both martially and in destructive forms of magic might call themselves a Battle Mage. Since the Empire does not allow the mastery of arcane magic, many imperial <a class="hyperlink" href="#mage">Mages</a> round their weaknesses off with the intense physical training of a <a class="hyperlink" href="#fighter">Fighter</a>. Due to their even levels in both classes, Battle Mages are capable of casting their strongest spells even while wearing armor.<br/><br/>
 Some aspiring Battle Mages who can't quite hack it in spellcasting might end up becoming <a class="hyperlink" href="/world/factions#knightly-order-mage-mashers">Mage Mashers</a>.
 
-<h2>Legionnaire</h2>
+## Legionnaire
 In Mythmancer, the <span class="terminology">Legionnaire</span>'s are members of <a class="hyperlink" href="/world/factions#kalis-legion">Kali's Legion</a>. A Legionnaire is exclusively a <a class="hyperlink" href="#fighter">Fighter</a>, though higher level Legionnaires end up with powers similar to a <a class="hyperlink" href="#knight">Knight</a> when they earn the title of <span class="terminology">Centurion</span>. Kali's Legion is heavily hierarchical, and enforces a "might makes right" mentality. To eventually attain the title of Centurion, a Legionnaire must get to a high level and then sequentially duel up their entire chain of command in single combat until they manage to defeat a Centurion themselves.<br/><br/>
 What makes the Legionnaire is primarily training. Fighters who train with Kali's Legion end up learning a very defensive combat style and learn how to use their shield with far more proficiency.
 
-<h2>War Priest</h2>
+## War Priest
 While <a class="hyperlink" href="/world/factions#kali">Kali</a> is one of the Seven Saints, she is not one of the patrons that Clerics worship. This is because the religious and political system around the worship of Kali is isolated to those within Kali's Legion. Followers of Kali are instead called War Priests and are expected to train in martial combat just as the Legionnaires they support.

@@ -19,13 +19,13 @@
           "route": "character-creation",
           "title": "character creation",
           "template": "template_writing.html",
-          "data_type": "text"
+          "data_type": "markdown"
         },
         {
           "route": "tables",
           "title": "tables",
           "template": "template_writing.html",
-          "data_type": "text"
+          "data_type": "markdown"
         }
       ]
     },
@@ -38,19 +38,19 @@
           "route": "factions",
           "title": "factions",
           "template": "template_writing.html",
-          "data_type": "text"
+          "data_type": "markdown"
         },
         {
           "route": "locations",
           "title": "locations",
           "template": "template_writing.html",
-          "data_type": "text"
+          "data_type": "markdown"
         },
         {
           "route": "magic",
           "title": "magic",
           "template": "template_writing.html",
-          "data_type": "text"
+          "data_type": "markdown"
         }
       ]
     },
