@@ -16,6 +16,9 @@ run-server: symlink-assets
 	docker stop mythmancer.com || true
 	docker run  -it --rm -d -p 80:80 --name mythmancer.com -v $(ROOT_DIR)/docs:/usr/share/nginx/html -v $(realpath ../assets.mythmancer.github.io/docs/):/usr/share/nginx/assets nginx:1.22-alpine
 
+stop-server:
+	docker stop mythmancer.com
+
 enter-server:
 	docker exec -w /usr/share/nginx/html -it mythmancer.com sh
 
