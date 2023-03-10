@@ -7,9 +7,9 @@ The site's served at [https://mythmancer.com](https://mythmancer.com).
 
 # Development
 
-I use the static site generator [purajit/YASS](https://github.com/purajit/YASS), with the default structure.
+We use the static site generator [purajit/YASS](https://github.com/purajit/YASS), with the default structure.
 
-Assets are stored separately in the [mythmancer/assets.mythmancer.github.io](https://github.com/mythmancer/assets.mythmancer.github.io)` repo to keep deploys artifacts and times small.
+Assets are stored separately in the [mythmancer/assets.mythmancer.github.io](https://github.com/mythmancer/assets.mythmancer.github.io) repo to keep deploys artifacts and times small.
 
 ## Local testing
 ```sh
@@ -26,7 +26,7 @@ make generate-pages-cdn
 
 You will need [colima](https://github.com/abiosoft/colima).
 
-If you want to change assets and test it, you will have to clone the assets repo [mythmancer/assets.mythmancer.github.io](https://github.com/mythmancer/assets.mythmancer.github.io)` into the same parent directory as this one. To use locally-available assets, run
+If you want to change assets and test it, you will have to clone the assets repo [mythmancer/assets.mythmancer.github.io](https://github.com/mythmancer/assets.mythmancer.github.io) into the same parent directory as this one. To use locally-available assets, run
 
 ```sh
 make generate-pages-local
@@ -37,7 +37,7 @@ You could also use this simply to avoid network requests.
 ## Merging changes
 If you're a collaborator, you can easily merge changes by creating a commit locally (`git commit -am "gneurshk"`), and running
 ```sh
-gh pr create --fill && sleep 2 && gh pr merge --auto -r -d
+gh pr create --fill && gh pr merge --auto -r -d
 ```
 
 Follow [this GHA](https://github.com/mythmancer/mythmancer.github.io/actions/workflows/deploy.yml) to track the deploy - we use a custom deploy workflow that saves us 50%+ compared to the default workflow.
