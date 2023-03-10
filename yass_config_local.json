@@ -1,3 +1,4 @@
 {
+  "permanent_paths": "404.html",
   "static_url": "/static/assets"
 }
