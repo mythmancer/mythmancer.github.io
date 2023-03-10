@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% include 'head.html' %}
-<body class="notopmargin nobg lesssidemargin">
+<body class="character-sheet">
     <div id="main">
         <div id="contents">
             <div id="character-switcher">
@@ -29,7 +29,7 @@
                     <img id="cs-switch-character" class="cs-control-button" title="Switch character" src="{{ static_url }}/images/switch-character.png">
                     <img id="cs-fullscreen" class="cs-control-button" title="Fullscreen" src="{{ static_url }}/images/fullscreen.png">
                     <img id="cs-exit-fullscreen" class="cs-control-button hidden" title="Exit fullscreen" src="{{ static_url }}/images/exit-fullscreen.png">
-                    <div class="filler"></div>
+                    <div class="spacer"></div>
                     <img title="d4" class="die" src="{{ static_url }}/images/d4.png">
                     <img title="d6" class="die" src="{{ static_url }}/images/d6.png">
                     <img title="d8" class="die" src="{{ static_url }}/images/d8.png">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="table" id="page-main-character-sheet">
                     <div class="block-col">
-                        <div class="block-row">
+                        <div class="table-row">
                             <div class="table-column heading-column">Character</div>
                         </div>
                         <div class="table-row non-alternating">
