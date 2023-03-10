@@ -7,34 +7,32 @@ The site's served at [https://mythmancer.com](https://mythmancer.com).
 
 # Development
 
-I use a custom site generator whose logic is pretty simple - each page is either a table of contents of its children, or an end page. It's trees all the way down.
-* The structure is defined in `data/sitemap.json`.
-* All templates are in `templates/`.
-* Statics are in `docs/static`
-* The website is served out of `docs/`.
-* Assets are stored separately in the `mythmancer/assets.mythmancer.github.io` repo to keep deploys artifacts and times small.
+I use the static site generator [purajit/YASS](https://github.com/purajit/YASS), with the default structure.
 
-## Generating the website
-You will have to clone the assets repo `mythmancer/assets.mythmancer.github.io` into the same parent directory as this one.
+Assets are stored separately in the [mythmancer/assets.mythmancer.github.io](https://github.com/mythmancer/assets.mythmancer.github.io)` repo to keep deploys artifacts and times small.
 
-When you make statics changes (including css/js), just refreshing the page will show you the updates. If you made changes to the
-page contents, regenerate the site with
+## Local testing
+```sh
+# To run the website locally on `localhost:80`
+make run-server
+
+# To stop the server
+make stop-server
+
+# To regenerate the website if changes were made to non-static files
+# Changes will be instantly reflected
+make generate-pages-cdn
+```
+
+You will need [colima](https://github.com/abiosoft/colima).
+
+If you want to change assets and test it, you will have to clone the assets repo [mythmancer/assets.mythmancer.github.io](https://github.com/mythmancer/assets.mythmancer.github.io)` into the same parent directory as this one. To use locally-available assets, run
+
 ```sh
 make generate-pages-local
 ```
 
-## Running the website locally
-Run
-```sh
-make run-server
-```
-to run the website on `localhost:80`. You will need colima. Alternatively, you can just `file://`, but the linking and static sourcing
-will not work.
-
-To stop the server
-```sh
-docker stop mythmancer.com
-```
+You could also use this simply to avoid network requests.
 
 ## Merging changes
 If you're a collaborator, you can easily merge changes by creating a commit locally (`git commit -am "gneurshk"`), and running
