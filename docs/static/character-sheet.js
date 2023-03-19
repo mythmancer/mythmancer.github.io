@@ -47,12 +47,21 @@ CHARACTERISTICS = [
   "cs-silver",
 ];
 
+CREATION_OPTION_TO_SHEET = {
+  "opt-charisma": "cs-charisma",
+  "opt-constitution": "cs-constitution",
+  "opt-dexterity": "cs-dexterity",
+  "opt-intelligence": "cs-intelligence",
+  "opt-strength": "cs-strength",
+  "opt-wisdom": "cs-wisdom",
+};
+
 CLASSES = [
   "fighter",
   "mage",
   "rogue",
   "warlock",
-]
+];
 
 POPULATED_NAMES = [];
 
@@ -98,7 +107,7 @@ ARMOR = {
     "ac": 3,
     "max_dex_mod": 2,
   },
-}
+};
 
 SPELL_SLOTS = {
   0: {
@@ -171,7 +180,7 @@ SPELL_SLOTS = {
     4: 2,
     5: 1,
   },
-}
+};
 
 ATTRIBUTE_MODIFIER_TABLE = {
   2: -4,
@@ -192,7 +201,7 @@ ATTRIBUTE_MODIFIER_TABLE = {
   17: 2,
   18: 3,
   19: 4,
-}
+};
 
 SKILL_PROFICIENCY_TABLE = {
   0: {
@@ -235,7 +244,7 @@ SKILL_PROFICIENCY_TABLE = {
     "rogue": 10,
     "mage": 3,
   },
-}
+};
 
 DERIVED_CHARACTERISTICS = {
   // save throws and attribute modifiers
@@ -308,7 +317,7 @@ DERIVED_CHARACTERISTICS = {
     return Math.max(
       Math.floor(1 + (getNumericalCharacteristic(characterData["cs-level-fighter"]) - 1) / 4),
       1,
-    )
+    );
   },
   "cs-allowed-armor": function(characterData) {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
@@ -337,7 +346,7 @@ DERIVED_CHARACTERISTICS = {
   "cs-skill-check-bonus": function(characterData) {
     // ROG + MAG/2
     return Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
-      + getNumericalCharacteristic(characterData["cs-level-rogue"])
+      + getNumericalCharacteristic(characterData["cs-level-rogue"]);
   },
   "cs-skill-proficiencies": function(characterData) {
     // table
@@ -420,7 +429,7 @@ DERIVED_CHARACTERISTICS = {
   "cs-slots-m5": function(characterData) {
     return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][5];
   },
-}
+};
 
 function getNumericalCharacteristic(val) {
   return parseInt(val || "0");
@@ -474,7 +483,7 @@ function hideSpecifics() {
 function showAppropriateSpecifics(characterData) {
   hideSpecifics();
 
-  showClassDivs(`for-${characterData["cs-race"].toLowerCase()}`)
+  showClassDivs(`for-${characterData["cs-race"].toLowerCase()}`);
   for (let i = 0; i < CLASSES.length; i++) {
     const classLevel = characterData[`cs-level-${CLASSES[i]}`];
     if (classLevel && parseInt(classLevel) > 0) {
@@ -658,6 +667,52 @@ function save() {
   }
 }
 
+// character creation modal
+function generateAttributeValue() {
+  const max = 6;
+  const rolls = [
+    Math.floor(Math.random() * max) + 1,
+    Math.floor(Math.random() * max) + 1,
+    Math.floor(Math.random() * max) + 1,
+    Math.floor(Math.random() * max) + 1,
+  ];
+  return rolls.reduce((a, b) => {return a + b;}) - Math.min(...rolls);
+}
+
+function populateSheetFromDiv(creationOptionDiv) {
+  if (creationOptionDiv.classList.contains("from-scratch")) {
+    return ;
+  }
+  for (let [key, value] of Object.entries(CREATION_OPTION_TO_SHEET)) {
+    document.getElementById(value).value = creationOptionDiv.getElementsByClassName(key)[0].textContent;
+  }
+}
+
+function populateCharacterCreationOptions() {
+  const creationOptionDivs = document.getElementsByClassName("character-creation-option");
+  // ignore "from scratch" div
+  for (let i = 0; i < creationOptionDivs.length - 1; i++) {
+    for (let prop in CREATION_OPTION_TO_SHEET) {
+      creationOptionDivs[i].getElementsByClassName(prop)[0].textContent = generateAttributeValue();
+    }
+  }
+}
+
+function hideCharacterCreation() {
+  document.getElementById("character-sheet").classList.remove("blurred");
+  document.getElementById("character-creation-modal").classList.add("hidden");
+}
+
+function showCharacterCreation() {
+  document.getElementById("character-sheet").classList.add("blurred");
+  document.getElementById("character-creation-modal").classList.remove("hidden");
+  populateCharacterCreationOptions();
+}
+
+function startCharacterCreation() {
+  showCharacterCreation();
+}
+
 // character switcher stuff
 function createSwitcherElement(name) {
   let d = document.createElement('div');
@@ -710,13 +765,13 @@ function populateCharacterSwitcher() {
 
 function hideCharacterSwitcher() {
   document.getElementById("character-sheet").classList.remove("blurred");
-  document.getElementById("character-switcher").classList.add("hidden");
+  document.getElementById("character-switcher-modal").classList.add("hidden");
 }
 
 function showCharacterSwitcher() {
   populateCharacterSwitcher();
   document.getElementById("character-sheet").classList.add("blurred");
-  document.getElementById("character-switcher").classList.remove("hidden");
+  document.getElementById("character-switcher-modal").classList.remove("hidden");
 }
 
 // main initializer
@@ -738,7 +793,8 @@ window.onload = function() {
   });
   const newCharacterIcon = document.getElementById("cs-new-character");
   newCharacterIcon.addEventListener("click", function(event) {
-    loadFromName(null);
+    hideCharacterSwitcher();
+    startCharacterCreation();
     event.stopPropagation();
   });
   document.body.addEventListener('mouseup', function() {
@@ -767,6 +823,17 @@ window.onload = function() {
   document.getElementById("cs-switch-character").addEventListener("click", function() {
     showCharacterSwitcher();
   });
+
+  // new character creation
+  const creationOptionDivs = document.getElementsByClassName("character-creation-option");
+  for (let i = 0; i < creationOptionDivs.length; i++) {
+    const div = creationOptionDivs[i];
+    div.addEventListener("click", function() {
+      populateSheetFromDiv(div);
+      hideCharacterCreation();
+    });
+  }
+
 
   // fullscreening, display appropriate button
   document.getElementById("cs-fullscreen").addEventListener("click", function() {
