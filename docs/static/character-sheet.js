@@ -533,7 +533,7 @@ function clearSheet() {
 function loadFromName(name) {
   console.log(name);
 
-  const characterData = JSON.parse(getCharacterSheet(name);
+  const characterData = getCharacterSheet(name);
 
   lockSensitiveFields();
   hideCharacterSwitcher();
@@ -601,7 +601,7 @@ function exportData() {
 
 function exportToFile() {
   // fake a download request
-  const text = JSON.stringify(window.localStorage.getItem(STORAGE_NAME));
+  const text = window.localStorage.getItem(STORAGE_NAME);
   const element = document.createElement("a");
   element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
   element.setAttribute("download", `mythmancer-character-sheets-${new Date().toISOString().replaceAll(":", "-")}.json`);
@@ -630,11 +630,9 @@ function loadFromJsonString(mapString) {
     return names;
   }
   const map = JSON.parse(mapString);
-  for (let prop in map) {
-    names.push(prop);
-    if (Object.prototype.hasOwnProperty.call(map, prop)) {
-      updateCharacterSheet(prop, map[prop]);
-    }
+  for (let [key, value] of Object.entries(map)) {
+    names.push(key);
+    updateCharacterSheet(key, value);
   }
   return names;
 }
