@@ -65,6 +65,8 @@ CLASSES = [
 
 POPULATED_NAMES = [];
 
+STORAGE_NAME = "character_sheets";
+
 VERSION = "0.2.1"
 
 // example, "Chain Mail (+2)"
@@ -456,6 +458,29 @@ function unlockSensitiveFields() {
   document.getElementById("cs-lock-sheet").classList.remove("hidden");
 }
 
+// utilities for interacting with localstorage
+function getCharacterSheet(name) {
+  const characterSheets = JSON.parse(window.localStorage.getItem(STORAGE_NAME)) || {};
+  return characterSheets[name];
+}
+
+function getCharacterSheetNames() {
+  const characterSheets = JSON.parse(window.localStorage.getItem(STORAGE_NAME)) || {};
+  return Object.keys(characterSheets);
+}
+
+function updateCharacterSheet(name, sheet) {
+  const characterSheets = JSON.parse(window.localStorage.getItem(STORAGE_NAME)) || {};
+  characterSheets[name] = sheet;
+  window.localStorage.setItem(STORAGE_NAME, JSON.stringify(characterSheets));
+}
+
+function deleteCharacterSheet(name) {
+  const characterSheets = JSON.parse(window.localStorage.getItem(STORAGE_NAME));
+  delete characterSheets[name];
+  window.localStorage.setItem(STORAGE_NAME, JSON.stringify(characterSheets));
+}
+
 // utilities for hiding/showing race- and class-specific sections
 function hideClassDivs(className) {
   const divs = document.getElementsByClassName(className);
@@ -508,20 +533,18 @@ function clearSheet() {
 function loadFromName(name) {
   console.log(name);
 
-  const characterDataStr = window.localStorage.getItem(name);
+  const characterData = JSON.parse(window.localStorage.getItem(name)) || getCharacterSheet(name);
 
   lockSensitiveFields();
   hideCharacterSwitcher();
   clearSheet();
 
   // new character form. keep fields unlocked in this view for ease of use
-  if (characterDataStr == null) {
+  if (characterData == null) {
     document.getElementById("cs-delete-sheet").classList.add("hidden");
     unlockSensitiveFields();
     return;
   }
-
-  const characterData = JSON.parse(characterDataStr);
 
   // populate page
   document.getElementById("cs-name-heading").textContent = name;
@@ -611,6 +634,7 @@ function loadFromJsonString(mapString) {
     names.push(prop);
     if (Object.prototype.hasOwnProperty.call(map, prop)) {
       window.localStorage.setItem(prop, map[prop]);
+      updateCharacterSheet(prop, map[prop]);
     }
   }
   return names;
@@ -657,6 +681,7 @@ function save() {
     return;
   }
   window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
+  updateCharacterSheet(map["cs-name"], map);
 
   try {
     showAppropriateSpecifics(map);
@@ -680,6 +705,9 @@ function generateAttributeValue() {
 }
 
 function populateSheetFromDiv(creationOptionDiv) {
+  document.getElementById("cs-delete-sheet").classList.add("hidden");
+  unlockSensitiveFields();
+  clearSheet();
   if (creationOptionDiv.classList.contains("from-scratch")) {
     return ;
   }
@@ -739,7 +767,7 @@ function createSwitcherElement(name) {
 function populateCharacterSwitcher() {
   // TODO: sort local storage by created at? Alphabetical?
   // Insert any newly available names to the character switcher
-  const availableNames = Object.keys(window.localStorage);
+  const availableNames = Object.keys(window.localStorage).concat(getCharacterSheetNames());
   const newCharacterIcon = document.getElementById("cs-new-character");
   const characterCardsDiv = document.getElementById("character-cards");
   for (let i = 0; i < availableNames.length; i++) {
@@ -816,6 +844,7 @@ window.onload = function() {
   document.getElementById("cs-delete-sheet").addEventListener("click", function() {
     const name = document.getElementById("cs-name").value;
     window.localStorage.removeItem(name);
+    deleteCharacterSheet(name);
     clearSheet();
     // once deleted, open switcher
     showCharacterSwitcher();
