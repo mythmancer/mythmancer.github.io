@@ -533,7 +533,7 @@ function clearSheet() {
 function loadFromName(name) {
   console.log(name);
 
-  const characterData = JSON.parse(window.localStorage.getItem(name)) || getCharacterSheet(name);
+  const characterData = JSON.parse(getCharacterSheet(name);
 
   lockSensitiveFields();
   hideCharacterSwitcher();
@@ -601,7 +601,7 @@ function exportData() {
 
 function exportToFile() {
   // fake a download request
-  const text = JSON.stringify(window.localStorage);
+  const text = JSON.stringify(window.localStorage.getItem(STORAGE_NAME));
   const element = document.createElement("a");
   element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
   element.setAttribute("download", `mythmancer-character-sheets-${new Date().toISOString().replaceAll(":", "-")}.json`);
@@ -633,7 +633,6 @@ function loadFromJsonString(mapString) {
   for (let prop in map) {
     names.push(prop);
     if (Object.prototype.hasOwnProperty.call(map, prop)) {
-      window.localStorage.setItem(prop, map[prop]);
       updateCharacterSheet(prop, map[prop]);
     }
   }
@@ -680,7 +679,6 @@ function save() {
   if (map["cs-name"] == "") {
     return;
   }
-  window.localStorage.setItem(map["cs-name"], JSON.stringify(map));
   updateCharacterSheet(map["cs-name"], map);
 
   try {
@@ -767,7 +765,7 @@ function createSwitcherElement(name) {
 function populateCharacterSwitcher() {
   // TODO: sort local storage by created at? Alphabetical?
   // Insert any newly available names to the character switcher
-  const availableNames = Object.keys(window.localStorage).concat(getCharacterSheetNames());
+  const availableNames = getCharacterSheetNames();
   const newCharacterIcon = document.getElementById("cs-new-character");
   const characterCardsDiv = document.getElementById("character-cards");
   for (let i = 0; i < availableNames.length; i++) {
@@ -843,7 +841,6 @@ window.onload = function() {
   document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
   document.getElementById("cs-delete-sheet").addEventListener("click", function() {
     const name = document.getElementById("cs-name").value;
-    window.localStorage.removeItem(name);
     deleteCharacterSheet(name);
     clearSheet();
     // once deleted, open switcher
