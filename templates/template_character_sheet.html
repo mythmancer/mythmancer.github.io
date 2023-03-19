@@ -3,7 +3,7 @@
 <body class="character-sheet">
     <div id="main">
         <div id="contents">
-            <div id="character-switcher">
+            <div id="character-switcher-modal">
                 <div id="character-cards">
                     <div class="character-card" id="cs-new-character">
                         <div class="character-letter">
@@ -18,6 +18,69 @@
                     <img id="cs-export" class="cs-control-button" title="Download" src="{{ static_url }}/images/download.png">
                     <label id="uploader-label" for="uploader"><img id="cs-import" class="cs-control-button" title="Upload" src="{{ static_url }}/images/upload.png"></label>
                     <input type="file" id="uploader" name="uploader"/>
+                </div>
+            </div>
+            <div id="character-creation-modal" class="hidden">
+                <div id="character-creation-options">
+                    <div class="character-creation-option">
+                        <div class="table table-as-rows">
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Strength</div>
+                                <div class="table-column opt-strength"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Dexterity</div>
+                                <div class="table-column opt-dexterity"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Constitution</div>
+                                <div class="table-column opt-constitution"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Wisdom</div>
+                                <div class="table-column opt-wisdom"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Intelligence</div>
+                                <div class="table-column opt-intelligence"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Charisma</div>
+                                <div class="table-column opt-charisma"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="character-creation-option">
+                        <div class="table table-as-rows">
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Strength</div>
+                                <div class="table-column opt-strength"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Dexterity</div>
+                                <div class="table-column opt-dexterity"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Constitution</div>
+                                <div class="table-column opt-constitution"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Wisdom</div>
+                                <div class="table-column opt-wisdom"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Intelligence</div>
+                                <div class="table-column opt-intelligence"></div>
+                            </div>
+                            <div class="table-row non-alternating">
+                                <div class="table-column">Charisma</div>
+                                <div class="table-column opt-charisma"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="character-creation-option from-scratch">
+                        <h1>From Scratch</h1>
+                    </div>
                 </div>
             </div>
             <form id="character-sheet" class="blurred">
