@@ -3,6 +3,12 @@
     src: local('HammerBro101MovieReg-Regular'), url(/static/HammerBro101MovieReg-Regular.ttf) format('truetype');
 }
 
+@media screen and (max-width: 1024px) {
+    .hide-when-narrow {
+        display: none !important;
+    }
+}
+
 :root {
     --bg: #222033;
     --text: #e8e6e3;
@@ -106,6 +112,10 @@ body.character-sheet {
 
 .writing ul {
     margin: 0;
+}
+
+.writing .table ul {
+    margin-left: calc(-1 * var(--table-cell-spacing));
 }
 
 /* splash of color for important words */
@@ -371,7 +381,7 @@ body.character-sheet {
     font-size: var(--character-card-size);
     width: var(--character-card-size);
     height: var(--character-card-size);
-    border-radius: 100px;
+    border-radius: calc(0.5 * var(--character-card-size));
     background-color: black;
     color: white;
     margin: 10px;
