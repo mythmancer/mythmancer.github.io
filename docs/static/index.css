@@ -346,11 +346,16 @@ body.character-sheet {
     margin-top: 50px;
 }
 
+#character-sheet.blurred {
+    opacity: 0.5;
+    filter: blur(3px);
+}
+
 #character-switcher-modal {
     display: flex;
-    width: 100%;
+    width: 98%;
     position: fixed;
-    margin-top: auto;
+    padding-top: 20px;
     flex-direction: column;
     z-index: 1000;
 }
@@ -358,7 +363,6 @@ body.character-sheet {
 #character-creation-options {
     display: flex;
     width: 100%;
-    padding: 20px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -388,26 +392,23 @@ body.character-sheet {
 
 #character-switcher-modal {
     display: flex;
-    width: 100%;
+    width: 98%;
     position: fixed;
-    margin-top: auto;
+    padding-top: 20px;
     flex-direction: column;
     z-index: 1000;
+
+    align-content: center;
+    align-self: center;
+    align-items: center;
 }
 
 #character-cards {
     display: flex;
-    width: 100%;
-    padding: 20px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-}
-
-#character-sheet.blurred {
-    opacity: 0.5;
-    filter: blur(3px);
 }
 
 .character-card {
