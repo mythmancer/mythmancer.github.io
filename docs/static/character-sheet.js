@@ -573,32 +573,6 @@ function rollDice(event) {
 }
 
 // download-related functions - downloads all character sheets as a single json to disk
-function exportData() {
-  const characterData = {};
-
-  for (let i = 0; i < CHARACTERISTICS.length; i++) {
-    const data = document.getElementById(CHARACTERISTICS[i]).value;
-    characterData[CHARACTERISTICS[i]] = data;
-  }
-
-  for (let i = 0; i < COLLECTIONS.length; i++) {
-    characterData[COLLECTIONS[i]] = [];
-  }
-
-  for (let i = 0; i < COLLECTIONS.length; i++) {
-    const elements = document.getElementsByClassName(COLLECTIONS[i]);
-    const arr = [];
-    for (let j = 0; j < elements.length; j++) {
-      const data = elements[j].value;
-      arr.push(data);
-    }
-    characterData[COLLECTIONS[i]] = arr;
-  }
-
-  console.log(characterData);
-  return characterData;
-}
-
 function exportToFile() {
   // fake a download request
   const text = window.localStorage.getItem(STORAGE_NAME);
@@ -672,6 +646,34 @@ function handleFileUpload(e) {
 }
 
 // save to localStorage
+function exportData() {
+  const characterData = {
+    "version": VERSION,
+  };
+
+  for (let i = 0; i < CHARACTERISTICS.length; i++) {
+    const data = document.getElementById(CHARACTERISTICS[i]).value;
+    characterData[CHARACTERISTICS[i]] = data;
+  }
+
+  for (let i = 0; i < COLLECTIONS.length; i++) {
+    characterData[COLLECTIONS[i]] = [];
+  }
+
+  for (let i = 0; i < COLLECTIONS.length; i++) {
+    const elements = document.getElementsByClassName(COLLECTIONS[i]);
+    const arr = [];
+    for (let j = 0; j < elements.length; j++) {
+      const data = elements[j].value;
+      arr.push(data);
+    }
+    characterData[COLLECTIONS[i]] = arr;
+  }
+
+  console.log(characterData);
+  return characterData;
+}
+
 function save() {
   const map = exportData();
   if (map["cs-name"] == "") {
