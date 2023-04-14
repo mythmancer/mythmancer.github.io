@@ -216,35 +216,35 @@ SKILL_PROFICIENCY_TABLE = {
   },
   2: {
     "rogue": 5,
-    "mage": 1,
+    "mage": 2,
   },
   3: {
     "rogue": 5,
-    "mage": 1,
+    "mage": 2,
   },
   4: {
     "rogue": 6,
-    "mage": 2,
+    "mage": 3,
   },
   5: {
     "rogue": 7,
-    "mage": 2,
+    "mage": 3,
   },
   6: {
     "rogue": 8,
-    "mage": 2,
+    "mage": 4,
   },
   7: {
     "rogue": 8,
-    "mage": 2,
+    "mage": 4,
   },
   8: {
     "rogue": 9,
-    "mage": 3,
+    "mage": 5,
   },
   9: {
     "rogue": 10,
-    "mage": 3,
+    "mage": 5,
   },
 };
 
@@ -346,9 +346,11 @@ DERIVED_CHARACTERISTICS = {
     }
   },
   "cs-skill-check-bonus": function(characterData) {
-    // ROG + MAG/2
+    // ROG + MAG/2 + FGT/4 + WAR/4
     return Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
-      + getNumericalCharacteristic(characterData["cs-level-rogue"]);
+      + getNumericalCharacteristic(characterData["cs-level-rogue"])
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
+      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4);
   },
   "cs-skill-proficiencies": function(characterData) {
     // table
