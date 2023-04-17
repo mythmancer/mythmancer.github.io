@@ -3,8 +3,14 @@
     src: local('HammerBro101MovieReg-Regular'), url(/static/HammerBro101MovieReg-Regular.ttf) format('truetype');
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1222px) {
     .hide-when-narrow {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 1222px) {
+    .show-when-narrow {
         display: none !important;
     }
 }
@@ -250,11 +256,17 @@ body.character-sheet {
 
 /* character sheet page */
 /* top row */
-#cs-name-heading {
+#cs-name-heading, #cs-name-heading-short {
     font-size: 50px;
     width: fit-content;
     white-space: nowrap;
     margin-right: var(--character-sheet-control-panel-gap);
+}
+
+#references {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
 }
 
 .cs-control-panel {
