@@ -85,19 +85,25 @@
             </div>
             <form id="character-sheet" class="blurred">
                 <div class="cs-control-panel">
-                    <div id="cs-name-heading"></div>
-                    <img id="cs-unlock-sheet" class="cs-control-button" title="Unlock sheet" src="{{ static_url }}/images/unlock.png">
-                    <img id="cs-lock-sheet" class="cs-control-button hidden" title="Lock sheet" src="{{ static_url }}/images/lock.png">
-                    <img id="cs-delete-sheet" class="cs-control-button hidden" title="Delete sheet" src="{{ static_url }}/images/trash.png">
+                    <div id="cs-name-heading" class="hide-when-narrow"></div>
+                    <div id="cs-name-heading-short" class="show-when-narrow">(... name ...)</div>
+                    <img id="cs-unlock-sheet" class="cs-control-button hide-when-narrow" title="Unlock sheet" src="{{ static_url }}/images/unlock.png">
+                    <img id="cs-lock-sheet" class="cs-control-button hidden hide-when-narrow" title="Lock sheet" src="{{ static_url }}/images/lock.png">
+                    <img id="cs-delete-sheet" class="cs-control-button hidden hide-when-narrow" title="Delete sheet" src="{{ static_url }}/images/trash.png">
                     <img id="cs-switch-character" class="cs-control-button" title="Switch character" src="{{ static_url }}/images/switch-character.png">
                     <img id="cs-fullscreen" class="cs-control-button" title="Fullscreen" src="{{ static_url }}/images/fullscreen.png">
                     <img id="cs-exit-fullscreen" class="cs-control-button hidden" title="Exit fullscreen" src="{{ static_url }}/images/exit-fullscreen.png">
                     <div class="spacer"></div>
-                    <img title="d4" class="die" src="{{ static_url }}/images/d4.png">
+                    <div id="references" class="hide-when-narrow">
+                        <a href="https://docs.google.com/document/d/14x43yTIgARNvEX84At1Va_Q7aKe-2P49gLkG8y4xDaM/">Reference</a>
+                        <a href="https://docs.google.com/spreadsheets/d/1xnD9tfYePZi798UFab_8C1It3cMDApO9TAsGHhdE1hA/">Mage Spells Worksheet</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <img title="d4" class="die hide-when-narrow" src="{{ static_url }}/images/d4.png">
                     <img title="d6" class="die" src="{{ static_url }}/images/d6.png">
-                    <img title="d8" class="die" src="{{ static_url }}/images/d8.png">
-                    <img title="d10" class="die" src="{{ static_url }}/images/d10.png">
-                    <img title="d12" class="die" src="{{ static_url }}/images/d12.png">
+                    <img title="d8" class="die hide-when-narrow" src="{{ static_url }}/images/d8.png">
+                    <img title="d10" class="die hide-when-narrow" src="{{ static_url }}/images/d10.png">
+                    <img title="d12" class="die hide-when-narrow" src="{{ static_url }}/images/d12.png">
                     <img title="d20" class="die" src="{{ static_url }}/images/d20.png">
                     <img title="d100" class="die" src="{{ static_url }}/images/d100.png">
                     <div id="die-result">
