@@ -65,8 +65,9 @@ CLASSES = [
 
 POPULATED_NAMES = [];
 
-// populated by loadMageSpellbook
+// populated by load...Spellbook
 MAGE_SPELLS = {};
+WARLOCK_SPELLS = {};
 
 STORAGE_NAME = "character_sheets";
 
@@ -835,6 +836,8 @@ ${spellInfo["Details"]}
 function loadWarlockSpellbookWizard(spellDb) {
   // add all tooltips for warlock spellbook
 
+  WARLOCK_SPELLS = spellDb;
+
   const spellDivs = document
         .getElementById("page-spellbook")
         .getElementsByClassName("for-warlock")[0]
@@ -863,14 +866,18 @@ function loadMageSpellbook(spellDb) {
   MAGE_SPELLS = spellDb;
 }
 
-function updateMageSpellbookWizard(spellInputDiv) {
+function updateCustomSpellTooltip(spellInputDiv) {
   const spellName = spellInputDiv.value;
+
+  const parentTable = spellInputDiv.parentElement.parentElement.parentElement.parentElement;
+
+  const spellDb = parentTable.classList.contains("for-warlock") ? WARLOCK_SPELLS : MAGE_SPELLS;
 
   const element = document.createElement("div");
   element.classList.add("tooltiptext");
 
-  console.log(spellName, MAGE_SPELLS);
-  element.innerHTML = getTooltipHtml(spellName, MAGE_SPELLS);
+  element.innerHTML = getTooltipHtml(spellName, spellDb);
+
 
   // remove old tooltip and add new one
   const oldTooltip = spellInputDiv.parentElement.getElementsByClassName("tooltiptext")[0];
@@ -886,8 +893,6 @@ function getJSON(url, callback) {
   xhr.open('GET', url, true);
   xhr.responseType = 'json';
   xhr.onload = function() {
-    console.log(xhr.status);
-    console.log(xhr.response);
     var status = xhr.status;
     if (status === 200) {
       callback(null, xhr.response);
@@ -998,12 +1003,12 @@ window.onload = function() {
   }
 
   // add mage spell information when spells are changed/added
-  const mageSpellDivs = document.getElementById("page-spellbook").getElementsByClassName("cs-spell-name");
+  const customSpellDivs = document.getElementById("page-spellbook").getElementsByClassName("cs-spell-name");
 
-  for (let i = 0; i < mageSpellDivs.length; i++) {
-    const div = mageSpellDivs[i];
+  for (let i = 0; i < customSpellDivs.length; i++) {
+    const div = customSpellDivs[i];
     div.addEventListener("change", function() {
-      updateMageSpellbookWizard(div);
+      updateCustomSpellTooltip(div);
     });
   }
 
