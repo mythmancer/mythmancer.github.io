@@ -482,3 +482,31 @@ body.character-sheet {
     display: none !important;
 }
 
+.spell-name:hover .tooltiptext {
+    visibility: visible;
+}
+
+.spell-name .tooltiptext {
+    visibility: hidden;
+    top: 10%;
+    left: calc(50% - 400px);
+    width: 800px;
+    background-color: var(--bg);
+    color: white;
+    border: 10px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    white-space: normal;
+
+    /* Position the tooltip */
+    position: fixed;
+    z-index: 1;
+}
+
+.smallfont {
+    font-size: 10px;</v
+}
+
+.tooltiptext h1 {
+    margin: 0;
+}

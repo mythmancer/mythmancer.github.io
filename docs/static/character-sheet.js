@@ -65,9 +65,12 @@ CLASSES = [
 
 POPULATED_NAMES = [];
 
+// populated by loadMageSpellbook
+MAGE_SPELLS = {};
+
 STORAGE_NAME = "character_sheets";
 
-VERSION = "0.2.1"
+VERSION = "0.2.1";
 
 // example, "Chain Mail (+2)"
 EQUIPMENT_RE = /(?<armorType>[a-zA-Z ]*)(\(\+(?<acMod>\d+)\))?/;
@@ -802,6 +805,77 @@ function showCharacterSwitcher() {
   document.getElementById("character-switcher-modal").classList.remove("hidden");
 }
 
+// Spellbook wizard
+function getTooltipHtml(spellName, spellDb) {
+  const spellInfo = spellDb[spellName];
+  if (spellInfo == null) {
+    return "";
+  }
+
+  const isReversibleStr = spellInfo["Reversible"] ? " | Reversible" : "";
+
+  return `
+  <h1>${spellName}</h1>
+<span class="smallfont">${spellInfo["Type"]}${isReversibleStr}</span></br></br>
+Range: ${spellInfo["Range"]}</br>
+Duration: ${spellInfo["Duration"]}</br>
+Area of Effect: ${spellInfo["Area of Effect"]}</br>
+Components: ${spellInfo["Components"]}</br>
+Casting Time: ${spellInfo["Casting Time"]}</br>
+Saving Throw: ${spellInfo["Saving Throw"]}</br>
+Speed: ${spellInfo["Speed"]}</br></br>
+${spellInfo["Details"]}
+  `;
+}
+
+function loadWarlockSpellbookWizard(spellDb) {
+  // add all tooltips for warlock spellbook
+
+  const spellDivs = document
+        .getElementById("page-spellbook")
+        .getElementsByClassName("for-warlock")[0]
+        .getElementsByClassName("spell-name");
+
+  for (let i = 0; i < spellDivs.length; i++) {
+    const spellName = spellDivs[i].firstChild.textContent;
+
+    const element = document.createElement("div");
+    element.classList.add("tooltiptext");
+
+    element.innerHTML = getTooltipHtml(spellName, spellDb);
+    spellDivs[i].appendChild(element);
+  }
+}
+
+function loadMageSpellbook(spellDb) {
+  // since Mage spells are dynamic (chosen by player), we don't have a predefined
+  // list we can populate on load. We need to know which spells the player chooses
+  // to load appropriate tooltips.
+
+  // So instead, this function will simply store the information into globals, and
+  // we'll populate the tooltips when a character sheet is loaded, or when a mage
+  // spell slot is changed.
+
+  MAGE_SPELLS = spellDb;
+}
+
+function getJSON(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.responseType = 'json';
+  xhr.onload = function() {
+    console.log(xhr.status);
+    console.log(xhr.response);
+    var status = xhr.status;
+    if (status === 200) {
+      callback(null, xhr.response);
+    } else {
+      callback(status, xhr.response);
+    }
+  };
+  xhr.send();
+};
+
 // main initializer
 window.onload = function() {
   // save to localStorage whenever a field is changed
@@ -903,4 +977,19 @@ window.onload = function() {
 
   showCharacterSwitcher();
   hideSpecifics();
+
+  getJSON("https://assets.mythmancer.com/warlock_spells.json", function(err, data) {
+    if (err !== null) {
+      console.log("Unable to load cleric spellbook wizard");
+    } else {
+      loadWarlockSpellbookWizard(data);
+    }
+  });
+  getJSON("https://assets.mythmancer.com/mage_spells.json", function(err, data) {
+    if (err !== null) {
+      console.log("Unable to load mage spellbook wizard");
+    } else {
+      loadMageSpellbook("mage", data);
+    }
+  });
 };
