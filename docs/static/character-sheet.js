@@ -563,6 +563,10 @@ function loadFromName(name) {
     const elements = document.getElementsByClassName(COLLECTIONS[i]);
     for (let j = 0; j < elementDatas.length; j++) {
       elements[j].value = elementDatas[j];
+      // Trigger tooltip generation for mage spells
+      if (COLLECTIONS[i] == "cs-spell-name" && elementDatas[j].length > 0) {
+        elements[j].dispatchEvent(new Event('change'));
+      }
     }
   }
 
@@ -859,6 +863,24 @@ function loadMageSpellbook(spellDb) {
   MAGE_SPELLS = spellDb;
 }
 
+function updateMageSpellbookWizard(spellInputDiv) {
+  const spellName = spellInputDiv.value;
+
+  const element = document.createElement("div");
+  element.classList.add("tooltiptext");
+
+  console.log(spellName, MAGE_SPELLS);
+  element.innerHTML = getTooltipHtml(spellName, MAGE_SPELLS);
+
+  // remove old tooltip and add new one
+  const oldTooltip = spellInputDiv.parentElement.getElementsByClassName("tooltiptext")[0];
+  if (oldTooltip) {
+    spellInputDiv.parentElement.removeChild(oldTooltip);
+  }
+
+  spellInputDiv.parentElement.appendChild(element);
+}
+
 function getJSON(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
@@ -975,6 +997,16 @@ window.onload = function() {
     document.getElementById(prop).readOnly = true;
   }
 
+  // add mage spell information when spells are changed/added
+  const mageSpellDivs = document.getElementById("page-spellbook").getElementsByClassName("cs-spell-name");
+
+  for (let i = 0; i < mageSpellDivs.length; i++) {
+    const div = mageSpellDivs[i];
+    div.addEventListener("change", function() {
+      updateMageSpellbookWizard(div);
+    });
+  }
+
   showCharacterSwitcher();
   hideSpecifics();
 
@@ -989,7 +1021,7 @@ window.onload = function() {
     if (err !== null) {
       console.log("Unable to load mage spellbook wizard");
     } else {
-      loadMageSpellbook("mage", data);
+      loadMageSpellbook(data);
     }
   });
 };
