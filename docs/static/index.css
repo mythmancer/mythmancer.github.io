@@ -510,3 +510,12 @@ body.character-sheet {
 .tooltiptext h1 {
     margin: 0;
 }
+
+.tooltiptext .table {
+    margin-top: 0 !important;
+}
+
+.tooltiptext .table-column {
+    border-left-width: 1px !important;
+    margin-top: 0 !important;
+}
