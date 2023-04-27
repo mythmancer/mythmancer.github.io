@@ -12,8 +12,7 @@ COLLECTIONS = [
 
 CHARACTERISTICS = [
   // populate cs-name first, since that's what's used to identify the current state
-  // so even if anything goes wrong in later rendering, we have something to go to
-  // TODO: store current character in localStorage so that we don't need this?
+  // so even if anything goes wrong in later rendering, we have an index
   "cs-name",
 
   "cs-experience",
@@ -396,7 +395,7 @@ DERIVED_CHARACTERISTICS = {
         dexMod = Math.min(dexMod, ARMOR[armorType]["max_dex_mod"]);
       }
 
-      if (typeof ARMOR[armorType]["ac"] === 'function') {
+      if (typeof ARMOR[armorType]["ac"] === "function") {
         equipmentAC += ARMOR[armorType]["ac"](characterData);
       } else {
         equipmentAC += ARMOR[armorType]["ac"];
@@ -535,9 +534,9 @@ function clearSheet() {
   document.getElementById("character-sheet").reset();
 }
 
-// update UI from a name
+// load character sheet from name
 function loadFromName(name) {
-  console.log(name);
+  console.log("Switched to character:", name);
 
   const characterData = getCharacterSheet(name);
 
@@ -564,9 +563,10 @@ function loadFromName(name) {
     const elements = document.getElementsByClassName(COLLECTIONS[i]);
     for (let j = 0; j < elementDatas.length; j++) {
       elements[j].value = elementDatas[j];
-      // Trigger tooltip generation for mage spells
-      if (COLLECTIONS[i] == "cs-spell-name" && elementDatas[j].length > 0) {
-        elements[j].dispatchEvent(new Event('change'));
+      // Trigger tooltip generation, UI display for mage spells
+      if (COLLECTIONS[i] == "cs-spell-name" && elements[j].tagName == "SELECT" && elementDatas[j].length > 0) {
+        elements[j].parentElement.getElementsByClassName("select-selected")[0].innerHTML = elementDatas[j];
+        elements[j].dispatchEvent(new Event("initial_load"));
       }
     }
   }
@@ -609,7 +609,7 @@ function dragover(e) {
 
 function loadFromJsonString(mapString) {
   let names = [];
-  console.log(mapString);
+  console.log("Importing from json string:", mapString);
   if (mapString == null || mapString == "") {
     return names;
   }
@@ -624,7 +624,6 @@ function loadFromJsonString(mapString) {
 function importData(file) {
   const reader = new FileReader();
   reader.onload = (e) => {
-    console.log(e.target.result);
     const names = loadFromJsonString(e.target.result);
     showCharacterSwitcher();
     alert(
@@ -643,15 +642,12 @@ function handleDropUpload(e) {
   const dt = e.dataTransfer;
   const files = dt.files;
 
-  console.log(files[0]);
   importData(files[0]);
 }
 
 function handleFileUpload(e) {
   e.stopPropagation();
   e.preventDefault();
-
-  console.log(e.target.files[0]);
   importData(e.target.files[0]);
 }
 
@@ -680,7 +676,7 @@ function exportData() {
     characterData[COLLECTIONS[i]] = arr;
   }
 
-  console.log(characterData);
+  console.log("Character updated:", characterData);
   return characterData;
 }
 
@@ -695,7 +691,7 @@ function save() {
     showAppropriateSpecifics(map);
     populateDerivedCharacteristics(map);
   } catch(err) {
-    console.log("error");
+    console.log("Invalid input");
     alert("Fix the mistake in the most recently edited field");
   }
 }
@@ -751,13 +747,13 @@ function startCharacterCreation() {
 
 // character switcher stuff
 function createSwitcherElement(name) {
-  let d = document.createElement('div');
+  let d = document.createElement("div");
   d.classList.add("character-card");
 
-  let letterD = document.createElement('div');
+  let letterD = document.createElement("div");
   letterD.classList.add("character-letter");
   letterD.textContent = name[0].toUpperCase();
-  let nameD = document.createElement('div');
+  let nameD = document.createElement("div");
   nameD.classList.add("character-name");
   nameD.textContent = name;
 
@@ -854,6 +850,67 @@ function loadWarlockSpellbookWizard(spellDb) {
   }
 }
 
+// custom dropdown stuff (for mages)
+function populateSpellDropdown(selectDiv) {
+  selectDiv.innerHTML = "";
+
+  // Default option
+  const option = document.createElement("option");
+  option.value = "";
+  option.text = "Select spell";
+  selectDiv.appendChild(option);
+
+  const selectSpellLevel = selectDiv.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("spell-level")[0].textContent[0];
+
+  const spellsForLevel = [];
+  for (let prop in MAGE_SPELLS) {
+    if (selectSpellLevel != MAGE_SPELLS[prop]["Level"]) {
+      continue;
+    }
+    spellsForLevel.push(prop);
+  }
+
+  spellsForLevel.sort();
+
+  for (let i = 0; i < spellsForLevel.length; i++) {
+    const option = document.createElement("option");
+    option.value = spellsForLevel[i];
+    option.text = spellsForLevel[i];
+    selectDiv.appendChild(option);
+  }
+}
+
+function generateCustomSelectList(options) {
+  const customSelectList = document.createElement("div");
+  customSelectList.setAttribute("class", "select-items select-hide");
+  for (let j = 1; j < options.length; j++) {
+    const customSelectOption = document.createElement("div");
+    customSelectOption.innerHTML = options[j].innerHTML;
+    customSelectOption.addEventListener("click", function(e) {
+      const s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+      const h = this.parentNode.previousSibling;
+      for (let i = 0; i < s.length; i++) {
+        if (s.options[i].innerHTML != this.innerHTML) {
+          continue;
+        }
+        s.value = s.options[i].innerHTML;
+        h.innerHTML = this.innerHTML;
+        const y = this.parentNode.getElementsByClassName("same-as-selected");
+        for (let k = 0; k < y.length; k++) {
+          y[k].removeAttribute("class");
+        }
+        this.setAttribute("class", "same-as-selected");
+        break;
+      }
+      // Send a click to close the select list, and a change to save the selection
+      h.click();
+      s.dispatchEvent(new Event("change"));
+    });
+    customSelectList.appendChild(customSelectOption);
+  }
+  return customSelectList;
+}
+
 function loadMageSpellbook(spellDb) {
   // since Mage spells are dynamic (chosen by player), we don't have a predefined
   // list we can populate on load. We need to know which spells the player chooses
@@ -864,12 +921,39 @@ function loadMageSpellbook(spellDb) {
   // spell slot is changed.
 
   MAGE_SPELLS = spellDb;
+
+  // Populate all spell dropdowns, and configure the custom ones
+  const customSelectDivs = document.getElementsByClassName("custom-select");
+
+  for (let i = 0; i < customSelectDivs.length; i++) {
+    const selectDiv = customSelectDivs[i].getElementsByTagName("select")[0];
+    populateSpellDropdown(selectDiv);
+
+    // Create custom "selected item" display
+    const customSelectedItem = document.createElement("div");
+    customSelectedItem.setAttribute("class", "select-selected");
+    customSelectedItem.innerHTML = selectDiv.options[0].innerHTML;
+
+    const customSelectList = generateCustomSelectList(selectDiv.options);
+
+    customSelectDivs[i].appendChild(customSelectedItem);
+    customSelectDivs[i].appendChild(customSelectList);
+    customSelectedItem.addEventListener("click", function(e) {
+      e.stopPropagation();
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+    });
+  }
 }
 
 function updateCustomSpellTooltip(spellInputDiv) {
   const spellName = spellInputDiv.value;
 
-  const parentTable = spellInputDiv.parentElement.parentElement.parentElement.parentElement;
+  if (spellName == "") {
+    return;
+  }
+
+  const parentTable = spellInputDiv.parentElement.parentElement.parentElement.parentElement.parentElement;
 
   const spellDb = parentTable.classList.contains("for-warlock") ? WARLOCK_SPELLS : MAGE_SPELLS;
 
@@ -889,11 +973,11 @@ function updateCustomSpellTooltip(spellInputDiv) {
 }
 
 function getJSON(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.responseType = 'json';
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.responseType = "json";
   xhr.onload = function() {
-    var status = xhr.status;
+    const status = xhr.status;
     if (status === 200) {
       callback(null, xhr.response);
     } else {
@@ -903,6 +987,7 @@ function getJSON(url, callback) {
   xhr.send();
 };
 
+
 // main initializer
 window.onload = function() {
   // save to localStorage whenever a field is changed
@@ -910,6 +995,11 @@ window.onload = function() {
   for (let i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener("change", save);
   }
+  const selects = document.getElementsByTagName("select");
+  for (let i = 0; i < selects.length; i++) {
+    selects[i].addEventListener("change", save);
+  }
+
 
   // control panel on character switcher. Click shouldn't propagate so that clicking anywhere else closes the switcher
   document.getElementById("cs-export").addEventListener("click", function(event) {
@@ -926,7 +1016,7 @@ window.onload = function() {
     startCharacterCreation();
     event.stopPropagation();
   });
-  document.body.addEventListener('mouseup', function() {
+  document.body.addEventListener("mouseup", function() {
     if (document.getElementById("character-sheet").classList.contains("blurred")) {
       hideCharacterSwitcher();
     }
@@ -939,6 +1029,7 @@ window.onload = function() {
   dropbox.addEventListener("drop", handleDropUpload, false);
   const uploader = document.getElementById("uploader");
   uploader.addEventListener("change", handleFileUpload, false);
+
 
   // control panel on character sheet
   document.getElementById("cs-unlock-sheet").addEventListener("click", unlockSensitiveFields);
@@ -963,7 +1054,6 @@ window.onload = function() {
     });
   }
 
-
   // fullscreening, display appropriate button
   document.getElementById("cs-fullscreen").addEventListener("click", function() {
     document.documentElement.requestFullscreen();
@@ -986,10 +1076,12 @@ window.onload = function() {
     }
   });
 
+
   // update sheet heading when name is updated
   document.getElementById("cs-name").addEventListener("change", function() {
     document.getElementById("cs-name-heading").textContent = document.getElementById("cs-name").value;
   });
+
 
   // listeners for die rolls
   const dice = document.getElementsByClassName("die");
@@ -1002,7 +1094,10 @@ window.onload = function() {
     document.getElementById(prop).readOnly = true;
   }
 
-  // add mage spell information when spells are changed/added
+  showCharacterSwitcher();
+  hideSpecifics();
+
+  // Loading spellbooks, triggering tooltip generation, etc
   const customSpellDivs = document.getElementById("page-spellbook").getElementsByClassName("cs-spell-name");
 
   for (let i = 0; i < customSpellDivs.length; i++) {
@@ -1010,19 +1105,19 @@ window.onload = function() {
     div.addEventListener("change", function() {
       updateCustomSpellTooltip(div);
     });
+    div.addEventListener("initial_load", function() {
+      updateCustomSpellTooltip(div);
+    });
   }
 
-  showCharacterSwitcher();
-  hideSpecifics();
-
-  getJSON("https://assets.mythmancer.com/warlock_spells.json", function(err, data) {
+  getJSON("http://localhost/static/assets/warlock_spells.json", function(err, data) {
     if (err !== null) {
       console.log("Unable to load cleric spellbook wizard");
     } else {
       loadWarlockSpellbookWizard(data);
     }
   });
-  getJSON("https://assets.mythmancer.com/mage_spells.json", function(err, data) {
+  getJSON("http://localhost/static/assets/mage_spells.json", function(err, data) {
     if (err !== null) {
       console.log("Unable to load mage spellbook wizard");
     } else {
