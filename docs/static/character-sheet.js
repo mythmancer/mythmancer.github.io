@@ -1110,14 +1110,14 @@ window.onload = function() {
     });
   }
 
-  getJSON("http://localhost/static/assets/warlock_spells.json", function(err, data) {
+  getJSON("https://assets.mythmancer.com/warlock_spells.json", function(err, data) {
     if (err !== null) {
       console.log("Unable to load cleric spellbook wizard");
     } else {
       loadWarlockSpellbookWizard(data);
     }
   });
-  getJSON("http://localhost/static/assets/mage_spells.json", function(err, data) {
+  getJSON("https://assets.mythmancer.com/mage_spells.json", function(err, data) {
     if (err !== null) {
       console.log("Unable to load mage spellbook wizard");
     } else {
