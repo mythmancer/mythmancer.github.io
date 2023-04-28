@@ -293,7 +293,7 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">1st Degree Spell</div>
+                                <div class="table-column heading-column spell-level">1st Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             <div class="table-row non-alternating">
@@ -355,7 +355,7 @@
                                 <div class="table-column"><input id="cs-max-minor-patrons"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">2nd Degree Spell</div>
+                                <div class="table-column heading-column spell-level">2nd Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             <div class="table-row non-alternating">
@@ -417,7 +417,7 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">3rd Degree Spell</div>
+                                <div class="table-column heading-column spell-level">3rd Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             <div class="table-row non-alternating">
@@ -479,7 +479,7 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">4th Degree Spell</div>
+                                <div class="table-column heading-column spell-level">4th Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             <div class="table-row non-alternating">
@@ -541,7 +541,7 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">5th Degree Spell</div>
+                                <div class="table-column heading-column spell-level">5th Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             <div class="table-row non-alternating">
@@ -605,12 +605,17 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">1st Degree Spell</div>
+                                <div class="table-column heading-column spell-level">1st Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
-                                <div class="table-column spell-name"><input class="cs-spell-name"></div>
+                                <div class="table-column spell-name">
+                                    <div class="custom-select">
+                                        <select class="cs-spell-name">
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
                             {%- endfor %}
@@ -625,12 +630,17 @@
                                 <div class="table-column"><input id="cs-max-spells-learnable-per-degree"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">2nd Degree Spell</div>
+                                <div class="table-column heading-column spell-level">2nd Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
-                                <div class="table-column spell-name"><input class="cs-spell-name"></div>
+                                <div class="table-column spell-name">
+                                    <div class="custom-select">
+                                        <select class="cs-spell-name">
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
                             {%- endfor %}
@@ -645,12 +655,17 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">3rd Degree Spell</div>
+                                <div class="table-column heading-column spell-level">3rd Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
-                                <div class="table-column spell-name"><input class="cs-spell-name"></div>
+                                <div class="table-column spell-name">
+                                    <div class="custom-select">
+                                        <select class="cs-spell-name">
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
                             {%- endfor %}
@@ -665,12 +680,17 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">4th Degree Spell</div>
+                                <div class="table-column heading-column spell-level">4th Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
-                                <div class="table-column spell-name"><input class="cs-spell-name"></div>
+                                <div class="table-column spell-name">
+                                    <div class="custom-select">
+                                        <select class="cs-spell-name">
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
                             {%- endfor %}
@@ -685,12 +705,17 @@
                                 <div class="table-column empty-column"></div>
                             </div>
                             <div class="table-row non-alternating">
-                                <div class="table-column heading-column">5th Degree Spell</div>
+                                <div class="table-column heading-column spell-level">5th Degree Spell</div>
                                 <div class="table-column heading-column">Qty</div>
                             </div>
                             {%- for _ in range(data["num_mage_spells"]) %}
                             <div class="table-row non-alternating">
-                                <div class="table-column spell-name"><input class="cs-spell-name"></div>
+                                <div class="table-column spell-name">
+                                    <div class="custom-select">
+                                        <select class="cs-spell-name">
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="table-column"><input class="cs-spell-qty"></div>
                             </div>
                             {%- endfor %}
