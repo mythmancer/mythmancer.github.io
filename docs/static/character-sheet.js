@@ -212,42 +212,62 @@ SKILL_PROFICIENCY_TABLE = {
   0: {
     "rogue": 0,
     "mage": 0,
+    "fighter": 0,
+    "warlock": 0,
   },
   1: {
     "rogue": 3,
     "mage": 1,
+    "fighter": 1,
+    "warlock": 1,
   },
   2: {
     "rogue": 5,
     "mage": 2,
+    "fighter": 1,
+    "warlock": 1,
   },
   3: {
     "rogue": 5,
     "mage": 2,
+    "fighter": 1,
+    "warlock": 1,
   },
   4: {
     "rogue": 6,
     "mage": 3,
+    "fighter": 2,
+    "warlock": 2,
   },
   5: {
     "rogue": 7,
     "mage": 3,
+    "fighter": 2,
+    "warlock": 2,
   },
   6: {
     "rogue": 8,
     "mage": 4,
+    "fighter": 2,
+    "warlock": 2,
   },
   7: {
     "rogue": 8,
     "mage": 4,
+    "fighter": 2,
+    "warlock": 2,
   },
   8: {
     "rogue": 9,
     "mage": 5,
+    "fighter": 3,
+    "warlock": 3,
   },
   9: {
     "rogue": 10,
     "mage": 5,
+    "fighter": 3,
+    "warlock": 3,
   },
 };
 
@@ -358,7 +378,9 @@ DERIVED_CHARACTERISTICS = {
   "cs-skill-proficiencies": function(characterData) {
     // table
     return SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-mage"])]["mage"]
-      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["rogue"];
+      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["rogue"]
+      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["fighter"]
+      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["warlock"];
   },
 
   // spell casters
