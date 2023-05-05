@@ -45,6 +45,7 @@ a, a:visited {
 body.character-sheet {
     margin: 0% 1% 0% 1% !important;
     width: 98%; /* minus the margins */
+    font-size: 20px;
 }
 
 .bgimg {
