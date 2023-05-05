@@ -257,11 +257,13 @@ body.character-sheet {
 
 /* character sheet page */
 /* top row */
-#cs-name-heading, #cs-name-heading-short {
+#cs-name-heading {
     font-size: 50px;
-    width: fit-content;
+    max-width: 30%;
     white-space: nowrap;
     margin-right: var(--character-sheet-control-panel-gap);
+    overflow: clip;
+    text-overflow: ellipsis;
 }
 
 #references {
