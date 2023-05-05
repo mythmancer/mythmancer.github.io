@@ -359,6 +359,23 @@ body.character-sheet {
     margin-top: 50px;
 }
 
+#page-game-details .table {
+    margin-top: 50px;
+}
+
+#page-game-details textarea {
+    width: 100%;
+    padding: 10px 0px 0px 5px;
+    font-size: 20px;
+    margin: 0;
+    background-color: var(--bg);
+    color: white;
+    border: none;
+    resize: none;
+    outline: none;
+    height: 300px;
+}
+
 #character-sheet.blurred {
     opacity: 0.5;
     filter: blur(3px);

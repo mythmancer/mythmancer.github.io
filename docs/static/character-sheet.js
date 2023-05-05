@@ -44,6 +44,8 @@ CHARACTERISTICS = [
   "cs-equipment-shield",
 
   "cs-silver",
+
+  "cs-game-details",
 ];
 
 CREATION_OPTION_TO_SHEET = {
@@ -1020,6 +1022,10 @@ window.onload = function() {
   const selects = document.getElementsByTagName("select");
   for (let i = 0; i < selects.length; i++) {
     selects[i].addEventListener("change", save);
+  }
+  const textareas = document.getElementsByTagName("textarea");
+  for (let i = 0; i < textareas.length; i++) {
+    textareas[i].addEventListener("change", save);
   }
 
 
