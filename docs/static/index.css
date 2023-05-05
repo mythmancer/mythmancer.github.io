@@ -295,7 +295,7 @@ body.character-sheet {
 
 #die-result {
     font-size: 40px;
-    width: 200px;
+    min-width: 50px;
     background-color: rgba(96, 112, 215, 0.5);
     border-radius: 10px;
     text-align: center;
