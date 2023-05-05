@@ -190,6 +190,12 @@
                             <div class="table-column heading-column">Equipment</div>
                         </div>
                         <div class="table-row non-alternating">
+                            <div class="table-column">Allowed Weapons</div>
+                            <div class="table-column"><input id="cs-allowed-weapons"></div>
+                            <div class="table-column">Allowed Armor</div>
+                            <div class="table-column"><input id="cs-allowed-armor"></div>
+                        </div>
+                        <div class="table-row non-alternating">
                             <div class="table-column">Armor</div>
                             <div class="table-column"><input id="cs-equipment-armor"></div>
                             <div class="table-column">Neck</div>
@@ -245,12 +251,6 @@
                             <div class="table-column heading-column">
                                 Skill Proficiencies, Domain Powers, Special Abilities, Notes
                             </div>
-                        </div>
-                        <div class="table-row non-alternating">
-                            <div class="table-column">Allowed Weapons</div>
-                            <div class="table-column"><input id="cs-allowed-weapons"></div>
-                            <div class="table-column">Allowed Armor</div>
-                            <div class="table-column"><input id="cs-allowed-armor"></div>
                         </div>
                         {%- for _ in range(data["num_misc_rows"]) %}
                         <div class="table-row non-alternating">
