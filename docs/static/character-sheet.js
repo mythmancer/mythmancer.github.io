@@ -240,7 +240,6 @@ function setDivValue(div, text) {
   div.value = text;
   if (div.tagName == "SELECT" && text != "") {
     div.parentElement.getElementsByClassName("select-selected")[0].innerHTML = text;
-    div.dispatchEvent(new Event("initial_load"));
   }
 }
 
@@ -307,6 +306,10 @@ class Attribute {
 
   }
 }
+
+/*******************************************************************
+ ********************** INDIVIDUAL ATTRIBUTES **********************
+ *******************************************************************/
 
 NAME_ATTRIBUTE = new Attribute(
   "cs-name",
@@ -485,12 +488,7 @@ MAGE_SPELL_NAME_ATTRIBUTE = new Attribute(
 
     for (let i = 0; i < characterData["cs-mage-spell-name"].length; i++) {
       const spellName = characterData["cs-mage-spell-name"][i];
-
-      if (spellName == "") {
-        continue;
-      }
-
-      tooltips.push(getTooltipHtml(spellName, MAGE_SPELLS));
+      tooltips.push(spellName ? getTooltipHtml(spellName, MAGE_SPELLS) : "");
     }
     return tooltips;
   }
@@ -507,12 +505,7 @@ WARLOCK_SPELL_NAME_ATTRIBUTE = new Attribute(
 
     for (let i = 0; i < characterData["cs-warlock-spell-name"].length; i++) {
       const spellName = characterData["cs-warlock-spell-name"][i];
-
-      if (spellName == "") {
-        continue;
-      }
-
-      tooltips.push(getTooltipHtml(spellName, WARLOCK_SPELLS));
+      tooltips.push(spellName ? getTooltipHtml(spellName, WARLOCK_SPELLS) : "");
     }
     return tooltips;
   }
@@ -1648,9 +1641,6 @@ window.onload = function() {
   for (let i = 0; i < customSpellDivs.length; i++) {
     const div = customSpellDivs[i];
     div.addEventListener("change", function() {
-      updateCustomSpellTooltip(div);
-    });
-    div.addEventListener("initial_load", function() {
       updateCustomSpellTooltip(div);
     });
   }
