@@ -276,6 +276,7 @@ body.character-sheet {
     display: flex;
     flex-direction: row;
     padding: 10px 0px 10px 0px;
+    z-index: 1;
 
     /* to allow it to always be at the top */
     position: sticky;
@@ -381,15 +382,6 @@ body.character-sheet {
 #character-sheet.blurred {
     opacity: 0.5;
     filter: blur(3px);
-}
-
-#character-switcher-modal {
-    display: flex;
-    width: 98%;
-    position: fixed;
-    padding-top: 20px;
-    flex-direction: column;
-    z-index: 1000;
 }
 
 #character-creation-options {
@@ -562,7 +554,7 @@ body.character-sheet {
     top: 100%;
     left: 0;
     right: 0;
-    z-index: 99;
+    z-index: 1;
     height: 200px;
     overflow: scroll;
 }
