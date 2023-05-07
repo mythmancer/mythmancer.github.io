@@ -1,52 +1,23 @@
-COLLECTIONS = [
-  "cs-inventory",
-  "cs-misc",
-  "cs-weapon-bonus-to-hit",
-  "cs-weapon-damage",
-  "cs-weapon-features",
-  "cs-weapon-name",
+// This JS controls the entire character sheets.
+// It is divided into a few sections:
+// * Databases - about armor, spells, etc
+// * Fundamental "infra" - base classes, basic structure of the data model
+// * UI helper functions
 
-  "cs-spell-name",
-  "cs-spell-qty",
+// Some basic constants
+VERSION = "0.2.2";
+STORAGE_NAME = "character_sheets";
+POPULATED_NAMES = [];  // names currently in storage
+
+CLASSES = [
+  "fighter",
+  "mage",
+  "rogue",
+  "warlock",
 ];
 
-CHARACTERISTICS = [
-  // populate cs-name first, since that's what's used to identify the current state
-  // so even if anything goes wrong in later rendering, we have an index
-  "cs-name",
-
-  "cs-experience",
-  "cs-hit-points",
-  "cs-hit-points-current",
-  "cs-race",
-
-  "cs-level-fighter",
-  "cs-level-mage",
-  "cs-level-rogue",
-  "cs-level-warlock",
-
-  "cs-charisma",
-  "cs-constitution",
-  "cs-dexterity",
-  "cs-intelligence",
-  "cs-strength",
-  "cs-wisdom",
-
-  "cs-equipment-armor",
-  "cs-equipment-boots",
-  "cs-equipment-cloak",
-  "cs-equipment-gloves",
-  "cs-equipment-neck",
-  "cs-equipment-other-1",
-  "cs-equipment-other-2",
-  "cs-equipment-ring-1",
-  "cs-equipment-ring-2",
-  "cs-equipment-shield",
-
-  "cs-silver",
-
-  "cs-game-details",
-];
+// example, "Chain Mail (+2)"
+EQUIPMENT_RE = /(?<armorType>[a-zA-Z ]*)(\(\+(?<acMod>\d+)\))?/;
 
 CREATION_OPTION_TO_SHEET = {
   "opt-charisma": "cs-charisma",
@@ -57,25 +28,13 @@ CREATION_OPTION_TO_SHEET = {
   "opt-wisdom": "cs-wisdom",
 };
 
-CLASSES = [
-  "fighter",
-  "mage",
-  "rogue",
-  "warlock",
-];
-
-POPULATED_NAMES = [];
+/*****************************************************************
+ *************************** DATABASES ***************************
+ *****************************************************************/
 
 // populated by load...Spellbook
 MAGE_SPELLS = {};
 WARLOCK_SPELLS = {};
-
-STORAGE_NAME = "character_sheets";
-
-VERSION = "0.2.1";
-
-// example, "Chain Mail (+2)"
-EQUIPMENT_RE = /(?<armorType>[a-zA-Z ]*)(\(\+(?<acMod>\d+)\))?/;
 
 // Databases
 ARMOR = {
@@ -273,48 +232,378 @@ SKILL_PROFICIENCY_TABLE = {
   },
 };
 
-DERIVED_CHARACTERISTICS = {
-  // save throws and attribute modifiers
-  "cs-charisma-modifier": function(characterData) {
-    // table
+/*******************************************************************
+ *************************** DATA MODELS ***************************
+ *******************************************************************/
+
+function setDivValue(div, text) {
+  div.value = text;
+  if (div.tagName == "SELECT" && text != "") {
+    div.parentElement.getElementsByClassName("select-selected")[0].innerHTML = text;
+    div.dispatchEvent(new Event("initial_load"));
+  }
+}
+
+function setTooltip(div, innerHTML) {
+  // remove old tooltip
+  const oldTooltipDiv = div.parentElement.getElementsByClassName("tooltiptext")[0];
+  div.parentElement.classList.remove("has-tooltip");
+  if (oldTooltipDiv) {
+    oldTooltipDiv.parentElement.removeChild(oldTooltipDiv);
+  }
+
+  if (!innerHTML) {
+    return ;
+  }
+
+  const tooltipDiv = document.createElement("div");
+  tooltipDiv.classList.add("tooltiptext");
+  tooltipDiv.innerHTML = innerHTML;
+
+  div.parentElement.classList.add("has-tooltip");
+  div.parentElement.appendChild(tooltipDiv);
+}
+
+class Attribute {
+  constructor(divName, isCollection, getTextDisplay=null, getTooltip=(characterData => ""), getMods=(characterData => [])) {
+    this.divName = divName;
+    this.isCollection = isCollection;
+    this.isReadOnly = (getTextDisplay != null);
+    this.getTextDisplay = getTextDisplay || (characterData => {
+      return characterData[this.divName];
+    });
+    this.getTooltip = getTooltip;
+    this.getMods = getMods;
+  }
+
+  populateField(characterModel) {
+    const text = this.getTextDisplay(characterModel);
+    const tooltip = this.getTooltip(characterModel);
+    if (this.isCollection) {
+      const divs = document.getElementsByClassName(this.divName);
+      for (let i = 0; i < divs.length; i++) {
+        setDivValue(divs[i], text[i]);
+        setTooltip(divs[i], tooltip[i]);
+      }
+    } else {
+      const div = document.getElementById(this.divName);
+      setDivValue(div, text);
+      setTooltip(div, tooltip);
+    }
+  }
+
+  getDisplayedData() {
+    if (this.isCollection) {
+      const data = [];
+      const divs = document.getElementsByClassName(this.divName);
+      for (let i = 0; i < divs.length; i++) {
+        data.push(divs[i].value);
+      }
+      return data;
+    } else {
+      const div = document.getElementById(this.divName);
+      return div.value;
+    }
+
+  }
+}
+
+NAME_ATTRIBUTE = new Attribute(
+  "cs-name",
+  false,
+);
+
+EXPERIENCE_ATTRIBUTE = new Attribute(
+  "cs-experience",
+  false,
+);
+
+HIT_POINTS_ATTRIBUTE = new Attribute(
+  "cs-hit-points",
+  false,
+);
+
+HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute(
+  "cs-hit-points-current",
+  false,
+);
+
+RACE_ATTRIBUTE = new Attribute(
+  "cs-race",
+  false,
+);
+
+
+LEVEL_FIGHTER_ATTRIBUTE = new Attribute(
+  "cs-level-fighter",
+  false,
+);
+
+LEVEL_MAGE_ATTRIBUTE = new Attribute(
+  "cs-level-mage",
+  false,
+);
+
+LEVEL_ROGUE_ATTRIBUTE = new Attribute(
+  "cs-level-rogue",
+  false,
+);
+
+LEVEL_WARLOCK_ATTRIBUTE = new Attribute(
+  "cs-level-warlock",
+  false,
+);
+
+CHARISMA_ATTRIBUTE = new Attribute(
+  "cs-charisma",
+  false,
+);
+
+CONSTITUTION_ATTRIBUTE = new Attribute(
+  "cs-constitution",
+  false,
+);
+
+DEXTERITY_ATTRIBUTE = new Attribute(
+  "cs-dexterity",
+  false,
+);
+
+INTELLIGENCE_ATTRIBUTE = new Attribute(
+  "cs-intelligence",
+  false,
+);
+
+STRENGTH_ATTRIBUTE = new Attribute(
+  "cs-strength",
+  false,
+);
+
+WISDOM_ATTRIBUTE = new Attribute(
+  "cs-wisdom",
+  false,
+);
+
+EQUIPMENT_ARMOR_ATTRIBUTE = new Attribute(
+  "cs-equipment-armor",
+  false,
+);
+
+EQUIPMENT_BOOTS_ATTRIBUTE = new Attribute(
+  "cs-equipment-boots",
+  false,
+);
+
+EQUIPMENT_CLOAK_ATTRIBUTE = new Attribute(
+  "cs-equipment-cloak",
+  false,
+);
+
+EQUIPMENT_GLOVES_ATTRIBUTE = new Attribute(
+  "cs-equipment-gloves",
+  false,
+);
+
+EQUIPMENT_NECK_ATTRIBUTE = new Attribute(
+  "cs-equipment-neck",
+  false,
+);
+
+EQUIPMENT_OTHER_1_ATTRIBUTE = new Attribute(
+  "cs-equipment-other-1",
+  false,
+);
+
+EQUIPMENT_OTHER_2_ATTRIBUTE = new Attribute(
+  "cs-equipment-other-2",
+  false,
+);
+
+EQUIPMENT_RING_1_ATTRIBUTE = new Attribute(
+  "cs-equipment-ring-1",
+  false,
+);
+
+EQUIPMENT_RING_2_ATTRIBUTE = new Attribute(
+  "cs-equipment-ring-2",
+  false,
+);
+
+EQUIPMENT_SHIELD_ATTRIBUTE = new Attribute(
+  "cs-equipment-shield",
+  false,
+);
+
+SILVER_ATTRIBUTE = new Attribute(
+  "cs-silver",
+  false,
+);
+
+GAME_DETAILS_ATTRIBUTE = new Attribute(
+  "cs-game-details",
+  false,
+);
+
+INVENTORY_ATTRIBUTE = new Attribute(
+  "cs-inventory",
+  true,
+);
+
+MISC_ATTRIBUTE = new Attribute(
+  "cs-misc",
+  true,
+);
+
+WEAPON_BONUS_TO_HIT_ATTRIBUTE = new Attribute(
+  "cs-weapon-bonus-to-hit",
+  true,
+);
+
+WEAPON_DAMAGE_ATTRIBUTE = new Attribute(
+  "cs-weapon-damage",
+  true,
+);
+
+WEAPON_FEATURES_ATTRIBUTE = new Attribute(
+  "cs-weapon-features",
+  true,
+);
+
+WEAPON_NAME_ATTRIBUTE = new Attribute(
+  "cs-weapon-name",
+  true,
+);
+
+MAGE_SPELL_NAME_ATTRIBUTE = new Attribute(
+  "cs-mage-spell-name",
+  true,
+  characterData => {
+    return characterData["cs-mage-spell-name"];
+  },
+  characterData => {
+    const tooltips = [];
+
+    for (let i = 0; i < characterData["cs-mage-spell-name"].length; i++) {
+      const spellName = characterData["cs-mage-spell-name"][i];
+
+      if (spellName == "") {
+        continue;
+      }
+
+      tooltips.push(getTooltipHtml(spellName, MAGE_SPELLS));
+    }
+    return tooltips;
+  }
+);
+
+WARLOCK_SPELL_NAME_ATTRIBUTE = new Attribute(
+  "cs-warlock-spell-name",
+  true,
+  characterData => {
+    return characterData["cs-warlock-spell-name"];
+  },
+  characterData => {
+    const tooltips = [];
+
+    for (let i = 0; i < characterData["cs-warlock-spell-name"].length; i++) {
+      const spellName = characterData["cs-warlock-spell-name"][i];
+
+      if (spellName == "") {
+        continue;
+      }
+
+      tooltips.push(getTooltipHtml(spellName, WARLOCK_SPELLS));
+    }
+    return tooltips;
+  }
+);
+
+SPELL_QTY_ATTRIBUTE = new Attribute(
+  "cs-spell-qty",
+  true,
+  characterData => {
+    return characterData["cs-spell-qty"];
+  },
+);
+
+CHARISMA_MODIFIER_ATTRIBUTE = new Attribute(
+  "cs-charisma-modifier",
+  false,
+  characterData =>  {
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])];
-  },
-  "cs-constitution-modifier": function(characterData) {
-    // table
+  }
+);
+
+CONSTITUTION_MODIFIER_ATTRIBUTE = new Attribute(
+  "cs-constitution-modifier",
+  false,
+  characterData =>  {
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])];
-  },
-  "cs-constitution-save-throw": function(characterData) {
+  }
+);
+
+CONSTITUTION_SAVE_THROW_ATTRIBUTE = new Attribute(
+  "cs-constitution-save-throw",
+  false,
+  characterData => {
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])]
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 2)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 4)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 3);
-  },
-  "cs-dexterity-modifier": function(characterData) {
-    // table
+  }
+);
+
+DEXTERITY_MODIFIER_ATTRIBUTE = new Attribute(
+  "cs-dexterity-modifier",
+  false,
+  characterData =>  {
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
-  },
-  "cs-dexterity-save-throw": function(characterData) {
+  }
+);
+
+DEXTERITY_SAVE_THROW_ATTRIBUTE = new Attribute(
+  "cs-dexterity-save-throw",
+  false,
+  characterData => {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])]
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 3)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 3)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4);
-  },
-  "cs-intelligence-modifier": function(characterData) {
-    // table
+  }
+);
+
+INTELLIGENCE_MODIFIER_ATTRIBUTE = new Attribute(
+  "cs-intelligence-modifier",
+  false,
+  characterData =>  {
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])];
-  },
-  "cs-strength-modifier": function(characterData) {
-    // table
+  }
+);
+
+STRENGTH_MODIFIER_ATTRIBUTE = new Attribute(
+  "cs-strength-modifier",
+  false,
+  characterData =>  {
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])];
-  },
-  "cs-wisdom-modifier": function(characterData) {
+  }
+);
+
+WISDOM_MODIFIER_ATTRIBUTE = new Attribute(
+  "cs-wisdom-modifier",
+  false,
+  characterData =>  {
     // table
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])];
-  },
-  "cs-wisdom-save-throw": function(characterData) {
+  }
+);
+
+WISDOW_SAVE_THROW_ATTRIBUTE = new Attribute(
+  "cs-wisdom-save-throw",
+  false,
+  characterData => {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
     return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])]
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
@@ -322,31 +611,48 @@ DERIVED_CHARACTERISTICS = {
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 3)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2);
   },
+);
 
-  // class-based calculations
-  "cs-total-hit-die": function(characterData) {
+TOTAL_HIT_DIE_ATTRIBUTE = new Attribute(
+  "cs-total-hit-die",
+  false,
+  characterData => {
     // FGT + MAG + ROG + WAR
     return getNumericalCharacteristic(characterData["cs-level-fighter"])
       + getNumericalCharacteristic(characterData["cs-level-mage"])
       + getNumericalCharacteristic(characterData["cs-level-rogue"])
       + getNumericalCharacteristic(characterData["cs-level-warlock"]);
-  },
+  }
+);
 
-  "cs-base-attack-bonus": function(characterData) {
+BASE_ATTACK_BONUS_ATTRIBUTE = new Attribute(
+  "cs-base-attack-bonus",
+  false,
+  characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
     return getNumericalCharacteristic(characterData["cs-level-fighter"])
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2);
-  },
-  "cs-number-of-attacks": function(characterData) {
+  }
+);
+
+NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute(
+  "cs-number-of-attacks",
+  false,
+  characterData => {
     // max(1 + (FGT-1)/4, 1)
     return Math.max(
       Math.floor(1 + (getNumericalCharacteristic(characterData["cs-level-fighter"]) - 1) / 4),
       1,
     );
-  },
-  "cs-allowed-armor": function(characterData) {
+  }
+);
+
+ALLOWED_ARMOR_ATTRIBUTE = new Attribute(
+  "cs-allowed-armor",
+  false,
+  characterData => {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
     if (getNumericalCharacteristic(characterData["cs-level-fighter"]) > 0) {
       return "Heavy + Shields";
@@ -357,8 +663,13 @@ DERIVED_CHARACTERISTICS = {
     } else {
       return "None";
     }
-  },
-  "cs-allowed-weapons": function(characterData) {
+  }
+);
+
+ALLOWED_WEAPONS_ATTRIBUTE = new Attribute(
+  "cs-allowed-weapons",
+  false,
+  characterData => {
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
     if (getNumericalCharacteristic(characterData["cs-level-fighter"]) > 0) {
       return "Martial";
@@ -369,37 +680,138 @@ DERIVED_CHARACTERISTICS = {
     } else {
       return "Simple";
     }
-  },
-  "cs-skill-check-bonus": function(characterData) {
+  }
+);
+
+SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute(
+  "cs-skill-check-bonus",
+  false,
+  characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
     return Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
       + getNumericalCharacteristic(characterData["cs-level-rogue"])
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
       + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4);
-  },
-  "cs-skill-proficiencies": function(characterData) {
+  }
+);
+
+SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute(
+  "cs-skill-proficiencies",
+  false,
+  characterData => {
     // table
     return SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-mage"])]["mage"]
       + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["rogue"]
       + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["fighter"]
       + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["warlock"];
-  },
+  }
+);
 
-  // spell casters
-  "cs-max-spells-learnable-per-degree": function(characterData) {
+SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE = new Attribute(
+  "cs-max-spells-learnable-per-degree",
+  false,
+  characterData => {
     // 5 + INT
     return 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])];
-  },
-  "cs-max-minor-patrons": function(characterData) {
+  }
+);
+
+MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute(
+  "cs-max-minor-patrons",
+  false,
+  characterData => {
     // min(1 + CHA, (WAR+1)/2)
     return Math.min(
       1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])],
       Math.floor((getNumericalCharacteristic(characterData["cs-level-warlock"]) + 1) / 2)
     );
-  },
+  }
+);
 
-  // AC
-  "cs-armor-class": function(characterData) {
+SLOTS_W1_ATTRIBUTE = new Attribute(
+  "cs-slots-w1",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][1];
+  }
+);
+
+SLOTS_W2_ATTRIBUTE = new Attribute(
+  "cs-slots-w2",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][2];
+  }
+);
+
+SLOTS_W3_ATTRIBUTE = new Attribute(
+  "cs-slots-w3",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][3];
+  }
+);
+
+SLOTS_W4_ATTRIBUTE = new Attribute(
+  "cs-slots-w4",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][4];
+  }
+);
+
+SLOTS_W5_ATTRIBUTE = new Attribute(
+  "cs-slots-w5",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][5];
+  }
+);
+
+SLOTS_M1_ATTRIBUTE = new Attribute(
+  "cs-slots-m1",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][1];
+  }
+);
+
+SLOTS_M2_ATTRIBUTE = new Attribute(
+  "cs-slots-m2",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][2];
+  }
+);
+
+SLOTS_M3_ATTRIBUTE = new Attribute(
+  "cs-slots-m3",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][3];
+  }
+);
+
+SLOTS_M4_ATTRIBUTE = new Attribute(
+  "cs-slots-m4",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][4];
+  }
+);
+
+SLOTS_M5_ATTRIBUTE = new Attribute(
+  "cs-slots-m5",
+  false,
+  characterData =>  {
+    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][5];
+  }
+);
+
+ARMOR_CLASS_ATTRIBUTE = new Attribute(
+  "cs-armor-class",
+  false,
+  characterData => {
     let equipmentAC = 0;
     let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
     for (let prop in characterData) {
@@ -428,39 +840,104 @@ DERIVED_CHARACTERISTICS = {
 
     return 10 + dexMod + equipmentAC;
   },
+  characterData => {
+    let equipmentAC = 0;
+    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
+    for (let prop in characterData) {
+      if (!prop.startsWith("cs-equipment-") || characterData[prop] === "") {
+        continue;
+      }
 
-  // spell slots
-  "cs-slots-w1": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][1];
-  },
-  "cs-slots-w2": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][2];
-  },
-  "cs-slots-w3": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][3];
-  },
-  "cs-slots-w4": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][4];
-  },
-  "cs-slots-w5": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][5];
-  },
-  "cs-slots-m1": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][1];
-  },
-  "cs-slots-m2": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][2];
-  },
-  "cs-slots-m3": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][3];
-  },
-  "cs-slots-m4": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][4];
-  },
-  "cs-slots-m5": function(characterData) {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][5];
-  },
-};
+      const armor = characterData[prop].match(EQUIPMENT_RE).groups;
+      const armorType = armor.armorType.trim().toLowerCase();
+      equipmentAC += parseInt(armor.acMod || 0);
+
+      if (!ARMOR.hasOwnProperty(armorType)) {
+        continue;
+      }
+
+      if (ARMOR[armorType].hasOwnProperty("max_dex_mod")) {
+        dexMod = Math.min(dexMod, ARMOR[armorType]["max_dex_mod"]);
+      }
+
+      if (typeof ARMOR[armorType]["ac"] === "function") {
+        equipmentAC += ARMOR[armorType]["ac"](characterData);
+      } else {
+        equipmentAC += ARMOR[armorType]["ac"];
+      }
+    }
+
+    return `<h1>Armor Class</h1>${dexMod} from dex<br/>${equipmentAC} from equipment`;
+  }
+);
+
+ALL_ATTRIBUTES = [
+  NAME_ATTRIBUTE,
+  EXPERIENCE_ATTRIBUTE,
+  HIT_POINTS_ATTRIBUTE,
+  HIT_POINTS_CURRENT_ATTRIBUTE,
+  RACE_ATTRIBUTE,
+  LEVEL_FIGHTER_ATTRIBUTE,
+  LEVEL_MAGE_ATTRIBUTE,
+  LEVEL_ROGUE_ATTRIBUTE,
+  LEVEL_WARLOCK_ATTRIBUTE,
+  CHARISMA_ATTRIBUTE,
+  CONSTITUTION_ATTRIBUTE,
+  DEXTERITY_ATTRIBUTE,
+  INTELLIGENCE_ATTRIBUTE,
+  STRENGTH_ATTRIBUTE,
+  WISDOM_ATTRIBUTE,
+  EQUIPMENT_ARMOR_ATTRIBUTE,
+  EQUIPMENT_BOOTS_ATTRIBUTE,
+  EQUIPMENT_CLOAK_ATTRIBUTE,
+  EQUIPMENT_GLOVES_ATTRIBUTE,
+  EQUIPMENT_NECK_ATTRIBUTE,
+  EQUIPMENT_OTHER_1_ATTRIBUTE,
+  EQUIPMENT_OTHER_2_ATTRIBUTE,
+  EQUIPMENT_RING_1_ATTRIBUTE,
+  EQUIPMENT_RING_2_ATTRIBUTE,
+  EQUIPMENT_SHIELD_ATTRIBUTE,
+  SILVER_ATTRIBUTE,
+  GAME_DETAILS_ATTRIBUTE,
+  INVENTORY_ATTRIBUTE,
+  MISC_ATTRIBUTE,
+  WEAPON_BONUS_TO_HIT_ATTRIBUTE,
+  WEAPON_DAMAGE_ATTRIBUTE,
+  WEAPON_FEATURES_ATTRIBUTE,
+  WEAPON_NAME_ATTRIBUTE,
+  MAGE_SPELL_NAME_ATTRIBUTE,
+  WARLOCK_SPELL_NAME_ATTRIBUTE,
+  SPELL_QTY_ATTRIBUTE,
+  CHARISMA_MODIFIER_ATTRIBUTE,
+  CONSTITUTION_MODIFIER_ATTRIBUTE,
+  CONSTITUTION_SAVE_THROW_ATTRIBUTE,
+  DEXTERITY_MODIFIER_ATTRIBUTE,
+  DEXTERITY_SAVE_THROW_ATTRIBUTE,
+  INTELLIGENCE_MODIFIER_ATTRIBUTE,
+  STRENGTH_MODIFIER_ATTRIBUTE,
+  WISDOM_MODIFIER_ATTRIBUTE,
+  WISDOW_SAVE_THROW_ATTRIBUTE,
+  TOTAL_HIT_DIE_ATTRIBUTE,
+  BASE_ATTACK_BONUS_ATTRIBUTE,
+  NUMBER_OF_ATTACKS_ATTRIBUTE,
+  ALLOWED_ARMOR_ATTRIBUTE,
+  ALLOWED_WEAPONS_ATTRIBUTE,
+  SKILL_CHECK_BONUS_ATTRIBUTE,
+  SKILL_PROFICIENCIES_ATTRIBUTE,
+  SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE,
+  MAX_MINOR_PATRONS_ATTRIBUTE,
+  SLOTS_W1_ATTRIBUTE,
+  SLOTS_W2_ATTRIBUTE,
+  SLOTS_W3_ATTRIBUTE,
+  SLOTS_W4_ATTRIBUTE,
+  SLOTS_W5_ATTRIBUTE,
+  SLOTS_M1_ATTRIBUTE,
+  SLOTS_M2_ATTRIBUTE,
+  SLOTS_M3_ATTRIBUTE,
+  SLOTS_M4_ATTRIBUTE,
+  SLOTS_M5_ATTRIBUTE,
+  ARMOR_CLASS_ATTRIBUTE,
+];
 
 function getNumericalCharacteristic(val) {
   return parseInt(val || "0");
@@ -548,9 +1025,35 @@ function showAppropriateSpecifics(characterData) {
 
 // autocalculate and populate derived characteristics
 function populateDerivedCharacteristics(characterData) {
-  for (let prop in DERIVED_CHARACTERISTICS) {
-    document.getElementById(prop).value = DERIVED_CHARACTERISTICS[prop](characterData);
-  }
+  CHARISMA_MODIFIER_ATTRIBUTE.populateField(characterData);
+  CONSTITUTION_MODIFIER_ATTRIBUTE.populateField(characterData);
+  CONSTITUTION_SAVE_THROW_ATTRIBUTE.populateField(characterData);
+  DEXTERITY_MODIFIER_ATTRIBUTE.populateField(characterData);
+  DEXTERITY_SAVE_THROW_ATTRIBUTE.populateField(characterData);
+  INTELLIGENCE_MODIFIER_ATTRIBUTE.populateField(characterData);
+  STRENGTH_MODIFIER_ATTRIBUTE.populateField(characterData);
+  WISDOM_MODIFIER_ATTRIBUTE.populateField(characterData);
+  WISDOW_SAVE_THROW_ATTRIBUTE.populateField(characterData);
+  TOTAL_HIT_DIE_ATTRIBUTE.populateField(characterData);
+  BASE_ATTACK_BONUS_ATTRIBUTE.populateField(characterData);
+  NUMBER_OF_ATTACKS_ATTRIBUTE.populateField(characterData);
+  ALLOWED_ARMOR_ATTRIBUTE.populateField(characterData);
+  ALLOWED_WEAPONS_ATTRIBUTE.populateField(characterData);
+  SKILL_CHECK_BONUS_ATTRIBUTE.populateField(characterData);
+  SKILL_PROFICIENCIES_ATTRIBUTE.populateField(characterData);
+  SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE.populateField(characterData);
+  MAX_MINOR_PATRONS_ATTRIBUTE.populateField(characterData);
+  SLOTS_W1_ATTRIBUTE.populateField(characterData);
+  SLOTS_W2_ATTRIBUTE.populateField(characterData);
+  SLOTS_W3_ATTRIBUTE.populateField(characterData);
+  SLOTS_W4_ATTRIBUTE.populateField(characterData);
+  SLOTS_W5_ATTRIBUTE.populateField(characterData);
+  SLOTS_M1_ATTRIBUTE.populateField(characterData);
+  SLOTS_M2_ATTRIBUTE.populateField(characterData);
+  SLOTS_M3_ATTRIBUTE.populateField(characterData);
+  SLOTS_M4_ATTRIBUTE.populateField(characterData);
+  SLOTS_M5_ATTRIBUTE.populateField(characterData);
+  ARMOR_CLASS_ATTRIBUTE.populateField(characterData);
 }
 
 function clearSheet() {
@@ -578,22 +1081,53 @@ function loadFromName(name) {
   // populate page
   document.getElementById("cs-name-heading").textContent = name;
 
-  for (let i = 0; i < CHARACTERISTICS.length; i++) {
-    document.getElementById(CHARACTERISTICS[i]).value = characterData[CHARACTERISTICS[i]];
+  // upgrade character sheet
+  if (characterData["version"] == "0.2.1") {
+    characterData["cs-warlock-spell-name"] = characterData["cs-spell-name"].slice(0, 10);
+    characterData["cs-mage-spell-name"] = characterData["cs-spell-name"].slice(10);
+    delete characterData["cs-spell-name"];
+    characterData["VERSION"] = VERSION;
+  } else if (characterData["version"] != VERSION) {
+    alert(`can't upgrade from version ${characterData["version"]} to ${VERSION}`);
+    throw new Error(`can't upgrade from version ${characterData["version"]} to ${VERSION}`);
   }
 
-  for (let i = 0; i < COLLECTIONS.length; i++) {
-    const elementDatas = characterData[COLLECTIONS[i]] || [];
-    const elements = document.getElementsByClassName(COLLECTIONS[i]);
-    for (let j = 0; j < elementDatas.length; j++) {
-      elements[j].value = elementDatas[j];
-      // Trigger tooltip generation, UI display for mage spells
-      if (COLLECTIONS[i] == "cs-spell-name" && elements[j].tagName == "SELECT" && elementDatas[j].length > 0) {
-        elements[j].parentElement.getElementsByClassName("select-selected")[0].innerHTML = elementDatas[j];
-        elements[j].dispatchEvent(new Event("initial_load"));
-      }
-    }
-  }
+  NAME_ATTRIBUTE.populateField(characterData);
+  EXPERIENCE_ATTRIBUTE.populateField(characterData);
+  HIT_POINTS_ATTRIBUTE.populateField(characterData);
+  HIT_POINTS_CURRENT_ATTRIBUTE.populateField(characterData);
+  RACE_ATTRIBUTE.populateField(characterData);
+  LEVEL_FIGHTER_ATTRIBUTE.populateField(characterData);
+  LEVEL_MAGE_ATTRIBUTE.populateField(characterData);
+  LEVEL_ROGUE_ATTRIBUTE.populateField(characterData);
+  LEVEL_WARLOCK_ATTRIBUTE.populateField(characterData);
+  CHARISMA_ATTRIBUTE.populateField(characterData);
+  CONSTITUTION_ATTRIBUTE.populateField(characterData);
+  DEXTERITY_ATTRIBUTE.populateField(characterData);
+  INTELLIGENCE_ATTRIBUTE.populateField(characterData);
+  STRENGTH_ATTRIBUTE.populateField(characterData);
+  WISDOM_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_ARMOR_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_BOOTS_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_CLOAK_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_GLOVES_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_NECK_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_OTHER_1_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_OTHER_2_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_RING_1_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_RING_2_ATTRIBUTE.populateField(characterData);
+  EQUIPMENT_SHIELD_ATTRIBUTE.populateField(characterData);
+  SILVER_ATTRIBUTE.populateField(characterData);
+  GAME_DETAILS_ATTRIBUTE.populateField(characterData);
+  INVENTORY_ATTRIBUTE.populateField(characterData);
+  MISC_ATTRIBUTE.populateField(characterData);
+  WEAPON_BONUS_TO_HIT_ATTRIBUTE.populateField(characterData);
+  WEAPON_DAMAGE_ATTRIBUTE.populateField(characterData);
+  WEAPON_FEATURES_ATTRIBUTE.populateField(characterData);
+  WEAPON_NAME_ATTRIBUTE.populateField(characterData);
+  MAGE_SPELL_NAME_ATTRIBUTE.populateField(characterData);
+  WARLOCK_SPELL_NAME_ATTRIBUTE.populateField(characterData);
+  SPELL_QTY_ATTRIBUTE.populateField(characterData);
 
   populateDerivedCharacteristics(characterData);
   showAppropriateSpecifics(characterData);
@@ -681,23 +1215,8 @@ function exportData() {
     "version": VERSION,
   };
 
-  for (let i = 0; i < CHARACTERISTICS.length; i++) {
-    const data = document.getElementById(CHARACTERISTICS[i]).value;
-    characterData[CHARACTERISTICS[i]] = data;
-  }
-
-  for (let i = 0; i < COLLECTIONS.length; i++) {
-    characterData[COLLECTIONS[i]] = [];
-  }
-
-  for (let i = 0; i < COLLECTIONS.length; i++) {
-    const elements = document.getElementsByClassName(COLLECTIONS[i]);
-    const arr = [];
-    for (let j = 0; j < elements.length; j++) {
-      const data = elements[j].value;
-      arr.push(data);
-    }
-    characterData[COLLECTIONS[i]] = arr;
+  for (let i = 0; i < ALL_ATTRIBUTES.length; i++) {
+    characterData[ALL_ATTRIBUTES[i].divName] = ALL_ATTRIBUTES[i].getDisplayedData();
   }
 
   console.log("Character updated:", characterData);
@@ -1115,11 +1634,6 @@ window.onload = function() {
   const dice = document.getElementsByClassName("die");
   for (let i = 0; i < dice.length; i++) {
     dice[i].addEventListener("click", rollDice);
-  }
-
-  // make derived fields readonly
-  for (let prop in DERIVED_CHARACTERISTICS) {
-    document.getElementById(prop).readOnly = true;
   }
 
   showCharacterSwitcher();
