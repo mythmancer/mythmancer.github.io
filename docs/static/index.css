@@ -502,11 +502,11 @@ body.character-sheet {
     display: none !important;
 }
 
-.spell-name:hover .tooltiptext {
+.has-tooltip:hover .tooltiptext {
     visibility: visible;
 }
 
-.spell-name .tooltiptext {
+.has-tooltip .tooltiptext {
     visibility: hidden;
     top: 10%;
     left: calc(50% - 400px);
