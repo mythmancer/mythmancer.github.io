@@ -264,7 +264,7 @@ function setTooltip(div, innerHTML) {
 }
 
 class Attribute {
-  constructor(divName, isCollection, getTextDisplay=null, getTooltip=(characterData => ""), getMods=(characterData => [])) {
+  constructor(divName, isCollection, getTextDisplay=null, getTooltip=(characterData => "")) {
     this.divName = divName;
     this.isCollection = isCollection;
     this.isReadOnly = (getTextDisplay != null);
@@ -272,7 +272,6 @@ class Attribute {
       return characterData[this.divName];
     });
     this.getTooltip = getTooltip;
-    this.getMods = getMods;
   }
 
   populateField(characterModel) {
@@ -335,7 +334,6 @@ RACE_ATTRIBUTE = new Attribute(
   "cs-race",
   false,
 );
-
 
 LEVEL_FIGHTER_ATTRIBUTE = new Attribute(
   "cs-level-fighter",
@@ -477,6 +475,11 @@ WEAPON_NAME_ATTRIBUTE = new Attribute(
   true,
 );
 
+SPELL_QTY_ATTRIBUTE = new Attribute(
+  "cs-spell-qty",
+  true,
+);
+
 MAGE_SPELL_NAME_ATTRIBUTE = new Attribute(
   "cs-mage-spell-name",
   true,
@@ -509,14 +512,6 @@ WARLOCK_SPELL_NAME_ATTRIBUTE = new Attribute(
     }
     return tooltips;
   }
-);
-
-SPELL_QTY_ATTRIBUTE = new Attribute(
-  "cs-spell-qty",
-  true,
-  characterData => {
-    return characterData["cs-spell-qty"];
-  },
 );
 
 CHARISMA_MODIFIER_ATTRIBUTE = new Attribute(
@@ -864,22 +859,25 @@ ARMOR_CLASS_ATTRIBUTE = new Attribute(
   }
 );
 
-ALL_ATTRIBUTES = [
+SAVED_ATTRIBUTES = [
   NAME_ATTRIBUTE,
   EXPERIENCE_ATTRIBUTE,
   HIT_POINTS_ATTRIBUTE,
   HIT_POINTS_CURRENT_ATTRIBUTE,
   RACE_ATTRIBUTE,
+
   LEVEL_FIGHTER_ATTRIBUTE,
   LEVEL_MAGE_ATTRIBUTE,
   LEVEL_ROGUE_ATTRIBUTE,
   LEVEL_WARLOCK_ATTRIBUTE,
+
   CHARISMA_ATTRIBUTE,
   CONSTITUTION_ATTRIBUTE,
   DEXTERITY_ATTRIBUTE,
   INTELLIGENCE_ATTRIBUTE,
   STRENGTH_ATTRIBUTE,
   WISDOM_ATTRIBUTE,
+
   EQUIPMENT_ARMOR_ATTRIBUTE,
   EQUIPMENT_BOOTS_ATTRIBUTE,
   EQUIPMENT_CLOAK_ATTRIBUTE,
@@ -890,46 +888,21 @@ ALL_ATTRIBUTES = [
   EQUIPMENT_RING_1_ATTRIBUTE,
   EQUIPMENT_RING_2_ATTRIBUTE,
   EQUIPMENT_SHIELD_ATTRIBUTE,
-  SILVER_ATTRIBUTE,
+
   GAME_DETAILS_ATTRIBUTE,
+
   INVENTORY_ATTRIBUTE,
+  SILVER_ATTRIBUTE,
   MISC_ATTRIBUTE,
+
   WEAPON_BONUS_TO_HIT_ATTRIBUTE,
   WEAPON_DAMAGE_ATTRIBUTE,
   WEAPON_FEATURES_ATTRIBUTE,
   WEAPON_NAME_ATTRIBUTE,
+
   MAGE_SPELL_NAME_ATTRIBUTE,
   WARLOCK_SPELL_NAME_ATTRIBUTE,
   SPELL_QTY_ATTRIBUTE,
-  CHARISMA_MODIFIER_ATTRIBUTE,
-  CONSTITUTION_MODIFIER_ATTRIBUTE,
-  CONSTITUTION_SAVE_THROW_ATTRIBUTE,
-  DEXTERITY_MODIFIER_ATTRIBUTE,
-  DEXTERITY_SAVE_THROW_ATTRIBUTE,
-  INTELLIGENCE_MODIFIER_ATTRIBUTE,
-  STRENGTH_MODIFIER_ATTRIBUTE,
-  WISDOM_MODIFIER_ATTRIBUTE,
-  WISDOW_SAVE_THROW_ATTRIBUTE,
-  TOTAL_HIT_DIE_ATTRIBUTE,
-  BASE_ATTACK_BONUS_ATTRIBUTE,
-  NUMBER_OF_ATTACKS_ATTRIBUTE,
-  ALLOWED_ARMOR_ATTRIBUTE,
-  ALLOWED_WEAPONS_ATTRIBUTE,
-  SKILL_CHECK_BONUS_ATTRIBUTE,
-  SKILL_PROFICIENCIES_ATTRIBUTE,
-  SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE,
-  MAX_MINOR_PATRONS_ATTRIBUTE,
-  SLOTS_W1_ATTRIBUTE,
-  SLOTS_W2_ATTRIBUTE,
-  SLOTS_W3_ATTRIBUTE,
-  SLOTS_W4_ATTRIBUTE,
-  SLOTS_W5_ATTRIBUTE,
-  SLOTS_M1_ATTRIBUTE,
-  SLOTS_M2_ATTRIBUTE,
-  SLOTS_M3_ATTRIBUTE,
-  SLOTS_M4_ATTRIBUTE,
-  SLOTS_M5_ATTRIBUTE,
-  ARMOR_CLASS_ATTRIBUTE,
 ];
 
 function getNumericalCharacteristic(val) {
@@ -1211,8 +1184,8 @@ function exportData() {
     "version": VERSION,
   };
 
-  for (let i = 0; i < ALL_ATTRIBUTES.length; i++) {
-    characterData[ALL_ATTRIBUTES[i].divName] = ALL_ATTRIBUTES[i].getDisplayedData();
+  for (let i = 0; i < SAVED_ATTRIBUTES.length; i++) {
+    characterData[SAVED_ATTRIBUTES[i].divName] = SAVED_ATTRIBUTES[i].getDisplayedData();
   }
 
   console.log("Character updated:", characterData);
