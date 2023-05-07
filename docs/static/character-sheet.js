@@ -1531,29 +1531,10 @@ function loadMageSpellbook(spellDb) {
 
 function updateCustomSpellTooltip(spellInputDiv) {
   const spellName = spellInputDiv.value;
-
-  if (spellName == "") {
-    return;
-  }
-
   const parentTable = spellInputDiv.parentElement.parentElement.parentElement.parentElement.parentElement;
-
   const spellDb = parentTable.classList.contains("for-warlock") ? WARLOCK_SPELLS : MAGE_SPELLS;
 
-  const element = document.createElement("div");
-  element.classList.add("tooltiptext");
-
-  element.innerHTML = getTooltipHtml(spellName, spellDb);
-
-
-  // remove old tooltip and add new one
-  const oldTooltip = spellInputDiv.parentElement.getElementsByClassName("tooltiptext")[0];
-  if (oldTooltip) {
-    spellInputDiv.parentElement.removeChild(oldTooltip);
-  }
-
-  spellInputDiv.parentElement.appendChild(element);
-  spellInputDiv.parentElement.classList.add("has-tooltip");
+  setTooltip(spellInputDiv, getTooltipHtml(spellName, spellDb));
 }
 
 function getJSON(url, callback) {
