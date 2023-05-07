@@ -280,7 +280,6 @@ class Attribute {
     const displayData = this.getDisplayData(characterModel);
     const displayText = displayData.display;
     const tooltipHTML = displayData.tooltip;
-    console.log(displayData, displayText, tooltipHTML);
     if (this.isCollection) {
       const divs = document.getElementsByClassName(this.divName);
       for (let i = 0; i < divs.length; i++) {
