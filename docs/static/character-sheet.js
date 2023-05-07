@@ -264,29 +264,33 @@ function setTooltip(div, innerHTML) {
 }
 
 class Attribute {
-  constructor(divName, isCollection, getTextDisplay=null, getTooltip=(characterData => "")) {
+  constructor(divName, isCollection, getDisplayData=null) {
     this.divName = divName;
     this.isCollection = isCollection;
-    this.isReadOnly = (getTextDisplay != null);
-    this.getTextDisplay = getTextDisplay || (characterData => {
-      return characterData[this.divName];
+    this.isReadOnly = (getDisplayData != null);
+    this.getDisplayData = getDisplayData || (characterData => {
+      return {
+        "display": characterData[this.divName],
+        "tooltip": this.isCollection ? Array(characterData[this.divName].length).fill("") : "",
+      };
     });
-    this.getTooltip = getTooltip;
   }
 
   populateField(characterModel) {
-    const text = this.getTextDisplay(characterModel);
-    const tooltip = this.getTooltip(characterModel);
+    const displayData = this.getDisplayData(characterModel);
+    const displayText = displayData.display;
+    const tooltipHTML = displayData.tooltip;
+    console.log(displayData, displayText, tooltipHTML);
     if (this.isCollection) {
       const divs = document.getElementsByClassName(this.divName);
       for (let i = 0; i < divs.length; i++) {
-        setDivValue(divs[i], text[i]);
-        setTooltip(divs[i], tooltip[i]);
+        setDivValue(divs[i], displayText[i]);
+        setTooltip(divs[i], tooltipHTML[i]);
       }
     } else {
       const div = document.getElementById(this.divName);
-      setDivValue(div, text);
-      setTooltip(div, tooltip);
+      setDivValue(div, displayText);
+      setTooltip(div, tooltipHTML);
     }
   }
 
@@ -302,7 +306,6 @@ class Attribute {
       const div = document.getElementById(this.divName);
       return div.value;
     }
-
   }
 }
 
@@ -484,25 +487,23 @@ MAGE_SPELL_NAME_ATTRIBUTE = new Attribute(
   "cs-mage-spell-name",
   true,
   characterData => {
-    return characterData["cs-mage-spell-name"];
-  },
-  characterData => {
     const tooltips = [];
 
     for (let i = 0; i < characterData["cs-mage-spell-name"].length; i++) {
       const spellName = characterData["cs-mage-spell-name"][i];
       tooltips.push(spellName ? getTooltipHtml(spellName, MAGE_SPELLS) : "");
     }
-    return tooltips;
-  }
+
+    return {
+      "display": characterData["cs-mage-spell-name"],
+      "tooltip": tooltips,
+    };
+  },
 );
 
 WARLOCK_SPELL_NAME_ATTRIBUTE = new Attribute(
   "cs-warlock-spell-name",
   true,
-  characterData => {
-    return characterData["cs-warlock-spell-name"];
-  },
   characterData => {
     const tooltips = [];
 
@@ -510,15 +511,22 @@ WARLOCK_SPELL_NAME_ATTRIBUTE = new Attribute(
       const spellName = characterData["cs-warlock-spell-name"][i];
       tooltips.push(spellName ? getTooltipHtml(spellName, WARLOCK_SPELLS) : "");
     }
-    return tooltips;
-  }
+
+    return {
+      "display": characterData["cs-warlock-spell-name"],
+      "tooltip": tooltips,
+    };
+  },
 );
 
 CHARISMA_MODIFIER_ATTRIBUTE = new Attribute(
   "cs-charisma-modifier",
   false,
   characterData =>  {
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])];
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -526,7 +534,10 @@ CONSTITUTION_MODIFIER_ATTRIBUTE = new Attribute(
   "cs-constitution-modifier",
   false,
   characterData =>  {
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])];
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -534,11 +545,14 @@ CONSTITUTION_SAVE_THROW_ATTRIBUTE = new Attribute(
   "cs-constitution-save-throw",
   false,
   characterData => {
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])]
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 2)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 4)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 3);
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-constitution"])]
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 3),
+      "tooltip": "",
+    };
   }
 );
 
@@ -546,7 +560,10 @@ DEXTERITY_MODIFIER_ATTRIBUTE = new Attribute(
   "cs-dexterity-modifier",
   false,
   characterData =>  {
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -555,11 +572,14 @@ DEXTERITY_SAVE_THROW_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])]
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 3)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 3)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4);
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])]
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4),
+      "tooltip": "",
+    };
   }
 );
 
@@ -567,7 +587,10 @@ INTELLIGENCE_MODIFIER_ATTRIBUTE = new Attribute(
   "cs-intelligence-modifier",
   false,
   characterData =>  {
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])];
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -575,7 +598,10 @@ STRENGTH_MODIFIER_ATTRIBUTE = new Attribute(
   "cs-strength-modifier",
   false,
   characterData =>  {
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])];
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-strength"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -584,7 +610,10 @@ WISDOM_MODIFIER_ATTRIBUTE = new Attribute(
   false,
   characterData =>  {
     // table
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])];
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -593,11 +622,14 @@ WISDOW_SAVE_THROW_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
-    return ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])]
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 3)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2);
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-wisdom"])]
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2),
+      "tooltip": "",
+    };
   },
 );
 
@@ -606,10 +638,13 @@ TOTAL_HIT_DIE_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // FGT + MAG + ROG + WAR
-    return getNumericalCharacteristic(characterData["cs-level-fighter"])
-      + getNumericalCharacteristic(characterData["cs-level-mage"])
-      + getNumericalCharacteristic(characterData["cs-level-rogue"])
-      + getNumericalCharacteristic(characterData["cs-level-warlock"]);
+    return {
+      "display": getNumericalCharacteristic(characterData["cs-level-fighter"])
+        + getNumericalCharacteristic(characterData["cs-level-mage"])
+        + getNumericalCharacteristic(characterData["cs-level-rogue"])
+        + getNumericalCharacteristic(characterData["cs-level-warlock"]),
+      "tooltip": "",
+    };
   }
 );
 
@@ -618,10 +653,13 @@ BASE_ATTACK_BONUS_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
-    return getNumericalCharacteristic(characterData["cs-level-fighter"])
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2);
+    return {
+      "display": getNumericalCharacteristic(characterData["cs-level-fighter"])
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-rogue"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 2),
+      "tooltip": "",
+    };
   }
 );
 
@@ -630,10 +668,13 @@ NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // max(1 + (FGT-1)/4, 1)
-    return Math.max(
-      Math.floor(1 + (getNumericalCharacteristic(characterData["cs-level-fighter"]) - 1) / 4),
-      1,
-    );
+    return {
+      "display": Math.max(
+        Math.floor(1 + (getNumericalCharacteristic(characterData["cs-level-fighter"]) - 1) / 4),
+        1,
+      ),
+      "tooltip": "",
+    };
   }
 );
 
@@ -642,15 +683,22 @@ ALLOWED_ARMOR_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
+    let allowedArmor;
+
     if (getNumericalCharacteristic(characterData["cs-level-fighter"]) > 0) {
-      return "Heavy + Shields";
+      allowedArmor = "Heavy + Shields";
     } else if (getNumericalCharacteristic(characterData["cs-level-warlock"]) > 0) {
-      return "Medium";
+      allowedArmor = "Medium";
     } else if (getNumericalCharacteristic(characterData["cs-level-rogue"]) > 0) {
-      return "Light";
+      allowedArmor = "Light";
     } else {
-      return "None";
+      allowedArmor = "None";
     }
+
+    return {
+      "display": allowedArmor,
+      "tooltip": "",
+    };
   }
 );
 
@@ -659,15 +707,22 @@ ALLOWED_WEAPONS_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
+    let allowedWeapons;
+
     if (getNumericalCharacteristic(characterData["cs-level-fighter"]) > 0) {
-      return "Martial";
+      allowedWeapons = "Martial";
     } else if (getNumericalCharacteristic(characterData["cs-level-warlock"]) > 0) {
-      return "Standard";
+      allowedWeapons = "Standard";
     } else if (getNumericalCharacteristic(characterData["cs-level-rogue"]) > 0) {
-      return "Standard";
+      allowedWeapons = "Standard";
     } else {
-      return "Simple";
+      allowedWeapons = "Simple";
     }
+
+    return {
+      "display": allowedWeapons,
+      "tooltip": "",
+    };
   }
 );
 
@@ -676,10 +731,13 @@ SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
-    return Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
-      + getNumericalCharacteristic(characterData["cs-level-rogue"])
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
-      + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4);
+    return {
+      "display": Math.floor(getNumericalCharacteristic(characterData["cs-level-mage"]) / 2)
+        + getNumericalCharacteristic(characterData["cs-level-rogue"])
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-fighter"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["cs-level-warlock"]) / 4),
+      "tooltip": "",
+    };
   }
 );
 
@@ -688,10 +746,13 @@ SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // table
-    return SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-mage"])]["mage"]
-      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["rogue"]
-      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["fighter"]
-      + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["warlock"];
+    return {
+      "display": SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-mage"])]["mage"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["rogue"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["fighter"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["cs-level-rogue"])]["warlock"],
+      "tooltip": "",
+    };
   }
 );
 
@@ -700,7 +761,10 @@ SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // 5 + INT
-    return 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])];
+    return {
+      "display": 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-intelligence"])],
+      "tooltip": "",
+    };
   }
 );
 
@@ -709,10 +773,13 @@ MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute(
   false,
   characterData => {
     // min(1 + CHA, (WAR+1)/2)
-    return Math.min(
-      1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])],
-      Math.floor((getNumericalCharacteristic(characterData["cs-level-warlock"]) + 1) / 2)
-    );
+    return {
+      "display": Math.min(
+        1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-charisma"])],
+        Math.floor((getNumericalCharacteristic(characterData["cs-level-warlock"]) + 1) / 2)
+      ),
+      "tooltip": "",
+    };
   }
 );
 
@@ -720,7 +787,10 @@ SLOTS_W1_ATTRIBUTE = new Attribute(
   "cs-slots-w1",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][1];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][1],
+      "tooltip": "",
+    };
   }
 );
 
@@ -728,7 +798,10 @@ SLOTS_W2_ATTRIBUTE = new Attribute(
   "cs-slots-w2",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][2];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][2],
+      "tooltip": "",
+    };
   }
 );
 
@@ -736,7 +809,10 @@ SLOTS_W3_ATTRIBUTE = new Attribute(
   "cs-slots-w3",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][3];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][3],
+      "tooltip": "",
+    };
   }
 );
 
@@ -744,7 +820,10 @@ SLOTS_W4_ATTRIBUTE = new Attribute(
   "cs-slots-w4",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][4];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][4],
+      "tooltip": "",
+    };
   }
 );
 
@@ -752,7 +831,10 @@ SLOTS_W5_ATTRIBUTE = new Attribute(
   "cs-slots-w5",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][5];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-warlock"])][5],
+      "tooltip": "",
+    };
   }
 );
 
@@ -760,7 +842,10 @@ SLOTS_M1_ATTRIBUTE = new Attribute(
   "cs-slots-m1",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][1];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][1],
+      "tooltip": "",
+    };
   }
 );
 
@@ -768,7 +853,10 @@ SLOTS_M2_ATTRIBUTE = new Attribute(
   "cs-slots-m2",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][2];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][2],
+      "tooltip": "",
+    };
   }
 );
 
@@ -776,7 +864,10 @@ SLOTS_M3_ATTRIBUTE = new Attribute(
   "cs-slots-m3",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][3];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][3],
+      "tooltip": "",
+    };
   }
 );
 
@@ -784,7 +875,10 @@ SLOTS_M4_ATTRIBUTE = new Attribute(
   "cs-slots-m4",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][4];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][4],
+      "tooltip": "",
+    };
   }
 );
 
@@ -792,7 +886,10 @@ SLOTS_M5_ATTRIBUTE = new Attribute(
   "cs-slots-m5",
   false,
   characterData =>  {
-    return SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][5];
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["cs-level-mage"])][5],
+      "tooltip": "",
+    };
   }
 );
 
@@ -826,37 +923,11 @@ ARMOR_CLASS_ATTRIBUTE = new Attribute(
       }
     }
 
-    return 10 + dexMod + equipmentAC;
+    return {
+      "display": 10 + dexMod + equipmentAC,
+      "tooltip": `<h1>Armor Class</h1>${dexMod} from dex<br/>${equipmentAC} from equipment`,
+    };
   },
-  characterData => {
-    let equipmentAC = 0;
-    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["cs-dexterity"])];
-    for (let prop in characterData) {
-      if (!prop.startsWith("cs-equipment-") || characterData[prop] === "") {
-        continue;
-      }
-
-      const armor = characterData[prop].match(EQUIPMENT_RE).groups;
-      const armorType = armor.armorType.trim().toLowerCase();
-      equipmentAC += parseInt(armor.acMod || 0);
-
-      if (!ARMOR.hasOwnProperty(armorType)) {
-        continue;
-      }
-
-      if (ARMOR[armorType].hasOwnProperty("max_dex_mod")) {
-        dexMod = Math.min(dexMod, ARMOR[armorType]["max_dex_mod"]);
-      }
-
-      if (typeof ARMOR[armorType]["ac"] === "function") {
-        equipmentAC += ARMOR[armorType]["ac"](characterData);
-      } else {
-        equipmentAC += ARMOR[armorType]["ac"];
-      }
-    }
-
-    return `<h1>Armor Class</h1>${dexMod} from dex<br/>${equipmentAC} from equipment`;
-  }
 );
 
 SAVED_ATTRIBUTES = [
@@ -1482,6 +1553,7 @@ function updateCustomSpellTooltip(spellInputDiv) {
   }
 
   spellInputDiv.parentElement.appendChild(element);
+  spellInputDiv.parentElement.classList.add("has-tooltip");
 }
 
 function getJSON(url, callback) {
@@ -1609,7 +1681,7 @@ window.onload = function() {
   hideSpecifics();
 
   // Loading spellbooks, triggering tooltip generation, etc
-  const customSpellDivs = document.getElementById("page-spellbook").getElementsByClassName("cs-spell-name");
+  const customSpellDivs = document.getElementById("page-spellbook").querySelectorAll(".cs-warlock-spell-name,.cs-mage-spell-name");
 
   for (let i = 0; i < customSpellDivs.length; i++) {
     const div = customSpellDivs[i];
