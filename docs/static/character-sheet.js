@@ -1082,14 +1082,17 @@ function loadFromName(name) {
   document.getElementById("cs-name-heading").textContent = name;
 
   // upgrade character sheet
-  if (characterData["version"] == "0.2.1") {
+  const currentVersion = characterData["version"];
+  if (currentVersion == "0.2.1") {
     characterData["cs-warlock-spell-name"] = characterData["cs-spell-name"].slice(0, 10);
     characterData["cs-mage-spell-name"] = characterData["cs-spell-name"].slice(10);
     delete characterData["cs-spell-name"];
     characterData["VERSION"] = VERSION;
-  } else if (characterData["version"] != VERSION) {
-    alert(`can't upgrade from version ${characterData["version"]} to ${VERSION}`);
-    throw new Error(`can't upgrade from version ${characterData["version"]} to ${VERSION}`);
+    console.log(`Upgraded ${name} from version ${currentVersion} to ${VERSION}`);
+  } else if (currentVersion != VERSION) {
+    console.log(`Can't upgrade ${name} from version ${currentVersion} to ${VERSION}`);
+    alert(`Can't upgrade ${name} from version ${currentVersion} to ${VERSION}`);
+    throw new Error(`Can't upgrade ${name} from version ${currentVersion} to ${VERSION}`);
   }
 
   NAME_ATTRIBUTE.populateField(characterData);
