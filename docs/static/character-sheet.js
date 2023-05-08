@@ -278,6 +278,32 @@ class Attribute {
     return this;
   }
 
+  setSensitive() {
+    if (this.isCollection) {
+      const divs = document.getElementsByClassName(this.divName);
+      for (let i = 0; i < divs.length; i++) {
+        divs[i].classList.add("sensitive-field");
+      }
+    } else {
+      const div = document.getElementById(this.divName);
+      div.classList.add("sensitive-field");
+    }
+    return this;
+  }
+
+  setReadOnly() {
+    if (this.isCollection) {
+      const divs = document.getElementsByClassName(this.divName);
+      for (let i = 0; i < divs.length; i++) {
+        divs[i].readOnly = true;
+      }
+    } else {
+      const div = document.getElementById(this.divName);
+      div.readOnly = true;
+    }
+    return this;
+  }
+
   populateField(finalizedCharacterModel) {
     const displayText = finalizedCharacterModel[this.divName]["display"];
     const tooltipHTML = finalizedCharacterModel[this.divName]["tooltip"];
@@ -294,7 +320,7 @@ class Attribute {
     }
   }
 
-  getDisplayedData() {
+  getCurrentData() {
     if (this.isCollection) {
       const data = [];
       const divs = document.getElementsByClassName(this.divName);
@@ -313,35 +339,35 @@ class Attribute {
  ********************* INDIVIDUAL UI ATTRIBUTES ********************
  *******************************************************************/
 
-NAME_ATTRIBUTE = new Attribute("cs-name").shouldBeSaved();
+NAME_ATTRIBUTE = new Attribute("cs-name").shouldBeSaved().setSensitive();
 
-EXPERIENCE_ATTRIBUTE = new Attribute("cs-experience").shouldBeSaved();;
+EXPERIENCE_ATTRIBUTE = new Attribute("cs-experience").shouldBeSaved().setSensitive();
 
-HIT_POINTS_ATTRIBUTE = new Attribute("cs-hit-points").shouldBeSaved();;
+HIT_POINTS_ATTRIBUTE = new Attribute("cs-hit-points").shouldBeSaved().setSensitive();
 
 HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute("cs-hit-points-current").shouldBeSaved();
 
-RACE_ATTRIBUTE = new Attribute("cs-race").shouldBeSaved();
+RACE_ATTRIBUTE = new Attribute("cs-race").shouldBeSaved().setSensitive();
 
-LEVEL_FIGHTER_ATTRIBUTE = new Attribute("cs-level-fighter").shouldBeSaved();
+LEVEL_FIGHTER_ATTRIBUTE = new Attribute("cs-level-fighter").shouldBeSaved().setSensitive();
 
-LEVEL_MAGE_ATTRIBUTE = new Attribute("cs-level-mage").shouldBeSaved();
+LEVEL_MAGE_ATTRIBUTE = new Attribute("cs-level-mage").shouldBeSaved().setSensitive();
 
-LEVEL_ROGUE_ATTRIBUTE = new Attribute("cs-level-rogue").shouldBeSaved();
+LEVEL_ROGUE_ATTRIBUTE = new Attribute("cs-level-rogue").shouldBeSaved().setSensitive();
 
-LEVEL_WARLOCK_ATTRIBUTE = new Attribute("cs-level-warlock").shouldBeSaved();
+LEVEL_WARLOCK_ATTRIBUTE = new Attribute("cs-level-warlock").shouldBeSaved().setSensitive();
 
-CHARISMA_ATTRIBUTE = new Attribute("cs-charisma").shouldBeSaved();
+CHARISMA_ATTRIBUTE = new Attribute("cs-charisma").shouldBeSaved().setSensitive();
 
-CONSTITUTION_ATTRIBUTE = new Attribute("cs-constitution").shouldBeSaved();
+CONSTITUTION_ATTRIBUTE = new Attribute("cs-constitution").shouldBeSaved().setSensitive();
 
-DEXTERITY_ATTRIBUTE = new Attribute("cs-dexterity").shouldBeSaved();
+DEXTERITY_ATTRIBUTE = new Attribute("cs-dexterity").shouldBeSaved().setSensitive();
 
-INTELLIGENCE_ATTRIBUTE = new Attribute("cs-intelligence").shouldBeSaved();
+INTELLIGENCE_ATTRIBUTE = new Attribute("cs-intelligence").shouldBeSaved().setSensitive();
 
-STRENGTH_ATTRIBUTE = new Attribute("cs-strength").shouldBeSaved();
+STRENGTH_ATTRIBUTE = new Attribute("cs-strength").shouldBeSaved().setSensitive();
 
-WISDOM_ATTRIBUTE = new Attribute("cs-wisdom").shouldBeSaved();
+WISDOM_ATTRIBUTE = new Attribute("cs-wisdom").shouldBeSaved().setSensitive();
 
 EQUIPMENT_ARMOR_ATTRIBUTE = new Attribute("cs-equipment-armor").shouldBeSaved();
 
@@ -385,63 +411,63 @@ MAGE_SPELL_NAME_ATTRIBUTE = new Attribute("cs-mage-spell-name", true).shouldBeSa
 
 WARLOCK_SPELL_NAME_ATTRIBUTE = new Attribute("cs-warlock-spell-name", true).shouldBeSaved();
 
-CHARISMA_MODIFIER_ATTRIBUTE = new Attribute("cs-charisma-modifier", false);
+CHARISMA_MODIFIER_ATTRIBUTE = new Attribute("cs-charisma-modifier", false).setReadOnly();
 
-CONSTITUTION_MODIFIER_ATTRIBUTE = new Attribute("cs-constitution-modifier", false);
+CONSTITUTION_MODIFIER_ATTRIBUTE = new Attribute("cs-constitution-modifier", false).setReadOnly();
 
-CONSTITUTION_SAVE_THROW_ATTRIBUTE = new Attribute("cs-constitution-save-throw", false);
+CONSTITUTION_SAVE_THROW_ATTRIBUTE = new Attribute("cs-constitution-save-throw", false).setReadOnly();
 
-DEXTERITY_MODIFIER_ATTRIBUTE = new Attribute("cs-dexterity-modifier", false);
+DEXTERITY_MODIFIER_ATTRIBUTE = new Attribute("cs-dexterity-modifier", false).setReadOnly();
 
-DEXTERITY_SAVE_THROW_ATTRIBUTE = new Attribute("cs-dexterity-save-throw", false);
+DEXTERITY_SAVE_THROW_ATTRIBUTE = new Attribute("cs-dexterity-save-throw", false).setReadOnly();
 
-INTELLIGENCE_MODIFIER_ATTRIBUTE = new Attribute("cs-intelligence-modifier", false);
+INTELLIGENCE_MODIFIER_ATTRIBUTE = new Attribute("cs-intelligence-modifier", false).setReadOnly();
 
-STRENGTH_MODIFIER_ATTRIBUTE = new Attribute("cs-strength-modifier", false);
+STRENGTH_MODIFIER_ATTRIBUTE = new Attribute("cs-strength-modifier", false).setReadOnly();
 
-WISDOM_MODIFIER_ATTRIBUTE = new Attribute("cs-wisdom-modifier", false);
+WISDOM_MODIFIER_ATTRIBUTE = new Attribute("cs-wisdom-modifier", false).setReadOnly();
 
-WISDOW_SAVE_THROW_ATTRIBUTE = new Attribute("cs-wisdom-save-throw", false);
+WISDOW_SAVE_THROW_ATTRIBUTE = new Attribute("cs-wisdom-save-throw", false).setReadOnly();
 
-TOTAL_HIT_DIE_ATTRIBUTE = new Attribute("cs-total-hit-die", false);
+TOTAL_HIT_DIE_ATTRIBUTE = new Attribute("cs-total-hit-die", false).setReadOnly();
 
-BASE_ATTACK_BONUS_ATTRIBUTE = new Attribute("cs-base-attack-bonus", false);
+BASE_ATTACK_BONUS_ATTRIBUTE = new Attribute("cs-base-attack-bonus", false).setReadOnly();
 
-NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute("cs-number-of-attacks", false);
+NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute("cs-number-of-attacks", false).setReadOnly();
 
-ALLOWED_ARMOR_ATTRIBUTE = new Attribute("cs-allowed-armor", false);
+ALLOWED_ARMOR_ATTRIBUTE = new Attribute("cs-allowed-armor", false).setReadOnly();
 
-ALLOWED_WEAPONS_ATTRIBUTE = new Attribute("cs-allowed-weapons", false);
+ALLOWED_WEAPONS_ATTRIBUTE = new Attribute("cs-allowed-weapons", false).setReadOnly();
 
-SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute("cs-skill-check-bonus", false);
+SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute("cs-skill-check-bonus", false).setReadOnly();
 
-SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute("cs-skill-proficiencies", false);
+SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute("cs-skill-proficiencies", false).setReadOnly();
 
-SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE = new Attribute("cs-max-spells-learnable-per-degree", false);
+SPELLS_LEARNABLE_PER_DEGREE_ATTRIBUTE = new Attribute("cs-max-spells-learnable-per-degree", false).setReadOnly();
 
-MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute("cs-max-minor-patrons", false);
+MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute("cs-max-minor-patrons", false).setReadOnly();
 
-SLOTS_W1_ATTRIBUTE = new Attribute("cs-slots-w1", false);
+SLOTS_W1_ATTRIBUTE = new Attribute("cs-slots-w1", false).setReadOnly();
 
-SLOTS_W2_ATTRIBUTE = new Attribute("cs-slots-w2", false);
+SLOTS_W2_ATTRIBUTE = new Attribute("cs-slots-w2", false).setReadOnly();
 
-SLOTS_W3_ATTRIBUTE = new Attribute("cs-slots-w3", false);
+SLOTS_W3_ATTRIBUTE = new Attribute("cs-slots-w3", false).setReadOnly();
 
-SLOTS_W4_ATTRIBUTE = new Attribute("cs-slots-w4", false);
+SLOTS_W4_ATTRIBUTE = new Attribute("cs-slots-w4", false).setReadOnly();
 
-SLOTS_W5_ATTRIBUTE = new Attribute("cs-slots-w5", false);
+SLOTS_W5_ATTRIBUTE = new Attribute("cs-slots-w5", false).setReadOnly();
 
-SLOTS_M1_ATTRIBUTE = new Attribute("cs-slots-m1", false);
+SLOTS_M1_ATTRIBUTE = new Attribute("cs-slots-m1", false).setReadOnly();
 
-SLOTS_M2_ATTRIBUTE = new Attribute("cs-slots-m2", false);
+SLOTS_M2_ATTRIBUTE = new Attribute("cs-slots-m2", false).setReadOnly();
 
-SLOTS_M3_ATTRIBUTE = new Attribute("cs-slots-m3", false);
+SLOTS_M3_ATTRIBUTE = new Attribute("cs-slots-m3", false).setReadOnly();
 
-SLOTS_M4_ATTRIBUTE = new Attribute("cs-slots-m4", false);
+SLOTS_M4_ATTRIBUTE = new Attribute("cs-slots-m4", false).setReadOnly();
 
-SLOTS_M5_ATTRIBUTE = new Attribute("cs-slots-m5", false);
+SLOTS_M5_ATTRIBUTE = new Attribute("cs-slots-m5", false).setReadOnly();
 
-ARMOR_CLASS_ATTRIBUTE = new Attribute("cs-armor-class", false);
+ARMOR_CLASS_ATTRIBUTE = new Attribute("cs-armor-class", false).setReadOnly();
 
 /*******************************************************************
  *************** EVALUATING A CHARACTER TO COMPLETION **************
@@ -791,6 +817,17 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
   return finalizedCharacterModel;
 }
 
+function reevaluateAndRepopulateCharacter(baseCharacterModel) {
+  const finalizedCharacterModel = buildFinalizedCharacterModel(baseCharacterModel);
+  for (let i = 0; i < ALL_ATTRIBUTES.length; i++) {
+    ALL_ATTRIBUTES[i].populateField(finalizedCharacterModel);
+  }
+}
+
+/*******************************************************************
+ ******************* ACTUAL UI CONTROLS AND FLOW *******************
+ *******************************************************************/
+
 function getNumericalCharacteristic(val) {
   return parseInt(val || "0");
 }
@@ -914,11 +951,7 @@ function loadFromName(name) {
     throw new Error(`Can't upgrade ${name} from version ${currentVersion} to ${VERSION}`);
   }
 
-  const finalizedCharacterModel = buildFinalizedCharacterModel(characterData);
-  for (let i = 0; i < ALL_ATTRIBUTES.length; i++) {
-    ALL_ATTRIBUTES[i].populateField(finalizedCharacterModel);
-  }
-
+  reevaluateAndRepopulateCharacter(characterData);
   showAppropriateSpecifics(characterData);
   document.getElementById("cs-delete-sheet").classList.remove("hidden");
 }
@@ -1005,7 +1038,7 @@ function exportData() {
   };
 
   for (let i = 0; i < SAVED_ATTRIBUTES.length; i++) {
-    characterData[SAVED_ATTRIBUTES[i].divName] = SAVED_ATTRIBUTES[i].getDisplayedData();
+    characterData[SAVED_ATTRIBUTES[i].divName] = SAVED_ATTRIBUTES[i].getCurrentData();
   }
 
   console.log("Character updated:", characterData);
@@ -1021,10 +1054,7 @@ function save() {
 
   try {
     showAppropriateSpecifics(map);
-    const finalizedCharacterModel = buildFinalizedCharacterModel(map);
-    for (let i = 0; i < ALL_ATTRIBUTES.length; i++) {
-      ALL_ATTRIBUTES[i].populateField(finalizedCharacterModel);
-    }
+    reevaluateAndRepopulateCharacter(map);
   } catch(err) {
     console.log("Invalid input");
     console.log(err);
