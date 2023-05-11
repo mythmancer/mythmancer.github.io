@@ -11,6 +11,12 @@
       "data_type": "json"
     },
     {
+      "title": "character sheet v2 demo",
+      "route": "character-sheet-v2",
+      "template": "template_character_sheet_v2.html",
+      "data_type": "json"
+    },
+    {
       "title": "character creation",
       "route": "character-creation",
       "template": "template_contents.html",
