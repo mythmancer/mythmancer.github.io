@@ -1,3 +1,54 @@
+/* character models - just for demo */
+const CHARACTER_MODELS = {
+  "Pal Bonwater - Level 6 Elementalist": {
+    "total_hit_points": 17,
+    "current_hit_points": 16,
+    "armor_class": 14,
+    "strength": "16/+2",
+    "armor": {
+      "Chest": "Wet Suit",
+      "Gloves": "Bracers of Armor +3",
+    },
+    "fighter": {
+      "level": 5,
+      "additional_attacks": 5,
+    }
+  },
+  "Herakles - Level 5 Grinner": {
+    "total_hit_points": 100000,
+    "current_hit_points": 18,
+    "armor_class": 20,
+    "strength": "19/+5",
+    "armor": {
+      "Chest": "Buff af",
+      "Gloves": "Gloooooooves",
+    },
+    "fighter": {
+      "level": 221,
+      "additional_attacks": 19,
+    }    
+  },
+  "Noam Gnomesky - Level 20 Old Man": {
+    "total_hit_points": 2,
+    "current_hit_points": 1,
+    "armor_class": 1,
+    "strength": "0/-3",
+    "armor": {
+      "Chest": "Sunken",
+      "Gloves": "Evening soiree gloves",
+    },
+    "fighter": {
+      "level": -10,
+      "additional_attacks": -1,
+    }        
+  }
+};
+
+function getCharacterModel(characterName) {
+  return CHARACTER_MODELS[characterName];
+}
+
+/* real shit */
 class HTMLComponent {
   getHTML() {
     console.log(`${this.constructor.name} does not have a defined HTML rendering function`);
@@ -98,7 +149,8 @@ ${html}
   }
 }
 
-window.onload = function() {
+function renderCharacter(characterName) {
+  const characterModel = getCharacterModel(characterName);
   let html = "";
   const panels = [
     new CharacterSheetPanel(
@@ -106,14 +158,14 @@ window.onload = function() {
         new CharacterSheetSection(
           null,
           [
-            new CharacterSheetEntry("Hit Points", "17/17"),
-            new CharacterSheetEntry("Armor Class", "14"),
+            new CharacterSheetEntry("Hit Points", `${characterModel.current_hit_points}/${characterModel.total_hit_points}`),
+            new CharacterSheetEntry("Armor Class", `${characterModel.armor_class}`),
           ]
         ),
         new CharacterSheetSection(
           "Abilities",
           [
-            new CharacterSheetEntry("Strength", "16/+5", rollCheck=new RollCheck("Check", 20)),
+            new CharacterSheetEntry("Strength", `${characterModel.strength}`, rollCheck=new RollCheck("Check", 20)),
           ]
         ),
       ]
@@ -134,8 +186,8 @@ window.onload = function() {
         new CharacterSheetSection(
           "Fighter",
           [
-            new CharacterSheetEntry("Fighter Level", "5"),
-            new CharacterSheetEntry("Additional Attacks", "1"),
+            new CharacterSheetEntry("Fighter Level", `${characterModel.fighter.level}`),
+            new CharacterSheetEntry("Additional Attacks", `${characterModel.fighter.additional_attacks}`),
           ]
         ),
       ]
@@ -146,10 +198,28 @@ window.onload = function() {
   }
   document.getElementById("cs-right-pane").innerHTML = `
 <div id="cs-current-character">
-<div id="cs-current-character-heading">Pal Bonwater - Level 6 Elementalist</div>
+<div id="cs-current-character-heading">${characterName}</div>
 <div class="cs-panels">
 ${html}
 </div>
 </div>
 `;
+
 }
+
+window.onload = function() {
+  const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
+  for (let i = 0; i < characterListings.length; i++) {
+    characterListings[i].addEventListener("click", function(e) {
+      renderCharacter(e.target.textContent);
+      const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
+      for (let i = 0; i < characterListings.length; i++) {
+        if (characterListings[i] == e.target) {
+          characterListings[i].classList.add("cs-character-listing-current");
+        } else {
+          characterListings[i].classList.remove("cs-character-listing-current");
+        }
+      }
+    });
+  }
+};
