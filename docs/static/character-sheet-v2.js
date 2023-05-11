@@ -1,5 +1,14 @@
-class RollCheck {
+class HTMLComponent {
+  getHTML() {
+    console.log(`${this.constructor.name} does not have a defined HTML rendering function`);
+    alert(`Could not render page`);
+    throw new Error(`${this.constructor.name} does not have a defined HTML rendering function`);
+  }
+}
+
+class RollCheck extends HTMLComponent {
   constructor(name, die) {
+    super();
     this.name = name;
     this.die = parseInt(die);
   }
@@ -17,8 +26,9 @@ class RollCheck {
   }
 }
 
-class CharacterSheetEntry {
+class CharacterSheetEntry extends HTMLComponent {
   constructor(name, value, rollCheck=null, notes=null, additionalActions=null) {
+    super();
     this.name = name;
     this.value = value;
     this.rollCheck = rollCheck;
@@ -37,7 +47,7 @@ class CharacterSheetEntry {
     return `
 <div class="cs-entry">
 <div class="cs-entry-row">
-${rollCheckHTML} <div class="content">${this.name} ${this.value}</div>
+${rollCheckHTML}<div class="content">${this.name} ${this.value}</div>
 </div>
 ${notesHTML}
 </div>
@@ -45,8 +55,9 @@ ${notesHTML}
   }
 }
 
-class CharacterSheetSection {
+class CharacterSheetSection extends HTMLComponent {
   constructor(heading, entries) {
+    super();
     this.heading = heading;
     this.entries = entries;
   }
@@ -68,8 +79,9 @@ ${headingHTML}${entriesHTML}
   }
 }
 
-class CharacterSheetPanel {
+class CharacterSheetPanel extends HTMLComponent {
   constructor(sections) {
+    super();
     this.sections = sections;
   }
 
