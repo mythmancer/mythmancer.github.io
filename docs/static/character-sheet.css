@@ -1,0 +1,135 @@
+@font-face {
+    font-family: 'Baskerville';
+    src: local('Baskerville Regular'), url(https://assets.mythmancer.com/LibreBaskerville-Regular.ttf) format('truetype');
+}
+
+:root {
+    --cs-bg: white;
+    --cs-accent: #8386CC;
+    --cs-text: black;
+}
+
+body.character-sheet {
+    margin: 0 !important;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--cs-bg);
+    color: var(--cs-black);
+    font-family: "Baskerville";
+}
+
+/* Main page is split into left navigation pane and right content pane */
+#cs-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+#cs-left-pane {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid var(--cs-accent);
+}
+
+#cs-right-pane {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* LEFT PANE */
+#cs-mythmancer-title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.cs-left-pane-heading-row {
+    display: flex;
+    flex-direction: row;
+}
+
+hr {
+    border-color: var(--cs-accent);
+}
+
+.cs-heading-decor-left {
+    width: 100%;
+    margin-right: 5px;
+}
+
+.cs-heading-decor-right {
+    width: 100%;
+    margin-left: 5px;
+}
+
+/* RIGHT PANE */
+#cs-current-character {
+    height: 100%;
+}
+
+#cs-current-character-heading {
+    font-size: 30px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    background-color: var(--cs-accent);
+    color: var(--cs-bg);
+}
+
+.cs-panels {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.cs-panel {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 1px solid var(--cs-accent);
+}
+
+.cs-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.cs-section-heading-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.cs-section-heading-decor-left {
+    width: 50px;
+    margin-right: 5px;
+}
+
+.cs-section-heading-decor-right {
+    width: 100%;
+    margin-left: 5px;
+}
+
+.cs-entry {
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-entry-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
