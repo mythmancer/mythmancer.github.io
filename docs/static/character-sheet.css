@@ -55,6 +55,11 @@ hr {
     border-color: var(--cs-accent);
 }
 
+.cs-heading {
+    width: fit-content;
+    white-space: nowrap;
+}
+
 .cs-heading-decor-left {
     width: 100%;
     margin-right: 5px;
@@ -63,6 +68,20 @@ hr {
 .cs-heading-decor-right {
     width: 100%;
     margin-left: 5px;
+}
+
+.cs-left-pane-listing {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: clip;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+.cs-character-listing-current {
+    color: var(--cs-bg);
+    background-color: var(--cs-accent);
 }
 
 /* RIGHT PANE */
@@ -89,6 +108,7 @@ hr {
 }
 
 .cs-panel {
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
     width: 30%;
