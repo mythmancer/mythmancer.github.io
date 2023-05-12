@@ -58,7 +58,24 @@ const CHARACTER_MODELS = {
     "fighter": {
       "level": 221,
       "additional_attacks": 19,
-    }    
+    },
+    "rogue": {
+      "level": 1,
+      "skill_specializations": 0,
+    },
+    "mage": {
+      "level": 2,
+      "arcane_spell_slots": "2/1",
+      "max_spells_per_degree": 3,
+      "arcane_casting_in_armor": 1,
+    },
+    "warlock": {
+      "level": 3,
+      "occult_spell_slots": "3/1",
+      "domain": "Elemental - Ice",
+      "major_patron": "Belch",
+      "minor_patrons": 12,
+    },
   },
   "Noam Gnomesky - Level 20 Old Man": {
     "total_hit_points": 2,
@@ -79,7 +96,24 @@ const CHARACTER_MODELS = {
     "fighter": {
       "level": -10,
       "additional_attacks": -1,
-    }        
+    },
+    "rogue": {
+      "level": 13,
+      "skill_specializations": 14,
+    },
+    "mage": {
+      "level": 16,
+      "arcane_spell_slots": "5/4/2/1",
+      "max_spells_per_degree": 10,
+      "arcane_casting_in_armor": 19,
+    },
+    "warlock": {
+      "level": 2,
+      "occult_spell_slots": "0/0/0/0",
+      "domain": "Arcana",
+      "major_patron": "Some old dead thing",
+      "minor_patrons": 100,
+    },
   }
 };
 
