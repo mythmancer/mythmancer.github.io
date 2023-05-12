@@ -312,19 +312,21 @@ ${html}
 
 }
 
+function loadCharacter(event) {
+  renderCharacter(event.target.textContent);
+  const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
+  for (let i = 0; i < characterListings.length; i++) {
+    if (characterListings[i] == event.target) {
+      characterListings[i].classList.add("cs-character-listing-current");
+    } else {
+      characterListings[i].classList.remove("cs-character-listing-current");
+    }
+  }
+}
+
 window.onload = function() {
   const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
   for (let i = 0; i < characterListings.length; i++) {
-    characterListings[i].addEventListener("click", function(e) {
-      renderCharacter(e.target.textContent);
-      const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
-      for (let i = 0; i < characterListings.length; i++) {
-        if (characterListings[i] == e.target) {
-          characterListings[i].classList.add("cs-character-listing-current");
-        } else {
-          characterListings[i].classList.remove("cs-character-listing-current");
-        }
-      }
-    });
+    characterListings[i].addEventListener("click", loadCharacter);
   }
 };
