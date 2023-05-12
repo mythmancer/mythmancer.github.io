@@ -77,11 +77,13 @@ hr {
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
+    cursor: pointer;
 }
 
 .cs-character-listing-current {
     color: var(--cs-bg);
     background-color: var(--cs-accent);
+    white-space: normal;
 }
 
 /* RIGHT PANE */
@@ -108,7 +110,6 @@ hr {
 }
 
 .cs-panel {
-    padding-top: 10px;
     display: flex;
     flex-direction: column;
     width: 30%;
@@ -121,6 +122,7 @@ hr {
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding-top: 10px;
 }
 
 .cs-section-heading-row {
