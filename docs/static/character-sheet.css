@@ -83,7 +83,6 @@ hr {
 .cs-character-listing-current {
     color: var(--cs-bg);
     background-color: var(--cs-accent);
-    white-space: normal;
 }
 
 /* RIGHT PANE */
