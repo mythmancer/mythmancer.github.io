@@ -52,7 +52,7 @@ body.character-sheet {
 }
 
 hr {
-    border-color: var(--cs-accent);
+    border: 0.5px solid var(--cs-accent);
 }
 
 .cs-heading {
