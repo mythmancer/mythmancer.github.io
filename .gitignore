@@ -1,3 +1,6 @@
+# idea because Colin has to use an IDE
+.idea
+
 # YASS generator for local runs
 generate_site.py
 
