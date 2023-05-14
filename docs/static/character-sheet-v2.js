@@ -186,7 +186,7 @@ class Pane extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col cs-border-right">
+    <div class="cs-col cs-padding-v cs-border-right">
         ${this.sections.map((section) => section.getHTML()).join("")}
     </div>
     `;
@@ -210,7 +210,7 @@ class PaneSection extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col cs-padding-v">
+    <div class="cs-col">
         ${this.divider == null ? "" : this.divider.getHTML()}
         <div class="cs-col">
             ${this.entries.map((entry) => entry.getHTML()).join("")}
@@ -247,7 +247,7 @@ class SectionEntry extends HTMLComponent {
    * serve as the primary descriptor of the entry, and the second being a vertical list of {@link SectionSubEntry}.
    *
    * @param {string} shortKeyText Optional short key of fixed width on the far left of the main row
-   * @param {DiceButton} mainKeyDiceButton Optional button to roll dice associated with this entry
+   * @param {DiceButton} diceButton Optional button to roll dice associated with this entry
    * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
    * @param {string} valueText Optional text for the right side of the main row in a key-value pair
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
@@ -255,7 +255,7 @@ class SectionEntry extends HTMLComponent {
    */
   constructor({
                 shortKeyText = "",
-                mainKeyDiceButton = null,
+                diceButton = null,
                 mainKeyText = "",
                 valueText = "",
                 editButton = null,
@@ -263,7 +263,7 @@ class SectionEntry extends HTMLComponent {
               }) {
     super();
     this.shortKeyText = shortKeyText;
-    this.mainKeyDiceButton = mainKeyDiceButton;
+    this.diceButton = diceButton;
     this.mainKeyText = mainKeyText;
     this.valueText = valueText;
     this.editButton = editButton;
@@ -274,19 +274,26 @@ class SectionEntry extends HTMLComponent {
     return `
     <div class="cs-col cs-padding-h">
       <div class="cs-row">
-          ${this.shortKeyText === "" && this.mainKeyDiceButton == null && this.mainKeyText === "" ? "" : `
-            <div class="cs-row">
-              ${this.shortKeyText === "" ? "" : `<div class="cs-elem cs-width-fixed-short-key">${this.shortKeyText}</div>`}
-              ${this.mainKeyDiceButton == null ? "" : this.mainKeyDiceButton.getHTML()}
-              <div class="cs-elem cs-width-fill">${this.mainKeyText}</div>
+          ${this.shortKeyText === "" ? "" : `
+            <div class="cs-elem cs-font-color-deemphasized cs-width-fixed-short-key">
+              ${this.shortKeyText}
             </div>
           `}
-          ${this.valueText === "" && this.editButton == null ? "" : `
+          ${this.diceButton == null && this.mainKeyText === "" ? "" : `
+            <div class="cs-row">
+              ${this.diceButton == null ? "" : this.diceButton.getHTML()}
+              <div class="cs-elem">${this.mainKeyText}</div>
+            </div>
+          `}
+          ${this.valueText === "" ? `
+            ${this.editButton == null ? "" : this.editButton.getHTML()}
+          ` : `
             <div class="cs-row">
               ${this.valueText === "" ? "" : `<div class="cs-elem cs-width-full">${this.valueText}</div>`}
               ${this.editButton == null ? "" : this.editButton.getHTML()}
             </div>
           `}
+
       </div>
       ${this.subEntries.map((subEntry) => subEntry.getHTML()).join("")}
     </div>
@@ -322,7 +329,7 @@ class SectionSubEntry extends HTMLComponent {
 class DiceButton extends HTMLComponent {
   /**
    * Button that rolls dice
-   * @param {string} text Text for the face of the button
+   * @param {string} text Button text
    */
   constructor(text) {
     super();
@@ -331,7 +338,7 @@ class DiceButton extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-btn cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn-dice">
+    <div class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-accent">
         ⚅ ${this.text}
     </div>
     `
@@ -341,7 +348,7 @@ class DiceButton extends HTMLComponent {
 class EditButton extends HTMLComponent {
   /**
    * Button used for editing entries
-   * @param {string} text Text for the face of the button
+   * @param {string} text Button text
    */
   constructor(text) {
     super();
@@ -350,7 +357,7 @@ class EditButton extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-btn cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn-edit">
+    <div class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
         ${this.text}
     </div>
     `
@@ -370,7 +377,7 @@ class EditButton extends HTMLComponent {
  */
 function actionKeyValue(action, key, value, description = "") {
   return new SectionEntry({
-    mainKeyDiceButton: new DiceButton(action),
+    diceButton: new DiceButton(action),
     mainKeyText: key,
     valueText: value,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
@@ -423,6 +430,24 @@ function armor(part, item = "", description = "") {
 }
 
 /**
+ * An entry displaying a (typically temporary) effect on the character such as a spell buff
+ *
+ * @param {string} effect name of this effect
+ * @param {string} duration description of the remaining time on this effect
+ * @param {string} description Small-text description of this effect
+ */
+function activeEffect(effect, duration, description) {
+  return new SectionEntry({
+    mainKeyText: effect,
+    editButton: new EditButton("Edit / Remove"),
+    subEntries: [
+      new SectionSubEntry({text: description}),
+      new SectionSubEntry({text: `Duration: ${duration}`})
+    ]
+  })
+}
+
+/**
  * Entry about class data containing simple key-value pairs and optional notes
  *
  * @param {string} key
@@ -442,9 +467,12 @@ function renderCharacter(characterName) {
   let html = "";
 
   const panes = [
+
+    // Pane 1 of 3 Core gameplay info and Actions
     new Pane([
       new PaneSection({
           entries: [
+            // TODO - add editable HP field... though it'll be a unique case :/
             new SectionEntry({
               mainKeyText: "Hit Points",
               valueText: `${characterModel.current_hit_points}/${characterModel.total_hit_points}`
@@ -492,6 +520,8 @@ function renderCharacter(characterName) {
         ]
       })
     ]),
+
+    // Pane 2 of 3 Equipment and Effects
     new Pane([
       new PaneSection({
         divider: new SectionDivider("Armor"),
@@ -512,10 +542,17 @@ function renderCharacter(characterName) {
       new PaneSection({
         divider: new SectionDivider("Effects"),
         entries: [
-          new SectionEntry({editButton: new EditButton("+ Add an Effect")})
+          new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
+          activeEffect("Bless - Water Mobility", "Permanent", "Can attack and perform basic actions unhindered while swimming. " +
+            "Can maintain a consistent swimming speed similar to walking speed and can hold breath for 1 minute without " +
+            "issue."),
+          activeEffect("Enlarged", "4 Rounds", "Strength is set to 16, size is now Large"),
+          ...[] // TODO - load effects from the character model
         ]
       })
     ]),
+
+    // Pane 3 of 3 Character Bio and Class Details
     new Pane([
       new PaneSection({
         entries: [
@@ -548,21 +585,18 @@ function renderCharacter(characterName) {
           ])
         ]
       }),
-      ... []  // TODO - load class data from model instead
+      ...[]  // TODO - load class data from model instead
     ]),
   ]
-  for (let i = 0; i < panes.length; i++) {
-    html += panes[i].getHTML();
-  }
-  document.getElementById("cs-right-pane").innerHTML = `
-<div id="cs-current-character">
-<div id="cs-current-character-heading">${characterName}</div>
-<div class="cs-panels">
-${html}
-</div>
-</div>
-`;
 
+  document.getElementById("cs-right-pane").innerHTML = `
+      <div id="cs-current-character">
+        <div id="cs-current-character-heading" class="cs-row cs-padding-h cs-padding-v">
+            <div class="cs-elem cs-width-full">${characterName}</div>
+        </div>
+        <div class="cs-panels">${panes.map(pane => pane.getHTML()).join("")}</div>
+      </div>
+    `;
 }
 
 function loadCharacter(event) {
