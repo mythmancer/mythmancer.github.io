@@ -123,13 +123,16 @@ function getCharacterModel(characterName) {
 
 class WeaponAttack {
   /**
+   * WIP - model for weapon attacks, intended to contain the necessary info to describe an attack in a standard way
+   * TODO - represent "Critically hits on 19" somehow
+   *
    * @param {string} verb descriptive verb of this attack (Strike, Shoot, etc) along with any distinguishing conditions
    * @param {number} numberOfAttacks
    * @param {boolean} isFast
    * @param {string} range TODO - use an enum or similar: none, melee, reach, short, medium, or long
    * @param {number} bonusToHit
    * @param {string} damage TODO - represent as a class eventually
-   * @param {string} condition list of free-form conditions this attack requires
+   * @param {string} condition free-form string of conditions this class requires e.g. "opponent is heavily armored"
    */
   constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damage, condition) {
     this.verb = verb;
@@ -143,25 +146,22 @@ class WeaponAttack {
 
   _rangeDescription() {
     const attack = this.numberOfAttacks === 1 ? "Attack" : "Attacks"
-    switch (this.range) {
-      case "melee":
-        return `Melee ${attack}`
-      case "reach":
-        return `Melee ${attack} with Reach`
-      case "short":
-      case "medium":
-      case "long":
-        return `${this.range.charAt(0).toUpperCase() + this.range.slice(1)}-Range ${attack}`
-      default:
-        return "(UNKNOWN RANGE)"
+    if (this.range === "melee") {
+      return `Melee ${attack}`
+    } else if (this.range === "reach") {
+      return `Melee ${attack} with Reach`
+    } else if (this.range === "short" || this.range === "medium" || this.range === "long") {
+      return `${this.range.charAt(0).toUpperCase() + this.range.slice(1)}-Range ${attack}`
+    } else {
+      return "(UNKNOWN RANGE)"
     }
   }
 
   description() {
     // "1 Attack at +3 to hit dealing 1d6 damage if some condition is filled"
     return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at 
-    ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to 
-    hit dealing ${this.damage} damage${this.condition === "" ? "" : ` if ${this.condition}`}`
+      ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit 
+      dealing ${this.damage} damage${this.condition === "" ? "" : ` if ${this.condition}`}`
   }
 }
 
@@ -176,7 +176,8 @@ class HTMLComponent {
 
 class Pane extends HTMLComponent {
   /**
-   * @param {PaneSection[]} sections
+   * Vertical list of {@link PaneSection}
+   * @param {PaneSection[]} sections List items within the pane
    */
   constructor(sections) {
     super();
@@ -194,8 +195,9 @@ class Pane extends HTMLComponent {
 
 class PaneSection extends HTMLComponent {
   /**
-   * @param {SectionDivider} divider
-   * @param {SectionEntry[]} entries
+   * Vertical list of {@link SectionEntry}
+   * @param {SectionDivider} divider Optional title of the section
+   * @param {SectionEntry[]} entries List items within the section
    */
   constructor({
                 divider = null,
@@ -220,7 +222,8 @@ class PaneSection extends HTMLComponent {
 
 class SectionDivider extends HTMLComponent {
   /**
-   * @param {string} heading
+   * Optional title of a section
+   * @param {string} heading Title text of the section, flanked by horizontal lines
    */
   constructor(heading) {
     super();
@@ -240,16 +243,19 @@ class SectionDivider extends HTMLComponent {
 
 class SectionEntry extends HTMLComponent {
   /**
-   * @param {string} shortKeyText
-   * @param {ActionButton} mainKeyActionButton
-   * @param {string} mainKeyText
-   * @param {string} valueText
-   * @param {EditButton} editButton
-   * @param {SectionSubEntry[]} subEntries
+   * List item within a {@link PaneSection}. Composed of two rows, the main containing various buttons and labels to
+   * serve as the primary descriptor of the entry, and the second being a vertical list of {@link SectionSubEntry}.
+   *
+   * @param {string} shortKeyText Optional short key of fixed width on the far left of the main row
+   * @param {DiceButton} mainKeyDiceButton Optional button to roll dice associated with this entry
+   * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
+   * @param {string} valueText Optional text for the right side of the main row in a key-value pair
+   * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
+   * @param {SectionSubEntry[]} subEntries Optional vertical list of small-text descriptors beneath the main row
    */
   constructor({
                 shortKeyText = "",
-                mainKeyActionButton = null,
+                mainKeyDiceButton = null,
                 mainKeyText = "",
                 valueText = "",
                 editButton = null,
@@ -257,7 +263,7 @@ class SectionEntry extends HTMLComponent {
               }) {
     super();
     this.shortKeyText = shortKeyText;
-    this.mainKeyActionButton = mainKeyActionButton;
+    this.mainKeyDiceButton = mainKeyDiceButton;
     this.mainKeyText = mainKeyText;
     this.valueText = valueText;
     this.editButton = editButton;
@@ -268,10 +274,10 @@ class SectionEntry extends HTMLComponent {
     return `
     <div class="cs-col cs-padding-h">
       <div class="cs-row">
-          ${this.shortKeyText === "" && this.mainKeyActionButton == null && this.mainKeyText === "" ? "" : `
+          ${this.shortKeyText === "" && this.mainKeyDiceButton == null && this.mainKeyText === "" ? "" : `
             <div class="cs-row">
               ${this.shortKeyText === "" ? "" : `<div class="cs-elem cs-width-fixed-short-key">${this.shortKeyText}</div>`}
-              ${this.mainKeyActionButton == null ? "" : this.mainKeyActionButton.getHTML()}
+              ${this.mainKeyDiceButton == null ? "" : this.mainKeyDiceButton.getHTML()}
               <div class="cs-elem cs-width-fill">${this.mainKeyText}</div>
             </div>
           `}
@@ -290,31 +296,33 @@ class SectionEntry extends HTMLComponent {
 
 class SectionSubEntry extends HTMLComponent {
   /**
-   * @param {ActionButton} actionButton
-   * @param {string} text
+   * Small-text descriptive list item beneath a {@link SectionEntry}
+   * @param {DiceButton} diceButton Optional button to roll dice associated with this sub-entry
+   * @param {string} text Optional text for this sub-entry
    */
   constructor({
-                actionButton = null,
-                text
+                diceButton = null,
+                text = ""
               }) {
     super();
-    this.actionButton = actionButton;
+    this.diceButton = diceButton;
     this.text = text;
   }
 
   getHTML() {
     return `
     <div class="cs-row">
-        ${this.actionButton == null ? "" : this.actionButton.getHTML()}
+        ${this.diceButton == null ? "" : this.diceButton.getHTML()}
         <div class="cs-elem cs-font-size-sm">${this.text}</div>
     </div>
     `;
   }
 }
 
-class ActionButton extends HTMLComponent {
+class DiceButton extends HTMLComponent {
   /**
-   * @param {string} text
+   * Button that rolls dice
+   * @param {string} text Text for the face of the button
    */
   constructor(text) {
     super();
@@ -323,7 +331,7 @@ class ActionButton extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-btn cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn-action">
+    <div class="cs-btn cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn-dice">
         ⚅ ${this.text}
     </div>
     `
@@ -331,6 +339,10 @@ class ActionButton extends HTMLComponent {
 }
 
 class EditButton extends HTMLComponent {
+  /**
+   * Button used for editing entries
+   * @param {string} text Text for the face of the button
+   */
   constructor(text) {
     super();
     this.text = text;
@@ -347,7 +359,7 @@ class EditButton extends HTMLComponent {
 
 // COMPOSITE COMPONENTS //
 /**
- * Entry with action button, key, and value.
+ * Entry with dice button, key, and value.
  *
  * Used for: Ability Scores, Save Throws, Skill Check
  *
@@ -358,7 +370,7 @@ class EditButton extends HTMLComponent {
  */
 function actionKeyValue(action, key, value, description = "") {
   return new SectionEntry({
-    mainKeyActionButton: new ActionButton(action),
+    mainKeyDiceButton: new DiceButton(action),
     mainKeyText: key,
     valueText: value,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
@@ -366,24 +378,33 @@ function actionKeyValue(action, key, value, description = "") {
 }
 
 /**
- * @param {string} weapon
- * @param {WeaponAttack[]} attacks
+ * Entry with the name of a weapon, an edit button, and a list of attacks that can be performed with that weapon
+ *
+ * @param {string} weapon Name of the weapon
+ * @param {WeaponAttack[]} attacks List of attacks that can be performed with this weapon
  */
 function weaponAndActions(weapon, attacks) {
   return new SectionEntry({
     mainKeyText: weapon,
     editButton: new EditButton("Edit / Remove"),
     subEntries: attacks.map((attack) => new SectionSubEntry({
-      actionButton: new ActionButton(attack.verb),
+      diceButton: new DiceButton(attack.verb),
       text: attack.description()
     }))
   })
 }
 
 /**
- * @param {string} part
- * @param {string} item
- * @param {string} description
+ * Entry about armor and other worn equipment. Can represent unequipped / equipped states based on the existence of
+ * the {@link item} param.
+ *
+ * The unequipped state simply contains a key-value pair of the body part and an equip (edit) button.
+ *
+ * The equipped state contains the body part, name of the item, an edit/remove button and an optional descriptor.
+ *
+ * @param {string} part Body part where this armor is equipped (Chest, Belt, etc.)
+ * @param {string} item Optional name of the piece of equipment
+ * @param {string} description Optional description for equipment that grants extra effects
  */
 function armor(part, item = "", description = "") {
   if (item === "") {
@@ -399,6 +420,21 @@ function armor(part, item = "", description = "") {
       subEntries: (description === "") ? [] : [new SectionSubEntry({text: description})]
     })
   }
+}
+
+/**
+ * Entry about class data containing simple key-value pairs and optional notes
+ *
+ * @param {string} key
+ * @param {string} value
+ * @param {string[]} notes
+ */
+function classKeyValue(key, value, notes = []) {
+  return new SectionEntry({
+    mainKeyText: key,
+    valueText: value,
+    subEntries: notes.map(note => new SectionSubEntry({text: note}))
+  })
 }
 
 function renderCharacter(characterName) {
@@ -472,6 +508,12 @@ function renderCharacter(characterName) {
           armor("Ring 2"),
           armor("Other")
         ]
+      }),
+      new PaneSection({
+        divider: new SectionDivider("Effects"),
+        entries: [
+          new SectionEntry({editButton: new EditButton("+ Add an Effect")})
+        ]
       })
     ]),
     new Pane([
@@ -494,7 +536,19 @@ function renderCharacter(characterName) {
             valueText: "Medium",
           })
         ]
-      })
+      }),
+      new PaneSection({ // TODO - only populate classes the character actually has levels in
+        divider: new SectionDivider("Fighter"),
+        entries: [
+          classKeyValue("Fighter Level", "5"),
+          classKeyValue("Additional Attacks", "1"),
+          classKeyValue("Weapon Specializations", "2", [
+            "Dagger & Sword I - +1 to Hit and Damage",
+            "Dagger & Sword II - Critical hits on 19",
+          ])
+        ]
+      }),
+      ... []  // TODO - load class data from model instead
     ]),
   ]
   for (let i = 0; i < panes.length; i++) {

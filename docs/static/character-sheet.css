@@ -6,7 +6,7 @@
 :root {
     --cs-color-accent: #8386CC;
     --cs-color-bg: white;
-    --cs-color-btn-action: #E2E1E3;
+    --cs-color-btn-dice: #E2E1E3;
     --cs-color-btn-edit: #F5F5F5;
     --cs-color-text: black;
     --cs-font-size-lg: 24px;
@@ -67,7 +67,7 @@ body.character-sheet {
 }
 
 .cs-border-right {
-    border-right: 1px solid var(--cs-color-btn-action);
+    border-right: 1px solid var(--cs-color-btn-dice);
 }
 
 .cs-heading {
@@ -125,9 +125,9 @@ body.character-sheet {
     overflow: scroll;
 }
 
-/* CONSTANTS, move after removing dev colors */
-.cs-color-btn-action {
-    background: var(--cs-color-btn-action);
+/* CONSTANTS */
+.cs-color-btn-dice {
+    background: var(--cs-color-btn-dice);
 }
 
 .cs-color-btn-edit {
@@ -205,7 +205,7 @@ body.character-sheet {
     position: relative;
     display: flex;
     height: 1px;
-    background-color: var(--cs-color-btn-action);
+    background-color: var(--cs-color-btn-dice);
 }
 
 .arrow-line::after {
@@ -221,13 +221,13 @@ body.character-sheet {
 .arrow-line-left::after {
     /* When paired with arrow-line, draws an arrow pointing to the left */
     left: 0;
-    border-left: 4px solid var(--cs-color-btn-action); /* Adjust the color and size of the arrow */
+    border-left: 4px solid var(--cs-color-btn-dice); /* Adjust the color and size of the arrow */
 }
 
 .arrow-line-right::after {
     /* When paired with arrow-line, draws an arrow pointing to the right */
     right: 0;
-    border-right: 4px solid var(--cs-color-btn-action); /* Adjust the color and size of the arrow */
+    border-right: 4px solid var(--cs-color-btn-dice); /* Adjust the color and size of the arrow */
 }
 
 .cs-btn {
