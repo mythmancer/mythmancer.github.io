@@ -1,21 +1,32 @@
 @font-face {
-    font-family: 'Baskerville';
-    src: local('Baskerville Regular'), url(https://assets.mythmancer.com/LibreBaskerville-Regular.ttf) format('truetype');
+    font-family: 'Baskervville';
+    src: local('Baskervville Regular'), url(https://assets.mythmancer.com/LibreBaskerville-Regular.ttf) format('truetype');
 }
 
 :root {
-    --cs-bg: white;
-    --cs-accent: #8386CC;
-    --cs-text: black;
+    --cs-color-accent: #8386CC;
+    --cs-color-bg: white;
+    --cs-color-btn-action: #E2E1E3;
+    --cs-color-btn-edit: #F5F5F5;
+    --cs-color-text: black;
+    --cs-font-size-lg: 24px;
+    --cs-font-size-std: 16px;
+    --cs-font-size-sm: 12px;
+    --cs-height-min: 24px;
+    --cs-gap: 5px;
+    --cs-padding: 5px;
+    --cs-width-divider-left: 12px;
+    --cs-width-fixed-short-key: 60px;
 }
 
 body.character-sheet {
     margin: 0 !important;
     width: 100%;
     height: 100vh;
-    background-color: var(--cs-bg);
-    color: var(--cs-black);
-    font-family: "Baskerville";
+    background-color: var(--cs-color-bg);
+    color: var(--cs-color-text);
+    font-family: Baskervville, serif;
+    font-size: var(--cs-font-size-std);
     overflow: clip;
 }
 
@@ -33,7 +44,7 @@ body.character-sheet {
     width: 300px;
     padding-left: 10px;
     padding-right: 10px;
-    border-right: 1px solid var(--cs-accent);
+    border-right: 1px solid var(--cs-color-accent);
     overflow: scroll;
 }
 
@@ -47,7 +58,7 @@ body.character-sheet {
 /* LEFT PANE */
 #cs-mythmancer-title {
     text-align: center;
-    font-size: 30px;
+    font-size: var(--cs-font-size-lg);
 }
 
 .cs-left-pane-heading-row {
@@ -55,8 +66,8 @@ body.character-sheet {
     flex-direction: row;
 }
 
-hr {
-    border: 0.5px solid var(--cs-accent);
+.cs-border-right {
+    border-right: 1px solid var(--cs-color-btn-action);
 }
 
 .cs-heading {
@@ -85,8 +96,8 @@ hr {
 }
 
 .cs-character-listing-current {
-    color: var(--cs-bg);
-    background-color: var(--cs-accent);
+    color: var(--cs-color-bg);
+    background-color: var(--cs-color-accent);
 }
 
 /* RIGHT PANE */
@@ -95,13 +106,13 @@ hr {
 }
 
 #cs-current-character-heading {
-    font-size: 30px;
+    font-size: 24px;
     padding-top: 5px;
     padding-left: 5px;
     padding-bottom: 5px;
     width: 100%;
-    background-color: var(--cs-accent);
-    color: var(--cs-bg);
+    background-color: var(--cs-color-accent);
+    color: var(--cs-color-bg);
     position: sticky;
     top: 0;
 }
@@ -114,51 +125,127 @@ hr {
     overflow: scroll;
 }
 
-.cs-panel {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-right: 1px solid var(--cs-accent);
+/* CONSTANTS, move after removing dev colors */
+.cs-color-btn-action {
+    background: var(--cs-color-btn-action);
 }
 
-.cs-section {
+.cs-color-btn-edit {
+    background: var(--cs-color-btn-edit);
+}
+
+.cs-font-size-sm {
+    font-size: var(--cs-font-size-sm);
+}
+
+/* LAYOUT */
+.cs-col {
+    /* Flex Column */
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    padding-top: 10px;
+    gap: var(--cs-gap);
 }
 
-.cs-section-heading-row {
+.cs-row {
+    /* Flex Row */
     display: flex;
     flex-direction: row;
-}
-
-.cs-section-heading-decor-left {
-    width: 50px;
-    margin-right: 5px;
-}
-
-.cs-section-heading-decor-right {
+    align-items: flex-start;
     width: 100%;
-    margin-left: 5px;
+    gap: var(--cs-gap);
 }
 
-.cs-entry {
-    display: flex;
-    flex-direction: column;
-}
-
-.cs-entry-row {
+.cs-elem {
+    /* Flex Element, should only contain simple contents such as text */
     display: flex;
     flex-direction: row;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    align-items: center;
+    min-height: var(--cs-height-min);
 }
 
-.content {
+.cs-padding-h {
+    /* Horizontal Padding, prefer gap in flex rows and columns in most cases */
+    padding-left: var(--cs-padding);
+    padding-right: var(--cs-padding);
+    box-sizing: border-box; /* prevents overflow */
+}
+
+.cs-padding-v {
+    /* Vertical Padding, prefer gap in flex rows and columns in most cases */
+    padding-top: var(--cs-padding);
+    padding-bottom: var(--cs-padding);
+}
+
+.cs-width-fixed-short-key {
+    /* Fixed width for short keys in entries */
+    width: var(--cs-width-fixed-short-key)
+}
+
+.cs-width-fill {
+    /* Used to allow elements to grow as much as required to prevent line breaks */
+    flex-shrink: 0;
+}
+
+.cs-width-full {
+    /* Used to cause an element to take up as much width as possible */
+    width: 100%;
+}
+
+.cs-width-divider-left {
+    /* Width of the left side of the section divider */
+    width: var(--cs-width-divider-left)
+}
+
+/* COMPONENTS */
+.arrow-line {
+    /* Base component for horizontal arrows, must be paired with either arrow-line-left or arrow-line-right */
+    align-items: center;
+    position: relative;
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    height: 1px;
+    background-color: var(--cs-color-btn-action);
+}
+
+.arrow-line::after {
+    /* Arrowhead for horizontal arrows */
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+}
+
+.arrow-line-left::after {
+    /* When paired with arrow-line, draws an arrow pointing to the left */
+    left: 0;
+    border-left: 4px solid var(--cs-color-btn-action); /* Adjust the color and size of the arrow */
+}
+
+.arrow-line-right::after {
+    /* When paired with arrow-line, draws an arrow pointing to the right */
+    right: 0;
+    border-right: 4px solid var(--cs-color-btn-action); /* Adjust the color and size of the arrow */
+}
+
+.cs-btn {
+    /* Button, should be paired with a color */
+    height: var(--cs-height-min);
+    align-items: center;
+    display: flex;
+    font-size: var(--cs-font-size-sm);
+    border-radius: 2px;
+    user-select: none;
+    transition: brightness 0.1s ease, filter 0.1s ease;
+    cursor: pointer;
+}
+
+.cs-btn:hover {
+    filter: brightness(90%);
+}
+
+.cs-btn:active {
+    scale: 90%;
 }
