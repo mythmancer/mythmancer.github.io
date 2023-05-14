@@ -6,9 +6,9 @@
 :root {
     --cs-color-accent: #8386CC;
     --cs-color-bg: white;
-    --cs-color-btn-dice: #E2E1E3;
-    --cs-color-btn-edit: #F5F5F5;
+    --cs-color-btn: #989898;
     --cs-color-text: black;
+    --cs-color-text-deemphasized: #5e5e5e;
     --cs-font-size-lg: 24px;
     --cs-font-size-std: 16px;
     --cs-font-size-sm: 12px;
@@ -17,6 +17,10 @@
     --cs-padding: 5px;
     --cs-width-divider-left: 12px;
     --cs-width-fixed-short-key: 60px;
+
+    --cs-color-debug-col: cyan;
+    --cs-color-debug-row: magenta;
+    --cs-color-debug-elem: yellow;
 }
 
 body.character-sheet {
@@ -67,7 +71,7 @@ body.character-sheet {
 }
 
 .cs-border-right {
-    border-right: 1px solid var(--cs-color-btn-dice);
+    border-right: 1px solid var(--cs-color-btn);
 }
 
 .cs-heading {
@@ -103,14 +107,14 @@ body.character-sheet {
 /* RIGHT PANE */
 #cs-current-character {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
 #cs-current-character-heading {
-    font-size: 24px;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-bottom: 5px;
-    width: 100%;
+    font-size: var(--cs-font-size-lg);
     background-color: var(--cs-color-accent);
     color: var(--cs-color-bg);
     position: sticky;
@@ -126,16 +130,20 @@ body.character-sheet {
 }
 
 /* CONSTANTS */
-.cs-color-btn-dice {
-    background: var(--cs-color-btn-dice);
+.cs-color-accent {
+    background: var(--cs-color-accent)
 }
 
-.cs-color-btn-edit {
-    background: var(--cs-color-btn-edit);
+.cs-color-btn {
+    background: var(--cs-color-btn);
 }
 
 .cs-font-size-sm {
     font-size: var(--cs-font-size-sm);
+}
+
+.cs-font-color-deemphasized {
+    color: var(--cs-color-text-deemphasized);
 }
 
 /* LAYOUT */
@@ -146,6 +154,8 @@ body.character-sheet {
     align-items: flex-start;
     width: 100%;
     gap: var(--cs-gap);
+
+    /*background: var(--cs-color-debug-col);*/
 }
 
 .cs-row {
@@ -155,6 +165,8 @@ body.character-sheet {
     align-items: flex-start;
     width: 100%;
     gap: var(--cs-gap);
+
+    /*background: var(--cs-color-debug-row);*/
 }
 
 .cs-elem {
@@ -163,6 +175,8 @@ body.character-sheet {
     flex-direction: row;
     align-items: center;
     min-height: var(--cs-height-min);
+
+    /*background: var(--cs-color-debug-elem);*/
 }
 
 .cs-padding-h {
@@ -180,7 +194,8 @@ body.character-sheet {
 
 .cs-width-fixed-short-key {
     /* Fixed width for short keys in entries */
-    width: var(--cs-width-fixed-short-key)
+    width: var(--cs-width-fixed-short-key);
+    min-width: var(--cs-width-fixed-short-key);
 }
 
 .cs-width-fill {
@@ -205,7 +220,7 @@ body.character-sheet {
     position: relative;
     display: flex;
     height: 1px;
-    background-color: var(--cs-color-btn-dice);
+    background-color: var(--cs-color-btn);
 }
 
 .arrow-line::after {
@@ -221,21 +236,21 @@ body.character-sheet {
 .arrow-line-left::after {
     /* When paired with arrow-line, draws an arrow pointing to the left */
     left: 0;
-    border-left: 4px solid var(--cs-color-btn-dice); /* Adjust the color and size of the arrow */
+    border-left: 4px solid var(--cs-color-btn); /* Adjust the color and size of the arrow */
 }
 
 .arrow-line-right::after {
     /* When paired with arrow-line, draws an arrow pointing to the right */
     right: 0;
-    border-right: 4px solid var(--cs-color-btn-dice); /* Adjust the color and size of the arrow */
+    border-right: 4px solid var(--cs-color-btn); /* Adjust the color and size of the arrow */
 }
 
 .cs-btn {
     /* Button, should be paired with a color */
+    filter: brightness(150%);
     height: var(--cs-height-min);
     align-items: center;
     display: flex;
-    font-size: var(--cs-font-size-sm);
     border-radius: 2px;
     user-select: none;
     transition: brightness 0.1s ease, filter 0.1s ease;
@@ -243,9 +258,9 @@ body.character-sheet {
 }
 
 .cs-btn:hover {
-    filter: brightness(90%);
+    filter: brightness(100%);
 }
 
 .cs-btn:active {
-    scale: 90%;
+    scale: 97%;
 }
