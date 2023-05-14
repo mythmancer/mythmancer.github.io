@@ -1,6 +1,7 @@
 /* character models - just for demo */
 const CHARACTER_MODELS = {
   "Pal Bonwater - Level 6 Elementalist": {
+    "color": "#8386CC",
     "total_hit_points": 17,
     "current_hit_points": 16,
     "ability_scores": {
@@ -40,6 +41,7 @@ const CHARACTER_MODELS = {
     },
   },
   "Herakles - Level 5 Grinner": {
+    "color": "#9a5656",
     "total_hit_points": 100000,
     "current_hit_points": 18,
     "armor_class": 20,
@@ -78,6 +80,7 @@ const CHARACTER_MODELS = {
     },
   },
   "Noam Gnomesky - Level 20 Old Man": {
+    "color": "#989898",
     "total_hit_points": 2,
     "current_hit_points": 1,
     "armor_class": 1,
@@ -589,6 +592,7 @@ function renderCharacter(characterName) {
     ]),
   ]
 
+  document.documentElement.style.setProperty("--cs-color-character", characterModel.color)
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
         <div id="cs-current-character-heading" class="cs-row cs-padding-h cs-padding-v">

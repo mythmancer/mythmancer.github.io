@@ -4,11 +4,11 @@
 }
 
 :root {
-    --cs-color-accent: #8386CC;
     --cs-color-bg: white;
     --cs-color-btn: #989898;
     --cs-color-text: black;
     --cs-color-text-deemphasized: #5e5e5e;
+    --cs-color-character: black;
     --cs-font-size-lg: 24px;
     --cs-font-size-std: 16px;
     --cs-font-size-sm: 12px;
@@ -48,7 +48,7 @@ body.character-sheet {
     width: 300px;
     padding-left: 10px;
     padding-right: 10px;
-    border-right: 1px solid var(--cs-color-accent);
+    border-right: 1px solid var(--cs-color-character);
     overflow: scroll;
 }
 
@@ -101,7 +101,7 @@ body.character-sheet {
 
 .cs-character-listing-current {
     color: var(--cs-color-bg);
-    background-color: var(--cs-color-accent);
+    background-color: var(--cs-color-character);
 }
 
 /* RIGHT PANE */
@@ -115,7 +115,7 @@ body.character-sheet {
 
 #cs-current-character-heading {
     font-size: var(--cs-font-size-lg);
-    background-color: var(--cs-color-accent);
+    background-color: var(--cs-color-character);
     color: var(--cs-color-bg);
     position: sticky;
     top: 0;
@@ -131,7 +131,7 @@ body.character-sheet {
 
 /* CONSTANTS */
 .cs-color-accent {
-    background: var(--cs-color-accent)
+    background: var(--cs-color-character)
 }
 
 .cs-color-btn {
