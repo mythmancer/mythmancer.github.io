@@ -5,12 +5,13 @@
 
 :root {
     /* Character colors adjust dynamically */
-    --cs-color-character-bg: black;
-    --cs-color-character-text: white;
+    --cs-color-character-bg: #ffffff;
+    --cs-color-character-text: #000000;
 
-    --cs-color-bg: white;
+    /* Constants */
+    --cs-color-bg: #ffffff;
     --cs-color-btn: #989898;
-    --cs-color-text: black;
+    --cs-color-text: #000000;
     --cs-color-text-deemphasized: #5e5e5e;
     --cs-font-size-lg: 24px;
     --cs-font-size-std: 16px;
@@ -20,52 +21,48 @@
     --cs-padding: 5px;
     --cs-width-divider-left: 12px;
     --cs-width-fixed-short-key: 60px;
-
-    --cs-color-debug-col: cyan;
-    --cs-color-debug-row: magenta;
-    --cs-color-debug-elem: yellow;
 }
 
 body.character-sheet {
-    margin: 0 !important;
-    width: 100%;
-    height: 100vh;
-    background-color: var(--cs-color-bg);
-    color: var(--cs-color-text);
     font-family: Baskervville, serif;
     font-size: var(--cs-font-size-std);
     overflow: clip;
+    width: 100%;
+    height: 100vh;
+    margin: 0 !important;
+    color: var(--cs-color-text);
+    background-color: var(--cs-color-bg);
 }
 
 /* Main page is split into left navigation pane and right content pane */
 #cs-container {
     display: flex;
+    overflow: clip;
     flex-direction: row;
     height: 100%;
-    overflow: clip;
 }
 
 #cs-left-pane {
     display: flex;
+    overflow: scroll;
     flex-direction: column;
     width: 300px;
-    padding-left: 10px;
     padding-right: 10px;
+    padding-left: 10px;
     border-right: 1px solid var(--cs-color-btn);
-    overflow: scroll;
 }
 
 #cs-right-pane {
-    width: 100%;
     display: flex;
-    flex-direction: column;
     overflow: scroll;
+    flex-direction: column;
+    width: 100%;
 }
 
 /* LEFT PANE */
 #cs-mythmancer-title {
-    text-align: center;
     font-size: var(--cs-font-size-lg);
+    text-align: center;
 }
 
 .cs-left-pane-heading-row {
@@ -93,13 +90,13 @@ body.character-sheet {
 }
 
 .cs-left-pane-listing {
-    white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: clip;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
     cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .cs-character-listing-current {
@@ -109,27 +106,27 @@ body.character-sheet {
 
 /* RIGHT PANE */
 #cs-current-character {
-    height: 100%;
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
 }
 
 #cs-current-character-heading {
     font-size: var(--cs-font-size-lg);
-    color: var(--cs-color-character-text);
-    background-color: var(--cs-color-character-bg);
     position: sticky;
     top: 0;
+    color: var(--cs-color-character-text);
+    background-color: var(--cs-color-character-bg);
 }
 
 .cs-panels {
     display: flex;
+    overflow: scroll;
     flex-direction: row;
     width: 100%;
     height: 100%;
-    overflow: scroll;
 }
 
 /* CONSTANTS */
@@ -157,40 +154,34 @@ body.character-sheet {
 .cs-col {
     /* Flex Column */
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
     width: 100%;
     gap: var(--cs-gap);
-
-    /*background: var(--cs-color-debug-col);*/
 }
 
 .cs-row {
     /* Flex Row */
     display: flex;
-    flex-direction: row;
     align-items: flex-start;
+    flex-direction: row;
     width: 100%;
     gap: var(--cs-gap);
-
-    /*background: var(--cs-color-debug-row);*/
 }
 
 .cs-elem {
     /* Flex Element, should only contain simple contents such as text */
     display: flex;
-    flex-direction: row;
     align-items: center;
+    flex-direction: row;
     min-height: var(--cs-height-min);
-
-    /*background: var(--cs-color-debug-elem);*/
 }
 
 .cs-padding-h {
     /* Horizontal Padding, prefer gap in flex rows and columns in most cases */
-    padding-left: var(--cs-padding);
-    padding-right: var(--cs-padding);
     box-sizing: border-box; /* prevents overflow */
+    padding-right: var(--cs-padding);
+    padding-left: var(--cs-padding);
 }
 
 .cs-padding-v {
@@ -223,19 +214,19 @@ body.character-sheet {
 /* COMPONENTS */
 .arrow-line {
     /* Base component for horizontal arrows, must be paired with either arrow-line-left or arrow-line-right */
-    align-items: center;
     position: relative;
     display: flex;
+    align-items: center;
     height: 1px;
     background-color: var(--cs-color-btn);
 }
 
 .arrow-line::after {
     /* Arrowhead for horizontal arrows */
-    content: "";
     position: absolute;
     width: 0;
     height: 0;
+    content: "";
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
 }
@@ -254,14 +245,14 @@ body.character-sheet {
 
 .cs-btn {
     /* Button, should be paired with a color */
-    filter: brightness(150%);
-    height: var(--cs-height-min);
-    align-items: center;
     display: flex;
-    border-radius: 2px;
+    align-items: center;
+    height: var(--cs-height-min);
+    cursor: pointer;
     user-select: none;
     transition: brightness 0.1s ease, filter 0.1s ease;
-    cursor: pointer;
+    border-radius: 2px;
+    filter: brightness(150%);
 }
 
 .cs-btn:hover {
