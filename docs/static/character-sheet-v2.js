@@ -90,7 +90,7 @@ const CHARACTER_MODELS = {
       "Gloves": "Evening soiree gloves",
     },
     "fighter": {
-      "level": 9,
+      "level": 0,
     },
     "rogue": {
       "level": 9,
@@ -107,10 +107,70 @@ const CHARACTER_MODELS = {
   }
 };
 
+
+
 /*******************************************************************
- *************************** DATA BASES ****************************
+ **************************** CONSTANTS ****************************
  *******************************************************************/
-// Databases
+
+CHARACTER_SHEET_STORAGE_KEY = "character_sheets";
+COLOR_MODE_STORAGE_KEY = "color_mode";
+THEME_STORAGE_KEY = "theme";
+
+/*******************************************************************
+ *************************** APPEARANCE ****************************
+ *******************************************************************/
+COLOR_MODES = {
+  "dark": {
+    "--cs-color-bg": "#181a1b",
+    "--cs-color-text": "#ffffff",
+    "--cs-color-btn-text": "#000000",
+    "--cs-color-text-deemphasized": "#9f9f9f",
+  },
+  "light": {
+    "--cs-color-bg": "#ffffff",
+    "--cs-color-text": "#000000",
+    "--cs-color-btn-text": "#ffffff",
+    "--cs-color-text-deemphasized": "#5e5e5e",
+  },
+};
+
+THEMES = {
+  "standard": {
+    "--cs-font": "Baskervville",
+    "--cs-font-size-lg": "24px",
+    "--cs-font-size-std": "16px",
+    "--cs-font-size-sm": "12px",
+    "--cs-width-divider-left": "12px",
+    "--cs-arrow-height": "2px",
+    "--cs-arrow-width": "4px",
+  },
+  "arcade": {
+    "--cs-font": "HammerBro",
+    "--cs-font-size-lg": "32px",
+    "--cs-font-size-std": "20px",
+    "--cs-font-size-sm": "16px",
+    "--cs-width-divider-left": "16px",
+    "--cs-arrow-height": "7px",
+    "--cs-arrow-width": "10px",
+  },
+};
+
+function setAppearance() {
+  const colorMode = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY) || "light";
+  for (let prop in COLOR_MODES[colorMode]) {
+    document.documentElement.style.setProperty(prop, COLOR_MODES[colorMode][prop]);
+  }
+
+  const theme = window.localStorage.getItem(THEME_STORAGE_KEY) || "normal";
+  for (let prop in THEMES[theme]) {
+    document.documentElement.style.setProperty(prop, THEMES[theme][prop]);
+  }
+}
+
+/*******************************************************************
+ **************************** DATABASES ****************************
+ *******************************************************************/
 ARMOR = {
   "padded": {
     "ac": 1,
@@ -673,8 +733,8 @@ class WeaponAttack {
 
   description() {
     // "1 Attack at +3 to hit dealing 1d6 damage if some condition is filled"
-    return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at 
-      ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit 
+    return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at
+      ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit
       dealing ${this.damage} damage${this.condition === "" ? "" : ` if ${this.condition}`}`;
   }
 }
@@ -700,7 +760,7 @@ class Pane extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col cs-padding-v cs-border-right">
+    <div class="cs-panel cs-col cs-padding-v cs-border-right">
         ${this.sections.map((section) => section.getHTML()).join("")}
     </div>
     `;
@@ -1122,6 +1182,7 @@ function renderCharacter(characterName) {
 
   document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.color);
   document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.color));
+
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
         <div id="cs-current-character-heading" class="cs-row cs-padding-h cs-padding-v">
@@ -1145,6 +1206,8 @@ function loadCharacter(event) {
 }
 
 window.onload = function () {
+  setAppearance();
+
   const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
   for (let i = 0; i < characterListings.length; i++) {
     characterListings[i].addEventListener("click", loadCharacter);

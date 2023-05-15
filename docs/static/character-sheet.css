@@ -1,32 +1,41 @@
 @font-face {
     font-family: 'Baskervville';
-    src: local('Baskervville Regular'), url(http://localhost/static/assets/LibreBaskerville-Regular.ttf) format('truetype');
+    src: local('Baskervville Regular'), url(https://assets.mythmancer.com/LibreBaskerville-Regular.ttf) format('truetype');
 }
 
 :root {
     /* Character colors adjust dynamically */
-    --cs-color-character-bg: #ffffff;
-    --cs-color-character-text: #000000;
+    --cs-color-character-bg: #000000;
+    --cs-color-character-text: #ffffff;
 
     /* Constants */
-    --cs-color-bg: #ffffff;
     --cs-color-btn: #989898;
-    --cs-color-text: #000000;
-    --cs-color-text-deemphasized: #5e5e5e;
-    --cs-font-size-lg: 24px;
-    --cs-font-size-std: 16px;
-    --cs-font-size-sm: 12px;
     --cs-height-min: 24px;
     --cs-gap: 5px;
     --cs-padding: 5px;
-    --cs-width-divider-left: 12px;
+
     --cs-width-tooltip-offset: 16px;
     --cs-width-fixed-short-key: 60px;
     --cs-max-width-tooltip: 400px;
+
+    /* Programmatically set properties:
+    The following based on color mode:
+      * --cs-color-bg
+      * --cs-color-text
+      * --cs-color-btn-text
+      * --cs-color-text-deemphasized
+
+    The following based on theme:
+      * --cs-font
+      * --cs-font-size-lg
+      * --cs-font-size-std
+      * --cs-font-size-sm
+      * --cs-width-divider-left
+    */
 }
 
 body.character-sheet {
-    font-family: Baskervville, serif;
+    font-family: var(--cs-font), serif;
     font-size: var(--cs-font-size-std);
     overflow: clip;
     width: 100%;
@@ -51,12 +60,12 @@ body.character-sheet {
     width: 300px;
     padding-right: 10px;
     padding-left: 10px;
-    border-right: 1px solid var(--cs-color-btn);
+    border-right: 1px solid var(--cs-color-character-bg);
 }
 
 #cs-right-pane {
     display: flex;
-    overflow: scroll;
+    overflow: clip;
     flex-direction: column;
     width: 100%;
 }
@@ -73,7 +82,7 @@ body.character-sheet {
 }
 
 .cs-border-right {
-    border-right: 1px solid var(--cs-color-btn);
+    border-right: 1px solid var(--cs-color-character-bg);
 }
 
 .cs-heading {
@@ -126,10 +135,14 @@ body.character-sheet {
 
 .cs-panels {
     display: flex;
-    overflow: scroll;
+    overflow: clip;
     flex-direction: row;
     width: 100%;
     height: 100%;
+}
+
+.cs-panel {
+    overflow: scroll;
 }
 
 /* CONSTANTS */
@@ -139,6 +152,7 @@ body.character-sheet {
 
 .cs-color-btn {
     background: var(--cs-color-btn);
+    color: var(--cs-color-btn-text);
 }
 
 .cs-font-size-sm {
@@ -211,7 +225,8 @@ body.character-sheet {
 
 .cs-width-divider-left {
     /* Width of the left side of the section divider */
-    width: var(--cs-width-divider-left)
+    width: var(--cs-width-divider-left);
+    min-width: var(--cs-width-divider-left);
 }
 
 /* COMPONENTS */
@@ -221,7 +236,7 @@ body.character-sheet {
     display: flex;
     align-items: center;
     height: 1px;
-    background-color: var(--cs-color-btn);
+    background-color: var(--cs-color-character-bg);
 }
 
 .arrow-line::after {
@@ -230,20 +245,20 @@ body.character-sheet {
     width: 0;
     height: 0;
     content: "";
-    border-top: 2px solid transparent;
-    border-bottom: 2px solid transparent;
+    border-top: var(--cs-arrow-height) solid transparent;
+    border-bottom: var(--cs-arrow-height) solid transparent;
 }
 
 .arrow-line-left::after {
     /* When paired with arrow-line, draws an arrow pointing to the left */
     left: 0;
-    border-left: 4px solid var(--cs-color-btn); /* Adjust the color and size of the arrow */
+    border-left: var(--cs-arrow-width) solid var(--cs-color-character-bg); /* Adjust the color and size of the arrow */
 }
 
 .arrow-line-right::after {
     /* When paired with arrow-line, draws an arrow pointing to the right */
     right: 0;
-    border-right: 4px solid var(--cs-color-btn); /* Adjust the color and size of the arrow */
+    border-right: var(--cs-arrow-width) solid var(--cs-color-character-bg); /* Adjust the color and size of the arrow */
 }
 
 .cs-btn {
@@ -264,6 +279,14 @@ body.character-sheet {
 
 .cs-btn:active {
     scale: 95%;
+}
+
+.cs-filler-h {
+    width: 100%;
+}
+
+.cs-filler-v {
+    height: 100%;
 }
 
 /* tooltips */
