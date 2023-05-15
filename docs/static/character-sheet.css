@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Baskervville';
-    src: local('Baskervville Regular'), url(https://assets.mythmancer.com/LibreBaskerville-Regular.ttf) format('truetype');
+    src: local('Baskervville Regular'), url(http://localhost/static/assets/LibreBaskerville-Regular.ttf) format('truetype');
 }
 
 :root {
