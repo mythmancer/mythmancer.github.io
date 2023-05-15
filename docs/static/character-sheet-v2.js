@@ -321,65 +321,65 @@ BUILDER_FUNCTIONS = {
       + getNumericalCharacteristic(characterData["rogue"]["level"])
       + getNumericalCharacteristic(characterData["warlock"]["level"]);
   },
-  "modifiers.charisma": characterData =>  {
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
-        "tooltip": "",
-      };
+  "modifiers.charisma": characterData => {
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
+      "tooltip": "",
+    };
   },
 
-  "modifiers.constitution": characterData =>  {
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])],
-        "tooltip": "",
-      };
+  "modifiers.constitution": characterData => {
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])],
+      "tooltip": "",
+    };
   },
 
   "save_throws.constitution": characterData => {
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])]
-          + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 2)
-          + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
-          + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 4)
-          + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 3),
-        "tooltip": "fortitude",
-      };
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])]
+        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 3),
+      "tooltip": "fortitude",
+    };
   },
 
-  "modifiers.dexterity": characterData =>  {
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])],
-        "tooltip": "",
-      };
+  "modifiers.dexterity": characterData => {
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])],
+      "tooltip": "",
+    };
   },
 
   "save_throws.dexterity": characterData => {
-      // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])]
-          + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 3)
-          + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 3)
-          + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
-          + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
-        "tooltip": "reflex",
-      };
+    // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])]
+        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
+      "tooltip": "A ".repeat(200),
+    };
   },
 
-  "modifiers.intelligence": characterData =>  {
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
-        "tooltip": "",
-      };
+  "modifiers.intelligence": characterData => {
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
+      "tooltip": "",
+    };
   },
 
-  "modifiers.strength": characterData =>  {
-      return {
-        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["strength"])],
-        "tooltip": "",
-      };
+  "modifiers.strength": characterData => {
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["strength"])],
+      "tooltip": "",
+    };
   },
 
-  "modifiers.wisdom": characterData =>  {
+  "modifiers.wisdom": characterData => {
     // table
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["wisdom"])],
@@ -514,70 +514,70 @@ BUILDER_FUNCTIONS = {
   },
 
 
-  "warlock.l1_spell_slots": characterData =>  {
+  "warlock.l1_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][1],
       "tooltip": "",
     };
   },
 
-  "warlock.l2_spell_slots": characterData =>  {
+  "warlock.l2_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][2],
       "tooltip": "",
     };
   },
 
-  "warlock.l3_spell_slots": characterData =>  {
+  "warlock.l3_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][3],
       "tooltip": "",
     };
   },
 
-  "warlock.l4_spell_slots": characterData =>  {
+  "warlock.l4_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][4],
       "tooltip": "",
     };
   },
 
-  "warlock.l5_spell_slots": characterData =>  {
+  "warlock.l5_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][5],
       "tooltip": "",
     };
   },
 
-  "mage.l1_spell_slots": characterData =>  {
+  "mage.l1_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][1],
       "tooltip": "",
     };
   },
 
-  "mage.l2_spell_slots": characterData =>  {
+  "mage.l2_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][2],
       "tooltip": "",
     };
   },
 
-  "mage.l3_spell_slots": characterData =>  {
+  "mage.l3_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][3],
       "tooltip": "",
     };
   },
 
-  "mage.l4_spell_slots": characterData =>  {
+  "mage.l4_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][4],
       "tooltip": "",
     };
   },
 
-  "mage.l5_spell_slots": characterData =>  {
+  "mage.l5_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][5],
       "tooltip": "",
@@ -764,7 +764,7 @@ class SectionEntry extends HTMLComponent {
    * @param {DiceButton} diceButton Optional button to roll dice associated with this entry
    * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
    * @param {string} valueText Optional text for the right side of the main row in a key-value pair
-   * @param {string} tooltipHTML Optional HTML for the tooltip of this entry
+   * @param {string} tooltipHTML Optional HTML for the tooltip of this entry TODO - this ought to be a class
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
    * @param {SectionSubEntry[]} subEntries Optional vertical list of small-text descriptors beneath the main row
    */
@@ -807,11 +807,11 @@ class SectionEntry extends HTMLComponent {
           ` : `
             <div class="cs-row">
               ${this.valueText === "" ? "" : `
-              <div class="cs-elem cs-width-full ${this.tooltipHTML ? "has-tooltip" : ""}">
+              <div class="cs-elem cs-width-full ${this.tooltipHTML ? "cs-has-tooltip" : ""}">
                 ${this.valueText}
-                ${this.tooltipHTML ? `<div class="cs-tooltiptext">${this.tooltipHTML}</div>`: ""}
+                ${this.tooltipHTML ? `<div class="cs-tooltiptext">${this.tooltipHTML}</div>` : ""}
               </div>`
-          }
+              }
               ${this.editButton == null ? "" : this.editButton.getHTML()}
             </div>
           `}

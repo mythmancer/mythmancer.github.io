@@ -20,7 +20,9 @@
     --cs-gap: 5px;
     --cs-padding: 5px;
     --cs-width-divider-left: 12px;
+    --cs-width-tooltip-offset: 16px;
     --cs-width-fixed-short-key: 60px;
+    --cs-max-width-tooltip: 400px;
 }
 
 body.character-sheet {
@@ -116,10 +118,10 @@ body.character-sheet {
 #cs-current-character-heading {
     font-size: var(--cs-font-size-lg);
     position: sticky;
+    z-index: 10;
     top: 0;
     color: var(--cs-color-character-text);
     background-color: var(--cs-color-character-bg);
-    z-index: 10;
 }
 
 .cs-panels {
@@ -261,27 +263,44 @@ body.character-sheet {
 }
 
 .cs-btn:active {
-    scale: 97%;
+    scale: 95%;
 }
 
 /* tooltips */
-.has-tooltip:hover .cs-tooltiptext {
+.cs-has-tooltip {
+    /* Component containing a tooltip */
+    position: relative;
+    display: inline-block;
+}
+
+.cs-has-tooltip .cs-tooltiptext {
+    font-size: var(--cs-font-size-sm);
+    position: absolute;
+    z-index: 10;
+    bottom: calc(var(--cs-height-min) + var(--cs-padding));
+    left: var(--cs-width-tooltip-offset);
+    visibility: hidden;
+    width: max-content;
+    max-width: var(--cs-max-width-tooltip);
+    padding: var(--cs-padding);
+    transition: visibility 0s linear 0.5s;
+    color: var(--cs-color-bg);
+    border-radius: 2px;
+    background-color: var(--cs-color-text);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.cs-has-tooltip:hover .cs-tooltiptext {
     visibility: visible;
 }
 
-.has-tooltip .cs-tooltiptext {
-    visibility: hidden;
-    top: 10%;
-    left: calc(50% - 400px);
-    width: 800px;
-    background-color: var(--bg);
-    color: white;
-    border: 10px solid black;
-    border-radius: 10px;
-    padding: 10px;
-    white-space: normal;
-
-    /* Position the tooltip */
-    position: fixed;
-    z-index: 10;
+.cs-has-tooltip .cs-tooltiptext::before {
+    /* Draws a triangle on the corner of the tooltip to resemble a quote box */
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    content: "";
+    border-top: 6px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 6px solid var(--cs-color-text);
 }
