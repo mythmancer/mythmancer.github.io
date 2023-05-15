@@ -4,11 +4,14 @@
 }
 
 :root {
+    /* Character colors adjust dynamically */
+    --cs-color-character-bg: black;
+    --cs-color-character-text: white;
+
     --cs-color-bg: white;
     --cs-color-btn: #989898;
     --cs-color-text: black;
     --cs-color-text-deemphasized: #5e5e5e;
-    --cs-color-character: black;
     --cs-font-size-lg: 24px;
     --cs-font-size-std: 16px;
     --cs-font-size-sm: 12px;
@@ -48,7 +51,7 @@ body.character-sheet {
     width: 300px;
     padding-left: 10px;
     padding-right: 10px;
-    border-right: 1px solid var(--cs-color-character);
+    border-right: 1px solid var(--cs-color-btn);
     overflow: scroll;
 }
 
@@ -100,8 +103,8 @@ body.character-sheet {
 }
 
 .cs-character-listing-current {
-    color: var(--cs-color-bg);
-    background-color: var(--cs-color-character);
+    color: var(--cs-color-character-text);
+    background-color: var(--cs-color-character-bg);
 }
 
 /* RIGHT PANE */
@@ -115,8 +118,8 @@ body.character-sheet {
 
 #cs-current-character-heading {
     font-size: var(--cs-font-size-lg);
-    background-color: var(--cs-color-character);
-    color: var(--cs-color-bg);
+    color: var(--cs-color-character-text);
+    background-color: var(--cs-color-character-bg);
     position: sticky;
     top: 0;
 }
@@ -130,8 +133,8 @@ body.character-sheet {
 }
 
 /* CONSTANTS */
-.cs-color-accent {
-    background: var(--cs-color-character)
+.cs-color-character-bg {
+    background: var(--cs-color-character-bg)
 }
 
 .cs-color-btn {
@@ -140,6 +143,10 @@ body.character-sheet {
 
 .cs-font-size-sm {
     font-size: var(--cs-font-size-sm);
+}
+
+.cs-font-color-character {
+    color: var(--cs-color-character-text)
 }
 
 .cs-font-color-deemphasized {
