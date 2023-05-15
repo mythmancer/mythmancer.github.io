@@ -2,15 +2,17 @@
 const CHARACTER_MODELS = {
   "Pal Bonwater - Level 6 Elementalist": {
     "color": "#8386CC",
-    "total_hit_points": 17,
-    "current_hit_points": 16,
+    "hit_points": {
+      "total": 17,
+      "current": 16
+    },
     "ability_scores": {
-      "strength": "16 / +2",
-      "dexterity": "13 / +1",
-      "constitution": "9 / 0",
-      "wisdom": "17 / +2",
-      "intelligence": "16 / +2",
-      "charisma": "16 / +2",
+      "strength": 16,
+      "dexterity": 13,
+      "constitution": 9,
+      "wisdom": 17,
+      "intelligence": 16,
+      "charisma": 16,
     },
     "armor_class": 14,
     "armor": {
@@ -19,39 +21,34 @@ const CHARACTER_MODELS = {
     },
     "fighter": {
       "level": 5,
-      "additional_attacks": 5,
-      "weapon_specializations": 2,
     },
     "rogue": {
       "level": 5,
-      "skill_specializations": 1,
     },
     "mage": {
       "level": 5,
-      "arcane_spell_slots": "4/2/1",
-      "max_spells_per_degree": 7,
       "arcane_casting_in_armor": 3,
     },
     "warlock": {
       "level": 5,
-      "occult_spell_slots": "4/2/1",
       "domain": "Elemental - Water",
       "major_patron": "Rath - Water Aspect",
-      "minor_patrons": 2,
     },
   },
   "Herakles - Level 5 Grinner": {
     "color": "#7c0a0a",
-    "total_hit_points": 100000,
-    "current_hit_points": 18,
+    "hit_points": {
+      "total": 100000,
+      "current": 18
+    },
     "armor_class": 20,
     "ability_scores": {
-      "strength": "19/+5",
-      "dexterity": "1/+1",
-      "constitution": "2/+2",
-      "wisdom": "3/+3",
-      "intelligence": "4/+4",
-      "charisma": "5/+5",
+      "strength": 19,
+      "dexterity": 1,
+      "constitution": 2,
+      "wisdom": 3,
+      "intelligence": 4,
+      "charisma": 5,
     },
     "armor": {
       "Chest": "Buff af",
@@ -59,66 +56,564 @@ const CHARACTER_MODELS = {
     },
     "fighter": {
       "level": 221,
-      "additional_attacks": 19,
     },
     "rogue": {
       "level": 1,
-      "skill_specializations": 0,
     },
     "mage": {
       "level": 2,
-      "arcane_spell_slots": "2/1",
-      "max_spells_per_degree": 3,
       "arcane_casting_in_armor": 1,
     },
     "warlock": {
       "level": 3,
-      "occult_spell_slots": "3/1",
       "domain": "Elemental - Ice",
       "major_patron": "Belch",
-      "minor_patrons": 12,
     },
   },
   "Noam Gnomesky - Level 20 Old Man": {
     "color": "#989898",
-    "total_hit_points": 2,
-    "current_hit_points": 1,
+    "hit_points": {
+      "total": 2,
+      "current": 1
+    },
     "armor_class": 1,
     "ability_scores": {
-      "strength": "0/-3",
-      "dexterity": "0/-3",
-      "constitution": "0/-3",
-      "wisdom": "20/+5",
-      "intelligence": "10/0",
-      "charisma": "15/+2",
+      "strength": 0,
+      "dexterity": 0,
+      "constitution": 0,
+      "wisdom": 20,
+      "intelligence": 10,
+      "charisma": 15,
     },
     "armor": {
       "Chest": "Sunken",
       "Gloves": "Evening soiree gloves",
     },
     "fighter": {
-      "level": -10,
-      "additional_attacks": -1,
+      "level": 9,
     },
     "rogue": {
-      "level": 13,
-      "skill_specializations": 14,
+      "level": 9,
     },
     "mage": {
-      "level": 16,
-      "arcane_spell_slots": "5/4/2/1",
-      "max_spells_per_degree": 10,
+      "level": 9,
       "arcane_casting_in_armor": 19,
     },
     "warlock": {
-      "level": 2,
-      "occult_spell_slots": "0/0/0/0",
+      "level": 9,
       "domain": "Arcana",
       "major_patron": "Some old dead thing",
-      "minor_patrons": 100,
     },
   }
 };
+
+/*******************************************************************
+ *************************** DATA BASES ****************************
+ *******************************************************************/
+// Databases
+ARMOR = {
+  "padded": {
+    "ac": 1,
+  },
+  "leather": {
+    "ac": 2,
+  },
+  "reinforced": {
+    "ac": 3,
+  },
+  "ring mail": {
+    "ac": 4,
+    "max_dex_mod": 3,
+  },
+  "scale mail": {
+    "ac": 5,
+    "max_dex_mod": 3,
+  },
+  "chain mail": {
+    "ac": 6,
+    "max_dex_mod": 2,
+  },
+  "shield": {
+    "ac": 2,
+  },
+  "elfin chain mail": {
+    "ac": 5,
+  },
+  "dwarven mail": {
+    "ac": 7,
+    "max_dex_mod": 2,
+  },
+  "hoplon": {
+    "ac": 3,
+    "max_dex_mod": 2,
+  },
+};
+
+SPELL_SLOTS = {
+  0: {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  1: {
+    1: 2,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  2: {
+    1: 3,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  3: {
+    1: 3,
+    2: 1,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  4: {
+    1: 3,
+    2: 2,
+    3: 0,
+    4: 0,
+    5: 0,
+  },
+  5: {
+    1: 4,
+    2: 2,
+    3: 1,
+    4: 0,
+    5: 0,
+  },
+  6: {
+    1: 4,
+    2: 3,
+    3: 2,
+    4: 0,
+    5: 0,
+  },
+  7: {
+    1: 4,
+    2: 3,
+    3: 2,
+    4: 1,
+    5: 0,
+  },
+  8: {
+    1: 4,
+    2: 3,
+    3: 3,
+    4: 2,
+    5: 0,
+  },
+  9: {
+    1: 4,
+    2: 4,
+    3: 3,
+    4: 2,
+    5: 1,
+  },
+};
+
+ATTRIBUTE_MODIFIER_TABLE = {
+  2: -4,
+  3: -3,
+  4: -2,
+  5: -2,
+  6: -1,
+  7: -1,
+  8: -1,
+  9: 0,
+  10: 0,
+  11: 0,
+  12: 0,
+  13: 1,
+  14: 1,
+  15: 1,
+  16: 2,
+  17: 2,
+  18: 3,
+  19: 4,
+};
+
+SKILL_PROFICIENCY_TABLE = {
+  0: {
+    "rogue": 0,
+    "mage": 0,
+    "fighter": 0,
+    "warlock": 0,
+  },
+  1: {
+    "rogue": 3,
+    "mage": 1,
+    "fighter": 1,
+    "warlock": 1,
+  },
+  2: {
+    "rogue": 5,
+    "mage": 2,
+    "fighter": 1,
+    "warlock": 1,
+  },
+  3: {
+    "rogue": 5,
+    "mage": 2,
+    "fighter": 1,
+    "warlock": 1,
+  },
+  4: {
+    "rogue": 6,
+    "mage": 3,
+    "fighter": 2,
+    "warlock": 2,
+  },
+  5: {
+    "rogue": 7,
+    "mage": 3,
+    "fighter": 2,
+    "warlock": 2,
+  },
+  6: {
+    "rogue": 8,
+    "mage": 4,
+    "fighter": 2,
+    "warlock": 2,
+  },
+  7: {
+    "rogue": 8,
+    "mage": 4,
+    "fighter": 2,
+    "warlock": 2,
+  },
+  8: {
+    "rogue": 9,
+    "mage": 5,
+    "fighter": 3,
+    "warlock": 3,
+  },
+  9: {
+    "rogue": 10,
+    "mage": 5,
+    "fighter": 3,
+    "warlock": 3,
+  },
+};
+
+/*******************************************************************
+ *************** EVALUATING A CHARACTER TO COMPLETION **************
+ *******************************************************************/
+
+function getNumericalCharacteristic(val) {
+  return parseInt(val || "0");
+}
+
+BUILDER_FUNCTIONS = {
+  "total_character_level": characterData => {
+    return getNumericalCharacteristic(characterData["fighter"]["level"])
+      + getNumericalCharacteristic(characterData["mage"]["level"])
+      + getNumericalCharacteristic(characterData["rogue"]["level"])
+      + getNumericalCharacteristic(characterData["warlock"]["level"]);
+  },
+  "modifiers.charisma": characterData =>  {
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
+        "tooltip": "",
+      };
+  },
+
+  "modifiers.constitution": characterData =>  {
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])],
+        "tooltip": "",
+      };
+  },
+
+  "save_throws.constitution": characterData => {
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])]
+          + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 2)
+          + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
+          + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 4)
+          + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 3),
+        "tooltip": "",
+      };
+  },
+
+  "modifiers.dexterity": characterData =>  {
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])],
+        "tooltip": "",
+      };
+  },
+
+  "save_throws.dexterity": characterData => {
+      // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])]
+          + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 3)
+          + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 3)
+          + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
+          + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
+        "tooltip": "",
+      };
+  },
+
+  "modifiers.intelligence": characterData =>  {
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
+        "tooltip": "",
+      };
+  },
+
+  "modifiers.strength": characterData =>  {
+      return {
+        "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["strength"])],
+        "tooltip": "",
+      };
+  },
+
+  "modifiers.wisdom": characterData =>  {
+    // table
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["wisdom"])],
+      "tooltip": "",
+    };
+  },
+
+  "save_throws.wisdom": characterData => {
+    // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
+    return {
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["wisdom"])]
+        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
+      "tooltip": "",
+    };
+  },
+
+  "hit_points.hit_die": characterData => {
+    // FGT + MAG + ROG + WAR
+    return {
+      "display": getNumericalCharacteristic(characterData["fighter"]["level"])
+        + getNumericalCharacteristic(characterData["mage"]["level"])
+        + getNumericalCharacteristic(characterData["rogue"]["level"])
+        + getNumericalCharacteristic(characterData["warlock"]["level"]),
+      "tooltip": "",
+    };
+  },
+
+  "attacks.base_bonus": characterData => {
+    // FGT + MAG/4 + ROG/2 + WAR/2
+    return {
+      "display": getNumericalCharacteristic(characterData["fighter"]["level"])
+        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
+      "tooltip": "",
+    };
+  },
+
+  "attacks.number_of_attacks": characterData => {
+    // max(1 + (FGT-1)/4, 1)
+    return {
+      "display": Math.max(
+        Math.floor(1 + (getNumericalCharacteristic(characterData["fighter"]["level"]) - 1) / 4),
+        1,
+      ),
+      "tooltip": "",
+    };
+  },
+
+  "equipment.allowed_armor": characterData => {
+    // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
+    let allowedArmor;
+
+    if (getNumericalCharacteristic(characterData["fighter"]["level"]) > 0) {
+      allowedArmor = "Heavy + Shields";
+    } else if (getNumericalCharacteristic(characterData["warlock"]["level"]) > 0) {
+      allowedArmor = "Medium";
+    } else if (getNumericalCharacteristic(characterData["rogue"]["level"]) > 0) {
+      allowedArmor = "Light";
+    } else {
+      allowedArmor = "None";
+    }
+
+    return {
+      "display": allowedArmor,
+      "tooltip": "",
+    };
+  },
+
+  "equipment.allowed_weapons": characterData => {
+    // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
+    let allowedWeapons;
+
+    if (getNumericalCharacteristic(characterData["fighter"]["level"]) > 0) {
+      allowedWeapons = "Martial";
+    } else if (getNumericalCharacteristic(characterData["warlock"]["level"]) > 0) {
+      allowedWeapons = "Standard";
+    } else if (getNumericalCharacteristic(characterData["rogue"]["level"]) > 0) {
+      allowedWeapons = "Standard";
+    } else {
+      allowedWeapons = "Simple";
+    }
+
+    return {
+      "display": allowedWeapons,
+      "tooltip": "",
+    };
+  },
+
+  "skills.skill_check_bonus": characterData => {
+    // ROG + MAG/2 + FGT/4 + WAR/4
+    return {
+      "display": Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 2)
+        + getNumericalCharacteristic(characterData["rogue"]["level"])
+        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
+      "tooltip": "",
+    };
+  },
+
+  "skills.max_skill_proficiencies": characterData => {
+    // table
+    return {
+      "display": SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["mage"]["level"])]["mage"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["rogue"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["fighter"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["warlock"],
+      "tooltip": "",
+    };
+  },
+
+  "mage.max_spells_learnable_per_degree": characterData => {
+    // 5 + INT
+    return {
+      "display": 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
+      "tooltip": "",
+    };
+  },
+
+  "warlock.max_minor_patrons": characterData => {
+    // min(1 + CHA, (WAR+1)/2)
+    return {
+      "display": Math.min(
+        1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
+        Math.floor((getNumericalCharacteristic(characterData["warlock"]["level"]) + 1) / 2)
+      ),
+      "tooltip": "",
+    };
+  },
+
+
+  "warlock.l1_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][1],
+      "tooltip": "",
+    };
+  },
+
+  "warlock.l2_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][2],
+      "tooltip": "",
+    };
+  },
+
+  "warlock.l3_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][3],
+      "tooltip": "",
+    };
+  },
+
+  "warlock.l4_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][4],
+      "tooltip": "",
+    };
+  },
+
+  "warlock.l5_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][5],
+      "tooltip": "",
+    };
+  },
+
+  "mage.l1_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][1],
+      "tooltip": "",
+    };
+  },
+
+  "mage.l2_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][2],
+      "tooltip": "",
+    };
+  },
+
+  "mage.l3_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][3],
+      "tooltip": "",
+    };
+  },
+
+  "mage.l4_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][4],
+      "tooltip": "",
+    };
+  },
+
+  "mage.l5_spell_slots": characterData =>  {
+    return {
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][5],
+      "tooltip": "",
+    };
+  },
+
+  "cs-armor-class": characterData => {
+    let equipmentAC = 0;
+    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])];
+
+    // TODO - go through euipment and populate equipmentAC
+
+    return {
+      "display": 10 + dexMod + equipmentAC,
+      "tooltip": `<h1>Armor Class</h1>${dexMod} from dex<br/>${equipmentAC} from equipment`,
+    };
+  },
+};
+
+function buildFinalizedCharacterModel(baseCharacterModel) {
+  const finalizedCharacterModel = structuredClone(baseCharacterModel);
+
+  for (let prop in BUILDER_FUNCTIONS) {
+    const propPath = prop.split(".");
+    let currLevel = finalizedCharacterModel;
+    for (let i = 0; i < propPath.length - 1; i++) {
+      if (!currLevel.hasOwnProperty(propPath[i])) {
+        currLevel[propPath[i]] = {};
+      }
+      currLevel = currLevel[propPath[i]];
+    }
+    currLevel[propPath[propPath.length - 1]] = BUILDER_FUNCTIONS[prop](baseCharacterModel);
+  }
+
+  return finalizedCharacterModel;
+}
 
 function getCharacterModel(characterName) {
   return CHARACTER_MODELS[characterName];
@@ -164,15 +659,15 @@ class WeaponAttack {
   }
 
   _rangeDescription() {
-    const attack = this.numberOfAttacks === 1 ? "Attack" : "Attacks"
+    const attack = this.numberOfAttacks === 1 ? "Attack" : "Attacks";
     if (this.range === "melee") {
-      return `Melee ${attack}`
+      return `Melee ${attack}`;
     } else if (this.range === "reach") {
-      return `Melee ${attack} with Reach`
+      return `Melee ${attack} with Reach`;
     } else if (this.range === "short" || this.range === "medium" || this.range === "long") {
-      return `${this.range.charAt(0).toUpperCase() + this.range.slice(1)}-Range ${attack}`
+      return `${this.range.charAt(0).toUpperCase() + this.range.slice(1)}-Range ${attack}`;
     } else {
-      return "(UNKNOWN RANGE)"
+      return "(UNKNOWN RANGE)";
     }
   }
 
@@ -180,7 +675,7 @@ class WeaponAttack {
     // "1 Attack at +3 to hit dealing 1d6 damage if some condition is filled"
     return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at 
       ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit 
-      dealing ${this.damage} damage${this.condition === "" ? "" : ` if ${this.condition}`}`
+      dealing ${this.damage} damage${this.condition === "" ? "" : ` if ${this.condition}`}`;
   }
 }
 
@@ -352,7 +847,7 @@ class DiceButton extends HTMLComponent {
    */
   constructor(text) {
     super();
-    this.text = text
+    this.text = text;
   }
 
   getHTML() {
@@ -360,7 +855,7 @@ class DiceButton extends HTMLComponent {
     <div class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
         ⚅ ${this.text}
     </div>
-    `
+    `;
   }
 }
 
@@ -379,7 +874,7 @@ class EditButton extends HTMLComponent {
     <div class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
         ${this.text}
     </div>
-    `
+    `;
   }
 }
 
@@ -391,16 +886,21 @@ class EditButton extends HTMLComponent {
  *
  * @param {string} action
  * @param {string} key
- * @param {string} value
+ * @param {string} value ({display: ..., tooltip: ...})
  * @param {string} description
  */
 function actionKeyValue(action, key, value, description = "") {
+  // TODO: cleanup to having common way to access all display, tooltip data
+  if (value && value.hasOwnProperty("display")) {
+    value = value.display;
+  }
+
   return new SectionEntry({
     diceButton: new DiceButton(action),
     mainKeyText: key,
     valueText: value,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
-  })
+  });
 }
 
 /**
@@ -417,7 +917,7 @@ function weaponAndActions(weapon, attacks) {
       diceButton: new DiceButton(attack.verb),
       text: attack.description()
     }))
-  })
+  });
 }
 
 /**
@@ -437,14 +937,14 @@ function armor(part, item = "", description = "") {
     return new SectionEntry({
       shortKeyText: part,
       editButton: new EditButton("Equip")
-    })
+    });
   } else {
     return new SectionEntry({
       shortKeyText: part,
       mainKeyText: item,
       editButton: new EditButton("Edit / Remove"),
       subEntries: (description === "") ? [] : [new SectionSubEntry({text: description})]
-    })
+    });
   }
 }
 
@@ -482,7 +982,8 @@ function classKeyValue(key, value, notes = []) {
 }
 
 function renderCharacter(characterName) {
-  const characterModel = getCharacterModel(characterName);
+  const baseCharacterModel = getCharacterModel(characterName);
+  const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
   let html = "";
 
   const panes = [
@@ -494,7 +995,7 @@ function renderCharacter(characterName) {
             // TODO - add editable HP field... though it'll be a unique case :/
             new SectionEntry({
               mainKeyText: "Hit Points",
-              valueText: `${characterModel.current_hit_points}/${characterModel.total_hit_points}`
+              valueText: `${characterModel.hit_points.current} / ${characterModel.hit_points.total}`
             }),
             new SectionEntry({mainKeyText: "Armor Class", valueText: `${characterModel.armor_class}`})
           ]
@@ -514,15 +1015,15 @@ function renderCharacter(characterName) {
       new PaneSection({
         divider: new SectionDivider("Save Throws"),
         entries: [
-          actionKeyValue("Save vs", "Reflex", "TODO"),
-          actionKeyValue("Save vs", "Fortitude", "TODO"),
-          actionKeyValue("Save vs", "Will", "TODO"),
+          actionKeyValue("Save vs", "Reflex", characterModel.save_throws.dexterity),
+          actionKeyValue("Save vs", "Fortitude", characterModel.save_throws.constitution),
+          actionKeyValue("Save vs", "Will", characterModel.save_throws.wisdom),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Skills & Special Abilities"),
         entries: [
-          actionKeyValue("Perform", "Skill Check", "TODO", "When attempting: TODO - List of Skills"),
+          actionKeyValue("Perform", "Skill Check", characterModel.skills.skill_check_bonus, "When attempting: TODO - List of Skills"),
           new SectionEntry({mainKeyText: "TODO - Derive from list of special abilities"}),
           ...[] // TODO, pull Special Ability info from model
         ]
@@ -577,19 +1078,19 @@ function renderCharacter(characterName) {
         entries: [
           new SectionEntry({
             mainKeyText: "Total Character Level",
-            valueText: "6",
+            valueText: characterModel.total_character_level,
             editButton: new EditButton("Level Up / Edit Levels")
           }), new SectionEntry({
             mainKeyText: "Base Attack Bonus",
-            valueText: "+2",
+            valueText: characterModel.attacks.base_bonus.display,
           }),
           new SectionEntry({
             mainKeyText: "Allowed Weapons",
-            valueText: "Standard",
+            valueText: characterModel.equipment.allowed_weapons.display,
           }),
           new SectionEntry({
             mainKeyText: "Allowed Armor",
-            valueText: "Medium",
+            valueText: characterModel.equipment.allowed_armor.display,
           })
         ]
       }),
@@ -606,10 +1107,10 @@ function renderCharacter(characterName) {
       }),
       ...[]  // TODO - load class data from model instead
     ]),
-  ]
+  ];
 
-  document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.color)
-  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.color))
+  document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.color);
+  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.color));
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
         <div id="cs-current-character-heading" class="cs-row cs-padding-h cs-padding-v">
