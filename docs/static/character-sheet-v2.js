@@ -342,7 +342,7 @@ BUILDER_FUNCTIONS = {
           + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
           + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 4)
           + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 3),
-        "tooltip": "",
+        "tooltip": "fortitude",
       };
   },
 
@@ -361,7 +361,7 @@ BUILDER_FUNCTIONS = {
           + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 3)
           + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
           + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
-        "tooltip": "",
+        "tooltip": "reflex",
       };
   },
 
@@ -395,7 +395,7 @@ BUILDER_FUNCTIONS = {
         + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 2)
         + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 3)
         + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
-      "tooltip": "",
+      "tooltip": "will",
     };
   },
 
@@ -764,6 +764,7 @@ class SectionEntry extends HTMLComponent {
    * @param {DiceButton} diceButton Optional button to roll dice associated with this entry
    * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
    * @param {string} valueText Optional text for the right side of the main row in a key-value pair
+   * @param {string} tooltipHTML Optional HTML for the tooltip of this entry
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
    * @param {SectionSubEntry[]} subEntries Optional vertical list of small-text descriptors beneath the main row
    */
@@ -772,6 +773,7 @@ class SectionEntry extends HTMLComponent {
                 diceButton = null,
                 mainKeyText = "",
                 valueText = "",
+                tooltipHTML = "",
                 editButton = null,
                 subEntries = []
               }) {
@@ -780,6 +782,7 @@ class SectionEntry extends HTMLComponent {
     this.diceButton = diceButton;
     this.mainKeyText = mainKeyText;
     this.valueText = valueText;
+    this.tooltipHTML = tooltipHTML;
     this.editButton = editButton;
     this.subEntries = subEntries;
   }
@@ -803,7 +806,12 @@ class SectionEntry extends HTMLComponent {
             ${this.editButton == null ? "" : this.editButton.getHTML()}
           ` : `
             <div class="cs-row">
-              ${this.valueText === "" ? "" : `<div class="cs-elem cs-width-full">${this.valueText}</div>`}
+              ${this.valueText === "" ? "" : `
+              <div class="cs-elem cs-width-full ${this.tooltipHTML ? "has-tooltip" : ""}">
+                ${this.valueText}
+                ${this.tooltipHTML ? `<div class="cs-tooltiptext">${this.tooltipHTML}</div>`: ""}
+              </div>`
+          }
               ${this.editButton == null ? "" : this.editButton.getHTML()}
             </div>
           `}
@@ -891,7 +899,9 @@ class EditButton extends HTMLComponent {
  */
 function actionKeyValue(action, key, value, description = "") {
   // TODO: cleanup to having common way to access all display, tooltip data
+  let tooltipHTML = "";
   if (value && value.hasOwnProperty("display")) {
+    tooltipHTML = value.tooltip;
     value = value.display;
   }
 
@@ -899,6 +909,7 @@ function actionKeyValue(action, key, value, description = "") {
     diceButton: new DiceButton(action),
     mainKeyText: key,
     valueText: value,
+    tooltipHTML: tooltipHTML,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
   });
 }
