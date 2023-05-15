@@ -41,7 +41,7 @@ const CHARACTER_MODELS = {
     },
   },
   "Herakles - Level 5 Grinner": {
-    "color": "#9a5656",
+    "color": "#7c0a0a",
     "total_hit_points": 100000,
     "current_hit_points": 18,
     "armor_class": 20,
@@ -122,6 +122,22 @@ const CHARACTER_MODELS = {
 
 function getCharacterModel(characterName) {
   return CHARACTER_MODELS[characterName];
+}
+
+/**
+ * Returns white or black depending on a provided color that should visually stand out in comparison
+ * @param {string} hexColor String for the hex code of a color
+ * @returns {string} a hex string for white or black
+ */
+function getContrastColor(hexColor) {
+  hexColor = hexColor.replace('#', '');
+  const red = parseInt(hexColor.slice(0, 2), 16);
+  const green = parseInt(hexColor.slice(2, 4), 16);
+  const blue = parseInt(hexColor.slice(4, 6), 16);
+
+  // Calculate the brightness (luminance) using the relative luminance formula
+  const brightness = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
+  return (brightness > 0.5) ? '#000000' : '#FFFFFF';
 }
 
 class WeaponAttack {
@@ -341,7 +357,7 @@ class DiceButton extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-accent">
+    <div class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
         ⚅ ${this.text}
     </div>
     `
@@ -592,7 +608,8 @@ function renderCharacter(characterName) {
     ]),
   ]
 
-  document.documentElement.style.setProperty("--cs-color-character", characterModel.color)
+  document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.color)
+  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.color))
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
         <div id="cs-current-character-heading" class="cs-row cs-padding-h cs-padding-v">
