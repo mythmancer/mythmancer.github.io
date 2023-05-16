@@ -104,9 +104,8 @@ const CHARACTER_MODELS = {
       "domain": "Arcana",
       "major_patron": "Some old dead thing",
     },
-  }
+  },
 };
-
 
 
 /*******************************************************************
@@ -676,7 +675,11 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
 }
 
 function getCharacterModel(characterName) {
-  return CHARACTER_MODELS[characterName];
+  return JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY))[characterName];
+}
+
+function listCharacters(characterName) {
+  return Object.keys(JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY)));
 }
 
 /**
@@ -946,6 +949,23 @@ class EditButton extends HTMLComponent {
   }
 }
 
+class CharacterListings extends HTMLComponent {
+  /**
+   * Listing of known characters to be shown on the left navigation pane
+   * @param {string} characterNames List of character identifiers
+   */
+  constructor(characterNames) {
+    super();
+    this.characterNames = characterNames;
+  }
+
+  getHTML() {
+    return `
+    ${this.characterNames.map(characterName => `<div class="cs-left-pane-listing">${characterName}</div>`).join("")}
+    `;
+  }
+}
+
 // COMPOSITE COMPONENTS //
 /**
  * Entry with dice button, key, and value.
@@ -1205,11 +1225,20 @@ function loadCharacter(event) {
   }
 }
 
-window.onload = function () {
-  setAppearance();
-
-  const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
+function populateCharacterListing() {
+  const characterListingsDiv = document.getElementById("cs-character-listings");
+  const html = new CharacterListings(listCharacters()).getHTML();
+  characterListingsDiv.innerHTML = html;
+  const characterListings = characterListingsDiv.getElementsByClassName("cs-left-pane-listing");
   for (let i = 0; i < characterListings.length; i++) {
     characterListings[i].addEventListener("click", loadCharacter);
   }
+}
+
+window.onload = function () {
+  // only for the demo
+  window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(CHARACTER_MODELS));
+
+  setAppearance();
+  populateCharacterListing();
 };
