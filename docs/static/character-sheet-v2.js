@@ -112,7 +112,7 @@ const CHARACTER_MODELS = {
  **************************** CONSTANTS ****************************
  *******************************************************************/
 
-CHARACTER_SHEET_STORAGE_KEY = "character_sheets";
+CHARACTER_SHEET_STORAGE_KEY = "character_sheets_v2";
 COLOR_MODE_STORAGE_KEY = "color_mode";
 THEME_STORAGE_KEY = "theme";
 
