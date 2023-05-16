@@ -161,7 +161,7 @@ function setAppearance() {
     document.documentElement.style.setProperty(prop, COLOR_MODES[colorMode][prop]);
   }
 
-  const theme = window.localStorage.getItem(THEME_STORAGE_KEY) || "normal";
+  const theme = window.localStorage.getItem(THEME_STORAGE_KEY) || "standard";
   for (let prop in THEMES[theme]) {
     document.documentElement.style.setProperty(prop, THEMES[theme][prop]);
   }
