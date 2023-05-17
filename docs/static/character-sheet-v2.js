@@ -708,16 +708,16 @@ class WeaponAttack {
    * @param {boolean} isFast
    * @param {string} range TODO - use an enum or similar: none, melee, reach, short, medium, or long
    * @param {number} bonusToHit
-   * @param {string} damage TODO - represent as a class eventually
+   * @param {string} damageFormula TODO - represent as a class eventually
    * @param {string} condition free-form string of conditions this class requires e.g. "opponent is heavily armored"
    */
-  constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damage, condition) {
+  constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damageFormula, condition) {
     this.verb = verb;
     this.numberOfAttacks = numberOfAttacks;
     this.isFast = isFast;
     this.range = range;
     this.bonusToHit = bonusToHit;
-    this.damage = damage;
+    this.damageFormula = damageFormula;
     this.condition = condition;
   }
 
@@ -738,12 +738,34 @@ class WeaponAttack {
     // "1 Attack at +3 to hit dealing 1d6 damage if some condition is filled"
     return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at
       ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit
-      dealing ${this.damage} damage${this.condition === "" ? "" : ` if ${this.condition}`}`;
+      dealing ${this.damageFormula} damage${this.condition === "" ? "" : ` if ${this.condition}`}`;
   }
 }
 
 // CORE COMPONENTS //
+// storing component mappings for current character - this allows us to have a class attached to relevant
+// UI components to make it easy to build complex logic. This way, the component can define its logic
+// (example, die rolling), and we can easily connect it to the div using ids
+COMPONENT_STORE = {};
+
 class HTMLComponent {
+  constructor({
+    listeners = null,
+  }) {
+    this.listeners = listeners;
+    this.id = crypto.randomUUID();
+    // if either explicitly asked, or if it has listeners, store the component so that we can
+    // manipulate it after creation
+    // Note: individual components must decide where to attach the id
+    if (this.shouldStoreComponent() || this.listeners) {
+      COMPONENT_STORE[this.id] = this;
+    }
+  }
+
+  shouldStoreComponent() {
+    return false;
+  }
+
   getHTML() {
     console.log(`${this.constructor.name} does not have a defined HTML rendering function`);
     alert(`Could not render page`);
@@ -757,7 +779,7 @@ class Pane extends HTMLComponent {
    * @param {PaneSection[]} sections List items within the pane
    */
   constructor(sections) {
-    super();
+    super({});
     this.sections = sections;
   }
 
@@ -780,7 +802,7 @@ class PaneSection extends HTMLComponent {
                 divider = null,
                 entries = []
               }) {
-    super();
+    super({});
     this.divider = divider;
     this.entries = entries;
   }
@@ -803,7 +825,7 @@ class SectionDivider extends HTMLComponent {
    * @param {string} heading Title text of the section, flanked by horizontal lines
    */
   constructor(heading) {
-    super();
+    super({});
     this.heading = heading;
   }
 
@@ -840,7 +862,7 @@ class SectionEntry extends HTMLComponent {
                 editButton = null,
                 subEntries = []
               }) {
-    super();
+    super({});
     this.shortKeyText = shortKeyText;
     this.diceButton = diceButton;
     this.mainKeyText = mainKeyText;
@@ -896,7 +918,7 @@ class SectionSubEntry extends HTMLComponent {
                 diceButton = null,
                 text = ""
               }) {
-    super();
+    super({});
     this.diceButton = diceButton;
     this.text = text;
   }
@@ -916,14 +938,21 @@ class DiceButton extends HTMLComponent {
    * Button that rolls dice
    * @param {string} text Button text
    */
-  constructor(text) {
-    super();
+  constructor(text, formula) {
+    super({
+      listeners: {
+        "click": function() {
+          rollFormula(formula);
+        },
+      },
+    });
     this.text = text;
+    this.formula = formula;
   }
 
   getHTML() {
     return `
-    <div class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
         ⚅ ${this.text}
     </div>
     `;
@@ -936,13 +965,13 @@ class EditButton extends HTMLComponent {
    * @param {string} text Button text
    */
   constructor(text) {
-    super();
+    super({});
     this.text = text;
   }
 
   getHTML() {
     return `
-    <div class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
         ${this.text}
     </div>
     `;
@@ -955,7 +984,7 @@ class CharacterListings extends HTMLComponent {
    * @param {string} characterNames List of character identifiers
    */
   constructor(characterNames) {
-    super();
+    super({});
     this.characterNames = characterNames;
   }
 
@@ -977,7 +1006,7 @@ class CharacterListings extends HTMLComponent {
  * @param {string} value ({display: ..., tooltip: ...})
  * @param {string} description
  */
-function actionKeyValue(action, key, value, description = "") {
+function actionKeyValue(action, key, value, description = "", diceFormula = "") {
   // TODO: cleanup to having common way to access all display, tooltip data
   let tooltipHTML = "";
   if (value && value.hasOwnProperty("display")) {
@@ -986,7 +1015,7 @@ function actionKeyValue(action, key, value, description = "") {
   }
 
   return new SectionEntry({
-    diceButton: new DiceButton(action),
+    diceButton: new DiceButton(action, diceFormula),
     mainKeyText: key,
     valueText: value,
     tooltipHTML: tooltipHTML,
@@ -1005,7 +1034,7 @@ function weaponAndActions(weapon, attacks) {
     mainKeyText: weapon,
     editButton: new EditButton("Edit / Remove"),
     subEntries: attacks.map((attack) => new SectionSubEntry({
-      diceButton: new DiceButton(attack.verb),
+      diceButton: new DiceButton(attack.verb, attack.damageFormula),
       text: attack.description()
     }))
   });
@@ -1054,7 +1083,7 @@ function activeEffect(effect, duration, description) {
       new SectionSubEntry({text: description}),
       new SectionSubEntry({text: `Duration: ${duration}`})
     ]
-  })
+  });
 }
 
 /**
@@ -1069,10 +1098,64 @@ function classKeyValue(key, value, notes = []) {
     mainKeyText: key,
     valueText: value,
     subEntries: notes.map(note => new SectionSubEntry({text: note}))
-  })
+  });
 }
 
+// Utilities
+function rollDice(numDie, die) {
+  let result = 0;
+  for (let i = 0; i < numDie; i++) {
+    result += Math.floor(Math.random() * parseInt(die)) + 1;
+  }
+  return result;
+}
+
+/**
+ * Roll a formula - expects a series of ((\d+d\d+)|\d+)(( \+ ((\d+d\d+)|\d+))*)?
+ * Essentially, each component of a formula joined by " + "
+ * Each component is either:
+ * * (\d+d\d+): <number>d<number>, aka, a die roll, or
+ * * \d+: a constant
+ * Currently only allows for adding roll components
+ */
+function rollFormula(formula) {
+  const formulaComponents = formula.split(" + ");
+  let result = 0;
+  for (let i = 0; i < formulaComponents.length; i++) {
+    const formulaComponent = formulaComponents[i];
+    if (formulaComponent.search("d") != -1) {
+      [numDie, die] = formulaComponent.split("d");
+      result += rollDice(parseInt(numDie), parseInt(die));
+    } else {
+      result += parseInt(formulaComponent);
+    }
+  }
+  console.log(result);
+  return result;
+}
+
+// Main rendering logic
+
+/**
+ * Attach expected listeners to each div - after divs have been created by manipulating document HTML
+ */
+function attachComponentListeners() {
+  for (let componentId in COMPONENT_STORE) {
+    const div = document.getElementById(componentId);
+    for (let event in COMPONENT_STORE[componentId].listeners) {
+      div.addEventListener(event, COMPONENT_STORE[componentId].listeners[event]);
+    }
+  }
+}
+
+/**
+ * Convert base character model to fully populated character model,
+ * and re-render the entire character pane
+ */
 function renderCharacter(characterName) {
+  // Clear out component store
+  COMPONENT_STORE = {};
+
   const baseCharacterModel = getCharacterModel(characterName);
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
   let html = "";
@@ -1095,26 +1178,26 @@ function renderCharacter(characterName) {
       new PaneSection({
         divider: new SectionDivider("Abilities"),
         entries: [
-          actionKeyValue("Check", "Strength", characterModel.ability_scores.strength),
-          actionKeyValue("Check", "Dexterity", characterModel.ability_scores.dexterity),
-          actionKeyValue("Check", "Constitution", characterModel.ability_scores.constitution),
-          actionKeyValue("Check", "Wisdom", characterModel.ability_scores.wisdom),
-          actionKeyValue("Check", "Intelligence", characterModel.ability_scores.intelligence),
-          actionKeyValue("Check", "Charisma", characterModel.ability_scores.charisma)
+          actionKeyValue("Check", "Strength", characterModel.ability_scores.strength, "", "1d20"),
+          actionKeyValue("Check", "Dexterity", characterModel.ability_scores.dexterity, "", "1d20"),
+          actionKeyValue("Check", "Constitution", characterModel.ability_scores.constitution, "", "1d20"),
+          actionKeyValue("Check", "Wisdom", characterModel.ability_scores.wisdom, "", "1d20"),
+          actionKeyValue("Check", "Intelligence", characterModel.ability_scores.intelligence, "", "1d20"),
+          actionKeyValue("Check", "Charisma", characterModel.ability_scores.charisma, "", "1d20"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Save Throws"),
         entries: [
-          actionKeyValue("Save vs", "Reflex", characterModel.save_throws.dexterity),
-          actionKeyValue("Save vs", "Fortitude", characterModel.save_throws.constitution),
-          actionKeyValue("Save vs", "Will", characterModel.save_throws.wisdom),
+          actionKeyValue("Save vs", "Reflex", characterModel.save_throws.dexterity, "", "1d20"),
+          actionKeyValue("Save vs", "Fortitude", characterModel.save_throws.constitution, "", "1d20"),
+          actionKeyValue("Save vs", "Will", characterModel.save_throws.wisdom, "", "1d20"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Skills & Special Abilities"),
         entries: [
-          actionKeyValue("Perform", "Skill Check", characterModel.skills.skill_check_bonus, "When attempting: TODO - List of Skills"),
+          actionKeyValue("Perform", "Skill Check", characterModel.skills.skill_check_bonus, "When attempting: TODO - List of Skills", "1d100"),
           new SectionEntry({mainKeyText: "TODO - Derive from list of special abilities"}),
           ...[] // TODO, pull Special Ability info from model
         ]
@@ -1124,7 +1207,7 @@ function renderCharacter(characterName) {
         entries: [
           new SectionEntry({editButton: new EditButton("+ Equip a Weapon")}),
           weaponAndActions("Pipe Wrench", [
-            new WeaponAttack("Strike", 1, false, "melee", 1, "1d4", ""),
+            new WeaponAttack("Crazy Strike wtf", 1, false, "melee", 1, "1d4 + 3d8 + 5 + 2 + 6d1", ""),
             new WeaponAttack("Strike vs Heavy Armor", 3, false, "melee", 1, "1d4", "opponent is heavily armored")
           ]),
           ...[] // TODO, pull Attack info from model
@@ -1211,6 +1294,9 @@ function renderCharacter(characterName) {
         <div class="cs-panels">${panes.map(pane => pane.getHTML()).join("")}</div>
       </div>
     `;
+
+  // all logic that needs to be done after rendering is done - such as attaching listeners
+  attachComponentListeners();
 }
 
 function loadCharacter(event) {
