@@ -292,7 +292,7 @@ body.character-sheet {
 /* tooltips */
 .cs-has-tooltip {
     /* Component containing a tooltip */
-    position: relative;
+    position: absolute;
     display: inline-block;
 }
 
