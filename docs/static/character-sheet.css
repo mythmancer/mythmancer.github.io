@@ -278,7 +278,7 @@ body.character-sheet {
     cursor: pointer;
     user-select: none;
     transition: brightness 0.1s ease, filter 0.1s ease;
-    border-radius: 2px;
+    border-radius: 5px;
     filter: brightness(150%);
 }
 
@@ -301,7 +301,6 @@ body.character-sheet {
 /* tooltips */
 .cs-has-tooltip {
     /* Component containing a tooltip */
-    position: absolute;
     display: inline-block;
 }
 
@@ -309,17 +308,16 @@ body.character-sheet {
     font-size: var(--cs-font-size-sm);
     position: absolute;
     z-index: 10;
-    bottom: calc(var(--cs-height-min) + var(--cs-padding));
-    left: var(--cs-width-tooltip-offset);
     visibility: hidden;
     width: max-content;
     max-width: var(--cs-max-width-tooltip);
     padding: var(--cs-padding);
     transition: visibility 0s linear 0.5s;
-    color: var(--cs-color-bg);
-    border-radius: 2px;
+    color: var(--cs-color-section-bg);
+    border-radius: 5px;
     background-color: var(--cs-color-text);
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+    height: fit-content;
 }
 
 .cs-has-tooltip:hover .cs-tooltiptext {
@@ -329,10 +327,50 @@ body.character-sheet {
 .cs-has-tooltip .cs-tooltiptext::before {
     /* Draws a triangle on the corner of the tooltip to resemble a quote box */
     position: absolute;
+    content: "";
+}
+
+.cs-has-tooltip .cs-tooltiptext::after {
+    /* Draws a triangle on the corner of the tooltip to resemble a quote box */
+    position: absolute;
+    content: "";
+}
+
+/* Draws a triangle on the corner of the tooltip to resemble a quote box,
+   depending on how the box is positioned relative to the annotated div
+ */
+.cs-has-tooltip .cs-tooltiptext.cs-bottomleft::before {
     bottom: -5px;
     left: 0;
-    content: "";
+
     border-top: 6px solid transparent;
     border-bottom: 8px solid transparent;
     border-left: 6px solid var(--cs-color-text);
+}
+
+.cs-has-tooltip .cs-tooltiptext.cs-bottomright::after {
+    bottom: -5px;
+    right: 0;
+
+    border-top: 6px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 6px solid var(--cs-color-text);
+}
+
+.cs-has-tooltip .cs-tooltiptext.cs-topleft::before {
+    top: -5px;
+    left: 0;
+
+    border-top: 6px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 6px solid var(--cs-color-text);
+}
+
+.cs-has-tooltip .cs-tooltiptext.cs-topright::after {
+    top: -5px;
+    right: 0;
+
+    border-top: 6px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 6px solid var(--cs-color-text);
 }
