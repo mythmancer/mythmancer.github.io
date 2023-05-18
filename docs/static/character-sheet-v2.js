@@ -880,7 +880,7 @@ class SectionEntry extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col cs-padding-h">
+    <div class="cs-col cs-padding-h cs-section-entry">
       <div class="cs-row">
           ${this.shortKeyText === "" ? "" : `
             <div class="cs-elem cs-font-color-deemphasized cs-width-fixed-short-key">

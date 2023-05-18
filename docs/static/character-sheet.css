@@ -47,6 +47,90 @@ body.character-sheet {
     background-color: var(--cs-color-bg);
 }
 
+/* LAYOUT */
+.cs-col {
+    /* Flex Column */
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--cs-gap);
+}
+
+.cs-row {
+    /* Flex Row */
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    gap: var(--cs-gap);
+}
+
+.cs-elem {
+    /* Flex Element, should only contain simple contents such as text */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    min-height: var(--cs-height-min);
+}
+
+.cs-padding-h {
+    /* Horizontal Padding, prefer gap in flex rows and columns in most cases */
+    box-sizing: border-box; /* prevents overflow */
+    padding-right: var(--cs-padding);
+    padding-left: var(--cs-padding);
+}
+
+.cs-padding-v {
+    /* Vertical Padding, prefer gap in flex rows and columns in most cases */
+    padding-top: var(--cs-padding);
+    padding-bottom: var(--cs-padding);
+}
+
+.cs-width-fixed-short-key {
+    /* Fixed width for short keys in entries */
+    width: var(--cs-width-fixed-short-key);
+    min-width: var(--cs-width-fixed-short-key);
+}
+
+.cs-width-fill {
+    /* Used to allow elements to grow as much as required to prevent line breaks */
+    flex-shrink: 0;
+}
+
+.cs-width-full {
+    /* Used to cause an element to take up as much width as possible */
+    width: 100%;
+}
+
+.cs-width-divider-left {
+    /* Width of the left side of the section divider */
+    width: var(--cs-width-divider-left);
+    min-width: var(--cs-width-divider-left);
+}
+
+/* CONSTANTS */
+.cs-color-character-bg {
+    background: var(--cs-color-character-bg)
+}
+
+.cs-color-btn {
+    background: var(--cs-color-btn);
+    color: var(--cs-color-btn-text);
+}
+
+.cs-font-size-sm {
+    font-size: var(--cs-font-size-sm);
+}
+
+.cs-font-color-character {
+    color: var(--cs-color-character-text)
+}
+
+.cs-font-color-deemphasized {
+    color: var(--cs-color-text-deemphasized);
+}
+
 /* Main page is split into left navigation pane and right content pane */
 #cs-container {
     display: flex;
@@ -145,88 +229,8 @@ body.character-sheet {
     border-radius: 5px;
 }
 
-/* CONSTANTS */
-.cs-color-character-bg {
-    background: var(--cs-color-character-bg)
-}
-
-.cs-color-btn {
-    background: var(--cs-color-btn);
-    color: var(--cs-color-btn-text);
-}
-
-.cs-font-size-sm {
-    font-size: var(--cs-font-size-sm);
-}
-
-.cs-font-color-character {
-    color: var(--cs-color-character-text)
-}
-
-.cs-font-color-deemphasized {
-    color: var(--cs-color-text-deemphasized);
-}
-
-/* LAYOUT */
-.cs-col {
-    /* Flex Column */
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 100%;
-    gap: var(--cs-gap);
-}
-
-.cs-row {
-    /* Flex Row */
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
-    width: 100%;
-    gap: var(--cs-gap);
-}
-
-.cs-elem {
-    /* Flex Element, should only contain simple contents such as text */
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    min-height: var(--cs-height-min);
-}
-
-.cs-padding-h {
-    /* Horizontal Padding, prefer gap in flex rows and columns in most cases */
-    box-sizing: border-box; /* prevents overflow */
-    padding-right: var(--cs-padding);
-    padding-left: var(--cs-padding);
-}
-
-.cs-padding-v {
-    /* Vertical Padding, prefer gap in flex rows and columns in most cases */
-    padding-top: var(--cs-padding);
-    padding-bottom: var(--cs-padding);
-}
-
-.cs-width-fixed-short-key {
-    /* Fixed width for short keys in entries */
-    width: var(--cs-width-fixed-short-key);
-    min-width: var(--cs-width-fixed-short-key);
-}
-
-.cs-width-fill {
-    /* Used to allow elements to grow as much as required to prevent line breaks */
-    flex-shrink: 0;
-}
-
-.cs-width-full {
-    /* Used to cause an element to take up as much width as possible */
-    width: 100%;
-}
-
-.cs-width-divider-left {
-    /* Width of the left side of the section divider */
-    width: var(--cs-width-divider-left);
-    min-width: var(--cs-width-divider-left);
+.cs-section-entry {
+    gap: 0;
 }
 
 /* COMPONENTS */
