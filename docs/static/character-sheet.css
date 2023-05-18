@@ -198,6 +198,8 @@ body.character-sheet {
 .cs-character-listing-current {
     color: var(--cs-color-character-text);
     background-color: var(--cs-color-character-bg);
+    border-radius: 5px;
+    white-space: normal;
 }
 
 /* RIGHT PANE */
@@ -230,7 +232,7 @@ body.character-sheet {
 }
 
 .cs-section-entry {
-    gap: 0;
+    gap: calc(var(--cs-gap) / 2);
 }
 
 /* COMPONENTS */
