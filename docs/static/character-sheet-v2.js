@@ -59,7 +59,7 @@ const CHARACTER_MODELS = {
       "Gloves": "Gloooooooves",
     },
     "fighter": {
-      "level": 221,
+      "level": 9,
     },
     "rogue": {
       "level": 1,
@@ -381,39 +381,39 @@ function getNumericalCharacteristic(val) {
 
 BUILDER_FUNCTIONS = {
   "total_character_level": characterData => {
-    return getNumericalCharacteristic(characterData["fighter"]["level"])
-      + getNumericalCharacteristic(characterData["mage"]["level"])
-      + getNumericalCharacteristic(characterData["rogue"]["level"])
-      + getNumericalCharacteristic(characterData["warlock"]["level"]);
+    return getNumericalCharacteristic(characterData.fighter.level)
+      + getNumericalCharacteristic(characterData.mage.level)
+      + getNumericalCharacteristic(characterData.rogue.level)
+      + getNumericalCharacteristic(characterData.warlock.level);
   },
   "modifiers.charisma": characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "modifiers.constitution": characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])],
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "save_throws.constitution": characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])]
-        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 3),
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
+        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 3),
       "tooltip": "fortitude",
     };
   },
 
   "modifiers.dexterity": characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])],
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)],
       "tooltip": "ah, a force dyad",
     };
   },
@@ -421,25 +421,25 @@ BUILDER_FUNCTIONS = {
   "save_throws.dexterity": characterData => {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])]
-        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 3)
-        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 3)
-        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)]
+        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 4),
       "tooltip": "A ".repeat(200),
     };
   },
 
   "modifiers.intelligence": characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "modifiers.strength": characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["strength"])],
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.strength)],
       "tooltip": "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ",
     };
   },
@@ -447,7 +447,7 @@ BUILDER_FUNCTIONS = {
   "modifiers.wisdom": characterData => {
     // table
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["wisdom"])],
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)],
       "tooltip": "ah, a force dyad",
     };
   },
@@ -455,11 +455,11 @@ BUILDER_FUNCTIONS = {
   "save_throws.wisdom": characterData => {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["wisdom"])]
-        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 3)
-        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
+      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)]
+        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 2),
       "tooltip": "ah, a force dyad",
     };
   },
@@ -467,10 +467,10 @@ BUILDER_FUNCTIONS = {
   "hit_points.hit_die": characterData => {
     // FGT + MAG + ROG + WAR
     return {
-      "display": getNumericalCharacteristic(characterData["fighter"]["level"])
-        + getNumericalCharacteristic(characterData["mage"]["level"])
-        + getNumericalCharacteristic(characterData["rogue"]["level"])
-        + getNumericalCharacteristic(characterData["warlock"]["level"]),
+      "display": getNumericalCharacteristic(characterData.fighter.level)
+        + getNumericalCharacteristic(characterData.mage.level)
+        + getNumericalCharacteristic(characterData.rogue.level)
+        + getNumericalCharacteristic(characterData.warlock.level),
       "tooltip": "ah, a force dyad",
     };
   },
@@ -478,10 +478,10 @@ BUILDER_FUNCTIONS = {
   "attacks.base_bonus": characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
     return {
-      "display": getNumericalCharacteristic(characterData["fighter"]["level"])
-        + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
+      "display": getNumericalCharacteristic(characterData.fighter.level)
+        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 2),
       "tooltip": "ah, a force dyad",
     };
   },
@@ -490,7 +490,7 @@ BUILDER_FUNCTIONS = {
     // max(1 + (FGT-1)/4, 1)
     return {
       "display": Math.max(
-        Math.floor(1 + (getNumericalCharacteristic(characterData["fighter"]["level"]) - 1) / 4),
+        Math.floor(1 + (getNumericalCharacteristic(characterData.fighter.level) - 1) / 4),
         1,
       ),
       "tooltip": "ah, a force dyad",
@@ -501,11 +501,11 @@ BUILDER_FUNCTIONS = {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
     let allowedArmor;
 
-    if (getNumericalCharacteristic(characterData["fighter"]["level"]) > 0) {
+    if (getNumericalCharacteristic(characterData.fighter.level) > 0) {
       allowedArmor = "Heavy + Shields";
-    } else if (getNumericalCharacteristic(characterData["warlock"]["level"]) > 0) {
+    } else if (getNumericalCharacteristic(characterData.warlock.level) > 0) {
       allowedArmor = "Medium";
-    } else if (getNumericalCharacteristic(characterData["rogue"]["level"]) > 0) {
+    } else if (getNumericalCharacteristic(characterData.rogue.level) > 0) {
       allowedArmor = "Light";
     } else {
       allowedArmor = "None";
@@ -521,11 +521,11 @@ BUILDER_FUNCTIONS = {
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
     let allowedWeapons;
 
-    if (getNumericalCharacteristic(characterData["fighter"]["level"]) > 0) {
+    if (getNumericalCharacteristic(characterData.fighter.level) > 0) {
       allowedWeapons = "Martial";
-    } else if (getNumericalCharacteristic(characterData["warlock"]["level"]) > 0) {
+    } else if (getNumericalCharacteristic(characterData.warlock.level) > 0) {
       allowedWeapons = "Standard";
-    } else if (getNumericalCharacteristic(characterData["rogue"]["level"]) > 0) {
+    } else if (getNumericalCharacteristic(characterData.rogue.level) > 0) {
       allowedWeapons = "Standard";
     } else {
       allowedWeapons = "Simple";
@@ -540,10 +540,10 @@ BUILDER_FUNCTIONS = {
   "skills.skill_check_bonus": characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
     return {
-      "display": Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 2)
-        + getNumericalCharacteristic(characterData["rogue"]["level"])
-        + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
+      "display": Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
+        + getNumericalCharacteristic(characterData.rogue.level)
+        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 4),
       "tooltip": "ah, a force dyad",
     };
   },
@@ -551,10 +551,10 @@ BUILDER_FUNCTIONS = {
   "skills.max_skill_proficiencies": characterData => {
     // table
     return {
-      "display": SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["mage"]["level"])]["mage"]
-        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["rogue"]
-        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["fighter"]
-        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["warlock"],
+      "display": SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.mage.level)]["mage"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.rogue.level)]["rogue"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.fighter.level)]["fighter"]
+        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.warlock.level)]["warlock"],
       "tooltip": "ah, a force dyad",
     };
   },
@@ -562,7 +562,7 @@ BUILDER_FUNCTIONS = {
   "mage.max_spells_learnable_per_degree": characterData => {
     // 5 + INT
     return {
-      "display": 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
+      "display": 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
       "tooltip": "ah, a force dyad",
     };
   },
@@ -571,8 +571,8 @@ BUILDER_FUNCTIONS = {
     // min(1 + CHA, (WAR+1)/2)
     return {
       "display": Math.min(
-        1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
-        Math.floor((getNumericalCharacteristic(characterData["warlock"]["level"]) + 1) / 2)
+        1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
+        Math.floor((getNumericalCharacteristic(characterData.warlock.level) + 1) / 2)
       ),
       "tooltip": "ah, a force dyad",
     };
@@ -581,77 +581,77 @@ BUILDER_FUNCTIONS = {
 
   "warlock.l1_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][1],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][1],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l2_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][2],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][2],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l3_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][3],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][3],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l4_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][4],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][4],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l5_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][5],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][5],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l1_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][1],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][1],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l2_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][2],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][2],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l3_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][3],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][3],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l4_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][4],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][4],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l5_spell_slots": characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][5],
+      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][5],
       "tooltip": "ah, a force dyad",
     };
   },
 
   "cs-armor-class": characterData => {
     let equipmentAC = 0;
-    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])];
+    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)];
 
     // TODO - go through euipment and populate equipmentAC
 
@@ -839,7 +839,7 @@ class SectionDivider extends HTMLComponent {
     return `
     <div class="cs-row cs-elem">
         <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
-        <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading}</div>
+        <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading.toUpperCase()}</div>
         <div class="arrow-line arrow-line-left cs-width-full"></div>
     </div>
     `;
@@ -1170,6 +1170,16 @@ function rollFormula(formula) {
   return result;
 }
 
+function spellSlotsRender(characterModel, classType) {
+  // TODO: all classes should get their own Composite Component class
+  const classInfo = characterModel[classType];
+  const spellSlots = [];
+  for (let i = 1; i <= 5; i++) {
+    spellSlots.push(classInfo[`l${i}_spell_slots`].display);
+  }
+  return spellSlots.join(" / ");
+}
+
 // Main rendering logic
 
 /**
@@ -1381,6 +1391,34 @@ function renderPage(characterName) {
             "Dagger & Sword I - +1 to Hit and Damage",
             "Dagger & Sword II - Critical hits on 19",
           ])
+        ]
+      }),
+      new PaneSection({
+        divider: new SectionDivider("Rogue"),
+        entries: [
+          classKeyValue("Rogue Level", characterModel.rogue.level),
+          classKeyValue("Skill Specializations", "1", [
+            "Mercantile - Journeyman Merchant",
+          ])
+        ]
+      }),
+      new PaneSection({
+        divider: new SectionDivider("Mage"),
+        entries: [
+          classKeyValue("Mage Level", characterModel.mage.level),
+          classKeyValue("Arcane Spell Slots", spellSlotsRender(characterModel, "mage")),
+          classKeyValue("Max Spells per Degree", characterModel.mage.max_spells_learnable_per_degree.display),
+          classKeyValue("Arcane Casting in Armor", "Up to 3rd Degree"),
+        ]
+      }),
+      new PaneSection({
+        divider: new SectionDivider("Warlock"),
+        entries: [
+          classKeyValue("Mage Level", characterModel.warlock.level),
+          classKeyValue("Occult Spell Slots", spellSlotsRender(characterModel, "warlock")),
+          classKeyValue("Domain", "Elemental - Water"),
+          classKeyValue("Major Patron", "Rath - Water Aspect"),
+          classKeyValue("Minor Patrons", `Up to ${characterModel.warlock.max_minor_patrons.display}`),
         ]
       }),
       ...[]  // TODO - load class data from model instead
