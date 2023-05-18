@@ -839,7 +839,7 @@ class SectionDivider extends HTMLComponent {
     return `
     <div class="cs-row cs-elem">
         <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
-        <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading.toUpperCase()}</div>
+        <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading}</div>
         <div class="arrow-line arrow-line-left cs-width-full"></div>
     </div>
     `;
