@@ -785,7 +785,7 @@ class Pane extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-panel cs-col cs-padding-v cs-padding-h">
+    <div class="cs-panel cs-col cs-padding-v">
         ${this.sections.map((section) => section.getHTML()).join("")}
     </div>
     `;
