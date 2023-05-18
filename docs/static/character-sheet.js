@@ -942,6 +942,7 @@ function loadFromName(name) {
   if (currentVersion == "0.2.1") {
     characterData["cs-warlock-spell-name"] = characterData["cs-spell-name"].slice(0, 10);
     characterData["cs-mage-spell-name"] = characterData["cs-spell-name"].slice(10);
+    characterData["cs-game-details"] = "";
     delete characterData["cs-spell-name"];
     characterData["VERSION"] = VERSION;
     console.log(`Upgraded ${name} from version ${currentVersion} to ${VERSION}`);
