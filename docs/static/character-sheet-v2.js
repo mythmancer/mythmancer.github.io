@@ -127,7 +127,7 @@ COLOR_MODES = {
     "--cs-color-text-deemphasized": "#9f9f9f",
   },
   "light": {
-    "--cs-color-bg": "rgba(0, 0, 0, 0.1)",
+    "--cs-color-bg": "#e5e5e5",
     "--cs-color-section-bg": "#ffffff",
     "--cs-color-text": "#000000",
     "--cs-color-text-deemphasized": "#5e5e5e",
@@ -383,14 +383,14 @@ BUILDER_FUNCTIONS = {
   "modifiers.charisma": characterData => {
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "modifiers.constitution": characterData => {
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["constitution"])],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -408,7 +408,7 @@ BUILDER_FUNCTIONS = {
   "modifiers.dexterity": characterData => {
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["dexterity"])],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -427,14 +427,14 @@ BUILDER_FUNCTIONS = {
   "modifiers.intelligence": characterData => {
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "modifiers.strength": characterData => {
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["strength"])],
-      "tooltip": "",
+      "tooltip": "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ",
     };
   },
 
@@ -442,7 +442,7 @@ BUILDER_FUNCTIONS = {
     // table
     return {
       "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["wisdom"])],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -454,7 +454,7 @@ BUILDER_FUNCTIONS = {
         + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 2)
         + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 3)
         + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
-      "tooltip": "will",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -465,7 +465,7 @@ BUILDER_FUNCTIONS = {
         + getNumericalCharacteristic(characterData["mage"]["level"])
         + getNumericalCharacteristic(characterData["rogue"]["level"])
         + getNumericalCharacteristic(characterData["warlock"]["level"]),
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -476,7 +476,7 @@ BUILDER_FUNCTIONS = {
         + Math.floor(getNumericalCharacteristic(characterData["mage"]["level"]) / 4)
         + Math.floor(getNumericalCharacteristic(characterData["rogue"]["level"]) / 2)
         + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 2),
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -487,7 +487,7 @@ BUILDER_FUNCTIONS = {
         Math.floor(1 + (getNumericalCharacteristic(characterData["fighter"]["level"]) - 1) / 4),
         1,
       ),
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -507,7 +507,7 @@ BUILDER_FUNCTIONS = {
 
     return {
       "display": allowedArmor,
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -527,7 +527,7 @@ BUILDER_FUNCTIONS = {
 
     return {
       "display": allowedWeapons,
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -538,7 +538,7 @@ BUILDER_FUNCTIONS = {
         + getNumericalCharacteristic(characterData["rogue"]["level"])
         + Math.floor(getNumericalCharacteristic(characterData["fighter"]["level"]) / 4)
         + Math.floor(getNumericalCharacteristic(characterData["warlock"]["level"]) / 4),
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -549,7 +549,7 @@ BUILDER_FUNCTIONS = {
         + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["rogue"]
         + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["fighter"]
         + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData["rogue"]["level"])]["warlock"],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -557,7 +557,7 @@ BUILDER_FUNCTIONS = {
     // 5 + INT
     return {
       "display": 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["intelligence"])],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -568,7 +568,7 @@ BUILDER_FUNCTIONS = {
         1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData["ability_scores"]["charisma"])],
         Math.floor((getNumericalCharacteristic(characterData["warlock"]["level"]) + 1) / 2)
       ),
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -576,70 +576,70 @@ BUILDER_FUNCTIONS = {
   "warlock.l1_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][1],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l2_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][2],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l3_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][3],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l4_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][4],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "warlock.l5_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["warlock"]["level"])][5],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l1_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][1],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l2_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][2],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l3_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][3],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l4_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][4],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
   "mage.l5_spell_slots": characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData["mage"]["level"])][5],
-      "tooltip": "",
+      "tooltip": "ah, a force dyad",
     };
   },
 
@@ -1008,7 +1008,7 @@ class CharacterListings extends HTMLComponent {
  */
 function actionKeyValue(action, key, value, description = "", diceFormula = "") {
   // TODO: cleanup to having common way to access all display, tooltip data
-  let tooltipHTML = "";
+  let tooltipHTML = "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ";
   if (value && value.hasOwnProperty("display")) {
     tooltipHTML = value.tooltip;
     value = value.display;
@@ -1097,6 +1097,7 @@ function classKeyValue(key, value, notes = []) {
   return new SectionEntry({
     mainKeyText: key,
     valueText: value,
+    tooltipHTML: "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A",
     subEntries: notes.map(note => new SectionSubEntry({text: note}))
   });
 }
@@ -1146,6 +1147,57 @@ function attachComponentListeners() {
       div.addEventListener(event, COMPONENT_STORE[componentId].listeners[event]);
     }
   }
+}
+
+/*
+ * Event listener for mouseovers to show tooltips. `this` refers to the tooltip
+ * parent, since that is what receives this event
+ * This function positions the tooltip on the appropriate side (to avoid overflowing
+ * outside the screen), and also positions the quote artifact on the appropriate side.
+ */
+function positionTooltip() {
+  // The Div is the parent of the tooltop
+  // get top, left coords of The Div
+  const divRect = this.getBoundingClientRect();
+  const tooltip = this.querySelector(".cs-tooltiptext");
+  let tooltipRect = tooltip.getBoundingClientRect();
+
+  // position tooltip right above and slightly to the right of the left of The Div
+  let top = divRect.top - tooltipRect.height - 5;
+  let left = divRect.left + 10;
+  let quotePosition = "bottomleft";
+
+  tooltip.style.top = `${top}px`;
+  tooltip.style.left = `${left}px`;
+
+  // Get new tooltip coordinates and size
+  tooltipRect = tooltip.getBoundingClientRect();
+
+  // Window overflow detection
+  if ((tooltipRect.x + tooltipRect.width) > window.innerWidth) {
+    // exceeds window on right, move the tooltip to the left of The Div
+    left -= tooltipRect.width + 5;
+    quotePosition = quotePosition.replace("left", "right");
+  }
+
+  if (tooltipRect.y < 0) {
+    // exceeds window on top, move the tooltip below The Div
+    top += tooltipRect.height + divRect.height + 5;
+    quotePosition = quotePosition.replace("bottom", "top");
+  }
+
+  // Apply corrected position
+  tooltip.style.top = `${top}px`;
+  tooltip.style.left = `${left}px`;
+
+  tooltip.classList.add(`cs-${quotePosition}`);
+}
+
+function positionTooltips() {
+  const tooltipParents = document.querySelectorAll(".cs-has-tooltip");
+  tooltipParents.forEach(function(tooltipParent, index) {
+    tooltipParent.addEventListener("mouseover", positionTooltip);
+  });
 }
 
 /**
@@ -1275,7 +1327,7 @@ function renderCharacter(characterName) {
       new PaneSection({ // TODO - only populate classes the character actually has levels in
         divider: new SectionDivider("Fighter"),
         entries: [
-          classKeyValue("Fighter Level", "5"),
+          classKeyValue("Fighter Level", characterModel.fighter.level),
           classKeyValue("Additional Attacks", "1"),
           classKeyValue("Weapon Specializations", "2", [
             "Dagger & Sword I - +1 to Hit and Damage",
@@ -1298,6 +1350,7 @@ function renderCharacter(characterName) {
 
   // all logic that needs to be done after rendering is done - such as attaching listeners
   attachComponentListeners();
+  positionTooltips();
 }
 
 function loadCharacter(event) {
