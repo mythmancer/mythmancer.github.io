@@ -10,6 +10,7 @@
 
     /* Constants */
     --cs-color-btn: #989898;
+    --cs-color-btn-text: #000000;
     --cs-height-min: 24px;
     --cs-gap: 5px;
     --cs-padding: 5px;
@@ -21,6 +22,7 @@
     /* Programmatically set properties:
     The following based on color mode:
       * --cs-color-bg
+      * --cs-color-section-bg
       * --cs-color-text
       * --cs-color-btn-text
       * --cs-color-text-deemphasized
@@ -60,7 +62,6 @@ body.character-sheet {
     width: 300px;
     padding-right: 10px;
     padding-left: 10px;
-    border-right: 1px solid var(--cs-color-character-bg);
 }
 
 #cs-right-pane {
@@ -143,6 +144,13 @@ body.character-sheet {
 
 .cs-panel {
     overflow: scroll;
+}
+
+.cs-section {
+    background-color: var(--cs-color-section-bg);
+    padding-top: var(--cs-gap);
+    padding-bottom: var(--cs-gap);
+    border-radius: 5px;
 }
 
 /* CONSTANTS */

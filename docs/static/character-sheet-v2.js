@@ -121,15 +121,15 @@ THEME_STORAGE_KEY = "theme";
  *******************************************************************/
 COLOR_MODES = {
   "dark": {
-    "--cs-color-bg": "#181a1b",
+    "--cs-color-bg": "#252525",
+    "--cs-color-section-bg": "#000000",
     "--cs-color-text": "#ffffff",
-    "--cs-color-btn-text": "#000000",
     "--cs-color-text-deemphasized": "#9f9f9f",
   },
   "light": {
-    "--cs-color-bg": "#ffffff",
+    "--cs-color-bg": "rgba(0, 0, 0, 0.1)",
+    "--cs-color-section-bg": "#ffffff",
     "--cs-color-text": "#000000",
-    "--cs-color-btn-text": "#ffffff",
     "--cs-color-text-deemphasized": "#5e5e5e",
   },
 };
@@ -785,7 +785,7 @@ class Pane extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-panel cs-col cs-padding-v cs-border-right">
+    <div class="cs-panel cs-col cs-padding-v cs-padding-h">
         ${this.sections.map((section) => section.getHTML()).join("")}
     </div>
     `;
@@ -809,7 +809,7 @@ class PaneSection extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col">
+    <div class="cs-col cs-section">
         ${this.divider == null ? "" : this.divider.getHTML()}
         <div class="cs-col">
             ${this.entries.map((entry) => entry.getHTML()).join("")}
@@ -1168,6 +1168,10 @@ function renderCharacter(characterName) {
           entries: [
             // TODO - add editable HP field... though it'll be a unique case :/
             new SectionEntry({
+              mainKeyText: "Name",
+              valueText: characterName,
+            }),
+            new SectionEntry({
               mainKeyText: "Hit Points",
               valueText: `${characterModel.hit_points.current} / ${characterModel.hit_points.total}`
             }),
@@ -1288,9 +1292,6 @@ function renderCharacter(characterName) {
 
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
-        <div id="cs-current-character-heading" class="cs-row cs-padding-h cs-padding-v">
-            <div class="cs-elem cs-width-full">${characterName}</div>
-        </div>
         <div class="cs-panels">${panes.map(pane => pane.getHTML()).join("")}</div>
       </div>
     `;
