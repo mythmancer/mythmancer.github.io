@@ -125,15 +125,6 @@ body.character-sheet {
     height: 100%;
 }
 
-#cs-current-character-heading {
-    font-size: var(--cs-font-size-lg);
-    position: sticky;
-    z-index: 10;
-    top: 0;
-    color: var(--cs-color-character-text);
-    background-color: var(--cs-color-character-bg);
-}
-
 .cs-panels {
     display: flex;
     overflow: clip;

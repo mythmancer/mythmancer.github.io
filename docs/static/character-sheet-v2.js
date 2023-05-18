@@ -1,6 +1,8 @@
 /* character models - just for demo */
 const CHARACTER_MODELS = {
-  "Pal Bonwater - Level 6 Elementalist": {
+  "Pal Bonwater": {
+    "name": "Pal Bonwater",
+    "title": "Elementalist",
     "color": "#8386CC",
     "hit_points": {
       "total": 17,
@@ -35,7 +37,9 @@ const CHARACTER_MODELS = {
       "major_patron": "Rath - Water Aspect",
     },
   },
-  "Herakles - Level 5 Grinner": {
+  "Herakles": {
+    "name": "Herakles",
+    "title": "Grinner",
     "color": "#7c0a0a",
     "hit_points": {
       "total": 100000,
@@ -70,7 +74,9 @@ const CHARACTER_MODELS = {
       "major_patron": "Belch",
     },
   },
-  "Noam Gnomesky - Level 20 Old Man": {
+  "Noam Gnomesky": {
+    "name": "Noam Gnomesky",
+    "title": "Old Man",
     "color": "#989898",
     "hit_points": {
       "total": 2,
@@ -978,19 +984,48 @@ class EditButton extends HTMLComponent {
   }
 }
 
+class CharacterListing extends HTMLComponent {
+  /**
+   * Single listing of a character on the navigation pane
+   * @param {string} characterName Name of character
+   */
+  constructor(characterName, isCurrentCharacter) {
+    super({
+      listeners: {
+        "click": function(event) {
+        renderPage(characterName);
+      }},
+    });
+    this.characterName = characterName;
+    this.isCurrentCharacter = isCurrentCharacter;
+  }
+
+  _getCharacterIdentifier(characterName) {
+    const baseCharacterModel = getCharacterModel(characterName);
+    const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
+    return `${characterName} - Level ${characterModel.total_character_level} ${characterModel.title}`;
+  }
+
+  getHTML() {
+    return `<div id="${this.id}" class="cs-left-pane-listing ${this.isCurrentCharacter ? "cs-character-listing-current" : ""}">${this._getCharacterIdentifier(this.characterName)}</div>`;
+  }
+}
+
+
 class CharacterListings extends HTMLComponent {
   /**
    * Listing of known characters to be shown on the left navigation pane
    * @param {string} characterNames List of character identifiers
    */
-  constructor(characterNames) {
+  constructor(characterNames, currentCharacterName) {
     super({});
     this.characterNames = characterNames;
+    this.currentCharacterName = currentCharacterName;
   }
 
   getHTML() {
     return `
-    ${this.characterNames.map(characterName => `<div class="cs-left-pane-listing">${characterName}</div>`).join("")}
+    ${this.characterNames.map(characterName => new CharacterListing(characterName, this.currentCharacterName === characterName).getHTML()).join("")}
     `;
   }
 }
@@ -1204,9 +1239,18 @@ function positionTooltips() {
  * Convert base character model to fully populated character model,
  * and re-render the entire character pane
  */
-function renderCharacter(characterName) {
+function renderPage(characterName) {
   // Clear out component store
   COMPONENT_STORE = {};
+
+  const characterListingsDiv = document.getElementById("cs-character-listings");
+  const navHTML = new CharacterListings(listCharacters(), characterName).getHTML();
+  characterListingsDiv.innerHTML = navHTML;
+
+  if (characterName == null) {
+    postRender();
+    return ;
+  }
 
   const baseCharacterModel = getCharacterModel(characterName);
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
@@ -1221,7 +1265,11 @@ function renderCharacter(characterName) {
             // TODO - add editable HP field... though it'll be a unique case :/
             new SectionEntry({
               mainKeyText: "Name",
-              valueText: characterName,
+              valueText: characterModel.name,
+            }),
+            new SectionEntry({
+              mainKeyText: "Title",
+              valueText: characterModel.title,
             }),
             new SectionEntry({
               mainKeyText: "Hit Points",
@@ -1348,31 +1396,13 @@ function renderCharacter(characterName) {
       </div>
     `;
 
+  postRender();
+}
+
+function postRender() {
   // all logic that needs to be done after rendering is done - such as attaching listeners
   attachComponentListeners();
   positionTooltips();
-}
-
-function loadCharacter(event) {
-  renderCharacter(event.target.textContent);
-  const characterListings = document.getElementById("cs-character-listings").getElementsByClassName("cs-left-pane-listing");
-  for (let i = 0; i < characterListings.length; i++) {
-    if (characterListings[i] === event.target) {
-      characterListings[i].classList.add("cs-character-listing-current");
-    } else {
-      characterListings[i].classList.remove("cs-character-listing-current");
-    }
-  }
-}
-
-function populateCharacterListing() {
-  const characterListingsDiv = document.getElementById("cs-character-listings");
-  const html = new CharacterListings(listCharacters()).getHTML();
-  characterListingsDiv.innerHTML = html;
-  const characterListings = characterListingsDiv.getElementsByClassName("cs-left-pane-listing");
-  for (let i = 0; i < characterListings.length; i++) {
-    characterListings[i].addEventListener("click", loadCharacter);
-  }
 }
 
 window.onload = function () {
@@ -1380,5 +1410,5 @@ window.onload = function () {
   window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(CHARACTER_MODELS));
 
   setAppearance();
-  populateCharacterListing();
+  renderPage(null);
 };
