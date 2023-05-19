@@ -173,7 +173,7 @@ function setAppearance() {
   }
 }
 
-/*******************************************************************
+/****n***************************************************************
  **************************** DATABASES ****************************
  *******************************************************************/
 ARMOR = {
@@ -757,8 +757,10 @@ COMPONENT_STORE = {};
 class HTMLComponent {
   constructor({
     listeners = null,
+    initializer = null,
   }) {
     this.listeners = listeners;
+    this.initializer = initializer;
     this.id = crypto.randomUUID();
     // if either explicitly asked, or if it has listeners, store the component so that we can
     // manipulate it after creation
@@ -766,6 +768,10 @@ class HTMLComponent {
     if (this.shouldStoreComponent() || this.listeners) {
       COMPONENT_STORE[this.id] = this;
     }
+  }
+
+  getUIElement() {
+    return document.getElementById(this.id);
   }
 
   shouldStoreComponent() {
@@ -948,7 +954,8 @@ class DiceButton extends HTMLComponent {
     super({
       listeners: {
         "click": function() {
-          rollFormula(formula);
+          const result = rollFormula(formula);
+          logDieRoll(text, result);
         },
       },
     });
@@ -1027,6 +1034,82 @@ class CharacterListings extends HTMLComponent {
     return `
     ${this.characterNames.map(characterName => new CharacterListing(characterName, this.currentCharacterName === characterName).getHTML()).join("")}
     `;
+  }
+}
+
+class DieLogEntry extends HTMLComponent {
+  /**
+   * Single entry in the die log
+   * @param {string} tag Name of the roll (check, save vs, etc)
+   * @param {number} result Result of the roll
+   */
+  constructor(tag, result) {
+    super({});
+    this.tag = tag;
+    this.result = result;
+    this.time = new Date();
+  }
+
+  getHTML() {
+    return `<div class="cs-die-log-entry">${this.time.toTimeString().substr(0, 8)} - ${this.tag} for ${this.result}</div>`;
+  }
+}
+
+class SettingDropDown extends HTMLComponent {
+  /**
+   * A label and a dropdown next to it
+   * @param {string} label The label to be displayed
+   * @param {map} setting The setting this modifies
+   * @param {function} callback Callback on option selection
+   */
+  constructor(label, setting, initialValue, callback) {
+    super({
+      "listeners": {
+        "change": function() {
+          callback(this.value);
+        },
+      },
+      "initializer": function() {
+        console.log(this.getUIElement(), initialValue);
+        this.getUIElement().value = initialValue;
+      },
+    });
+    this.label = label;
+    this.setting = setting;
+    this.callback = callback;
+  }
+
+  getHTML() {
+    return `
+<div class="cs-setting-dropdown">
+  <div class="cs-label">${this.label}</div>
+  <select id="${this.id}">
+    ${Object.keys(this.setting).map(entry => `<option value="${entry}">${entry}</option>`).join("")}
+  </select>
+</div>
+    `;
+  }
+}
+
+class SettingsPanel extends HTMLComponent {
+  constructor() {
+    super({});
+  }
+
+  setColorTheme(colorMode) {
+    window.localStorage.setItem(COLOR_MODE_STORAGE_KEY, colorMode);
+    setAppearance();
+  }
+
+  setTheme(theme) {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    setAppearance();
+  }
+
+  getHTML() {
+    return `
+${new SettingDropDown("Color Mode", COLOR_MODES, window.localStorage.getItem(COLOR_MODE_STORAGE_KEY), this.setColorTheme).getHTML()}
+${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE_KEY), this.setTheme).getHTML()}`;
   }
 }
 
@@ -1138,6 +1221,10 @@ function classKeyValue(key, value, notes = []) {
 }
 
 // Utilities
+function logDieRoll(tag, result) {
+  document.getElementById("cs-die-log").innerHTML = new DieLogEntry(tag, result).getHTML() + document.getElementById("cs-die-log").innerHTML;
+}
+
 function rollDice(numDie, die) {
   let result = 0;
   for (let i = 0; i < numDie; i++) {
@@ -1166,7 +1253,6 @@ function rollFormula(formula) {
       result += parseInt(formulaComponent);
     }
   }
-  console.log(result);
   return result;
 }
 
@@ -1190,6 +1276,15 @@ function attachComponentListeners() {
     const div = document.getElementById(componentId);
     for (let event in COMPONENT_STORE[componentId].listeners) {
       div.addEventListener(event, COMPONENT_STORE[componentId].listeners[event]);
+    }
+  }
+}
+
+function initializeComponents() {
+  for (let componentId in COMPONENT_STORE) {
+    const div = document.getElementById(componentId);
+    if (COMPONENT_STORE[componentId].initializer) {
+      COMPONENT_STORE[componentId].initializer();
     }
   }
 }
@@ -1256,6 +1351,8 @@ function renderPage(characterName) {
   const characterListingsDiv = document.getElementById("cs-character-listings");
   const navHTML = new CharacterListings(listCharacters(), characterName).getHTML();
   characterListingsDiv.innerHTML = navHTML;
+
+  document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
 
   if (characterName == null) {
     postRender();
@@ -1440,6 +1537,7 @@ function renderPage(characterName) {
 function postRender() {
   // all logic that needs to be done after rendering is done - such as attaching listeners
   attachComponentListeners();
+  initializeComponents();
   positionTooltips();
 }
 
