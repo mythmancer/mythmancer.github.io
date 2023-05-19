@@ -214,6 +214,10 @@ body.character-sheet {
     width: 100%;
 }
 
+.cs-die-log-entry:not(:first-of-type) {
+    opacity: 0.5;
+}
+
 .cs-setting-dropdown {
     display: flex;
     flex-direction: row;
