@@ -9,8 +9,6 @@
     --cs-color-character-text: #ffffff;
 
     /* Constants */
-    --cs-color-btn: #989898;
-    --cs-color-btn-text: #000000;
     --cs-height-min: 24px;
     --cs-gap: 5px;
     --cs-padding: 5px;
@@ -26,6 +24,8 @@
       * --cs-color-text
       * --cs-color-btn-text
       * --cs-color-text-deemphasized
+      * --cs-color-btn
+      * --cs-color-btn-text
 
     The following based on theme:
       * --cs-font
