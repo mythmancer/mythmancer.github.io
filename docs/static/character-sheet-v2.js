@@ -131,12 +131,16 @@ COLOR_MODES = {
     "--cs-color-section-bg": "#000000",
     "--cs-color-text": "#ffffff",
     "--cs-color-text-deemphasized": "#9f9f9f",
+    "--cs-color-btn": "#52595c",
+    "--cs-color-btn-text": "#ffffff",
   },
   "light": {
     "--cs-color-bg": "#e5e5e5",
     "--cs-color-section-bg": "#ffffff",
     "--cs-color-text": "#000000",
     "--cs-color-text-deemphasized": "#5e5e5e",
+    "--cs-color-btn": "#989898",
+    "--cs-color-btn-text": "#000000",
   },
 };
 
