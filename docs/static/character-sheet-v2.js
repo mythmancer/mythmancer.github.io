@@ -19,10 +19,50 @@ const CHARACTER_MODELS = {
       "intelligence": 16,
       "charisma": 16,
     },
-    "armor_class": 14,
-    "armor": {
-      "Chest": "Wet Suit",
-      "Gloves": "Bracers of Armor +3",
+    "equipment": {
+      "armor": {
+        "chest": {
+          "name": "Wet Suit",
+          "description": "Water I: Bestows Bless - Water Mobility upon the wearer",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "misc",
+              "name": "Bless - Water Mobility",
+              "description": "Can attack and perform basic actions unhindered while swimming. Can maintain a consistent swimming speed similar to walking speed and can hold breath for 1 minute without issue.",
+              "duration": "Permanent",
+            },
+          ],
+        },
+        "gloves": {
+          "name": "Bracers of Armor",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "armor_class",
+              "value": 3,
+              "operation": "add",
+            },
+          ]
+        },
+        "neck": {
+          "name": "Siren's Scale",
+          "equipped": true,
+          "description": "Water I: Grants access to The Siren as a Minor Patron in addition to one 1st Degree Occult Spell Slot",
+          "effects": [
+            {
+              "attribute": "warlock.l1_spell_slots",
+              "value": 1,
+              "operation": "add",
+            },
+            {
+              "attribute": "misc",
+              "name": "The Siren",
+              "description": "Access to The Siren as a Minor Patron",
+            },
+          ],
+        },
+      },
     },
     "fighter": {
       "level": 5,
@@ -41,22 +81,25 @@ const CHARACTER_MODELS = {
     },
     "active_effects": [
       {
-        "source": "race",
-        "attribute": "ability_scores.strength",
-        "value": -1,
-        "operation": "add",
-      },
-      {
-        "source": "race",
-        "attribute": "ability_scores.dexterity",
-        "value": 1,
-        "operation": "add",
-      },
-      {
         "source": "talisman",
         "attribute": "mage.l1_spell_slots",
         "value": 1,
         "operation": "add",
+        "duration": "Permanent",
+      },
+      {
+        "source": "Enlarged",
+        "attribute": "ability_scores.strength",
+        "value": 16,
+        "operation": "override",
+        "duration": "4 Rounds",
+      },
+      {
+        "source": "Enlarged",
+        "name": "Enlarged - size effect",
+        "attribute": "misc",
+        "description": "Size is now Large",
+        "duration": "4 Rounds",
       },
     ],
   },
@@ -71,7 +114,6 @@ const CHARACTER_MODELS = {
       "total": 100000,
       "current": 18
     },
-    "armor_class": 20,
     "ability_scores": {
       "strength": 18,
       "dexterity": 3,
@@ -80,9 +122,24 @@ const CHARACTER_MODELS = {
       "intelligence": 4,
       "charisma": 5,
     },
-    "armor": {
-      "Chest": "Buff af",
-      "Gloves": "Gloooooooves",
+    "equipment": {
+      "armor": {
+        "chest": {
+          "name": "Buff af",
+          "equipped": true,
+        },
+        "gloves": {
+          "name": "Gloooooooves",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "armor_class",
+              "value": 1,
+              "operation": "add",
+            },
+          ]
+        },
+      },
     },
     "fighter": {
       "level": 9,
@@ -99,20 +156,7 @@ const CHARACTER_MODELS = {
       "domain": "Elemental - Ice",
       "major_patron": "Belch",
     },
-    "active_effects": [
-      {
-        "source": "race",
-        "attribute": "ability_scores.strength",
-        "value": 1,
-        "operation": "add",
-      },
-      {
-        "source": "race",
-        "attribute": "ability_scores.dexterity",
-        "value": -1,
-        "operation": "add",
-      },
-    ],
+    "active_effects": [],
   },
   "Noam Gnomesky": {
     "name": "Noam Gnomesky",
@@ -125,7 +169,6 @@ const CHARACTER_MODELS = {
       "total": 2,
       "current": 1
     },
-    "armor_class": 1,
     "ability_scores": {
       "strength": 3,
       "dexterity": 1,
@@ -134,9 +177,24 @@ const CHARACTER_MODELS = {
       "intelligence": 10,
       "charisma": 15,
     },
-    "armor": {
-      "Chest": "Sunken",
-      "Gloves": "Evening soiree gloves",
+    "equipment": {
+      "armor": {
+        "chest": {
+          "name": "Sunken",
+          "equipped": true,
+        },
+        "gloves": {
+          "name": "Evening soiree gloves",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "armor_class",
+              "value": 1,
+              "operation": "add",
+            }
+          ],
+        },
+      },
     },
     "fighter": {
       "level": 0,
@@ -153,20 +211,7 @@ const CHARACTER_MODELS = {
       "domain": "Arcana",
       "major_patron": "Some old dead thing",
     },
-    "active_effects": [
-      {
-        "source": "race",
-        "attribute": "ability_scores.strength",
-        "value": -1,
-        "operation": "add",
-      },
-      {
-        "source": "race",
-        "attribute": "ability_scores.dexterity",
-        "value": 1,
-        "operation": "add",
-      },
-    ],
+    "active_effects": [],
   },
 };
 
@@ -432,6 +477,39 @@ SKILL_PROFICIENCY_TABLE = {
   },
 };
 
+EFFECTS = {
+  "race": {
+    "halfling": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.strength",
+        "value": -1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "value": 1,
+        "operation": "add",
+      },
+    ],
+    "orc": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.strength",
+        "value": 1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "value": -1,
+        "operation": "add",
+      },
+    ],
+  }
+};
+
 /*******************************************************************
  *************** EVALUATING A CHARACTER TO COMPLETION **************
  *******************************************************************/
@@ -567,6 +645,46 @@ WARLOCK_MAJOR_PATRON_ATTRIBUTE = new Attribute({
   path: "warlock.major_patron",
   isIntrinsic: true,
 });
+EQUIPMENT_ARMOR_CHEST_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.chest",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_SHIELD_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.shield",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_GLOVES_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.gloves",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_HEAD_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.head",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_CLOCK_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.clock",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_BOOTS_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.boots",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_NECK_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.neck",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_RING_1_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.ring1",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_RING_2_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.ring2",
+  isIntrinsic: true,
+});
+EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.other",
+  isIntrinsic: true,
+});
 
 // convert to derived
 MAGE_ARCANE_CASTING_IN_ARMOR_ATTRIBUTE = new Attribute({
@@ -575,6 +693,11 @@ MAGE_ARCANE_CASTING_IN_ARMOR_ATTRIBUTE = new Attribute({
 });
 ARMOR_CLASS_ATTRIBUTE = new Attribute({
   path: "armor_class",
+  isIntrinsic: true,
+});
+// remove once all effects linking is done
+EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
+  path: "active_effects",
   isIntrinsic: true,
 });
 
@@ -967,19 +1090,52 @@ MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
 
 
 ARMOR_CLASS_ATTRIBUTE = new Attribute({
-  path: "cs-armor-class",
+  path: "armor_class",
   builderFunction: characterData => {
-    let equipmentAC = 0;
     let dexMod = MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)];
 
-    // TODO - go through equipment and populate equipmentAC
-
     return {
-      "display": 10 + dexMod + equipmentAC,
-      "tooltip": `<h1>Armor Class</h1>${dexMod} from dex<br/>${equipmentAC} from equipment`,
+      "display": 10 + dexMod,
+      "tooltip": `add ${dexMod} from dex`,
     };
   },
 });
+
+function populateEffects(characterModel) {
+  const effects = [];
+
+  const raceEffects = EFFECTS["race"][characterModel.race.toLowerCase()];
+  for (let i = 0; i < raceEffects.length; i++) {
+    effects.push({
+      "source": `race.${characterModel.race}`,
+      "attribute": raceEffects[i].attribute,
+      "value": raceEffects[i].value,
+      "operation": raceEffects[i].operation,
+      "duration": "Permanent",
+    });
+  }
+
+  const equipments = characterModel.equipment;
+  const armor = equipments.armor;
+  for (let armorType in armor) {
+    const equipment = armor[armorType];
+    if (!equipment.equipped || !equipment.effects) {
+      // skip if not equipped, or has no effects
+      continue ;
+    }
+    for (let i = 0; i < equipment.effects.length; i++) {
+      effects.push({
+        "source": `equipment.armor.${armorType}.${equipment.name}`,
+        "attribute": equipment.effects[i].attribute,
+        "value": equipment.effects[i].value,
+        "description": equipment.effects[i].description,
+        "operation": equipment.effects[i].operation,
+        "duration": "Permanent",
+      });
+    }
+  }
+  return effects;
+}
 
 function buildFinalizedCharacterModel(baseCharacterModel) {
   const finalizedCharacterModel = {};
@@ -994,12 +1150,12 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
 
   // apply effects, in multiple steps
   const overriddenAttributes = [];
-  const effects = baseCharacterModel.active_effects;
+  const effects = baseCharacterModel.active_effects.concat(populateEffects(baseCharacterModel));
 
   // first resolve effects on intrinsic attributes
   for (let i = 0; i < effects.length; i++) {
     const effect = effects[i];
-    if (overriddenAttributes.includes(effect.attribute) || !ATTRIBUTES[effect.attribute].isIntrinsic) {
+    if (effect.attribute === "misc" || overriddenAttributes.includes(effect.attribute) || !ATTRIBUTES[effect.attribute].isIntrinsic) {
       continue ;
     }
 
@@ -1007,12 +1163,12 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
     if (effect.operation === "add") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
         display: previousValue.display + effect.value,
-        tooltip: previousValue.tooltip + ` add ${effect.value} from ${effect.source}`,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}add ${effect.value} from ${effect.source}`,
       });
     } else if (effect.operation === "override") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
         display: effect.value,
-        tooltip: previousValue.tooltip + ` override of ${effect.value} from ${effect.source}`,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}override of ${effect.value} from ${effect.source}`,
       });
       overriddenAttributes.push(effect.attribute);
     }
@@ -1029,7 +1185,7 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
   // finally, resolve effects on derived attributes
   for (let i = 0; i < effects.length; i++) {
     const effect = effects[i];
-    if (overriddenAttributes.includes(effect.attribute) || ATTRIBUTES[effect.attribute].isIntrinsic) {
+    if (effect.attribute === "misc" || overriddenAttributes.includes(effect.attribute) || ATTRIBUTES[effect.attribute].isIntrinsic) {
       continue ;
     }
 
@@ -1037,12 +1193,12 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
     if (effect.operation === "add") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
         display: previousValue.display + effect.value,
-        tooltip: previousValue.tooltip + ` add ${effect.value} from ${effect.source}`,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}add ${effect.value} from ${effect.source}`,
       });
     } else if (effect.operation === "override") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
         display: effect.value,
-        tooltip: previousValue.tooltip + ` override of ${effect.value} from ${effect.source}`,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}override of ${effect.value} from ${effect.source}`,
       });
     }
   }
@@ -1527,11 +1683,10 @@ function weaponAndActions(weapon, attacks) {
  * The equipped state contains the body part, name of the item, an edit/remove button and an optional descriptor.
  *
  * @param {string} part Body part where this armor is equipped (Chest, Belt, etc.)
- * @param {string} item Optional name of the piece of equipment
- * @param {string} description Optional description for equipment that grants extra effects
+ * @param {object} item name,description,etc object of equipment
  */
-function armor(part, item = "", description = "") {
-  if (item === "") {
+function armor(part, item = {}) {
+  if (item === {} || !item.equipped) {
     return new SectionEntry({
       shortKeyText: part,
       editButton: new EditButton("Equip")
@@ -1539,9 +1694,9 @@ function armor(part, item = "", description = "") {
   } else {
     return new SectionEntry({
       shortKeyText: part,
-      mainKeyText: item,
+      mainKeyText: item.name,
       editButton: new EditButton("Edit / Remove"),
-      subEntries: (description === "") ? [] : [new SectionSubEntry({text: description})]
+      subEntries: item.description ? [new SectionSubEntry({text: item.description})] : [],
     });
   }
 }
@@ -1562,6 +1717,24 @@ function activeEffect(effect, duration, description) {
       new SectionSubEntry({text: `Duration: ${duration}`})
     ]
   });
+}
+
+function getEffectsEntries(characterModel) {
+  const activeEffects = characterModel.active_effects.concat(populateEffects(characterModel));
+  const effectsEntries = [];
+  for (let i = 0; i < activeEffects.length; i++) {
+    const effect = activeEffects[i];
+    let description = effect.description;
+    if (!description) {
+      if (effect.operation === "add") {
+        description = `Adds ${effect.value} to ${effect.attribute}`;
+      } else if (effect.operation === "override") {
+        description = `Overrides ${effect.attribute} to ${effect.value}`;
+      }
+    }
+    effectsEntries.push(activeEffect(effect.source, effect.duration, description));
+  }
+  return effectsEntries;
 }
 
 /**
@@ -1756,10 +1929,7 @@ function renderPage(characterName) {
             }),
             new SectionEntry({
               mainKeyText: "Armor Class",
-              value: {
-                display: `${characterModel.armor_class.display}`,
-                tooltip: "",
-              },
+              value: characterModel.armor_class,
             }),
           ]
         }
@@ -1809,29 +1979,23 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Armor"),
         entries: [ // TODO - fix alignment of Equip to align left if possible
-          armor("Chest", "Wet Suit", "Water I: Bestows Bless - Water Mobility upon the wearer"),
-          armor("Shield"),
-          armor("Gloves", "Bracers of Armor +3"),
-          armor("Head"),
-          armor("Cloak"),
-          armor("Boots"),
-          armor("Neck", "Siren's Scale", "Water I: Grants access to The Siren as a Minor Patron in " +
-            "addition to one 1st Degree Occult Spell Slot"),
-          armor("Ring 1"),
-          armor("Ring 2"),
-          armor("Other")
+          armor("Chest", baseCharacterModel.equipment.armor.chest),
+          armor("Shield", baseCharacterModel.equipment.armor.shield),
+          armor("Gloves", baseCharacterModel.equipment.armor.gloves),
+          armor("Head", baseCharacterModel.equipment.armor.head),
+          armor("Cloak", baseCharacterModel.equipment.armor.clock),
+          armor("Boots", baseCharacterModel.equipment.armor.boots),
+          armor("Neck", baseCharacterModel.equipment.armor.neck),
+          armor("Ring 1", baseCharacterModel.equipment.armor.ring1),
+          armor("Ring 2", baseCharacterModel.equipment.armor.ring2),
+          armor("Other", baseCharacterModel.equipment.armor.other),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Effects"),
         entries: [
           new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
-          activeEffect("Bless - Water Mobility", "Permanent", "Can attack and perform basic actions unhindered while swimming. " +
-            "Can maintain a consistent swimming speed similar to walking speed and can hold breath for 1 minute without " +
-            "issue."),
-          activeEffect("Enlarged", "4 Rounds", "Strength is set to 16, size is now Large"),
-          ...[] // TODO - load effects from the character model
-        ]
+        ].concat(getEffectsEntries(baseCharacterModel)),
       })
     ]),
 
