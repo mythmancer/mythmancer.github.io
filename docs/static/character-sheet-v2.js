@@ -2,15 +2,18 @@
 const CHARACTER_MODELS = {
   "Pal Bonwater": {
     "name": "Pal Bonwater",
+    "race": "Halfling",
     "title": "Elementalist",
-    "color": "#8386CC",
+    "meta": {
+      "color": "#8386cc",
+    },
     "hit_points": {
       "total": 17,
       "current": 16
     },
     "ability_scores": {
-      "strength": 16,
-      "dexterity": 13,
+      "strength": 17,
+      "dexterity": 12,
       "constitution": 9,
       "wisdom": 17,
       "intelligence": 16,
@@ -36,19 +39,42 @@ const CHARACTER_MODELS = {
       "domain": "Elemental - Water",
       "major_patron": "Rath - Water Aspect",
     },
+    "active_effects": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.strength",
+        "value": -1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "value": 1,
+        "operation": "add",
+      },
+      {
+        "source": "talisman",
+        "attribute": "mage.l1_spell_slots",
+        "value": 1,
+        "operation": "add",
+      },
+    ],
   },
   "Herakles": {
     "name": "Herakles",
+    "race": "Orc",
     "title": "Grinner",
-    "color": "#7c0a0a",
+    "meta": {
+      "color": "#7c0a0a",
+    },
     "hit_points": {
       "total": 100000,
       "current": 18
     },
     "armor_class": 20,
     "ability_scores": {
-      "strength": 19,
-      "dexterity": 1,
+      "strength": 18,
+      "dexterity": 3,
       "constitution": 2,
       "wisdom": 3,
       "intelligence": 4,
@@ -73,21 +99,38 @@ const CHARACTER_MODELS = {
       "domain": "Elemental - Ice",
       "major_patron": "Belch",
     },
+    "active_effects": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.strength",
+        "value": 1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "value": -1,
+        "operation": "add",
+      },
+    ],
   },
   "Noam Gnomesky": {
     "name": "Noam Gnomesky",
+    "race": "Halfling",
     "title": "Old Man",
-    "color": "#989898",
+    "meta": {
+      "color": "#989898",
+    },
     "hit_points": {
       "total": 2,
       "current": 1
     },
     "armor_class": 1,
     "ability_scores": {
-      "strength": 0,
-      "dexterity": 0,
-      "constitution": 0,
-      "wisdom": 20,
+      "strength": 3,
+      "dexterity": 1,
+      "constitution": 2,
+      "wisdom": 19,
       "intelligence": 10,
       "charisma": 15,
     },
@@ -110,6 +153,20 @@ const CHARACTER_MODELS = {
       "domain": "Arcana",
       "major_patron": "Some old dead thing",
     },
+    "active_effects": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.strength",
+        "value": -1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "value": 1,
+        "operation": "add",
+      },
+    ],
   },
 };
 
@@ -177,7 +234,7 @@ function setAppearance() {
   }
 }
 
-/****n***************************************************************
+/*******************************************************************
  **************************** DATABASES ****************************
  *******************************************************************/
 ARMOR = {
@@ -291,7 +348,7 @@ SPELL_SLOTS = {
   },
 };
 
-ATTRIBUTE_MODIFIER_TABLE = {
+MODIFIER_TABLE = {
   2: -4,
   3: -3,
   4: -2,
@@ -380,33 +437,187 @@ SKILL_PROFICIENCY_TABLE = {
  *******************************************************************/
 
 function getNumericalCharacteristic(val) {
+  if (typeof val === 'object') {
+    val = val.display;
+  }
   return parseInt(val || "0");
 }
 
-BUILDER_FUNCTIONS = {
-  "total_character_level": characterData => {
-    return getNumericalCharacteristic(characterData.fighter.level)
-      + getNumericalCharacteristic(characterData.mage.level)
-      + getNumericalCharacteristic(characterData.rogue.level)
-      + getNumericalCharacteristic(characterData.warlock.level);
-  },
-  "modifiers.charisma": characterData => {
+ATTRIBUTES = {};
+
+class Attribute {
+  constructor({
+    path = "",
+    isIntrinsic = false,
+    divId = "",
+    builderFunction = null,
+    displayFunction = null,
+  }) {
+    this.path = path;
+    this.isIntrinsic = isIntrinsic;
+    this.divId = divId;
+    // TODO: replace "display" with "value"; the individual HTML components will decide what to display
+    this.builderFunction = builderFunction || (characterData => {
+      return {
+        "display": this.get(characterData),
+        "tooltip": "",
+      };
+    });
+    ATTRIBUTES[path] = this;
+  }
+
+  get(characterModel) {
+    const propPath = this.path.split(".");
+    let currLevel = characterModel;
+    for (let i = 0; i < propPath.length; i++) {
+      if (!currLevel.hasOwnProperty(propPath[i])) {
+        return null;
+      }
+      currLevel = currLevel[propPath[i]];
+    }
+    return currLevel;
+  }
+
+  set(characterModel, value) {
+    const propPath = this.path.split(".");
+    let currLevel = characterModel;
+    for (let i = 0; i < propPath.length - 1; i++) {
+      if (!currLevel.hasOwnProperty(propPath[i])) {
+        currLevel[propPath[i]] = {};
+      }
+      currLevel = currLevel[propPath[i]];
+    }
+    currLevel[propPath[propPath.length - 1]] = value;
+  }
+
+  calculate(characterModel) {
+    return this.builderFunction(characterModel);
+  }
+}
+
+NAME_ATTRIBUTE = new Attribute({
+  path: "name",
+  isIntrinsic: true,
+});
+RACE_ATTRIBUTE = new Attribute({
+  path: "race",
+  isIntrinsic: true,
+});
+TITLE_ATTRIBUTE = new Attribute({
+  path: "title",
+  isIntrinsic: true,
+});
+COLOR_ATTRIBUTE = new Attribute({
+  path: "color",
+  isIntrinsic: true,
+});
+HIT_POINTS_TOTAL_ATTRIBUTE = new Attribute({
+  path: "hit_points.total",
+  isIntrinsic: true,
+});
+HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute({
+  path: "hit_points.current",
+  isIntrinsic: true,
+});
+ABILITY_SCORES_STRENGTH_ATTRIBUTE = new Attribute({
+  path: "ability_scores.strength",
+  isIntrinsic: true,
+});
+ABILITY_SCORES_DEXTERITY_ATTRIBUTE = new Attribute({
+  path: "ability_scores.dexterity",
+  isIntrinsic: true,
+});
+ABILITY_SCORES_CONSTITUTION_ATTRIBUTE = new Attribute({
+  path: "ability_scores.constitution",
+  isIntrinsic: true,
+});
+ABILITY_SCORES_INTELLIGENCE_ATTRIBUTE = new Attribute({
+  path: "ability_scores.intelligence",
+  isIntrinsic: true,
+});
+ABILITY_SCORES_WISDOM_ATTRIBUTE = new Attribute({
+  path: "ability_scores.wisdom",
+  isIntrinsic: true,
+});
+ABILITY_SCORES_CHARISMA_ATTRIBUTE = new Attribute({
+  path: "ability_scores.charisma",
+  isIntrinsic: true,
+});
+FIGHTER_LEVEL_ATTRIBUTE = new Attribute({
+  path: "fighter.level",
+  isIntrinsic: true,
+});
+ROGUE_LEVEL_ATTRIBUTE = new Attribute({
+  path: "rogue.level",
+  isIntrinsic: true,
+});
+MAGE_LEVEL_ATTRIBUTE = new Attribute({
+  path: "mage.level",
+  isIntrinsic: true,
+});
+WARLOCK_LEVEL_ATTRIBUTE = new Attribute({
+  path: "warlock.level",
+  isIntrinsic: true,
+});
+WARLOCK_DOMAIN_ATTRIBUTE = new Attribute({
+  path: "warlock.domain",
+  isIntrinsic: true,
+});
+WARLOCK_MAJOR_PATRON_ATTRIBUTE = new Attribute({
+  path: "warlock.major_patron",
+  isIntrinsic: true,
+});
+
+// convert to derived
+MAGE_ARCANE_CASTING_IN_ARMOR_ATTRIBUTE = new Attribute({
+  path: "mage.arcane_casting_in_armor",
+  isIntrinsic: true,
+});
+ARMOR_CLASS_ATTRIBUTE = new Attribute({
+  path: "armor_class",
+  isIntrinsic: true,
+});
+
+CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
+  path: "total_character_level",
+  builderFunction: characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
+      "display": getNumericalCharacteristic(characterData.fighter.level)
+        + getNumericalCharacteristic(characterData.mage.level)
+        + getNumericalCharacteristic(characterData.rogue.level)
+        + getNumericalCharacteristic(characterData.warlock.level),
+      "tooltip": "force? dyad?",
+    };
+  }
+});
+
+MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
+  path: "modifiers.charisma",
+  builderFunction: characterData => {
+    return {
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "modifiers.constitution": characterData => {
+
+MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
+  path: "modifiers.constitution",
+  builderFunction: characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)],
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "save_throws.constitution": characterData => {
+
+SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
+  path: "save_throws.constitution",
+  builderFunction: characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 2)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 4)
@@ -414,18 +625,26 @@ BUILDER_FUNCTIONS = {
       "tooltip": "fortitude",
     };
   },
+});
 
-  "modifiers.dexterity": characterData => {
+
+MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
+  path: "modifiers.dexterity",
+  builderFunction: characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)],
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "save_throws.dexterity": characterData => {
+
+SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
+  path: "save_throws.dexterity",
+  builderFunction: characterData => {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)]
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)]
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 3)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 3)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
@@ -433,33 +652,49 @@ BUILDER_FUNCTIONS = {
       "tooltip": "A ".repeat(200),
     };
   },
+});
 
-  "modifiers.intelligence": characterData => {
+
+MODIFIERS_INTELLIGENCE_ATTRIBUTE = new Attribute({
+  path: "modifiers.intelligence",
+  builderFunction: characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "modifiers.strength": characterData => {
+
+MODIFIERS_STRENGTH_ATTRIBUTE = new Attribute({
+  path: "modifiers.strength",
+  builderFunction: characterData => {
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.strength)],
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.strength)],
       "tooltip": "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ",
     };
   },
+});
 
-  "modifiers.wisdom": characterData => {
+
+MODIFIERS_WISDOM_ATTRIBUTE = new Attribute({
+  path: "modifiers.wisdom",
+  builderFunction: characterData => {
     // table
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)],
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "save_throws.wisdom": characterData => {
+
+SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
+  path: "save_throws.wisdom",
+  builderFunction: characterData => {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
     return {
-      "display": ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)]
+      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)]
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 3)
@@ -467,8 +702,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "hit_points.hit_die": characterData => {
+
+HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
+  path: "hit_points.hit_die",
+  builderFunction: characterData => {
     // FGT + MAG + ROG + WAR
     return {
       "display": getNumericalCharacteristic(characterData.fighter.level)
@@ -478,8 +717,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "attacks.base_bonus": characterData => {
+
+ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
+  path: "attacks.base_bonus",
+  builderFunction: characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
     return {
       "display": getNumericalCharacteristic(characterData.fighter.level)
@@ -489,8 +732,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "attacks.number_of_attacks": characterData => {
+
+ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
+  path: "attacks.number_of_attacks",
+  builderFunction: characterData => {
     // max(1 + (FGT-1)/4, 1)
     return {
       "display": Math.max(
@@ -500,8 +747,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "equipment.allowed_armor": characterData => {
+
+EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
+  path: "equipment.allowed_armor",
+  builderFunction: characterData => {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
     let allowedArmor;
 
@@ -520,8 +771,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "equipment.allowed_weapons": characterData => {
+
+EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
+  path: "equipment.allowed_weapons",
+  builderFunction: characterData => {
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
     let allowedWeapons;
 
@@ -540,8 +795,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "skills.skill_check_bonus": characterData => {
+
+SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
+  path: "skills.skill_check_bonus",
+  builderFunction: characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
     return {
       "display": Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
@@ -551,8 +810,12 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "skills.max_skill_proficiencies": characterData => {
+
+SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
+  path: "skills.max_skill_proficiencies",
+  builderFunction: characterData => {
     // table
     return {
       "display": SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.mage.level)]["mage"]
@@ -562,123 +825,226 @@ BUILDER_FUNCTIONS = {
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "mage.max_spells_learnable_per_degree": characterData => {
+
+MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
+  path: "mage.max_spells_learnable_per_degree",
+  builderFunction: characterData => {
     // 5 + INT
     return {
-      "display": 5 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
+      "display": 5 + MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "warlock.max_minor_patrons": characterData => {
+
+WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
+  path: "warlock.max_minor_patrons",
+  builderFunction: characterData => {
     // min(1 + CHA, (WAR+1)/2)
     return {
       "display": Math.min(
-        1 + ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
+        1 + MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
         Math.floor((getNumericalCharacteristic(characterData.warlock.level) + 1) / 2)
       ),
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
 
-  "warlock.l1_spell_slots": characterData => {
+
+WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
+  path: "warlock.l1_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][1],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "warlock.l2_spell_slots": characterData => {
+
+WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
+  path: "warlock.l2_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][2],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "warlock.l3_spell_slots": characterData => {
+
+WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
+  path: "warlock.l3_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][3],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "warlock.l4_spell_slots": characterData => {
+
+WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
+  path: "warlock.l4_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][4],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "warlock.l5_spell_slots": characterData => {
+
+WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
+  path: "warlock.l5_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][5],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "mage.l1_spell_slots": characterData => {
+
+MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
+  path: "mage.l1_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][1],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "mage.l2_spell_slots": characterData => {
+
+MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
+  path: "mage.l2_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][2],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "mage.l3_spell_slots": characterData => {
+
+MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
+  path: "mage.l3_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][3],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "mage.l4_spell_slots": characterData => {
+
+MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
+  path: "mage.l4_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][4],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "mage.l5_spell_slots": characterData => {
+
+MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
+  path: "mage.l5_spell_slots",
+  builderFunction: characterData => {
     return {
       "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][5],
       "tooltip": "ah, a force dyad",
     };
   },
+});
 
-  "cs-armor-class": characterData => {
+
+ARMOR_CLASS_ATTRIBUTE = new Attribute({
+  path: "cs-armor-class",
+  builderFunction: characterData => {
     let equipmentAC = 0;
-    let dexMod = ATTRIBUTE_MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)];
+    let dexMod = MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)];
 
-    // TODO - go through euipment and populate equipmentAC
+    // TODO - go through equipment and populate equipmentAC
 
     return {
       "display": 10 + dexMod + equipmentAC,
       "tooltip": `<h1>Armor Class</h1>${dexMod} from dex<br/>${equipmentAC} from equipment`,
     };
   },
-};
+});
 
 function buildFinalizedCharacterModel(baseCharacterModel) {
-  const finalizedCharacterModel = structuredClone(baseCharacterModel);
+  const finalizedCharacterModel = {};
 
-  for (let prop in BUILDER_FUNCTIONS) {
-    const propPath = prop.split(".");
-    let currLevel = finalizedCharacterModel;
-    for (let i = 0; i < propPath.length - 1; i++) {
-      if (!currLevel.hasOwnProperty(propPath[i])) {
-        currLevel[propPath[i]] = {};
-      }
-      currLevel = currLevel[propPath[i]];
+  // populate initial intrinsic attributes
+  for (let attribute in ATTRIBUTES) {
+    if (!ATTRIBUTES[attribute].isIntrinsic) {
+      continue ;
     }
-    currLevel[propPath[propPath.length - 1]] = BUILDER_FUNCTIONS[prop](baseCharacterModel);
+    ATTRIBUTES[attribute].set(finalizedCharacterModel, ATTRIBUTES[attribute].calculate(baseCharacterModel));
+  }
+
+  // apply effects, in multiple steps
+  const overriddenAttributes = [];
+  const effects = baseCharacterModel.active_effects;
+
+  // first resolve effects on intrinsic attributes
+  for (let i = 0; i < effects.length; i++) {
+    const effect = effects[i];
+    if (overriddenAttributes.includes(effect.attribute) || !ATTRIBUTES[effect.attribute].isIntrinsic) {
+      continue ;
+    }
+
+    const previousValue = ATTRIBUTES[effect.attribute].get(finalizedCharacterModel);
+    if (effect.operation === "add") {
+      ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
+        display: previousValue.display + effect.value,
+        tooltip: previousValue.tooltip + ` add ${effect.value} from ${effect.source}`,
+      });
+    } else if (effect.operation === "override") {
+      ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
+        display: effect.value,
+        tooltip: previousValue.tooltip + ` override of ${effect.value} from ${effect.source}`,
+      });
+      overriddenAttributes.push(effect.attribute);
+    }
+  }
+
+  // calculate derived attributes
+  for (let attribute in ATTRIBUTES) {
+    if (ATTRIBUTES[attribute].isIntrinsic) {
+      continue ;
+    }
+    ATTRIBUTES[attribute].set(finalizedCharacterModel, ATTRIBUTES[attribute].calculate(finalizedCharacterModel));
+  }
+
+  // finally, resolve effects on derived attributes
+  for (let i = 0; i < effects.length; i++) {
+    const effect = effects[i];
+    if (overriddenAttributes.includes(effect.attribute) || ATTRIBUTES[effect.attribute].isIntrinsic) {
+      continue ;
+    }
+
+    const previousValue = ATTRIBUTES[effect.attribute].get(finalizedCharacterModel) || 0;
+    if (effect.operation === "add") {
+      ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
+        display: previousValue.display + effect.value,
+        tooltip: previousValue.tooltip + ` add ${effect.value} from ${effect.source}`,
+      });
+    } else if (effect.operation === "override") {
+      ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
+        display: effect.value,
+        tooltip: previousValue.tooltip + ` override of ${effect.value} from ${effect.source}`,
+      });
+    }
   }
 
   return finalizedCharacterModel;
@@ -864,7 +1230,7 @@ class SectionEntry extends HTMLComponent {
    * @param {string} shortKeyText Optional short key of fixed width on the far left of the main row
    * @param {DiceButton} diceButton Optional button to roll dice associated with this entry
    * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
-   * @param {string} valueText Optional text for the right side of the main row in a key-value pair
+   * @param {object} value Object with "display" and "tooltip"
    * @param {string} tooltipHTML Optional HTML for the tooltip of this entry TODO - this ought to be a class
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
    * @param {SectionSubEntry[]} subEntries Optional vertical list of small-text descriptors beneath the main row
@@ -873,8 +1239,7 @@ class SectionEntry extends HTMLComponent {
                 shortKeyText = "",
                 diceButton = null,
                 mainKeyText = "",
-                valueText = "",
-                tooltipHTML = "",
+                value = {display: "", tooltip: ""},
                 editButton = null,
                 subEntries = []
               }) {
@@ -882,8 +1247,8 @@ class SectionEntry extends HTMLComponent {
     this.shortKeyText = shortKeyText;
     this.diceButton = diceButton;
     this.mainKeyText = mainKeyText;
-    this.valueText = valueText;
-    this.tooltipHTML = tooltipHTML;
+    this.valueText = value.display;
+    this.tooltipHTML = value.tooltip;
     this.editButton = editButton;
     this.subEntries = subEntries;
   }
@@ -1014,7 +1379,7 @@ class CharacterListing extends HTMLComponent {
   _getCharacterIdentifier(characterName) {
     const baseCharacterModel = getCharacterModel(characterName);
     const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
-    return `${characterName} - Level ${characterModel.total_character_level} ${characterModel.title}`;
+    return `${characterName} - Level ${characterModel.total_character_level.display} ${characterModel.title.display}`;
   }
 
   getHTML() {
@@ -1074,7 +1439,6 @@ class SettingDropDown extends HTMLComponent {
         },
       },
       "initializer": function() {
-        console.log(this.getUIElement(), initialValue);
         this.getUIElement().value = initialValue;
       },
     });
@@ -1129,18 +1493,10 @@ ${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE
  * @param {string} description
  */
 function actionKeyValue(action, key, value, description = "", diceFormula = "") {
-  // TODO: cleanup to having common way to access all display, tooltip data
-  let tooltipHTML = "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ";
-  if (value && value.hasOwnProperty("display")) {
-    tooltipHTML = value.tooltip;
-    value = value.display;
-  }
-
   return new SectionEntry({
     diceButton: new DiceButton(action, diceFormula),
     mainKeyText: key,
-    valueText: value,
-    tooltipHTML: tooltipHTML,
+    value: value,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
   });
 }
@@ -1218,8 +1574,7 @@ function activeEffect(effect, duration, description) {
 function classKeyValue(key, value, notes = []) {
   return new SectionEntry({
     mainKeyText: key,
-    valueText: value,
-    tooltipHTML: "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A",
+    value: value,
     subEntries: notes.map(note => new SectionSubEntry({text: note}))
   });
 }
@@ -1264,10 +1619,15 @@ function spellSlotsRender(characterModel, classType) {
   // TODO: all classes should get their own Composite Component class
   const classInfo = characterModel[classType];
   const spellSlots = [];
+  const tooltips = [];
   for (let i = 1; i <= 5; i++) {
     spellSlots.push(classInfo[`l${i}_spell_slots`].display);
+    tooltips.push(classInfo[`l${i}_spell_slots`].tooltip);
   }
-  return spellSlots.join(" / ");
+  return {
+    display: spellSlots.join(" / "),
+    tooltip: tooltips.join("</br>"),
+  };
 }
 
 // Main rendering logic
@@ -1365,6 +1725,7 @@ function renderPage(characterName) {
 
   const baseCharacterModel = getCharacterModel(characterName);
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
+
   let html = "";
 
   const panes = [
@@ -1376,17 +1737,30 @@ function renderPage(characterName) {
             // TODO - add editable HP field... though it'll be a unique case :/
             new SectionEntry({
               mainKeyText: "Name",
-              valueText: characterModel.name,
+              value: characterModel.name,
             }),
             new SectionEntry({
               mainKeyText: "Title",
-              valueText: characterModel.title,
+              value: characterModel.title,
+            }),
+            new SectionEntry({
+              mainKeyText: "Race",
+              value: characterModel.race,
             }),
             new SectionEntry({
               mainKeyText: "Hit Points",
-              valueText: `${characterModel.hit_points.current} / ${characterModel.hit_points.total}`
+              value: {
+                display: `${characterModel.hit_points.current.display} / ${characterModel.hit_points.total.display}`,
+                tooltip: "",
+              },
             }),
-            new SectionEntry({mainKeyText: "Armor Class", valueText: `${characterModel.armor_class}`})
+            new SectionEntry({
+              mainKeyText: "Armor Class",
+              value: {
+                display: `${characterModel.armor_class.display}`,
+                tooltip: "",
+              },
+            }),
           ]
         }
       ),
@@ -1467,19 +1841,19 @@ function renderPage(characterName) {
         entries: [
           new SectionEntry({
             mainKeyText: "Total Character Level",
-            valueText: characterModel.total_character_level,
+            value: characterModel.total_character_level,
             editButton: new EditButton("Level Up / Edit Levels")
           }), new SectionEntry({
             mainKeyText: "Base Attack Bonus",
-            valueText: characterModel.attacks.base_bonus.display,
+            value: characterModel.attacks.base_bonus,
           }),
           new SectionEntry({
             mainKeyText: "Allowed Weapons",
-            valueText: characterModel.equipment.allowed_weapons.display,
+            value: characterModel.equipment.allowed_weapons,
           }),
           new SectionEntry({
             mainKeyText: "Allowed Armor",
-            valueText: characterModel.equipment.allowed_armor.display,
+            value: characterModel.equipment.allowed_armor,
           })
         ]
       }),
@@ -1487,8 +1861,8 @@ function renderPage(characterName) {
         divider: new SectionDivider("Fighter"),
         entries: [
           classKeyValue("Fighter Level", characterModel.fighter.level),
-          classKeyValue("Additional Attacks", "1"),
-          classKeyValue("Weapon Specializations", "2", [
+          classKeyValue("Additional Attacks", {display: "1", tooltip: ""}),
+          classKeyValue("Weapon Specializations", {display: "2", tooltip: ""}, [
             "Dagger & Sword I - +1 to Hit and Damage",
             "Dagger & Sword II - Critical hits on 19",
           ])
@@ -1498,7 +1872,7 @@ function renderPage(characterName) {
         divider: new SectionDivider("Rogue"),
         entries: [
           classKeyValue("Rogue Level", characterModel.rogue.level),
-          classKeyValue("Skill Specializations", "1", [
+          classKeyValue("Skill Specializations", {display: "1", tooltip: ""}, [
             "Mercantile - Journeyman Merchant",
           ])
         ]
@@ -1508,8 +1882,8 @@ function renderPage(characterName) {
         entries: [
           classKeyValue("Mage Level", characterModel.mage.level),
           classKeyValue("Arcane Spell Slots", spellSlotsRender(characterModel, "mage")),
-          classKeyValue("Max Spells per Degree", characterModel.mage.max_spells_learnable_per_degree.display),
-          classKeyValue("Arcane Casting in Armor", "Up to 3rd Degree"),
+          classKeyValue("Max Spells per Degree", characterModel.mage.max_spells_learnable_per_degree),
+          classKeyValue("Arcane Casting in Armor", {display: "Up to 3rd Degree", tooltip: ""}),
         ]
       }),
       new PaneSection({
@@ -1517,17 +1891,17 @@ function renderPage(characterName) {
         entries: [
           classKeyValue("Mage Level", characterModel.warlock.level),
           classKeyValue("Occult Spell Slots", spellSlotsRender(characterModel, "warlock")),
-          classKeyValue("Domain", "Elemental - Water"),
-          classKeyValue("Major Patron", "Rath - Water Aspect"),
-          classKeyValue("Minor Patrons", `Up to ${characterModel.warlock.max_minor_patrons.display}`),
+          classKeyValue("Domain", characterModel.warlock.domain),
+          classKeyValue("Major Patron", characterModel.warlock.major_patron),
+          classKeyValue("Minor Patrons", {display: `Up to ${characterModel.warlock.max_minor_patrons.display}`, tooltip: characterModel.warlock.max_minor_patrons.tooltip}),
         ]
       }),
       ...[]  // TODO - load class data from model instead
     ]),
   ];
 
-  document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.color);
-  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.color));
+  document.documentElement.style.setProperty("--cs-color-character-bg", baseCharacterModel.meta.color);
+  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(baseCharacterModel.meta.color));
 
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
