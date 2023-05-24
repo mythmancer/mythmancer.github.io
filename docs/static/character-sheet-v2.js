@@ -28,9 +28,7 @@ const CHARACTER_MODELS = {
           "effects": [
             {
               "attribute": "misc",
-              "name": "Bless - Water Mobility",
               "description": "Can attack and perform basic actions unhindered while swimming. Can maintain a consistent swimming speed similar to walking speed and can hold breath for 1 minute without issue.",
-              "duration": "Permanent",
             },
           ],
         },
@@ -57,7 +55,6 @@ const CHARACTER_MODELS = {
             },
             {
               "attribute": "misc",
-              "name": "The Siren",
               "description": "Access to The Siren as a Minor Patron",
             },
           ],
@@ -72,7 +69,6 @@ const CHARACTER_MODELS = {
     },
     "mage": {
       "level": 5,
-      "arcane_casting_in_armor": 3,
     },
     "warlock": {
       "level": 5,
@@ -98,7 +94,6 @@ const CHARACTER_MODELS = {
       },
       {
         "source": "Enlarged",
-        "name": "Enlarged - size effect",
         "attribute": "misc",
         "description": "Size is now Large",
         "duration": "4 Rounds",
@@ -152,7 +147,6 @@ const CHARACTER_MODELS = {
     },
     "mage": {
       "level": 2,
-      "arcane_casting_in_armor": 1,
     },
     "warlock": {
       "level": 3,
@@ -207,7 +201,6 @@ const CHARACTER_MODELS = {
     },
     "mage": {
       "level": 9,
-      "arcane_casting_in_armor": 19,
     },
     "warlock": {
       "level": 9,
@@ -349,6 +342,27 @@ SKILL_PROFICIENCY_TABLE = {
   warlock: [0, 1, 1, 1, 2, 2, 2, 3, 3],
 };
 
+
+/**
+ * The Effect schema:
+ * * source: the item/spell/etc that caused the effect
+ * * attribute: the attribute that this effect impacts. "misc" for generic effects
+ * * adjustment: the numerical adjustment to the attribute. Only if attribute is NOT "misc"
+ * * operation: how the numerical adjustment should be factored it - an override, or an add
+ * * duration: duration, in D&D time units, of the effect
+ * * is_external: if the effect is caused by something external to the character
+ *                (like a spell that was cast on them, or they drank poison)
+ * * hide_from_list: if this effect should be hidden from the displayed list. For instance,
+ *                   Race effects are hidden since they're already factored in and don't need to
+ *                   be consciously considered
+ *
+ * While specifying effects of equipment/inventory items::
+ * * That impacts an attribute: only "attribute", "adjustment", "operation" are needed
+ * * That is a generic effect: only "attribute", "description" are needed
+ *
+ * While specifying effects that are external (stored in character model): in addition to the above,
+ * "source", "duration", "is_external" (set to true) are also needed
+ */
 EFFECTS = {
   "race": {
     "halfling": [
