@@ -608,7 +608,7 @@ EQUIPMENT_ARMOR_HEAD_ATTRIBUTE = new Attribute({
   name: "Head Armor",
   isIntrinsic: true,
 });
-EQUIPMENT_ARMOR_CLOCK_ATTRIBUTE = new Attribute({
+EQUIPMENT_ARMOR_CLOAL_ATTRIBUTE = new Attribute({
   path: "equipment.armor.cloak",
   name: "Cloak",
   isIntrinsic: true,
@@ -1689,9 +1689,11 @@ function spellSlots(key, characterModel, classType) {
  * The equipped state contains the body part, name of the item, an edit/remove button and an optional descriptor.
  *
  * @param {string} part Body part where this armor is equipped (Chest, Belt, etc.)
- * @param {object} item (name, description, ...) object of equipment
+ * @param {object} characterModel
+ * @param {string} attribute
  */
-function armor(part, item = {}) {
+function armor(part, characterModel, attribute) {
+  const item = ATTRIBUTES[attribute].getValue(characterModel);
   if (!item || item === undefined || item === {} || !item.equipped) {
     return new SectionEntry({
       shortKeyText: part,
@@ -1795,7 +1797,7 @@ class WeaponAttack {
    * @param {boolean} isFast
    * @param {string} range TODO - use an enum or similar: none, melee, reach, short, medium, or long
    * @param {number} bonusToHit
-   * @param {string} damageFormula TODO - represent as a class eventually
+   * @param {string} damageFormula
    * @param {string} condition free-form string of conditions this class requires e.g. "opponent is heavily armored"
    */
   constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damageFormula, condition) {
@@ -1968,6 +1970,63 @@ function renderPage(characterName) {
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
   let html = "";
 
+  const classesSections = [];
+  if (characterModel.fighter.level > 0) {
+    classesSections.push(
+      new PaneSection({
+        divider: new SectionDivider("Fighter"),
+        entries: [
+          classKeyValue("Fighter Level", characterModel, "fighter.level"),
+          classKeyValue("Additional Attacks", characterModel, "fighter.additional_attacks"),
+          classKeyValue("Weapon Specializations", characterModel, "fighter.weapon_specializations", [
+            "Dagger & Sword I - +1 to Hit and Damage",
+            "Dagger & Sword II - Critical hits on 19",
+          ])
+        ]
+      })
+    );
+  }
+  if (characterModel.rogue.level > 0) {
+    classesSections.push(
+      new PaneSection({
+        divider: new SectionDivider("Rogue"),
+        entries: [
+          classKeyValue("Rogue Level", characterModel, "rogue.level"),
+          classKeyValue("Skill Specializations", characterModel, "rogue.skill_specializations", [
+            "Mercantile - Journeyman Merchant",
+          ])
+        ]
+      })
+    );
+  }
+  if (characterModel.mage.level > 0) {
+    classesSections.push(
+      new PaneSection({
+        divider: new SectionDivider("Mage"),
+        entries: [
+          classKeyValue("Mage Level", characterModel, "mage.level"),
+          spellSlots("Arcane Spell Slots", characterModel, "mage"),
+          classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
+          classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
+        ]
+      })
+    );
+  }
+  if (characterModel.warlock.level > 0) {
+    classesSections.push(
+      new PaneSection({
+        divider: new SectionDivider("Warlock"),
+        entries: [
+          classKeyValue("Warlock Level", characterModel, "warlock.level"),
+          spellSlots("Occult Spell Slots", characterModel, "warlock"),
+          classKeyValue("Domain", characterModel, "warlock.domain"),
+          classKeyValue("Major Patron", characterModel, "warlock.major_patron"),
+          classKeyValue("Minor Patrons", characterModel, "warlock.max_minor_patrons"),
+        ]
+      })
+    );
+  }
+
   const panes = [
 
     // Pane 1 of 3 Core gameplay info and Actions
@@ -2048,16 +2107,16 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Armor"),
         entries: [ // TODO - fix alignment of Equip to align left if possible
-          armor("Chest", characterModel.equipment.armor.chest),
-          armor("Shield", characterModel.equipment.armor.shield),
-          armor("Gloves", characterModel.equipment.armor.gloves),
-          armor("Head", characterModel.equipment.armor.head),
-          armor("Cloak", characterModel.equipment.armor.clock),
-          armor("Boots", characterModel.equipment.armor.boots),
-          armor("Neck", characterModel.equipment.armor.neck),
-          armor("Ring 1", characterModel.equipment.armor.ring1),
-          armor("Ring 2", characterModel.equipment.armor.ring2),
-          armor("Other", characterModel.equipment.armor.other),
+          armor("Chest", characterModel, "equipment.armor.chest"),
+          armor("Shield", characterModel, "equipment.armor.shield"),
+          armor("Gloves", characterModel, "equipment.armor.gloves"),
+          armor("Head", characterModel, "equipment.armor.head"),
+          armor("Cloak", characterModel, "equipment.armor.cloak"),
+          armor("Boots", characterModel, "equipment.armor.boots"),
+          armor("Neck", characterModel, "equipment.armor.neck"),
+          armor("Ring 1", characterModel, "equipment.armor.ring1"),
+          armor("Ring 2", characterModel, "equipment.armor.ring2"),
+          armor("Other", characterModel, "equipment.armor.other"),
         ]
       }),
       new PaneSection({
@@ -2094,46 +2153,7 @@ function renderPage(characterName) {
           })
         ]
       }),
-      new PaneSection({ // TODO - only populate classes the character actually has levels in
-        divider: new SectionDivider("Fighter"),
-        entries: [
-          classKeyValue("Fighter Level", characterModel, "fighter.level"),
-          classKeyValue("Additional Attacks", characterModel, "fighter.additional_attacks"),
-          classKeyValue("Weapon Specializations", characterModel, "fighter.weapon_specializations", [
-            "Dagger & Sword I - +1 to Hit and Damage",
-            "Dagger & Sword II - Critical hits on 19",
-          ])
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Rogue"),
-        entries: [
-          classKeyValue("Rogue Level", characterModel, "rogue.level"),
-          classKeyValue("Skill Specializations", characterModel, "rogue.skill_specializations", [
-            "Mercantile - Journeyman Merchant",
-          ])
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Mage"),
-        entries: [
-          classKeyValue("Mage Level", characterModel, "mage.level"),
-          spellSlots("Arcane Spell Slots", characterModel, "mage"),
-          classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
-          classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Warlock"),
-        entries: [
-          classKeyValue("Mage Level", characterModel, "warlock.level"),
-          spellSlots("Occult Spell Slots", characterModel, "warlock"),
-          classKeyValue("Domain", characterModel, "warlock.domain"),
-          classKeyValue("Major Patron", characterModel, "warlock.major_patron"),
-          classKeyValue("Minor Patrons", characterModel, "warlock.max_minor_patrons"),
-        ]
-      }),
-      ...[]  // TODO - load class data from model instead
+      ...classesSections,
     ]),
   ];
 
