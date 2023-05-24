@@ -86,6 +86,7 @@ const CHARACTER_MODELS = {
         "adjustment": 1,
         "operation": "add",
         "duration": "Permanent",
+        "is_external": true,
       },
       {
         "source": "Enlarged",
@@ -93,6 +94,7 @@ const CHARACTER_MODELS = {
         "adjustment": 16,
         "operation": "override",
         "duration": "4 Rounds",
+        "is_external": true,
       },
       {
         "source": "Enlarged",
@@ -100,6 +102,7 @@ const CHARACTER_MODELS = {
         "attribute": "misc",
         "description": "Size is now Large",
         "duration": "4 Rounds",
+        "is_external": true,
       },
     ],
   },
@@ -222,6 +225,7 @@ const CHARACTER_MODELS = {
 
 CHARACTER_SHEET_STORAGE_KEY = "character_sheets_v2";
 COLOR_MODE_STORAGE_KEY = "color_mode";
+DISPLAY_MODE_STORAGE_KEY = "display_mode";
 THEME_STORAGE_KEY = "theme";
 
 /*******************************************************************
@@ -267,6 +271,21 @@ THEMES = {
   },
 };
 
+DISPLAY_MODES = {
+  standard: {
+    show_debug: false,
+    show_dice_buttons: true,
+  },
+  advanced: {
+    show_debug: false,
+    show_dice_buttons: false,
+  },
+  debug: {
+    show_debug: true,
+    show_dice_buttons: true,
+  },
+};
+
 function setAppearance() {
   const colorMode = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY) || "light";
   for (let prop in COLOR_MODES[colorMode]) {
@@ -277,6 +296,11 @@ function setAppearance() {
   for (let prop in THEMES[theme]) {
     document.documentElement.style.setProperty(prop, THEMES[theme][prop]);
   }
+}
+
+function getDisplayMode() {
+  const displayMode = window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY) || "standard";
+  return DISPLAY_MODES[displayMode];
 }
 
 /*******************************************************************
@@ -1082,6 +1106,7 @@ function getActiveEffects(characterModel) {
       adjustment: raceEffects[i].adjustment,
       operation: raceEffects[i].operation,
       duration: "Permanent",
+      hide_from_list: true,
     });
   }
 
@@ -1101,6 +1126,7 @@ function getActiveEffects(characterModel) {
         description: equipment.effects[i].description,
         operation: equipment.effects[i].operation,
         duration: "Permanent",
+        hide_from_list: equipment.effects[i].attribute === "armor_class",
       });
     }
   }
@@ -1354,7 +1380,9 @@ class SectionEntry extends HTMLComponent {
           `}
           ${this.diceButton == null && this.mainKeyText === "" ? "" : `
             <div class="cs-row">
-              ${this.diceButton == null ? "" : this.diceButton.getHTML()}
+              <div class="${getDisplayMode().show_dice_buttons ? "" : "hidden"}">
+                ${this.diceButton == null ? "" : this.diceButton.getHTML()}
+              </div>
               <div class="cs-elem">${this.mainKeyText}</div>
             </div>
           `}
@@ -1525,7 +1553,9 @@ class SettingDropDown extends HTMLComponent {
     super({
       "listeners": {
         "change": function() {
-          callback(this.value);
+          if (callback) {
+            callback(this.value);
+          }
         },
       },
       "initializer": function() {
@@ -1564,9 +1594,15 @@ class SettingsPanel extends HTMLComponent {
     setAppearance();
   }
 
+  setDisplayMode(displayMode) {
+    window.localStorage.setItem(DISPLAY_MODE_STORAGE_KEY, displayMode);
+    renderPage();
+  }
+
   getHTML() {
     return `
 ${new SettingDropDown("Color Mode", COLOR_MODES, window.localStorage.getItem(COLOR_MODE_STORAGE_KEY), this.setColorTheme).getHTML()}
+${new SettingDropDown("Display Mode", DISPLAY_MODES, window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY), this.setDisplayMode).getHTML()}
 ${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE_KEY), this.setTheme).getHTML()}`;
   }
 }
@@ -1661,12 +1697,13 @@ function armor(part, item = {}) {
  *
  * @param {string} effect name of this effect
  * @param {string} duration description of the remaining time on this effect
+ * @param {boolean} isExternal whether the effect is external (not from something the character is wearing/owns)
  * @param {string} description Small-text description of this effect
  */
-function activeEffect(effect, duration, description) {
+function activeEffect(effect, duration, isExternal, description) {
   return new SectionEntry({
     mainKeyText: effect,
-    editButton: new EditButton("Edit / Remove"),
+    editButton: isExternal ? new EditButton("Edit / Remove") : null,
     subEntries: [
       new SectionSubEntry({text: description}),
       new SectionSubEntry({text: `Duration: ${duration}`})
@@ -1679,6 +1716,10 @@ function effectsEntries(characterModel) {
   const effectsEntries = [];
   for (let i = 0; i < activeEffects.length; i++) {
     const effect = activeEffects[i];
+    if (!getDisplayMode().show_debug && effect.hide_from_list) {
+      continue ;
+    }
+
     let description = effect.description;
     if (!description) {
       if (effect.operation === "add") {
@@ -1687,7 +1728,7 @@ function effectsEntries(characterModel) {
         description = `Overrides ${ATTRIBUTES[effect.attribute].name} to ${effect.adjustment}`;
       }
     }
-    effectsEntries.push(activeEffect(effect.source, effect.duration, description));
+    effectsEntries.push(activeEffect(effect.source, effect.duration, effect.is_external, description));
   }
   return effectsEntries;
 }
@@ -1899,10 +1940,12 @@ function renderPage(characterName) {
   document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
 
   if (characterName == null) {
+    document.getElementById("cs-right-pane").innerHTML = "";
     postRender();
     return ;
   }
 
+  const displayMode = getDisplayMode();
   const baseCharacterModel = getCharacterModel(characterName);
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
   let html = "";
