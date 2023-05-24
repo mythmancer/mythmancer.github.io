@@ -40,7 +40,7 @@ const CHARACTER_MODELS = {
           "effects": [
             {
               "attribute": "armor_class",
-              "value": 3,
+              "adjustment": 3,
               "operation": "add",
             },
           ]
@@ -52,7 +52,7 @@ const CHARACTER_MODELS = {
           "effects": [
             {
               "attribute": "warlock.l1_spell_slots",
-              "value": 1,
+              "adjustment": 1,
               "operation": "add",
             },
             {
@@ -83,14 +83,14 @@ const CHARACTER_MODELS = {
       {
         "source": "talisman",
         "attribute": "mage.l1_spell_slots",
-        "value": 1,
+        "adjustment": 1,
         "operation": "add",
         "duration": "Permanent",
       },
       {
         "source": "Enlarged",
         "attribute": "ability_scores.strength",
-        "value": 16,
+        "adjustment": 16,
         "operation": "override",
         "duration": "4 Rounds",
       },
@@ -134,7 +134,7 @@ const CHARACTER_MODELS = {
           "effects": [
             {
               "attribute": "armor_class",
-              "value": 1,
+              "adjustment": 1,
               "operation": "add",
             },
           ]
@@ -189,7 +189,7 @@ const CHARACTER_MODELS = {
           "effects": [
             {
               "attribute": "armor_class",
-              "value": 1,
+              "adjustment": 1,
               "operation": "add",
             }
           ],
@@ -228,7 +228,7 @@ THEME_STORAGE_KEY = "theme";
  *************************** APPEARANCE ****************************
  *******************************************************************/
 COLOR_MODES = {
-  "dark": {
+  dark: {
     "--cs-color-bg": "#252525",
     "--cs-color-section-bg": "#000000",
     "--cs-color-text": "#ffffff",
@@ -236,7 +236,7 @@ COLOR_MODES = {
     "--cs-color-btn": "#52595c",
     "--cs-color-btn-text": "#ffffff",
   },
-  "light": {
+  light: {
     "--cs-color-bg": "#e5e5e5",
     "--cs-color-section-bg": "#ffffff",
     "--cs-color-text": "#000000",
@@ -247,7 +247,7 @@ COLOR_MODES = {
 };
 
 THEMES = {
-  "standard": {
+  standard: {
     "--cs-font": "Baskervville",
     "--cs-font-size-lg": "24px",
     "--cs-font-size-std": "16px",
@@ -256,7 +256,7 @@ THEMES = {
     "--cs-arrow-height": "2px",
     "--cs-arrow-width": "4px",
   },
-  "arcade": {
+  arcade: {
     "--cs-font": "HammerBro",
     "--cs-font-size-lg": "32px",
     "--cs-font-size-std": "20px",
@@ -282,115 +282,17 @@ function setAppearance() {
 /*******************************************************************
  **************************** DATABASES ****************************
  *******************************************************************/
-ARMOR = {
-  "padded": {
-    "ac": 1,
-  },
-  "leather": {
-    "ac": 2,
-  },
-  "reinforced": {
-    "ac": 3,
-  },
-  "ring mail": {
-    "ac": 4,
-    "max_dex_mod": 3,
-  },
-  "scale mail": {
-    "ac": 5,
-    "max_dex_mod": 3,
-  },
-  "chain mail": {
-    "ac": 6,
-    "max_dex_mod": 2,
-  },
-  "shield": {
-    "ac": 2,
-  },
-  "elfin chain mail": {
-    "ac": 5,
-  },
-  "dwarven mail": {
-    "ac": 7,
-    "max_dex_mod": 2,
-  },
-  "hoplon": {
-    "ac": 3,
-    "max_dex_mod": 2,
-  },
-};
-
 SPELL_SLOTS = {
-  0: {
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-  },
-  1: {
-    1: 2,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-  },
-  2: {
-    1: 3,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-  },
-  3: {
-    1: 3,
-    2: 1,
-    3: 0,
-    4: 0,
-    5: 0,
-  },
-  4: {
-    1: 3,
-    2: 2,
-    3: 0,
-    4: 0,
-    5: 0,
-  },
-  5: {
-    1: 4,
-    2: 2,
-    3: 1,
-    4: 0,
-    5: 0,
-  },
-  6: {
-    1: 4,
-    2: 3,
-    3: 2,
-    4: 0,
-    5: 0,
-  },
-  7: {
-    1: 4,
-    2: 3,
-    3: 2,
-    4: 1,
-    5: 0,
-  },
-  8: {
-    1: 4,
-    2: 3,
-    3: 3,
-    4: 2,
-    5: 0,
-  },
-  9: {
-    1: 4,
-    2: 4,
-    3: 3,
-    4: 2,
-    5: 1,
-  },
+  0: [0, 0, 0, 0, 0],
+  1: [2, 0, 0, 0, 0],
+  2: [3, 0, 0, 0, 0],
+  3: [3, 1, 0, 0, 0],
+  4: [3, 2, 0, 0, 0],
+  5: [4, 2, 1, 0, 0],
+  6: [4, 3, 2, 0, 0],
+  7: [4, 3, 2, 1, 0],
+  8: [4, 3, 3, 2, 0],
+  9: [4, 4, 3, 2, 1],
 };
 
 MODIFIER_TABLE = {
@@ -415,66 +317,10 @@ MODIFIER_TABLE = {
 };
 
 SKILL_PROFICIENCY_TABLE = {
-  0: {
-    "rogue": 0,
-    "mage": 0,
-    "fighter": 0,
-    "warlock": 0,
-  },
-  1: {
-    "rogue": 3,
-    "mage": 1,
-    "fighter": 1,
-    "warlock": 1,
-  },
-  2: {
-    "rogue": 5,
-    "mage": 2,
-    "fighter": 1,
-    "warlock": 1,
-  },
-  3: {
-    "rogue": 5,
-    "mage": 2,
-    "fighter": 1,
-    "warlock": 1,
-  },
-  4: {
-    "rogue": 6,
-    "mage": 3,
-    "fighter": 2,
-    "warlock": 2,
-  },
-  5: {
-    "rogue": 7,
-    "mage": 3,
-    "fighter": 2,
-    "warlock": 2,
-  },
-  6: {
-    "rogue": 8,
-    "mage": 4,
-    "fighter": 2,
-    "warlock": 2,
-  },
-  7: {
-    "rogue": 8,
-    "mage": 4,
-    "fighter": 2,
-    "warlock": 2,
-  },
-  8: {
-    "rogue": 9,
-    "mage": 5,
-    "fighter": 3,
-    "warlock": 3,
-  },
-  9: {
-    "rogue": 10,
-    "mage": 5,
-    "fighter": 3,
-    "warlock": 3,
-  },
+  rogue: [0, 3, 5, 5, 6, 7, 8, 9, 10],
+  mage: [0, 1, 2, 2, 3, 3, 4, 5, 5],
+  fighter: [0, 1, 1, 1, 2, 2, 2, 3, 3],
+  warlock: [0, 1, 1, 1, 2, 2, 2, 3, 3],
 };
 
 EFFECTS = {
@@ -483,13 +329,13 @@ EFFECTS = {
       {
         "source": "race",
         "attribute": "ability_scores.strength",
-        "value": -1,
+        "adjustment": -1,
         "operation": "add",
       },
       {
         "source": "race",
         "attribute": "ability_scores.dexterity",
-        "value": 1,
+        "adjustment": 1,
         "operation": "add",
       },
     ],
@@ -497,13 +343,13 @@ EFFECTS = {
       {
         "source": "race",
         "attribute": "ability_scores.strength",
-        "value": 1,
+        "adjustment": 1,
         "operation": "add",
       },
       {
         "source": "race",
         "attribute": "ability_scores.dexterity",
-        "value": -1,
+        "adjustment": -1,
         "operation": "add",
       },
     ],
@@ -515,9 +361,6 @@ EFFECTS = {
  *******************************************************************/
 
 function getNumericalCharacteristic(val) {
-  if (typeof val === 'object') {
-    val = val.display;
-  }
   return parseInt(val || "0");
 }
 
@@ -525,40 +368,51 @@ ATTRIBUTES = {};
 
 class Attribute {
   constructor({
-    path = "",
+    path,
     isIntrinsic = false,
-    divId = "",
-    builderFunction = null,
-    displayFunction = null,
+    calculateFunction = null,
   }) {
     this.path = path;
     this.isIntrinsic = isIntrinsic;
-    this.divId = divId;
-    // TODO: replace "display" with "value"; the individual HTML components will decide what to display
-    this.builderFunction = builderFunction || (characterData => {
+    this.calculateFunction = calculateFunction || (characterData => {
       return {
-        "display": this.get(characterData),
-        "tooltip": "",
+        value: this.getValue(characterData),
+        tooltip: "",
       };
     });
     ATTRIBUTES[path] = this;
   }
 
   get(characterModel) {
+    return {
+      value: this.getValue(characterModel),
+      tooltip: this.getTooltip(characterModel),
+    };
+  }
+
+  set(characterModel, valueAndTooltip) {
+    this.setValue(characterModel, valueAndTooltip.value);
+    this.setTooltip(characterModel, valueAndTooltip.tooltip);
+  }
+
+  getAttributeFromModel(model) {
+    if (!model) {
+      return null;
+    }
     const propPath = this.path.split(".");
-    let currLevel = characterModel;
-    for (let i = 0; i < propPath.length; i++) {
-      if (!currLevel.hasOwnProperty(propPath[i])) {
+    let currLevel = model;
+    for (let i = 0; i < propPath.length - 1; i++) {
+      if (!currLevel || !currLevel.hasOwnProperty(propPath[i])) {
         return null;
       }
       currLevel = currLevel[propPath[i]];
     }
-    return currLevel;
+    return currLevel[propPath[propPath.length - 1]];
   }
 
-  set(characterModel, value) {
+  setAttributeInModel(model, value) {
     const propPath = this.path.split(".");
-    let currLevel = characterModel;
+    let currLevel = model;
     for (let i = 0; i < propPath.length - 1; i++) {
       if (!currLevel.hasOwnProperty(propPath[i])) {
         currLevel[propPath[i]] = {};
@@ -568,8 +422,24 @@ class Attribute {
     currLevel[propPath[propPath.length - 1]] = value;
   }
 
+  getTooltip(characterModel) {
+    return this.getAttributeFromModel(characterModel.tooltips);
+  }
+
+  setTooltip(characterModel, tooltip) {
+    this.setAttributeInModel(characterModel.tooltips, tooltip);
+  }
+
+  getValue(characterModel) {
+    return this.getAttributeFromModel(characterModel);
+  }
+
+  setValue(characterModel, value) {
+    this.setAttributeInModel(characterModel, value);
+  }
+
   calculate(characterModel) {
-    return this.builderFunction(characterModel);
+    return this.calculateFunction(characterModel);
   }
 }
 
@@ -703,23 +573,23 @@ EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
 
 CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
   path: "total_character_level",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": getNumericalCharacteristic(characterData.fighter.level)
+      value: getNumericalCharacteristic(characterData.fighter.level)
         + getNumericalCharacteristic(characterData.mage.level)
         + getNumericalCharacteristic(characterData.rogue.level)
         + getNumericalCharacteristic(characterData.warlock.level),
-      "tooltip": "force? dyad?",
+      tooltip: "force? dyad?",
     };
   }
 });
 
 MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
   path: "modifiers.charisma",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
-      "tooltip": "ah, a force dyad",
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -727,10 +597,10 @@ MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
 
 MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "modifiers.constitution",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)],
-      "tooltip": "ah, a force dyad",
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -738,14 +608,14 @@ MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
 
 SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "save_throws.constitution",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 2)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 3),
-      "tooltip": "fortitude",
+      tooltip: "fortitude",
     };
   },
 });
@@ -753,10 +623,10 @@ SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
 
 MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "modifiers.dexterity",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)],
-      "tooltip": "ah, a force dyad",
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -764,15 +634,15 @@ MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
 
 SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "save_throws.dexterity",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)]
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)]
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 3)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 3)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
         + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 4),
-      "tooltip": "A ".repeat(200),
+      tooltip: "A ".repeat(200),
     };
   },
 });
@@ -780,10 +650,10 @@ SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
 
 MODIFIERS_INTELLIGENCE_ATTRIBUTE = new Attribute({
   path: "modifiers.intelligence",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
-      "tooltip": "ah, a force dyad",
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -791,10 +661,10 @@ MODIFIERS_INTELLIGENCE_ATTRIBUTE = new Attribute({
 
 MODIFIERS_STRENGTH_ATTRIBUTE = new Attribute({
   path: "modifiers.strength",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.strength)],
-      "tooltip": "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ",
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.strength)],
+      tooltip: "A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A ",
     };
   },
 });
@@ -802,11 +672,11 @@ MODIFIERS_STRENGTH_ATTRIBUTE = new Attribute({
 
 MODIFIERS_WISDOM_ATTRIBUTE = new Attribute({
   path: "modifiers.wisdom",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // table
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)],
-      "tooltip": "ah, a force dyad",
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -814,15 +684,15 @@ MODIFIERS_WISDOM_ATTRIBUTE = new Attribute({
 
 SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
   path: "save_throws.wisdom",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
     return {
-      "display": MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)]
+      value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)]
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 3)
         + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 2),
-      "tooltip": "ah, a force dyad",
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -830,14 +700,14 @@ SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
 
 HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
   path: "hit_points.hit_die",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // FGT + MAG + ROG + WAR
     return {
-      "display": getNumericalCharacteristic(characterData.fighter.level)
+      value: getNumericalCharacteristic(characterData.fighter.level)
         + getNumericalCharacteristic(characterData.mage.level)
         + getNumericalCharacteristic(characterData.rogue.level)
         + getNumericalCharacteristic(characterData.warlock.level),
-      "tooltip": "ah, a force dyad",
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -845,14 +715,14 @@ HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
 
 ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
   path: "attacks.base_bonus",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
     return {
-      "display": getNumericalCharacteristic(characterData.fighter.level)
+      value: getNumericalCharacteristic(characterData.fighter.level)
         + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
         + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 2),
-      "tooltip": "ah, a force dyad",
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -860,14 +730,14 @@ ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
 
 ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
   path: "attacks.number_of_attacks",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // max(1 + (FGT-1)/4, 1)
     return {
-      "display": Math.max(
+      value: Math.max(
         Math.floor(1 + (getNumericalCharacteristic(characterData.fighter.level) - 1) / 4),
         1,
       ),
-      "tooltip": "ah, a force dyad",
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -875,7 +745,7 @@ ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
 
 EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
   path: "equipment.allowed_armor",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
     let allowedArmor;
 
@@ -890,8 +760,8 @@ EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
     }
 
     return {
-      "display": allowedArmor,
-      "tooltip": "ah, a force dyad",
+      value: allowedArmor,
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -899,7 +769,7 @@ EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
 
 EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
   path: "equipment.allowed_weapons",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
     let allowedWeapons;
 
@@ -914,8 +784,8 @@ EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
     }
 
     return {
-      "display": allowedWeapons,
-      "tooltip": "ah, a force dyad",
+      value: allowedWeapons,
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -923,14 +793,14 @@ EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
 
 SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
   path: "skills.skill_check_bonus",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
     return {
-      "display": Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
+      value: Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
         + getNumericalCharacteristic(characterData.rogue.level)
         + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
         + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 4),
-      "tooltip": "ah, a force dyad",
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -938,14 +808,14 @@ SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
 
 SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
   path: "skills.max_skill_proficiencies",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // table
     return {
-      "display": SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.mage.level)]["mage"]
-        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.rogue.level)]["rogue"]
-        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.fighter.level)]["fighter"]
-        + SKILL_PROFICIENCY_TABLE[getNumericalCharacteristic(characterData.warlock.level)]["warlock"],
-      "tooltip": "ah, a force dyad",
+      value: SKILL_PROFICIENCY_TABLE.mage[getNumericalCharacteristic(characterData.mage.level) - 1]
+        + SKILL_PROFICIENCY_TABLE.rogue[getNumericalCharacteristic(characterData.rogue.level) - 1]
+        + SKILL_PROFICIENCY_TABLE.fighter[getNumericalCharacteristic(characterData.fighter.level) - 1]
+        + SKILL_PROFICIENCY_TABLE.warlock[getNumericalCharacteristic(characterData.warlock.level) - 1],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -953,11 +823,11 @@ SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
 
 MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
   path: "mage.max_spells_learnable_per_degree",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // 5 + INT
     return {
-      "display": 5 + MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
-      "tooltip": "ah, a force dyad",
+      value: 5 + MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -965,14 +835,14 @@ MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
 
 WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
   path: "warlock.max_minor_patrons",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     // min(1 + CHA, (WAR+1)/2)
     return {
-      "display": Math.min(
+      value: Math.min(
         1 + MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
         Math.floor((getNumericalCharacteristic(characterData.warlock.level) + 1) / 2)
       ),
-      "tooltip": "ah, a force dyad",
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -981,10 +851,10 @@ WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l1_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][1],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][0],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -992,10 +862,10 @@ WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l2_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][2],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][1],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1003,10 +873,10 @@ WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l3_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][3],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][2],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1014,10 +884,10 @@ WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l4_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][4],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][3],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1025,10 +895,10 @@ WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l5_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][5],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][4],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1036,10 +906,10 @@ WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l1_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][1],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][0],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1047,10 +917,10 @@ MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l2_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][2],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][1],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1058,10 +928,10 @@ MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l3_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][3],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][2],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1069,10 +939,10 @@ MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l4_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][4],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][3],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1080,10 +950,10 @@ MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l5_spell_slots",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     return {
-      "display": SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][5],
-      "tooltip": "ah, a force dyad",
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][4],
+      tooltip: "ah, a force dyad",
     };
   },
 });
@@ -1091,12 +961,12 @@ MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
 
 ARMOR_CLASS_ATTRIBUTE = new Attribute({
   path: "armor_class",
-  builderFunction: characterData => {
+  calculateFunction: characterData => {
     let dexMod = MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)];
 
     return {
-      "display": 10 + dexMod,
-      "tooltip": `add ${dexMod} from dex`,
+      value: 10 + dexMod,
+      tooltip: `add ${dexMod} from dex`,
     };
   },
 });
@@ -1104,14 +974,14 @@ ARMOR_CLASS_ATTRIBUTE = new Attribute({
 function populateEffects(characterModel) {
   const effects = [];
 
-  const raceEffects = EFFECTS["race"][characterModel.race.toLowerCase()];
+  const raceEffects = EFFECTS.race[characterModel.race.toLowerCase()];
   for (let i = 0; i < raceEffects.length; i++) {
     effects.push({
-      "source": `race.${characterModel.race}`,
-      "attribute": raceEffects[i].attribute,
-      "value": raceEffects[i].value,
-      "operation": raceEffects[i].operation,
-      "duration": "Permanent",
+      source: `race.${characterModel.race}`,
+      attribute: raceEffects[i].attribute,
+      adjustment: raceEffects[i].adjustment,
+      operation: raceEffects[i].operation,
+      duration: "Permanent",
     });
   }
 
@@ -1119,18 +989,18 @@ function populateEffects(characterModel) {
   const armor = equipments.armor;
   for (let armorType in armor) {
     const equipment = armor[armorType];
-    if (!equipment.equipped || !equipment.effects) {
+    if (!equipment || !equipment.equipped || !equipment.effects) {
       // skip if not equipped, or has no effects
       continue ;
     }
     for (let i = 0; i < equipment.effects.length; i++) {
       effects.push({
-        "source": `equipment.armor.${armorType}.${equipment.name}`,
-        "attribute": equipment.effects[i].attribute,
-        "value": equipment.effects[i].value,
-        "description": equipment.effects[i].description,
-        "operation": equipment.effects[i].operation,
-        "duration": "Permanent",
+        source: `equipment.armor.${armorType}.${equipment.name}`,
+        attribute: equipment.effects[i].attribute,
+        adjustment: equipment.effects[i].adjustment,
+        description: equipment.effects[i].description,
+        operation: equipment.effects[i].operation,
+        duration: "Permanent",
       });
     }
   }
@@ -1138,14 +1008,18 @@ function populateEffects(characterModel) {
 }
 
 function buildFinalizedCharacterModel(baseCharacterModel) {
-  const finalizedCharacterModel = {};
+  const finalizedCharacterModel = structuredClone(baseCharacterModel);
+  finalizedCharacterModel.tooltips = {};
 
   // populate initial intrinsic attributes
   for (let attribute in ATTRIBUTES) {
     if (!ATTRIBUTES[attribute].isIntrinsic) {
       continue ;
     }
-    ATTRIBUTES[attribute].set(finalizedCharacterModel, ATTRIBUTES[attribute].calculate(baseCharacterModel));
+    ATTRIBUTES[attribute].set(
+      finalizedCharacterModel,
+      ATTRIBUTES[attribute].calculate(finalizedCharacterModel)
+    );
   }
 
   // apply effects, in multiple steps
@@ -1162,13 +1036,13 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
     const previousValue = ATTRIBUTES[effect.attribute].get(finalizedCharacterModel);
     if (effect.operation === "add") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
-        display: previousValue.display + effect.value,
-        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}add ${effect.value} from ${effect.source}`,
+        value: previousValue.value + effect.adjustment,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}add ${effect.adjustment} from ${effect.source}`,
       });
     } else if (effect.operation === "override") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
-        display: effect.value,
-        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}override of ${effect.value} from ${effect.source}`,
+        value: effect.adjustment,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}override of ${effect.adjustment} from ${effect.source}`,
       });
       overriddenAttributes.push(effect.attribute);
     }
@@ -1192,17 +1066,16 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
     const previousValue = ATTRIBUTES[effect.attribute].get(finalizedCharacterModel) || 0;
     if (effect.operation === "add") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
-        display: previousValue.display + effect.value,
-        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}add ${effect.value} from ${effect.source}`,
+        value: previousValue.value + effect.adjustment,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}add ${effect.adjustment} from ${effect.source}`,
       });
     } else if (effect.operation === "override") {
       ATTRIBUTES[effect.attribute].set(finalizedCharacterModel, {
-        display: effect.value,
-        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}override of ${effect.value} from ${effect.source}`,
+        value: effect.adjustment,
+        tooltip: previousValue.tooltip + ` ${previousValue.tooltip ? "| " : ""}override of ${effect.adjustment} from ${effect.source}`,
       });
     }
   }
-
   return finalizedCharacterModel;
 }
 
@@ -1386,8 +1259,8 @@ class SectionEntry extends HTMLComponent {
    * @param {string} shortKeyText Optional short key of fixed width on the far left of the main row
    * @param {DiceButton} diceButton Optional button to roll dice associated with this entry
    * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
-   * @param {object} value Object with "display" and "tooltip"
-   * @param {string} tooltipHTML Optional HTML for the tooltip of this entry TODO - this ought to be a class
+   * @param {string} value to be displayed
+   * @param {string} tooltip Optional HTML for the tooltip of this entry
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
    * @param {SectionSubEntry[]} subEntries Optional vertical list of small-text descriptors beneath the main row
    */
@@ -1395,7 +1268,8 @@ class SectionEntry extends HTMLComponent {
                 shortKeyText = "",
                 diceButton = null,
                 mainKeyText = "",
-                value = {display: "", tooltip: ""},
+                value = "",
+                tooltip = "",
                 editButton = null,
                 subEntries = []
               }) {
@@ -1403,8 +1277,8 @@ class SectionEntry extends HTMLComponent {
     this.shortKeyText = shortKeyText;
     this.diceButton = diceButton;
     this.mainKeyText = mainKeyText;
-    this.valueText = value.display;
-    this.tooltipHTML = value.tooltip;
+    this.value = value;
+    this.tooltip = tooltip;
     this.editButton = editButton;
     this.subEntries = subEntries;
   }
@@ -1424,14 +1298,14 @@ class SectionEntry extends HTMLComponent {
               <div class="cs-elem">${this.mainKeyText}</div>
             </div>
           `}
-          ${this.valueText === "" ? `
+          ${this.value === "" ? `
             ${this.editButton == null ? "" : this.editButton.getHTML()}
           ` : `
             <div class="cs-row">
-              ${this.valueText === "" ? "" : `
-              <div class="cs-elem cs-width-full ${this.tooltipHTML ? "cs-has-tooltip" : ""}">
-                ${this.valueText}
-                ${this.tooltipHTML ? `<div class="cs-tooltiptext">${this.tooltipHTML}</div>` : ""}
+              ${this.value === "" ? "" : `
+              <div class="cs-elem cs-width-full ${this.tooltip ? "cs-has-tooltip" : ""}">
+                ${this.value}
+                ${this.tooltip ? `<div class="cs-tooltiptext">${this.tooltip}</div>` : ""}
               </div>`
               }
               ${this.editButton == null ? "" : this.editButton.getHTML()}
@@ -1535,7 +1409,7 @@ class CharacterListing extends HTMLComponent {
   _getCharacterIdentifier(characterName) {
     const baseCharacterModel = getCharacterModel(characterName);
     const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
-    return `${characterName} - Level ${characterModel.total_character_level.display} ${characterModel.title.display}`;
+    return `${characterName} - Level ${characterModel.total_character_level} ${characterModel.title}`;
   }
 
   getHTML() {
@@ -1645,14 +1519,16 @@ ${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE
  *
  * @param {string} action
  * @param {string} key
- * @param {string} value ({display: ..., tooltip: ...})
+ * @param {string} value
+ * @param {string} tooltip
  * @param {string} description
  */
-function actionKeyValue(action, key, value, description = "", diceFormula = "") {
+function actionKeyValue(action, key, value, tooltip, description = "", diceFormula = "") {
   return new SectionEntry({
     diceButton: new DiceButton(action, diceFormula),
     mainKeyText: key,
     value: value,
+    tooltip: tooltip,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
   });
 }
@@ -1686,7 +1562,7 @@ function weaponAndActions(weapon, attacks) {
  * @param {object} item name,description,etc object of equipment
  */
 function armor(part, item = {}) {
-  if (item === {} || !item.equipped) {
+  if (!item || item === undefined || item === {} || !item.equipped) {
     return new SectionEntry({
       shortKeyText: part,
       editButton: new EditButton("Equip")
@@ -1727,9 +1603,9 @@ function getEffectsEntries(characterModel) {
     let description = effect.description;
     if (!description) {
       if (effect.operation === "add") {
-        description = `Adds ${effect.value} to ${effect.attribute}`;
+        description = `Adds ${effect.adjustment} to ${effect.attribute}`;
       } else if (effect.operation === "override") {
-        description = `Overrides ${effect.attribute} to ${effect.value}`;
+        description = `Overrides ${effect.attribute} to ${effect.adjustment}`;
       }
     }
     effectsEntries.push(activeEffect(effect.source, effect.duration, description));
@@ -1744,10 +1620,11 @@ function getEffectsEntries(characterModel) {
  * @param {string} value
  * @param {string[]} notes
  */
-function classKeyValue(key, value, notes = []) {
+function classKeyValue(key, value, tooltip, notes = []) {
   return new SectionEntry({
     mainKeyText: key,
     value: value,
+    tooltip: tooltip,
     subEntries: notes.map(note => new SectionSubEntry({text: note}))
   });
 }
@@ -1791,14 +1668,15 @@ function rollFormula(formula) {
 function spellSlotsRender(characterModel, classType) {
   // TODO: all classes should get their own Composite Component class
   const classInfo = characterModel[classType];
+  const tooltipsInfo = characterModel.tooltips[classType];
   const spellSlots = [];
   const tooltips = [];
   for (let i = 1; i <= 5; i++) {
-    spellSlots.push(classInfo[`l${i}_spell_slots`].display);
-    tooltips.push(classInfo[`l${i}_spell_slots`].tooltip);
+    spellSlots.push(classInfo[`l${i}_spell_slots`]);
+    tooltips.push(tooltipsInfo[`l${i}_spell_slots`]);
   }
   return {
-    display: spellSlots.join(" / "),
+    value: spellSlots.join(" / "),
     tooltip: tooltips.join("</br>"),
   };
 }
@@ -1898,8 +1776,10 @@ function renderPage(characterName) {
 
   const baseCharacterModel = getCharacterModel(characterName);
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
-
   let html = "";
+
+  const mageSpells = spellSlotsRender(characterModel, "mage");
+  const warlockSpells = spellSlotsRender(characterModel, "warlock");
 
   const panes = [
 
@@ -1911,25 +1791,27 @@ function renderPage(characterName) {
             new SectionEntry({
               mainKeyText: "Name",
               value: characterModel.name,
+              tooltip: characterModel.tooltips.name,
             }),
             new SectionEntry({
               mainKeyText: "Title",
               value: characterModel.title,
+              tooltip: characterModel.tooltips.title,
             }),
             new SectionEntry({
               mainKeyText: "Race",
               value: characterModel.race,
+              tooltip: characterModel.tooltips.race,
             }),
             new SectionEntry({
               mainKeyText: "Hit Points",
-              value: {
-                display: `${characterModel.hit_points.current.display} / ${characterModel.hit_points.total.display}`,
-                tooltip: "",
-              },
+              value: `${characterModel.hit_points.current} / ${characterModel.hit_points.total}`,
+              tooltip: characterModel.tooltips.hit_points.total,
             }),
             new SectionEntry({
               mainKeyText: "Armor Class",
               value: characterModel.armor_class,
+              tooltip: characterModel.tooltips.armor_class,
             }),
           ]
         }
@@ -1937,26 +1819,26 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Abilities"),
         entries: [
-          actionKeyValue("Check", "Strength", characterModel.ability_scores.strength, "", "1d20"),
-          actionKeyValue("Check", "Dexterity", characterModel.ability_scores.dexterity, "", "1d20"),
-          actionKeyValue("Check", "Constitution", characterModel.ability_scores.constitution, "", "1d20"),
-          actionKeyValue("Check", "Wisdom", characterModel.ability_scores.wisdom, "", "1d20"),
-          actionKeyValue("Check", "Intelligence", characterModel.ability_scores.intelligence, "", "1d20"),
-          actionKeyValue("Check", "Charisma", characterModel.ability_scores.charisma, "", "1d20"),
+          actionKeyValue("Check", "Strength", characterModel.ability_scores.strength, characterModel.tooltips.ability_scores.strength, "", "1d20"),
+          actionKeyValue("Check", "Dexterity", characterModel.ability_scores.dexterity, characterModel.tooltips.ability_scores.dexterity, "", "1d20"),
+          actionKeyValue("Check", "Constitution", characterModel.ability_scores.constitution, characterModel.tooltips.ability_scores.constitution, "", "1d20"),
+          actionKeyValue("Check", "Wisdom", characterModel.ability_scores.wisdom, characterModel.tooltips.ability_scores.wisdom, "", "1d20"),
+          actionKeyValue("Check", "Intelligence", characterModel.ability_scores.intelligence, characterModel.tooltips.ability_scores.intelligence, "", "1d20"),
+          actionKeyValue("Check", "Charisma", characterModel.ability_scores.charisma, characterModel.tooltips.ability_scores.charisma, "", "1d20"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Save Throws"),
         entries: [
-          actionKeyValue("Save vs", "Reflex", characterModel.save_throws.dexterity, "", "1d20"),
-          actionKeyValue("Save vs", "Fortitude", characterModel.save_throws.constitution, "", "1d20"),
-          actionKeyValue("Save vs", "Will", characterModel.save_throws.wisdom, "", "1d20"),
+          actionKeyValue("Save vs", "Reflex", characterModel.save_throws.dexterity, characterModel.tooltips.save_throws.dexterity , "", "1d20"),
+          actionKeyValue("Save vs", "Fortitude", characterModel.save_throws.constitution, characterModel.tooltips.save_throws.constitution, "", "1d20"),
+          actionKeyValue("Save vs", "Will", characterModel.save_throws.wisdom, characterModel.tooltips.save_throws.wisdom, "", "1d20"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Skills & Special Abilities"),
         entries: [
-          actionKeyValue("Perform", "Skill Check", characterModel.skills.skill_check_bonus, "When attempting: TODO - List of Skills", "1d100"),
+          actionKeyValue("Perform", "Skill Check", characterModel.skills.skill_check_bonus, characterModel.tooltips.skills.skill_check_bonus, "When attempting: TODO - List of Skills", "1d100"),
           new SectionEntry({mainKeyText: "TODO - Derive from list of special abilities"}),
           ...[] // TODO, pull Special Ability info from model
         ]
@@ -1979,23 +1861,23 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Armor"),
         entries: [ // TODO - fix alignment of Equip to align left if possible
-          armor("Chest", baseCharacterModel.equipment.armor.chest),
-          armor("Shield", baseCharacterModel.equipment.armor.shield),
-          armor("Gloves", baseCharacterModel.equipment.armor.gloves),
-          armor("Head", baseCharacterModel.equipment.armor.head),
-          armor("Cloak", baseCharacterModel.equipment.armor.clock),
-          armor("Boots", baseCharacterModel.equipment.armor.boots),
-          armor("Neck", baseCharacterModel.equipment.armor.neck),
-          armor("Ring 1", baseCharacterModel.equipment.armor.ring1),
-          armor("Ring 2", baseCharacterModel.equipment.armor.ring2),
-          armor("Other", baseCharacterModel.equipment.armor.other),
+          armor("Chest", characterModel.equipment.armor.chest),
+          armor("Shield", characterModel.equipment.armor.shield),
+          armor("Gloves", characterModel.equipment.armor.gloves),
+          armor("Head", characterModel.equipment.armor.head),
+          armor("Cloak", characterModel.equipment.armor.clock),
+          armor("Boots", characterModel.equipment.armor.boots),
+          armor("Neck", characterModel.equipment.armor.neck),
+          armor("Ring 1", characterModel.equipment.armor.ring1),
+          armor("Ring 2", characterModel.equipment.armor.ring2),
+          armor("Other", characterModel.equipment.armor.other),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Effects"),
         entries: [
           new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
-        ].concat(getEffectsEntries(baseCharacterModel)),
+        ].concat(getEffectsEntries(characterModel)),
       })
     ]),
 
@@ -2006,27 +1888,31 @@ function renderPage(characterName) {
           new SectionEntry({
             mainKeyText: "Total Character Level",
             value: characterModel.total_character_level,
+            tooltip: characterModel.tooltips.total_character_level,
             editButton: new EditButton("Level Up / Edit Levels")
           }), new SectionEntry({
             mainKeyText: "Base Attack Bonus",
             value: characterModel.attacks.base_bonus,
+            tooltip: characterModel.tooltips.attacks.base_bonus,
           }),
           new SectionEntry({
             mainKeyText: "Allowed Weapons",
             value: characterModel.equipment.allowed_weapons,
+            tooltip: characterModel.tooltips.equipment.allowed_weapons,
           }),
           new SectionEntry({
             mainKeyText: "Allowed Armor",
             value: characterModel.equipment.allowed_armor,
+            tooltip: characterModel.tooltips.equipment.allowed_armor,
           })
         ]
       }),
       new PaneSection({ // TODO - only populate classes the character actually has levels in
         divider: new SectionDivider("Fighter"),
         entries: [
-          classKeyValue("Fighter Level", characterModel.fighter.level),
-          classKeyValue("Additional Attacks", {display: "1", tooltip: ""}),
-          classKeyValue("Weapon Specializations", {display: "2", tooltip: ""}, [
+          classKeyValue("Fighter Level", characterModel.fighter.level, characterModel.tooltips.fighter.level),
+          classKeyValue("Additional Attacks", "1", ""),
+          classKeyValue("Weapon Specializations", "2", "", [
             "Dagger & Sword I - +1 to Hit and Damage",
             "Dagger & Sword II - Critical hits on 19",
           ])
@@ -2035,8 +1921,8 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Rogue"),
         entries: [
-          classKeyValue("Rogue Level", characterModel.rogue.level),
-          classKeyValue("Skill Specializations", {display: "1", tooltip: ""}, [
+          classKeyValue("Rogue Level", characterModel.rogue.level, characterModel.tooltips.rogue.level),
+          classKeyValue("Skill Specializations", "1", "", [
             "Mercantile - Journeyman Merchant",
           ])
         ]
@@ -2044,28 +1930,28 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Mage"),
         entries: [
-          classKeyValue("Mage Level", characterModel.mage.level),
-          classKeyValue("Arcane Spell Slots", spellSlotsRender(characterModel, "mage")),
-          classKeyValue("Max Spells per Degree", characterModel.mage.max_spells_learnable_per_degree),
-          classKeyValue("Arcane Casting in Armor", {display: "Up to 3rd Degree", tooltip: ""}),
+          classKeyValue("Mage Level", characterModel.mage.level, characterModel.tooltips.mage.level),
+          classKeyValue("Arcane Spell Slots", mageSpells.value, mageSpells.tooltip),
+          classKeyValue("Max Spells per Degree", characterModel.mage.max_spells_learnable_per_degree, characterModel.tooltips.mage.max_spells_learnable_per_degree),
+          classKeyValue("Arcane Casting in Armor", "Up to 3rd Degree", ""),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Warlock"),
         entries: [
-          classKeyValue("Mage Level", characterModel.warlock.level),
-          classKeyValue("Occult Spell Slots", spellSlotsRender(characterModel, "warlock")),
-          classKeyValue("Domain", characterModel.warlock.domain),
-          classKeyValue("Major Patron", characterModel.warlock.major_patron),
-          classKeyValue("Minor Patrons", {display: `Up to ${characterModel.warlock.max_minor_patrons.display}`, tooltip: characterModel.warlock.max_minor_patrons.tooltip}),
+          classKeyValue("Mage Level", characterModel.warlock.level, characterModel.tooltips.warlock.level),
+          classKeyValue("Occult Spell Slots", warlockSpells.value, warlockSpells.tooltip),
+          classKeyValue("Domain", characterModel.warlock.domain, characterModel.tooltips.warlock.domain),
+          classKeyValue("Major Patron", characterModel.warlock.major_patron, characterModel.tooltips.warlock.major_patron),
+          classKeyValue("Minor Patrons", `Up to ${characterModel.warlock.max_minor_patrons}`, characterModel.tooltips.warlock.max_minor_patrons),
         ]
       }),
       ...[]  // TODO - load class data from model instead
     ]),
   ];
 
-  document.documentElement.style.setProperty("--cs-color-character-bg", baseCharacterModel.meta.color);
-  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(baseCharacterModel.meta.color));
+  document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.meta.color);
+  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.meta.color));
 
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
