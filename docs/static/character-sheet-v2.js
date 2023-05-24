@@ -1380,9 +1380,7 @@ class SectionEntry extends HTMLComponent {
           `}
           ${this.diceButton == null && this.mainKeyText === "" ? "" : `
             <div class="cs-row">
-              <div class="${getDisplayMode().show_dice_buttons ? "" : "hidden"}">
-                ${this.diceButton == null ? "" : this.diceButton.getHTML()}
-              </div>
+              ${this.diceButton == null ? "" : this.diceButton.getHTML()}
               <div class="cs-elem">${this.mainKeyText}</div>
             </div>
           `}
@@ -1452,7 +1450,7 @@ class DiceButton extends HTMLComponent {
 
   getHTML() {
     return `
-    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg ${getDisplayMode().show_dice_buttons ? "" : "hidden"}">
         ⚅ ${this.text}
     </div>
     `;
