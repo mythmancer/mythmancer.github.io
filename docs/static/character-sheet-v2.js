@@ -1569,6 +1569,7 @@ class SettingDropDown extends HTMLComponent {
     return `
 <div class="cs-setting-dropdown">
   <div class="cs-label">${this.label}</div>
+  <div class="cs-filler-h"></div>
   <select id="${this.id}">
     ${Object.keys(this.setting).map(entry => `<option value="${entry}">${entry}</option>`).join("")}
   </select>
