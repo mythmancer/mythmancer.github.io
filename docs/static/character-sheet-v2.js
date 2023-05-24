@@ -81,11 +81,11 @@ const CHARACTER_MODELS = {
     },
     "active_external_effects": [
       {
-        "source": "talisman",
+        "source": "Talisman (Inventory)",
         "attribute": "mage.l1_spell_slots",
         "adjustment": 1,
         "operation": "add",
-        "duration": "Permanent",
+        "duration": "While equipped",
         "is_external": true,
       },
       {
@@ -1102,7 +1102,7 @@ function getActiveEffects(characterModel) {
   const raceEffects = EFFECTS.race[characterModel.race.toLowerCase()];
   for (let i = 0; i < raceEffects.length; i++) {
     effects.push({
-      source: `race.${characterModel.race}`,
+      source: `Race: ${characterModel.race}`,
       attribute: raceEffects[i].attribute,
       adjustment: raceEffects[i].adjustment,
       operation: raceEffects[i].operation,
@@ -1120,13 +1120,14 @@ function getActiveEffects(characterModel) {
       continue ;
     }
     for (let i = 0; i < equipment.effects.length; i++) {
+      const armorName = ATTRIBUTES[`equipment.armor.${armorType}`].name;
       effects.push({
-        source: `equipment.armor.${armorType}.${equipment.name}`,
+        source: `${equipment.name} (${armorName})`,
         attribute: equipment.effects[i].attribute,
         adjustment: equipment.effects[i].adjustment,
         description: equipment.effects[i].description,
         operation: equipment.effects[i].operation,
-        duration: "Permanent",
+        duration: "While equipped",
         hide_from_list: equipment.effects[i].attribute === "armor_class",
       });
     }
@@ -1656,7 +1657,7 @@ function spellSlots(key, characterModel, classType) {
   const tooltips = [];
   for (let i = 1; i <= 5; i++) {
     spellSlots.push(classInfo[`l${i}_spell_slots`]);
-    tooltips.push(tooltipsInfo[`l${i}_spell_slots`]);
+    tooltips.push(`Level ${i}: ` + tooltipsInfo[`l${i}_spell_slots`]);
   }
   return new SectionEntry({
     mainKeyText: key,
