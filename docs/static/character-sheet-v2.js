@@ -372,6 +372,7 @@ class Attribute {
     name = "",
     isIntrinsic = false,
     calculateFunction = null,
+    formatFunction = null,
   }) {
     this.path = path;
     this.name = name || path;
@@ -381,6 +382,9 @@ class Attribute {
         value: this.getValue(characterData),
         tooltip: "",
       };
+    });
+    this.formatFunction = formatFunction || (characterData => {
+      return this.getValue(characterData);
     });
     ATTRIBUTES[path] = this;
   }
@@ -440,6 +444,10 @@ class Attribute {
     this.setAttributeInModel(characterModel, value);
   }
 
+  getDisplayString(characterModel) {
+    return this.formatFunction(characterModel);
+  }
+
   calculate(characterModel) {
     return this.calculateFunction(characterModel);
   }
@@ -468,11 +476,17 @@ HIT_POINTS_TOTAL_ATTRIBUTE = new Attribute({
   path: "hit_points.total",
   name: "Total Hit Points",
   isIntrinsic: true,
+  formatFunction: characterData => {
+    return `${characterData.hit_points.current} / ${characterData.hit_points.total}`;
+  },
 });
 HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute({
   path: "hit_points.current",
   name: "Current Hit Points",
   isIntrinsic: true,
+  formatFunction: characterData => {
+    return `${characterData.hit_points.current} / ${characterData.hit_points.total}`;
+  },
 });
 ABILITY_SCORES_STRENGTH_ATTRIBUTE = new Attribute({
   path: "ability_scores.strength",
@@ -599,13 +613,6 @@ ACTIVE_EFFECTS_ATTRIBUTE = new Attribute({
   }
 });
 
-// convert to derived
-MAGE_ARCANE_CASTING_IN_ARMOR_ATTRIBUTE = new Attribute({
-  path: "mage.arcane_casting_in_armor",
-  name: "Arcane Casting In Armor",
-  isIntrinsic: true,
-});
-
 // derived attributes
 CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
   path: "total_character_level",
@@ -632,7 +639,6 @@ MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "modifiers.constitution",
   name: "Constitution Modifier",
@@ -643,7 +649,6 @@ MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "save_throws.constitution",
@@ -660,7 +665,6 @@ SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "modifiers.dexterity",
   name: "Dexterity Modifier",
@@ -671,7 +675,6 @@ MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "save_throws.dexterity",
@@ -739,7 +742,6 @@ SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
   },
 });
 
-
 HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
   path: "hit_points.hit_die",
   name: "Hit Die",
@@ -754,7 +756,6 @@ HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
   path: "attacks.base_bonus",
@@ -771,7 +772,6 @@ ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
   path: "attacks.number_of_attacks",
   name: "Number of Attacks",
@@ -786,7 +786,6 @@ ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
   path: "equipment.allowed_armor",
@@ -837,7 +836,6 @@ EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
   path: "skills.skill_check_bonus",
   name: "Skill Check Bonus",
@@ -852,7 +850,6 @@ SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
   path: "skills.max_skill_proficiencies",
@@ -869,6 +866,56 @@ SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
   },
 });
 
+FIGHTER_ADDITIONAL_ATTACKS = new Attribute({
+  path: "fighter.additional_attacks",
+  name: "Additional Attacks",
+  calculateFunction: characterData => {
+    // TODO
+    return {
+      value: 1,
+      tooltip: "Hardcoded; needs to implemented",
+    };
+  },
+});
+
+FIGHTER_WEAPON_SPECIALIZATIONS = new Attribute({
+  path: "fighter.weapon_specializations",
+  name: "Weapon Specializations",
+  calculateFunction: characterData => {
+    // TODO
+    return {
+      value: 2,
+      tooltip: "Hardcoded; needs to implemented",
+    };
+  },
+});
+
+ROGUE_SKILL_SPECIALIZATIONS = new Attribute({
+  path: "rogue.skill_specializations",
+  name: "Skill Specializations",
+  calculateFunction: characterData => {
+    // TODO
+    return {
+      value: 1,
+      tooltip: "Hardcoded; needs to implemented",
+    };
+  },
+});
+
+MAGE_ARCANE_CASTING_IN_ARMOR_ATTRIBUTE = new Attribute({
+  path: "mage.arcane_casting_in_armor",
+  name: "Arcane Casting In Armor",
+  calculateFunction: characterData => {
+    // TODO
+    return {
+      value: 3,
+      tooltip: "Hardcoded; needs to implemented",
+    };
+  },
+  formatFunction: characterData => {
+    return `Up to ${characterData.mage.arcane_casting_in_armor}rd Degree`;
+  },
+});
 
 MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
   path: "mage.max_spells_learnable_per_degree",
@@ -881,7 +928,6 @@ MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
   path: "warlock.max_minor_patrons",
@@ -896,9 +942,10 @@ WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
       tooltip: "ah, a force dyad",
     };
   },
+  formatFunction: characterData => {
+    return `Up to ${characterData.warlock.max_minor_patrons}`;
+  }
 });
-
-
 
 WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l1_spell_slots",
@@ -911,7 +958,6 @@ WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l2_spell_slots",
   name: "Level 2 Occult Spell Slots",
@@ -922,7 +968,6 @@ WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l3_spell_slots",
@@ -935,7 +980,6 @@ WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l4_spell_slots",
   name: "Level 4 Occult Spell Slots",
@@ -946,7 +990,6 @@ WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l5_spell_slots",
@@ -959,7 +1002,6 @@ WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l1_spell_slots",
   name: "Level 1 Arcane Spell Slots",
@@ -970,7 +1012,6 @@ MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l2_spell_slots",
@@ -983,7 +1024,6 @@ MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l3_spell_slots",
   name: "Level 3 Arcane Spell Slots",
@@ -994,7 +1034,6 @@ MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l4_spell_slots",
@@ -1007,7 +1046,6 @@ MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l5_spell_slots",
   name: "Level 5 Arcane Spell Slots",
@@ -1018,7 +1056,6 @@ MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
     };
   },
 });
-
 
 ARMOR_CLASS_ATTRIBUTE = new Attribute({
   path: "armor_class",
@@ -1318,9 +1355,13 @@ class SectionEntry extends HTMLComponent {
    * List item within a {@link PaneSection}. Composed of two rows, the main containing various buttons and labels to
    * serve as the primary descriptor of the entry, and the second being a vertical list of {@link SectionSubEntry}.
    *
+   * Either provide (characterModel, attribute) or (value, tooltip).
+   *
    * @param {string} shortKeyText Optional short key of fixed width on the far left of the main row
    * @param {DiceButton} diceButton Optional button to roll dice associated with this entry
    * @param {string} mainKeyText Optional text for the left side of the main row in a key-value pair
+   * @param {object} characterModel Character Model to use for data
+   * @param {string} attribute Attribute to fetch from characterModel
    * @param {string} value to be displayed
    * @param {string} tooltip Optional HTML for the tooltip of this entry
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
@@ -1330,8 +1371,12 @@ class SectionEntry extends HTMLComponent {
                 shortKeyText = "",
                 diceButton = null,
                 mainKeyText = "",
-                value = "",
-                tooltip = "",
+
+                characterModel = null,
+                attribute = null,
+                value = null,
+                tooltip = null,
+
                 editButton = null,
                 subEntries = []
               }) {
@@ -1339,10 +1384,19 @@ class SectionEntry extends HTMLComponent {
     this.shortKeyText = shortKeyText;
     this.diceButton = diceButton;
     this.mainKeyText = mainKeyText;
-    this.value = value;
-    this.tooltip = tooltip;
     this.editButton = editButton;
     this.subEntries = subEntries;
+
+    if (value != null) {
+      this.value = value;
+      this.tooltip = tooltip;
+    } else if (attribute != null) {
+      this.value = ATTRIBUTES[attribute].getDisplayString(characterModel);
+      this.tooltip = ATTRIBUTES[attribute].getTooltip(characterModel);
+    } else {
+      this.value = "";
+      this.tooltip = "";
+    }
   }
 
   getHTML() {
@@ -1581,16 +1635,16 @@ ${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE
  *
  * @param {string} action
  * @param {string} key
- * @param {string} value
- * @param {string} tooltip
+ * @param {object} characterModel
+ * @param {string} attribute
  * @param {string} description
  */
-function actionKeyValue(action, key, value, tooltip, description = "", diceFormula = "") {
+function actionKeyValue(action, key, characterModel, attribute, description = "", diceFormula = "") {
   return new SectionEntry({
     diceButton: new DiceButton(action, diceFormula),
     mainKeyText: key,
-    value: value,
-    tooltip: tooltip,
+    characterModel: characterModel,
+    attribute: attribute,
     subEntries: description === "" ? [] : [new SectionSubEntry({text: description})]
   });
 }
@@ -1612,6 +1666,22 @@ function weaponAndActions(weapon, attacks) {
   });
 }
 
+function spellSlots(key, characterModel, classType) {
+  const classInfo = characterModel[classType];
+  const tooltipsInfo = characterModel.tooltips[classType];
+  const spellSlots = [];
+  const tooltips = [];
+  for (let i = 1; i <= 5; i++) {
+    spellSlots.push(classInfo[`l${i}_spell_slots`]);
+    tooltips.push(tooltipsInfo[`l${i}_spell_slots`]);
+  }
+  return new SectionEntry({
+    mainKeyText: key,
+    value: spellSlots.join(" / "),
+    tooltip: tooltips.join("</br>"),
+  });
+}
+
 /**
  * Entry about armor and other worn equipment. Can represent unequipped / equipped states based on the existence of
  * the {@link item} param.
@@ -1621,7 +1691,7 @@ function weaponAndActions(weapon, attacks) {
  * The equipped state contains the body part, name of the item, an edit/remove button and an optional descriptor.
  *
  * @param {string} part Body part where this armor is equipped (Chest, Belt, etc.)
- * @param {object} item name,description,etc object of equipment
+ * @param {object} item (name, description, ...) object of equipment
  */
 function armor(part, item = {}) {
   if (!item || item === undefined || item === {} || !item.equipped) {
@@ -1679,14 +1749,15 @@ function getEffectsEntries(characterModel) {
  * Entry about class data containing simple key-value pairs and optional notes
  *
  * @param {string} key
- * @param {string} value
+ * @param {object} characterModel
+ * @param {string} attribute
  * @param {string[]} notes
  */
-function classKeyValue(key, value, tooltip, notes = []) {
+function classKeyValue(key, characterModel, attribute, notes = []) {
   return new SectionEntry({
     mainKeyText: key,
-    value: value,
-    tooltip: tooltip,
+    characterModel: characterModel,
+    attribute: attribute,
     subEntries: notes.map(note => new SectionSubEntry({text: note}))
   });
 }
@@ -1725,22 +1796,6 @@ function rollFormula(formula) {
     }
   }
   return result;
-}
-
-function spellSlotsRender(characterModel, classType) {
-  // TODO: all classes should get their own Composite Component class
-  const classInfo = characterModel[classType];
-  const tooltipsInfo = characterModel.tooltips[classType];
-  const spellSlots = [];
-  const tooltips = [];
-  for (let i = 1; i <= 5; i++) {
-    spellSlots.push(classInfo[`l${i}_spell_slots`]);
-    tooltips.push(tooltipsInfo[`l${i}_spell_slots`]);
-  }
-  return {
-    value: spellSlots.join(" / "),
-    tooltip: tooltips.join("</br>"),
-  };
 }
 
 // Main rendering logic
@@ -1840,9 +1895,6 @@ function renderPage(characterName) {
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
   let html = "";
 
-  const mageSpells = spellSlotsRender(characterModel, "mage");
-  const warlockSpells = spellSlotsRender(characterModel, "warlock");
-
   const panes = [
 
     // Pane 1 of 3 Core gameplay info and Actions
@@ -1852,28 +1904,28 @@ function renderPage(characterName) {
             // TODO - add editable HP field... though it'll be a unique case :/
             new SectionEntry({
               mainKeyText: "Name",
-              value: characterModel.name,
-              tooltip: characterModel.tooltips.name,
+              characterModel: characterModel,
+              attribute: "name",
             }),
             new SectionEntry({
               mainKeyText: "Title",
-              value: characterModel.title,
-              tooltip: characterModel.tooltips.title,
+              characterModel: characterModel,
+              attribute: "title",
             }),
             new SectionEntry({
               mainKeyText: "Race",
-              value: characterModel.race,
-              tooltip: characterModel.tooltips.race,
+              characterModel: characterModel,
+              attribute: "race",
             }),
             new SectionEntry({
               mainKeyText: "Hit Points",
-              value: `${characterModel.hit_points.current} / ${characterModel.hit_points.total}`,
-              tooltip: characterModel.tooltips.hit_points.total,
+              characterModel: characterModel,
+              attribute: "hit_points.total",
             }),
             new SectionEntry({
               mainKeyText: "Armor Class",
-              value: characterModel.armor_class,
-              tooltip: characterModel.tooltips.armor_class,
+              characterModel: characterModel,
+              attribute: "armor_class",
             }),
           ]
         }
@@ -1881,26 +1933,26 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Abilities"),
         entries: [
-          actionKeyValue("Check", "Strength", characterModel.ability_scores.strength, characterModel.tooltips.ability_scores.strength, "", "1d20"),
-          actionKeyValue("Check", "Dexterity", characterModel.ability_scores.dexterity, characterModel.tooltips.ability_scores.dexterity, "", "1d20"),
-          actionKeyValue("Check", "Constitution", characterModel.ability_scores.constitution, characterModel.tooltips.ability_scores.constitution, "", "1d20"),
-          actionKeyValue("Check", "Wisdom", characterModel.ability_scores.wisdom, characterModel.tooltips.ability_scores.wisdom, "", "1d20"),
-          actionKeyValue("Check", "Intelligence", characterModel.ability_scores.intelligence, characterModel.tooltips.ability_scores.intelligence, "", "1d20"),
-          actionKeyValue("Check", "Charisma", characterModel.ability_scores.charisma, characterModel.tooltips.ability_scores.charisma, "", "1d20"),
+          actionKeyValue("Check", "Strength", characterModel, "ability_scores.strength", "", "1d20"),
+          actionKeyValue("Check", "Dexterity", characterModel, "ability_scores.dexterity", "", "1d20"),
+          actionKeyValue("Check", "Constitution", characterModel, "ability_scores.constitution", "", "1d20"),
+          actionKeyValue("Check", "Wisdom", characterModel, "ability_scores.wisdom", "", "1d20"),
+          actionKeyValue("Check", "Intelligence", characterModel, "ability_scores.intelligence", "", "1d20"),
+          actionKeyValue("Check", "Charisma", characterModel, "ability_scores.charisma", "", "1d20"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Save Throws"),
         entries: [
-          actionKeyValue("Save vs", "Reflex", characterModel.save_throws.dexterity, characterModel.tooltips.save_throws.dexterity , "", "1d20"),
-          actionKeyValue("Save vs", "Fortitude", characterModel.save_throws.constitution, characterModel.tooltips.save_throws.constitution, "", "1d20"),
-          actionKeyValue("Save vs", "Will", characterModel.save_throws.wisdom, characterModel.tooltips.save_throws.wisdom, "", "1d20"),
+          actionKeyValue("Save vs", "Reflex", characterModel, "save_throws.dexterity", "", "1d20"),
+          actionKeyValue("Save vs", "Fortitude", characterModel, "save_throws.constitution", "", "1d20"),
+          actionKeyValue("Save vs", "Will", characterModel, "save_throws.wisdom", "", "1d20"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Skills & Special Abilities"),
         entries: [
-          actionKeyValue("Perform", "Skill Check", characterModel.skills.skill_check_bonus, characterModel.tooltips.skills.skill_check_bonus, "When attempting: TODO - List of Skills", "1d100"),
+          actionKeyValue("Perform", "Skill Check", characterModel, "skills.skill_check_bonus", "When attempting: TODO - List of Skills", "1d100"),
           new SectionEntry({mainKeyText: "TODO - Derive from list of special abilities"}),
           ...[] // TODO, pull Special Ability info from model
         ]
@@ -1949,32 +2001,32 @@ function renderPage(characterName) {
         entries: [
           new SectionEntry({
             mainKeyText: "Total Character Level",
-            value: characterModel.total_character_level,
-            tooltip: characterModel.tooltips.total_character_level,
+            characterModel: characterModel,
+            attribute: "total_character_level",
             editButton: new EditButton("Level Up / Edit Levels")
           }), new SectionEntry({
             mainKeyText: "Base Attack Bonus",
-            value: characterModel.attacks.base_bonus,
-            tooltip: characterModel.tooltips.attacks.base_bonus,
+            characterModel: characterModel,
+            attribute: "attacks.base_bonus",
           }),
           new SectionEntry({
             mainKeyText: "Allowed Weapons",
-            value: characterModel.equipment.allowed_weapons,
-            tooltip: characterModel.tooltips.equipment.allowed_weapons,
+            characterModel: characterModel,
+            attribute: "equipment.allowed_weapons",
           }),
           new SectionEntry({
             mainKeyText: "Allowed Armor",
-            value: characterModel.equipment.allowed_armor,
-            tooltip: characterModel.tooltips.equipment.allowed_armor,
+            characterModel: characterModel,
+            attribute: "equipment.allowed_armor",
           })
         ]
       }),
       new PaneSection({ // TODO - only populate classes the character actually has levels in
         divider: new SectionDivider("Fighter"),
         entries: [
-          classKeyValue("Fighter Level", characterModel.fighter.level, characterModel.tooltips.fighter.level),
-          classKeyValue("Additional Attacks", "1", ""),
-          classKeyValue("Weapon Specializations", "2", "", [
+          classKeyValue("Fighter Level", characterModel, "fighter.level"),
+          classKeyValue("Additional Attacks", characterModel, "fighter.additional_attacks"),
+          classKeyValue("Weapon Specializations", characterModel, "fighter.weapon_specializations", [
             "Dagger & Sword I - +1 to Hit and Damage",
             "Dagger & Sword II - Critical hits on 19",
           ])
@@ -1983,8 +2035,8 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Rogue"),
         entries: [
-          classKeyValue("Rogue Level", characterModel.rogue.level, characterModel.tooltips.rogue.level),
-          classKeyValue("Skill Specializations", "1", "", [
+          classKeyValue("Rogue Level", characterModel, "rogue.level"),
+          classKeyValue("Skill Specializations", characterModel, "rogue.skill_specializations", [
             "Mercantile - Journeyman Merchant",
           ])
         ]
@@ -1992,20 +2044,20 @@ function renderPage(characterName) {
       new PaneSection({
         divider: new SectionDivider("Mage"),
         entries: [
-          classKeyValue("Mage Level", characterModel.mage.level, characterModel.tooltips.mage.level),
-          classKeyValue("Arcane Spell Slots", mageSpells.value, mageSpells.tooltip),
-          classKeyValue("Max Spells per Degree", characterModel.mage.max_spells_learnable_per_degree, characterModel.tooltips.mage.max_spells_learnable_per_degree),
-          classKeyValue("Arcane Casting in Armor", "Up to 3rd Degree", ""),
+          classKeyValue("Mage Level", characterModel, "mage.level"),
+          spellSlots("Arcane Spell Slots", characterModel, "mage"),
+          classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
+          classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
         ]
       }),
       new PaneSection({
         divider: new SectionDivider("Warlock"),
         entries: [
-          classKeyValue("Mage Level", characterModel.warlock.level, characterModel.tooltips.warlock.level),
-          classKeyValue("Occult Spell Slots", warlockSpells.value, warlockSpells.tooltip),
-          classKeyValue("Domain", characterModel.warlock.domain, characterModel.tooltips.warlock.domain),
-          classKeyValue("Major Patron", characterModel.warlock.major_patron, characterModel.tooltips.warlock.major_patron),
-          classKeyValue("Minor Patrons", `Up to ${characterModel.warlock.max_minor_patrons}`, characterModel.tooltips.warlock.max_minor_patrons),
+          classKeyValue("Mage Level", characterModel, "warlock.level"),
+          spellSlots("Occult Spell Slots", characterModel, "warlock"),
+          classKeyValue("Domain", characterModel, "warlock.domain"),
+          classKeyValue("Major Patron", characterModel, "warlock.major_patron"),
+          classKeyValue("Minor Patrons", characterModel, "warlock.max_minor_patrons"),
         ]
       }),
       ...[]  // TODO - load class data from model instead
