@@ -52,7 +52,7 @@ const CHARACTER_MODELS = {
           "effects": [
             {
               "attribute": "warlock.l1_spell_slots",
-              "adjustment": 1,
+              "adjustment": 2,
               "operation": "add",
             },
             {
@@ -79,7 +79,7 @@ const CHARACTER_MODELS = {
       "domain": "Elemental - Water",
       "major_patron": "Rath - Water Aspect",
     },
-    "active_effects": [
+    "active_external_effects": [
       {
         "source": "talisman",
         "attribute": "mage.l1_spell_slots",
@@ -156,7 +156,7 @@ const CHARACTER_MODELS = {
       "domain": "Elemental - Ice",
       "major_patron": "Belch",
     },
-    "active_effects": [],
+    "active_external_effects": [],
   },
   "Noam Gnomesky": {
     "name": "Noam Gnomesky",
@@ -211,7 +211,7 @@ const CHARACTER_MODELS = {
       "domain": "Arcana",
       "major_patron": "Some old dead thing",
     },
-    "active_effects": [],
+    "active_external_effects": [],
   },
 };
 
@@ -369,10 +369,12 @@ ATTRIBUTES = {};
 class Attribute {
   constructor({
     path,
+    name = "",
     isIntrinsic = false,
     calculateFunction = null,
   }) {
     this.path = path;
+    this.name = name || path;
     this.isIntrinsic = isIntrinsic;
     this.calculateFunction = calculateFunction || (characterData => {
       return {
@@ -445,14 +447,17 @@ class Attribute {
 
 NAME_ATTRIBUTE = new Attribute({
   path: "name",
+  name: "Name",
   isIntrinsic: true,
 });
 RACE_ATTRIBUTE = new Attribute({
   path: "race",
+  name: "Race",
   isIntrinsic: true,
 });
 TITLE_ATTRIBUTE = new Attribute({
   path: "title",
+  name: "Title",
   isIntrinsic: true,
 });
 COLOR_ATTRIBUTE = new Attribute({
@@ -461,118 +466,150 @@ COLOR_ATTRIBUTE = new Attribute({
 });
 HIT_POINTS_TOTAL_ATTRIBUTE = new Attribute({
   path: "hit_points.total",
+  name: "Total Hit Points",
   isIntrinsic: true,
 });
 HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute({
   path: "hit_points.current",
+  name: "Current Hit Points",
   isIntrinsic: true,
 });
 ABILITY_SCORES_STRENGTH_ATTRIBUTE = new Attribute({
   path: "ability_scores.strength",
+  name: "Strength",
   isIntrinsic: true,
 });
 ABILITY_SCORES_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "ability_scores.dexterity",
+  name: "Dexterity",
   isIntrinsic: true,
 });
 ABILITY_SCORES_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "ability_scores.constitution",
+  name: "Constitution",
   isIntrinsic: true,
 });
 ABILITY_SCORES_INTELLIGENCE_ATTRIBUTE = new Attribute({
   path: "ability_scores.intelligence",
+  name: "Intelligence",
   isIntrinsic: true,
 });
 ABILITY_SCORES_WISDOM_ATTRIBUTE = new Attribute({
   path: "ability_scores.wisdom",
+  name: "Wisdom",
   isIntrinsic: true,
 });
 ABILITY_SCORES_CHARISMA_ATTRIBUTE = new Attribute({
   path: "ability_scores.charisma",
+  name: "Charisma",
   isIntrinsic: true,
 });
 FIGHTER_LEVEL_ATTRIBUTE = new Attribute({
   path: "fighter.level",
+  name: "Fighter Level",
   isIntrinsic: true,
 });
 ROGUE_LEVEL_ATTRIBUTE = new Attribute({
   path: "rogue.level",
+  name: "Rogue Level",
   isIntrinsic: true,
 });
 MAGE_LEVEL_ATTRIBUTE = new Attribute({
   path: "mage.level",
+  name: "Mage Level",
   isIntrinsic: true,
 });
 WARLOCK_LEVEL_ATTRIBUTE = new Attribute({
   path: "warlock.level",
+  name: "Warlock Level",
   isIntrinsic: true,
 });
 WARLOCK_DOMAIN_ATTRIBUTE = new Attribute({
   path: "warlock.domain",
+  name: "Warlock Domain",
   isIntrinsic: true,
 });
 WARLOCK_MAJOR_PATRON_ATTRIBUTE = new Attribute({
   path: "warlock.major_patron",
+  name: "Warlock Major Patron",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_CHEST_ATTRIBUTE = new Attribute({
   path: "equipment.armor.chest",
+  name: "Chest Armor",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_SHIELD_ATTRIBUTE = new Attribute({
   path: "equipment.armor.shield",
+  name: "Shield",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_GLOVES_ATTRIBUTE = new Attribute({
   path: "equipment.armor.gloves",
+  name: "Gloves",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_HEAD_ATTRIBUTE = new Attribute({
   path: "equipment.armor.head",
+  name: "Head Armor",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_CLOCK_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.clock",
+  path: "equipment.armor.cloak",
+  name: "Cloak",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_BOOTS_ATTRIBUTE = new Attribute({
   path: "equipment.armor.boots",
+  name: "Boots",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_NECK_ATTRIBUTE = new Attribute({
   path: "equipment.armor.neck",
+  name: "Neck Armor",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_RING_1_ATTRIBUTE = new Attribute({
   path: "equipment.armor.ring1",
+  name: "Ring #1",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_RING_2_ATTRIBUTE = new Attribute({
   path: "equipment.armor.ring2",
+  name: "Ring #2",
   isIntrinsic: true,
 });
 EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
   path: "equipment.armor.other",
+  name: "Other Armor",
   isIntrinsic: true,
+});
+ACTIVE_EXTERNAL_EFFECTS_ATTRIBUTE = new Attribute({
+  path: "active_external_effects",
+  isIntrinsic: true,
+});
+ACTIVE_EFFECTS_ATTRIBUTE = new Attribute({
+  path: "active_effects",
+  isIntrinsic: true,
+  calculateFunction: characterData => {
+    return {
+      value: characterData.active_external_effects.concat(getActiveEffects(characterData)),
+      tooltip: "",
+    };
+  }
 });
 
 // convert to derived
 MAGE_ARCANE_CASTING_IN_ARMOR_ATTRIBUTE = new Attribute({
   path: "mage.arcane_casting_in_armor",
-  isIntrinsic: true,
-});
-ARMOR_CLASS_ATTRIBUTE = new Attribute({
-  path: "armor_class",
-  isIntrinsic: true,
-});
-// remove once all effects linking is done
-EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
-  path: "active_effects",
+  name: "Arcane Casting In Armor",
   isIntrinsic: true,
 });
 
+// derived attributes
 CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
   path: "total_character_level",
+  name: "Total Character Level",
   calculateFunction: characterData => {
     return {
       value: getNumericalCharacteristic(characterData.fighter.level)
@@ -586,6 +623,7 @@ CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
 
 MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
   path: "modifiers.charisma",
+  name: "Charisma Modifier",
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
@@ -597,6 +635,7 @@ MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
 
 MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "modifiers.constitution",
+  name: "Constitution Modifier",
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)],
@@ -608,6 +647,7 @@ MODIFIERS_CONSTITUTION_ATTRIBUTE = new Attribute({
 
 SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
   path: "save_throws.constitution",
+  name: "Constitution Save Throw",
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
@@ -623,6 +663,7 @@ SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
 
 MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "modifiers.dexterity",
+  name: "Dexterity Modifier",
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)],
@@ -634,6 +675,7 @@ MODIFIERS_DEXTERITY_ATTRIBUTE = new Attribute({
 
 SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
   path: "save_throws.dexterity",
+  name: "Dexterity Save Throw",
   calculateFunction: characterData => {
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
     return {
@@ -647,9 +689,9 @@ SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MODIFIERS_INTELLIGENCE_ATTRIBUTE = new Attribute({
   path: "modifiers.intelligence",
+  name: "Intelligence Modifier",
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.intelligence)],
@@ -658,9 +700,9 @@ MODIFIERS_INTELLIGENCE_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MODIFIERS_STRENGTH_ATTRIBUTE = new Attribute({
   path: "modifiers.strength",
+  name: "Strength Modifier",
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.strength)],
@@ -669,9 +711,9 @@ MODIFIERS_STRENGTH_ATTRIBUTE = new Attribute({
   },
 });
 
-
 MODIFIERS_WISDOM_ATTRIBUTE = new Attribute({
   path: "modifiers.wisdom",
+  name: "Wisdom Modifier",
   calculateFunction: characterData => {
     // table
     return {
@@ -681,9 +723,9 @@ MODIFIERS_WISDOM_ATTRIBUTE = new Attribute({
   },
 });
 
-
 SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
   path: "save_throws.wisdom",
+  name: "Wisdom Save Throw",
   calculateFunction: characterData => {
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
     return {
@@ -700,6 +742,7 @@ SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
 
 HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
   path: "hit_points.hit_die",
+  name: "Hit Die",
   calculateFunction: characterData => {
     // FGT + MAG + ROG + WAR
     return {
@@ -715,6 +758,7 @@ HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
 
 ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
   path: "attacks.base_bonus",
+  name: "Base Attack Bonus",
   calculateFunction: characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
     return {
@@ -730,6 +774,7 @@ ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
 
 ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
   path: "attacks.number_of_attacks",
+  name: "Number of Attacks",
   calculateFunction: characterData => {
     // max(1 + (FGT-1)/4, 1)
     return {
@@ -745,6 +790,7 @@ ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
 
 EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
   path: "equipment.allowed_armor",
+  name: "Allowed Armor",
   calculateFunction: characterData => {
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
     let allowedArmor;
@@ -769,6 +815,7 @@ EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
 
 EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
   path: "equipment.allowed_weapons",
+  name: "Allowed Weapons",
   calculateFunction: characterData => {
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
     let allowedWeapons;
@@ -793,6 +840,7 @@ EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
 
 SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
   path: "skills.skill_check_bonus",
+  name: "Skill Check Bonus",
   calculateFunction: characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
     return {
@@ -808,6 +856,7 @@ SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
 
 SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
   path: "skills.max_skill_proficiencies",
+  name: "Max Skill Proficiencies",
   calculateFunction: characterData => {
     // table
     return {
@@ -823,6 +872,7 @@ SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
 
 MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
   path: "mage.max_spells_learnable_per_degree",
+  name: "Max Spells Learnable Per Degree",
   calculateFunction: characterData => {
     // 5 + INT
     return {
@@ -835,6 +885,7 @@ MAGE_MAX_SPELLS_LEARNABLE_ATTRIBUTE = new Attribute({
 
 WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
   path: "warlock.max_minor_patrons",
+  name: "Max Minor Patrons",
   calculateFunction: characterData => {
     // min(1 + CHA, (WAR+1)/2)
     return {
@@ -851,6 +902,7 @@ WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l1_spell_slots",
+  name: "Level 1 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][0],
@@ -862,6 +914,7 @@ WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l2_spell_slots",
+  name: "Level 2 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][1],
@@ -873,6 +926,7 @@ WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l3_spell_slots",
+  name: "Level 3 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][2],
@@ -884,6 +938,7 @@ WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l4_spell_slots",
+  name: "Level 4 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][3],
@@ -895,6 +950,7 @@ WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
 
 WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
   path: "warlock.l5_spell_slots",
+  name: "Level 5 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][4],
@@ -906,6 +962,7 @@ WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l1_spell_slots",
+  name: "Level 1 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][0],
@@ -917,6 +974,7 @@ MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l2_spell_slots",
+  name: "Level 2 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][1],
@@ -928,6 +986,7 @@ MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l3_spell_slots",
+  name: "Level 3 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][2],
@@ -939,6 +998,7 @@ MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l4_spell_slots",
+  name: "Level 4 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][3],
@@ -950,6 +1010,7 @@ MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
 
 MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
   path: "mage.l5_spell_slots",
+  name: "Level 5 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
       value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][4],
@@ -961,6 +1022,7 @@ MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
 
 ARMOR_CLASS_ATTRIBUTE = new Attribute({
   path: "armor_class",
+  name: "Armor Class",
   calculateFunction: characterData => {
     let dexMod = MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)];
 
@@ -971,7 +1033,7 @@ ARMOR_CLASS_ATTRIBUTE = new Attribute({
   },
 });
 
-function populateEffects(characterModel) {
+function getActiveEffects(characterModel) {
   const effects = [];
 
   const raceEffects = EFFECTS.race[characterModel.race.toLowerCase()];
@@ -1024,7 +1086,7 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
 
   // apply effects, in multiple steps
   const overriddenAttributes = [];
-  const effects = baseCharacterModel.active_effects.concat(populateEffects(baseCharacterModel));
+  const effects = finalizedCharacterModel.active_effects;
 
   // first resolve effects on intrinsic attributes
   for (let i = 0; i < effects.length; i++) {
@@ -1408,8 +1470,8 @@ class CharacterListing extends HTMLComponent {
 
   _getCharacterIdentifier(characterName) {
     const baseCharacterModel = getCharacterModel(characterName);
-    const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
-    return `${characterName} - Level ${characterModel.total_character_level} ${characterModel.title}`;
+    const totalCharacterLevel = CHARACTER_LEVEL_ATTRIBUTE.calculate(baseCharacterModel).value;
+    return `${characterName} - Level ${totalCharacterLevel} ${baseCharacterModel.title}`;
   }
 
   getHTML() {
@@ -1596,16 +1658,16 @@ function activeEffect(effect, duration, description) {
 }
 
 function getEffectsEntries(characterModel) {
-  const activeEffects = characterModel.active_effects.concat(populateEffects(characterModel));
+  const activeEffects = characterModel.active_effects;
   const effectsEntries = [];
   for (let i = 0; i < activeEffects.length; i++) {
     const effect = activeEffects[i];
     let description = effect.description;
     if (!description) {
       if (effect.operation === "add") {
-        description = `Adds ${effect.adjustment} to ${effect.attribute}`;
+        description = `Adds ${effect.adjustment} to ${ATTRIBUTES[effect.attribute].name}`;
       } else if (effect.operation === "override") {
-        description = `Overrides ${effect.attribute} to ${effect.adjustment}`;
+        description = `Overrides ${ATTRIBUTES[effect.attribute].name} to ${effect.adjustment}`;
       }
     }
     effectsEntries.push(activeEffect(effect.source, effect.duration, description));
