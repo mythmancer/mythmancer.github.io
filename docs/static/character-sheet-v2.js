@@ -282,6 +282,7 @@ function setAppearance() {
 /*******************************************************************
  **************************** DATABASES ****************************
  *******************************************************************/
+
 SPELL_SLOTS = {
   0: [0, 0, 0, 0, 0],
   1: [2, 0, 0, 0, 0],
@@ -357,7 +358,7 @@ EFFECTS = {
 };
 
 /*******************************************************************
- *************** EVALUATING A CHARACTER TO COMPLETION **************
+ ****************** CHARACTER MODEL AND ATTRIBUTES *****************
  *******************************************************************/
 
 function getNumericalCharacteristic(val) {
@@ -1186,67 +1187,10 @@ function listCharacters(characterName) {
   return Object.keys(JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY)));
 }
 
-/**
- * Returns white or black depending on a provided color that should visually stand out in comparison
- * @param {string} hexColor String for the hex code of a color
- * @returns {string} a hex string for white or black
- */
-function getContrastColor(hexColor) {
-  hexColor = hexColor.replace('#', '');
-  const red = parseInt(hexColor.slice(0, 2), 16);
-  const green = parseInt(hexColor.slice(2, 4), 16);
-  const blue = parseInt(hexColor.slice(4, 6), 16);
+/*******************************************************************
+ ************************* HTML COMPONENTS *************************
+ *******************************************************************/
 
-  // Calculate the brightness (luminance) using the relative luminance formula
-  const brightness = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
-  return (brightness > 0.5) ? '#000000' : '#FFFFFF';
-}
-
-class WeaponAttack {
-  /**
-   * WIP - model for weapon attacks, intended to contain the necessary info to describe an attack in a standard way
-   * TODO - represent "Critically hits on 19" somehow
-   *
-   * @param {string} verb descriptive verb of this attack (Strike, Shoot, etc) along with any distinguishing conditions
-   * @param {number} numberOfAttacks
-   * @param {boolean} isFast
-   * @param {string} range TODO - use an enum or similar: none, melee, reach, short, medium, or long
-   * @param {number} bonusToHit
-   * @param {string} damageFormula TODO - represent as a class eventually
-   * @param {string} condition free-form string of conditions this class requires e.g. "opponent is heavily armored"
-   */
-  constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damageFormula, condition) {
-    this.verb = verb;
-    this.numberOfAttacks = numberOfAttacks;
-    this.isFast = isFast;
-    this.range = range;
-    this.bonusToHit = bonusToHit;
-    this.damageFormula = damageFormula;
-    this.condition = condition;
-  }
-
-  _rangeDescription() {
-    const attack = this.numberOfAttacks === 1 ? "Attack" : "Attacks";
-    if (this.range === "melee") {
-      return `Melee ${attack}`;
-    } else if (this.range === "reach") {
-      return `Melee ${attack} with Reach`;
-    } else if (this.range === "short" || this.range === "medium" || this.range === "long") {
-      return `${this.range.charAt(0).toUpperCase() + this.range.slice(1)}-Range ${attack}`;
-    } else {
-      return "(UNKNOWN RANGE)";
-    }
-  }
-
-  description() {
-    // "1 Attack at +3 to hit dealing 1d6 damage if some condition is filled"
-    return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at
-      ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit
-      dealing ${this.damageFormula} damage${this.condition === "" ? "" : ` if ${this.condition}`}`;
-  }
-}
-
-// CORE COMPONENTS //
 // storing component mappings for current character - this allows us to have a class attached to relevant
 // UI components to make it easy to build complex logic. This way, the component can define its logic
 // (example, die rolling), and we can easily connect it to the div using ids
@@ -1627,7 +1571,10 @@ ${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE
   }
 }
 
-// COMPOSITE COMPONENTS //
+/*******************************************************************
+ *********************** COMPOSITE COMPONENTS **********************
+ *******************************************************************/
+
 /**
  * Entry with dice button, key, and value.
  *
@@ -1727,7 +1674,7 @@ function activeEffect(effect, duration, description) {
   });
 }
 
-function getEffectsEntries(characterModel) {
+function effectsEntries(characterModel) {
   const activeEffects = characterModel.active_effects;
   const effectsEntries = [];
   for (let i = 0; i < activeEffects.length; i++) {
@@ -1762,7 +1709,70 @@ function classKeyValue(key, characterModel, attribute, notes = []) {
   });
 }
 
-// Utilities
+/*******************************************************************
+ **************************** UTILITIES ****************************
+ *******************************************************************/
+
+/**
+ * Returns white or black depending on a provided color that should visually stand out in comparison
+ * @param {string} hexColor String for the hex code of a color
+ * @returns {string} a hex string for white or black
+ */
+function getContrastColor(hexColor) {
+  hexColor = hexColor.replace('#', '');
+  const red = parseInt(hexColor.slice(0, 2), 16);
+  const green = parseInt(hexColor.slice(2, 4), 16);
+  const blue = parseInt(hexColor.slice(4, 6), 16);
+
+  // Calculate the brightness (luminance) using the relative luminance formula
+  const brightness = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
+  return (brightness > 0.5) ? '#000000' : '#FFFFFF';
+}
+
+class WeaponAttack {
+  /**
+   * WIP - model for weapon attacks, intended to contain the necessary info to describe an attack in a standard way
+   * TODO - represent "Critically hits on 19" somehow
+   *
+   * @param {string} verb descriptive verb of this attack (Strike, Shoot, etc) along with any distinguishing conditions
+   * @param {number} numberOfAttacks
+   * @param {boolean} isFast
+   * @param {string} range TODO - use an enum or similar: none, melee, reach, short, medium, or long
+   * @param {number} bonusToHit
+   * @param {string} damageFormula TODO - represent as a class eventually
+   * @param {string} condition free-form string of conditions this class requires e.g. "opponent is heavily armored"
+   */
+  constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damageFormula, condition) {
+    this.verb = verb;
+    this.numberOfAttacks = numberOfAttacks;
+    this.isFast = isFast;
+    this.range = range;
+    this.bonusToHit = bonusToHit;
+    this.damageFormula = damageFormula;
+    this.condition = condition;
+  }
+
+  _rangeDescription() {
+    const attack = this.numberOfAttacks === 1 ? "Attack" : "Attacks";
+    if (this.range === "melee") {
+      return `Melee ${attack}`;
+    } else if (this.range === "reach") {
+      return `Melee ${attack} with Reach`;
+    } else if (this.range === "short" || this.range === "medium" || this.range === "long") {
+      return `${this.range.charAt(0).toUpperCase() + this.range.slice(1)}-Range ${attack}`;
+    } else {
+      return "(UNKNOWN RANGE)";
+    }
+  }
+
+  description() {
+    // "1 Attack at +3 to hit dealing 1d6 damage if some condition is filled"
+    return `${this.numberOfAttacks} ${this.isFast ? "Fast " : ""}${this._rangeDescription()} at
+      ${this.bonusToHit >= 0 ? `+${this.bonusToHit}` : this.bonusToHit} to hit
+      dealing ${this.damageFormula} damage${this.condition === "" ? "" : ` if ${this.condition}`}`;
+  }
+}
+
 function logDieRoll(tag, result) {
   document.getElementById("cs-die-log").innerHTML = new DieLogEntry(tag, result).getHTML() + document.getElementById("cs-die-log").innerHTML;
 }
@@ -1798,7 +1808,9 @@ function rollFormula(formula) {
   return result;
 }
 
-// Main rendering logic
+/*******************************************************************
+ **************************** RENDERING ****************************
+ *******************************************************************/
 
 /**
  * Attach expected listeners to each div - after divs have been created by manipulating document HTML
@@ -1991,7 +2003,7 @@ function renderPage(characterName) {
         divider: new SectionDivider("Effects"),
         entries: [
           new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
-        ].concat(getEffectsEntries(characterModel)),
+        ].concat(effectsEntries(characterModel)),
       })
     ]),
 
