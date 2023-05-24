@@ -227,6 +227,7 @@ CHARACTER_SHEET_STORAGE_KEY = "character_sheets_v2";
 COLOR_MODE_STORAGE_KEY = "color_mode";
 DISPLAY_MODE_STORAGE_KEY = "display_mode";
 THEME_STORAGE_KEY = "theme";
+TOOLTIP_POSITIONS = ["bottomleft", "bottomright", "topleft", "topright"];
 
 /*******************************************************************
  *************************** APPEARANCE ****************************
@@ -1914,6 +1915,9 @@ function positionTooltip() {
   tooltip.style.top = `${top}px`;
   tooltip.style.left = `${left}px`;
 
+  for (let i = 0; i < TOOLTIP_POSITIONS.length; i++) {
+    tooltip.classList.remove(`cs-${TOOLTIP_POSITIONS[i]}`);
+  }
   tooltip.classList.add(`cs-${quotePosition}`);
 }
 
