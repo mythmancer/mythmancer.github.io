@@ -1360,11 +1360,11 @@ class FormSection extends HTMLComponent {
     if (hasNext) {
       this.entries.push(new SectionEntry({
         editButton: new NextButton(),
-      }));      
+      }));
     } else {
       this.entries.push(new SectionEntry({
         editButton: new FinishButton(formName, EMPTY_CHARACTER_MODEL, ATTRIBUTES),
-      }));            
+      }));
     }
   }
 
@@ -1867,31 +1867,17 @@ function armor(part, characterModel, attribute) {
 /**
  * An entry displaying a (typically temporary) effect on the character such as a spell buff
  *
- * @param {string} effect name of this effect
- * @param {string} duration description of the remaining time on this effect
- * @param {boolean} isExternal whether the effect is external (not from something the character is wearing/owns)
- * @param {string} description Small-text description of this effect
+ * @param {string} source name of these effects
+ * @param {list[object]} effects list of effects from this source
  */
-function activeEffect(effect, duration, isExternal, description) {
-  return new SectionEntry({
-    mainKeyText: effect,
-    editButton: isExternal ? new EditButton("Edit / Remove") : null,
-    subEntries: [
-      new SectionSubEntry({text: description}),
-      new SectionSubEntry({text: `Duration: ${duration}`})
-    ]
-  });
-}
-
-function effectsEntries(characterModel) {
-  const activeEffects = characterModel.active_effects;
-  const effectsEntries = [];
-  for (let i = 0; i < activeEffects.length; i++) {
-    const effect = activeEffects[i];
-    if (!getDisplayMode().show_debug && effect.hide_from_list) {
-      continue ;
+function effectEntry(source, effects) {
+  const subEntries = [];
+  let isExternal = false;
+  for (let i = 0; i < effects.length; i++) {
+    const effect = effects[i];
+    if (effect.is_external) {
+      isExternal = true;
     }
-
     let description = effect.description;
     if (!description) {
       if (effect.operation === "add") {
@@ -1900,7 +1886,45 @@ function effectsEntries(characterModel) {
         description = `Overrides ${ATTRIBUTES[effect.attribute].name} to ${effect.adjustment}`;
       }
     }
-    effectsEntries.push(activeEffect(effect.source, effect.duration, effect.is_external, description));
+    subEntries.push(new SectionSubEntry({text: `${description} | Duration: ${effect.duration}`}));
+    // subEntries.push(new SectionSubEntry({text: `Duration: ${effect.duration}`}));
+  }
+
+  return new SectionEntry({
+    mainKeyText: source,
+    editButton: isExternal ? new EditButton("Edit / Remove") : null,
+    subEntries: subEntries,
+  });
+}
+
+function effectsEntries(characterModel) {
+  const activeEffects = characterModel.active_effects;
+  const effectsBySource = {};
+  for (let i = 0; i < activeEffects.length; i++) {
+    const effect = activeEffects[i];
+    if (effectsBySource.hasOwnProperty(effect.source)) {
+      effectsBySource[effect.source].push(effect);
+    } else {
+      effectsBySource[effect.source] = [effect];
+    }
+  }
+
+  const effectsEntries = [];
+  for (let effectSource in effectsBySource) {
+    // hide from the list only if all effects from this source should be hidden
+    let hideFromList = true;
+    for (let i = 0; i < effectsBySource[effectSource].length; i++) {
+      if (!effectsBySource[effectSource][i].hide_from_list) {
+        hideFromList = false;
+      }
+    }
+
+    if (!getDisplayMode().show_debug && hideFromList) {
+      continue ;
+    }
+
+    console.log(effectSource, effectsBySource[effectSource])
+    effectsEntries.push(effectEntry(effectSource, effectsBySource[effectSource]));
   }
   return effectsEntries;
 }
