@@ -1573,7 +1573,7 @@ class DiceButton extends HTMLComponent {
    * Button that rolls dice
    * @param {string} text Button text
    */
-  constructor(text, formula, showIcon = true) {
+  constructor(text, formula, showIcon = true, showAlways = false) {
     super({
       listeners: {
         "click": function() {
@@ -1584,12 +1584,13 @@ class DiceButton extends HTMLComponent {
     });
     this.text = text;
     this.formula = formula;
+    this.isHidden = !showAlways && !getDisplayMode().show_dice_buttons;
     this.showIcon = showIcon;
   }
 
   getHTML() {
     return `
-    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg ${getDisplayMode().show_dice_buttons ? "" : "hidden"}">
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg ${this.isHidden ? "hidden" : ""}">
         ${this.showIcon ? "⚅" : ""} ${this.text}
     </div>
     `;
@@ -1956,7 +1957,6 @@ function effectsEntries(characterModel) {
       continue ;
     }
 
-    console.log(effectSource, effectsBySource[effectSource])
     effectsEntries.push(effectEntry(effectSource, effectsBySource[effectSource]));
   }
   return effectsEntries;
@@ -2301,7 +2301,7 @@ function renderPage(characterName) {
   const navHTML = new CharacterListings(listCharacters(), characterName).getHTML();
   characterListingsDiv.innerHTML = navHTML;
 
-  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton(`d${die}`, `1d${die}`, false));
+  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton(`d${die}`, `1d${die}`, false, true));
   document.getElementById("cs-die-rolls").innerHTML = dieRolls.map(dieRoll => dieRoll.getHTML()).join("");
 
   document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
