@@ -5,8 +5,8 @@
 
 :root {
     /* Character colors adjust dynamically */
-    --cs-color-character-bg: #000000;
-    --cs-color-character-text: #ffffff;
+    --cs-color-character-bg: #8386cc;
+    --cs-color-character-text: #8386cc;
 
     /* Constants */
     --cs-height-min: 24px;
@@ -260,6 +260,7 @@ body.character-sheet {
 
 .cs-panel {
     overflow: scroll;
+    max-width: 40%;
 }
 
 .cs-section {

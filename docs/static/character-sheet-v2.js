@@ -221,6 +221,15 @@ COLOR_MODE_STORAGE_KEY = "color_mode";
 DISPLAY_MODE_STORAGE_KEY = "display_mode";
 THEME_STORAGE_KEY = "theme";
 TOOLTIP_POSITIONS = ["bottomleft", "bottomright", "topleft", "topright"];
+EMPTY_CHARACTER_MODEL =   {
+  "meta": {
+    "color": "#8386cc",
+  },
+  "hit_points": {
+    "current": 0
+  },
+  "active_external_effects": [],
+};
 
 /*******************************************************************
  *************************** APPEARANCE ****************************
@@ -508,8 +517,14 @@ TITLE_ATTRIBUTE = new Attribute({
   name: "Title",
   isIntrinsic: true,
 });
+NAME_ATTRIBUTE = new Attribute({
+  path: "experience",
+  name: "Experience",
+  isIntrinsic: true,
+});
+
 COLOR_ATTRIBUTE = new Attribute({
-  path: "color",
+  path: "meta.color",
   isIntrinsic: true,
 });
 HIT_POINTS_TOTAL_ATTRIBUTE = new Attribute({
@@ -1225,6 +1240,12 @@ function getCharacterModel(characterName) {
   return JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY))[characterName];
 }
 
+function addCharacterModel(characterModel) {
+  const characters = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
+  characters[characterModel.name] = characterModel;
+  window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(characters));
+}
+
 function listCharacters(characterName) {
   return Object.keys(JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY)));
 }
@@ -1312,6 +1333,69 @@ class PaneSection extends HTMLComponent {
         </div>
     </div>
     `;
+  }
+}
+
+class FormSection extends HTMLComponent {
+  /**
+   * TODO
+   */
+  constructor({
+    formName = null,
+    divider = null,
+    entries = [],
+    isFirstPhase = false,
+    hasNext = False,
+  }) {
+    super({});
+    this.divider = divider;
+    this.entries = entries;
+    this.isFirstPhase = isFirstPhase;
+    if (hasNext) {
+      this.entries.push(new SectionEntry({
+        editButton: new NextButton(),
+      }));      
+    } else {
+      this.entries.push(new SectionEntry({
+        editButton: new FinishButton(formName, EMPTY_CHARACTER_MODEL, ATTRIBUTES),
+      }));            
+    }
+  }
+
+  getHTML() {
+    return `
+    <div class="cs-col cs-section ${this.isFirstPhase ? "" : "hidden"}">
+        ${this.divider == null ? "" : this.divider.getHTML()}
+        <div class="cs-col">
+            ${this.entries.map((entry) => entry.getHTML()).join("")}
+        </div>
+    </div>
+    `;
+  }
+}
+
+class FormSectionInputEntry extends HTMLComponent {
+  constructor({
+    formName = null,
+    mainKeyText = "",
+    attribute = null,
+    numerical = false,
+  }) {
+    super({});
+    this.mainKeyText = mainKeyText;
+    this.formName = formName;
+    this.attribute = attribute;
+    this.numerical = numerical;
+  }
+
+  getHTML() {
+    return `
+    <div class="cs-col cs-padding-h cs-section-entry">
+       <div class="cs-row">
+          <div class="cs-elem">${this.mainKeyText}</div>
+          <div class="cs-elem"><input class="${this.formName} ${this.numerical ? "numerical" : ""}" type="text" id="${this.formName}-attribute-${this.attribute}"></div>
+       </div>
+    </div>`;
   }
 }
 
@@ -1428,18 +1512,18 @@ class SectionSubEntry extends HTMLComponent {
    * @param {string} text Optional text for this sub-entry
    */
   constructor({
-                diceButton = null,
+                button = null,
                 text = ""
               }) {
     super({});
-    this.diceButton = diceButton;
+    this.button = button;
     this.text = text;
   }
 
   getHTML() {
     return `
     <div class="cs-row">
-        ${this.diceButton == null ? "" : this.diceButton.getHTML()}
+        ${this.button == null ? "" : this.button.getHTML()}
         <div class="cs-elem cs-font-size-sm">${this.text}</div>
     </div>
     `;
@@ -1472,6 +1556,71 @@ class DiceButton extends HTMLComponent {
     `;
   }
 }
+
+class NextButton extends HTMLComponent {
+  /**
+   * Button that goes to the next step in the current flow
+   */
+  constructor() {
+    super({
+      listeners: {
+        "click": function(event) {
+          const currentSection = event.target.closest(".cs-section");
+          let nextSection = currentSection.nextElementSibling;
+          if (!nextSection) {
+            // bottom of panel, go to next
+            nextSection = currentSection.closest(".cs-panel").nextElementSibling.children[0];
+          }
+          nextSection.classList.remove("hidden");
+        },
+      },
+    });
+  }
+
+  getHTML() {
+    return `
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
+        Next
+    </div>
+    `;
+  }
+}
+
+class FinishButton extends HTMLComponent {
+  /**
+   * Button that completes a form by collecting all the data from it
+   * The class of the input elements should be ${formName}, their ids should be
+   *  ${formName}-${attributePath}, where ${attributePath} defines how they get
+   *  populated into the resulting json
+   */
+  constructor(formName, baseModel, attributeDataBase) {
+    super({
+      listeners: {
+        "click": function(event) {
+          const inputs = event.target.closest(".cs-panels").getElementsByClassName(formName);
+          const model = structuredClone(baseModel);
+          for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            const attribute = input.id.substr(formName.length + "-attribute-".length);
+            const value = input.classList.contains("numerical") ? parseInt(input.value) : input.value;
+            attributeDataBase[attribute].setValue(model, value);
+          }
+          addCharacterModel(model);
+          renderPage();
+        },
+      },
+    });
+  }
+
+  getHTML() {
+    return `
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
+        Finish
+    </div>
+    `;
+  }
+}
+
 
 class EditButton extends HTMLComponent {
   /**
@@ -1658,7 +1807,7 @@ function weaponAndActions(weapon, attacks) {
     mainKeyText: weapon,
     editButton: new EditButton("Edit / Remove"),
     subEntries: attacks.map((attack) => new SectionSubEntry({
-      diceButton: new DiceButton(attack.verb, attack.damageFormula),
+      button: new DiceButton(attack.verb, attack.damageFormula),
       text: attack.description()
     }))
   });
@@ -1945,6 +2094,141 @@ function positionTooltips() {
   });
 }
 
+function renderNewCharacterForm() {
+  renderPage();
+
+  const phase1 = new FormSection({
+    formName: "cs-new-character",
+    hasNext: true,
+    isFirstPhase: true,
+    divider: new SectionDivider("Basics"),
+    entries: [
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Name",
+        attribute: "name",
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Title",
+        attribute: "title",
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Race",
+        attribute: "race",
+      }),
+    ]
+  });
+
+  const phase2 = new FormSection({
+    formName: "cs-new-character",
+    hasNext: true,
+    divider: new SectionDivider("Abilities"),
+    entries: [
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Strength",
+        attribute: "ability_scores.strength",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Constitution",
+        attribute: "ability_scores.constitution",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Dexterity",
+        attribute: "ability_scores.dexterity",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Intelligence",
+        attribute: "ability_scores.intelligence",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Wisdom",
+        attribute: "ability_scores.wisdom",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Charisma",
+        attribute: "ability_scores.charisma",
+        numerical: true,
+      }),
+    ]
+  });
+
+  const phase3 = new FormSection({
+    formName: "cs-new-character",
+    hasNext: false,
+    divider: new SectionDivider("Initial Levels, Hit Points, Experience"),
+    entries: [
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Experience",
+        attribute: "experience",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Fighter Level",
+        attribute: "fighter.level",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Rogue Level",
+        attribute: "rogue.level",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Mage Level",
+        attribute: "mage.level",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Warlock Level",
+        attribute: "warlock.level",
+        numerical: true,
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Total Hit Points",
+        attribute: "hit_points.total",
+        numerical: true,
+      }),
+    ]
+  });
+
+  const panes = [
+    new Pane(
+      [phase1, phase2, phase3]
+    )
+  ];
+
+  document.getElementById("cs-new-character-button").classList.add("cs-character-listing-current");
+
+  document.documentElement.style.setProperty("--cs-color-character-bg", "#8386cc");
+  document.documentElement.style.setProperty("--cs-color-character-text", "#000000");
+
+  document.getElementById("cs-right-pane").innerHTML = `
+      <div id="cs-current-character">
+        <div class="cs-panels">${panes.map(pane => pane.getHTML()).join("")}</div>
+      </div>
+    `;
+
+  postRender();
+}
+
 /**
  * Convert base character model to fully populated character model,
  * and re-render the entire character pane
@@ -1964,6 +2248,8 @@ function renderPage(characterName) {
     postRender();
     return ;
   }
+
+  document.getElementById("cs-new-character-button").classList.remove("cs-character-listing-current");
 
   const displayMode = getDisplayMode();
   const baseCharacterModel = getCharacterModel(characterName);
@@ -2179,6 +2465,8 @@ function postRender() {
 window.onload = function () {
   // only for the demo
   window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(CHARACTER_MODELS));
+
+  document.getElementById("cs-new-character-button").addEventListener("click", renderNewCharacterForm);
 
   setAppearance();
   renderPage(null);
