@@ -1246,6 +1246,12 @@ function addCharacterModel(characterModel) {
   window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(characters));
 }
 
+function deleteCharacterModel(characterName) {
+  const characters = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
+  delete characters[characterName];
+  window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(characters));
+}
+
 function listCharacters(characterName) {
   return Object.keys(JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY)));
 }
@@ -2464,7 +2470,8 @@ function postRender() {
 
 window.onload = function () {
   // only for the demo
-  window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(CHARACTER_MODELS));
+  const existingData = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
+  window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify({...existingData, ...CHARACTER_MODELS}));
 
   document.getElementById("cs-new-character-button").addEventListener("click", renderNewCharacterForm);
 

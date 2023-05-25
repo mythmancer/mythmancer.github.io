@@ -186,6 +186,12 @@ body.character-sheet {
     margin-left: 5px;
 }
 
+.cs-left-pane-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cs-gap);
+}
+
 .cs-left-pane-listing {
     overflow: clip;
     padding-top: 5px;
