@@ -2490,20 +2490,6 @@ function renderPage(characterName) {
 }
 
 function postRender() {
-  // setup service worker for offline loading, if available in browser
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/static/service-worker.js").then(
-      registration => {
-        console.log("Service worker registered");
-      },
-      error => {
-        console.log(`Service worker registration failed: ${error}`);
-      }
-    );
-  } else {
-    console.log(`Browser does not support service workers`);
-  }
-
   // all logic that needs to be done after rendering is done - such as attaching listeners
   attachComponentListeners();
   initializeComponents();
