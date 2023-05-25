@@ -6,7 +6,7 @@
 :root {
     /* Character colors adjust dynamically */
     --cs-color-character-bg: #8386cc;
-    --cs-color-character-text: #8386cc;
+    --cs-color-character-text: #000000;
 
     /* Constants */
     --cs-height-min: 24px;
@@ -221,6 +221,13 @@ body.character-sheet {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+#cs-die-rolls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .cs-die-log-entry {
