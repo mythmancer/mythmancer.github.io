@@ -131,6 +131,7 @@ body.character-sheet {
 .cs-current-hit-points {
     /* TODO: Urgh. Figure out why the input css is overriding this, even though it's declared before */
     width: 50px !important;
+    padding-left: 0 !important;
     text-align: center;
 }
 
