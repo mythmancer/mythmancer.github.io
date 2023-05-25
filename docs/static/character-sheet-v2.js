@@ -219,6 +219,9 @@ const CHARACTER_MODELS = {
 CHARACTER_SHEET_STORAGE_KEY = "character_sheets_v2";
 COLOR_MODE_STORAGE_KEY = "color_mode";
 DISPLAY_MODE_STORAGE_KEY = "display_mode";
+DEFAULT_CHARACTER_COLOR = "#8386cc",
+DEFAULT_FADED_BG_OPACITY = "26";  // in hex
+DEFAULT_FADED_TEXT_OPACITY = "7f";  // in hex
 THEME_STORAGE_KEY = "theme";
 TOOLTIP_POSITIONS = ["bottomleft", "bottomright", "topleft", "topright"];
 EMPTY_CHARACTER_MODEL =   {
@@ -531,17 +534,11 @@ HIT_POINTS_TOTAL_ATTRIBUTE = new Attribute({
   path: "hit_points.total",
   name: "Total Hit Points",
   isIntrinsic: true,
-  formatFunction: characterData => {
-    return `${characterData.hit_points.current} / ${characterData.hit_points.total}`;
-  },
 });
 HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute({
   path: "hit_points.current",
   name: "Current Hit Points",
   isIntrinsic: true,
-  formatFunction: characterData => {
-    return `${characterData.hit_points.current} / ${characterData.hit_points.total}`;
-  },
 });
 ABILITY_SCORES_STRENGTH_ATTRIBUTE = new Attribute({
   path: "ability_scores.strength",
@@ -1536,6 +1533,41 @@ class SectionSubEntry extends HTMLComponent {
   }
 }
 
+class HitPointsEntry extends HTMLComponent {
+  constructor(characterModel) {
+    super({});
+    this.current = characterModel.hit_points.current;
+    this.total = characterModel.hit_points.total;
+    this.currentTooltip = characterModel.tooltips.hit_points.current;
+    this.currentTotal = characterModel.tooltips.hit_points.total;
+  }
+
+  getHTML() {
+    return `
+    <div class="cs-col cs-padding-h cs-section-entry">
+      <div class="cs-row">
+        <div class="cs-row">
+          <div class="cs-elem">
+            Hit Points
+          </div>
+        </div>
+        <div class="cs-row">
+          <div class="cs-elem ${this.currentTooltip ? "cs-has-tooltip" : ""}">
+            <input class="cs-current-hit-points" type="text" value="${this.current}">
+            ${this.currentTooltip ? `<div class="cs-tooltiptext">${this.currentTooltip}</div>` : ""}
+          </div>
+          /
+          <div class="cs-elem ${this.totalTooltip ? "cs-has-tooltip" : ""}">
+            ${this.total}
+            ${this.totalTooltip ? `<div class="cs-tooltiptext">${this.totalTooltip}</div>` : ""}
+          </div>
+        </div>
+      </div>
+    </div>
+`;
+  }
+}
+
 class DiceButton extends HTMLComponent {
   /**
    * Button that rolls dice
@@ -1613,7 +1645,7 @@ class FinishButton extends HTMLComponent {
             attributeDataBase[attribute].setValue(model, value);
           }
           addCharacterModel(model);
-          renderPage();
+          renderPage(model.name);
         },
       },
     });
@@ -2248,9 +2280,6 @@ function renderNewCharacterForm() {
 
   document.getElementById("cs-new-character-button").classList.add("cs-character-listing-current");
 
-  document.documentElement.style.setProperty("--cs-color-character-bg", "#8386cc");
-  document.documentElement.style.setProperty("--cs-color-character-text", "#000000");
-
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
         <div class="cs-panels">${panes.map(pane => pane.getHTML()).join("")}</div>
@@ -2279,6 +2308,11 @@ function renderPage(characterName) {
 
   if (characterName == null) {
     document.getElementById("cs-right-pane").innerHTML = "";
+
+    document.documentElement.style.setProperty("--cs-color-character-bg", DEFAULT_CHARACTER_COLOR);
+    document.documentElement.style.setProperty("--cs-color-character-faded-bg", DEFAULT_CHARACTER_COLOR + DEFAULT_FADED_BG_OPACITY);
+    document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(DEFAULT_CHARACTER_COLOR));
+
     postRender();
     return ;
   }
@@ -2369,11 +2403,7 @@ function renderPage(characterName) {
               characterModel: characterModel,
               attribute: "race",
             }),
-            new SectionEntry({
-              mainKeyText: "Hit Points",
-              characterModel: characterModel,
-              attribute: "hit_points.total",
-            }),
+            new HitPointsEntry(characterModel),
             new SectionEntry({
               mainKeyText: "Armor Class",
               characterModel: characterModel,
@@ -2478,6 +2508,7 @@ function renderPage(characterName) {
   ];
 
   document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.meta.color);
+  document.documentElement.style.setProperty("--cs-color-character-faded-bg", characterModel.meta.color + '26');
   document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.meta.color));
 
   document.getElementById("cs-right-pane").innerHTML = `
