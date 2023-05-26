@@ -297,9 +297,9 @@ DISPLAY_MODES = {
 // Pane 2 of 3 Equipment and Effects
 // Pane 3 of 3 Character Bio and Class Details
 DEFAULT_ARRANGEMENT = [
-  ["basics", "abilities", "save_throws", "skills", "weapons_attacks"],
-  ["armor", "effects"],
-  ["levelling", "fighter", "rogue", "mage", "warlock"],
+  ["character", "abilities", "save_throws", "skills"],
+  ["weapons_attacks", "armor"],
+  ["fighter", "rogue", "mage", "warlock", "effects"],
 ];
 
 COLUMN_MODES = {
@@ -1412,7 +1412,7 @@ class PaneSection extends HTMLComponent {
   getHTML() {
     return `
     <div id="${this.id}" class="cs-col cs-section" draggable="true">
-        ${this.divider == null ? "" : this.divider.getHTML()}
+        ${this.divider.getHTML()}
         <div class="cs-col">
             ${this.entries.map((entry) => entry.getHTML()).join("")}
         </div>
@@ -1497,9 +1497,15 @@ class SectionDivider extends HTMLComponent {
   getHTML() {
     return `
     <div class="cs-row cs-elem">
-        <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
-        <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading}</div>
-        <div class="arrow-line arrow-line-left cs-width-full"></div>
+      <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
+      <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading}</div>
+      <div class="arrow-line arrow-line-left cs-width-full"></div>
+      <div class="cs-drag-handle">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
+          </path>
+        </svg>
+      </div>
     </div>
     `;
   }
@@ -2286,7 +2292,7 @@ function renderNewCharacterForm() {
     formName: "cs-new-character",
     hasNext: true,
     isFirstPhase: true,
-    divider: new SectionDivider("Basics"),
+    divider: new SectionDivider("Character"),
     entries: [
       new FormSectionInputEntry({
         formName: "cs-new-character",
@@ -2448,8 +2454,10 @@ function renderPage(characterName) {
   let html = "";
 
   const sections = {
-    basics: new PaneSection({
-      name: "basics",
+    // TODO: decide section name
+    character: new PaneSection({
+      name: "character",
+      divider: new SectionDivider("Character"),
       entries: [
         new SectionEntry({
           mainKeyText: "Name",
@@ -2465,6 +2473,12 @@ function renderPage(characterName) {
           mainKeyText: "Race",
           characterModel: characterModel,
           attribute: "race",
+        }),
+        new SectionEntry({
+          mainKeyText: "Total Character Level",
+          characterModel: characterModel,
+          attribute: "total_character_level",
+          editButton: new EditButton("Level Up / Edit Levels")
         }),
         new HitPointsEntry(characterModel),
         new SectionEntry({
@@ -2508,6 +2522,16 @@ function renderPage(characterName) {
       name: "weapons_attacks",
       divider: new SectionDivider("Weapons & Attacks"),
       entries: [
+        new SectionEntry({
+          mainKeyText: "Base Attack Bonus",
+          characterModel: characterModel,
+          attribute: "attacks.base_bonus",
+        }),
+        new SectionEntry({
+          mainKeyText: "Allowed Weapons",
+          characterModel: characterModel,
+          attribute: "equipment.allowed_weapons",
+        }),
         new SectionEntry({editButton: new EditButton("+ Equip a Weapon")}),
         weaponAndActions("Pipe Wrench", [
           new WeaponAttack("Crazy Strike wtf", 1, false, "melee", 1, "1d4 + 3d8 + 5 + 2 + 6d1", ""),
@@ -2520,6 +2544,11 @@ function renderPage(characterName) {
       name: "armor",
       divider: new SectionDivider("Armor"),
       entries: [ // TODO - fix alignment of Equip to align left if possible
+        new SectionEntry({
+          mainKeyText: "Allowed Armor",
+          characterModel: characterModel,
+          attribute: "equipment.allowed_armor",
+        }),
         armor("Chest", characterModel, "equipment.armor.chest"),
         armor("Shield", characterModel, "equipment.armor.shield"),
         armor("Gloves", characterModel, "equipment.armor.gloves"),
@@ -2538,31 +2567,6 @@ function renderPage(characterName) {
       entries: [
         new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
       ].concat(effectsEntries(characterModel)),
-    }),
-    levelling: new PaneSection({
-      name: "levelling",
-      entries: [
-        new SectionEntry({
-          mainKeyText: "Total Character Level",
-          characterModel: characterModel,
-          attribute: "total_character_level",
-          editButton: new EditButton("Level Up / Edit Levels")
-        }), new SectionEntry({
-          mainKeyText: "Base Attack Bonus",
-          characterModel: characterModel,
-          attribute: "attacks.base_bonus",
-        }),
-        new SectionEntry({
-          mainKeyText: "Allowed Weapons",
-          characterModel: characterModel,
-          attribute: "equipment.allowed_weapons",
-        }),
-        new SectionEntry({
-          mainKeyText: "Allowed Armor",
-          characterModel: characterModel,
-          attribute: "equipment.allowed_armor",
-        })
-      ]
     }),
   };
 
