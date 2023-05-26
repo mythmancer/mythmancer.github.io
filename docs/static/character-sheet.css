@@ -14,7 +14,7 @@
     --cs-max-width-tooltip: 400px;
 
     /* Programmatically set properties:
-    The follow based on character-specific configs:
+    The following based on character-specific configs:
       * --cs-color-character-bg
       * --cs-color-character-faded-bg
       * --cs-color-character-text
@@ -34,6 +34,9 @@
       * --cs-font-size-std
       * --cs-font-size-sm
       * --cs-width-divider-left
+
+    The following based on screen width:
+      * --cs-panel-max-width
     */
 }
 
@@ -299,7 +302,7 @@ body.character-sheet {
 
 .cs-panel {
     overflow: scroll;
-    max-width: 33%;
+    max-width: var(--cs-panel-max-width);
 }
 
 .cs-section {

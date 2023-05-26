@@ -292,6 +292,16 @@ DISPLAY_MODES = {
   },
 };
 
+COLUMN_MODES = {
+  1: "100%",
+  2: "50%",
+  3: "34%",
+};
+
+COLUMN_MODE = 3;
+
+CURRENT_CHARACTER = null;
+
 function setAppearance() {
   const colorMode = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY) || "light";
   for (let prop in COLOR_MODES[colorMode]) {
@@ -1303,6 +1313,11 @@ class Pane extends HTMLComponent {
     this.sections = sections;
   }
 
+  combine(otherPane) {
+    this.sections = this.sections.concat(otherPane.sections);
+    return this;
+  }
+
   getHTML() {
     return `
     <div class="cs-panel cs-col cs-padding-v">
@@ -1573,7 +1588,7 @@ class DiceButton extends HTMLComponent {
    * Button that rolls dice
    * @param {string} text Button text
    */
-  constructor(text, formula, showIcon = true) {
+  constructor(text, formula, showIcon = true, showAlways = false) {
     super({
       listeners: {
         "click": function() {
@@ -1584,12 +1599,13 @@ class DiceButton extends HTMLComponent {
     });
     this.text = text;
     this.formula = formula;
+    this.isHidden = !showAlways && !getDisplayMode().show_dice_buttons;
     this.showIcon = showIcon;
   }
 
   getHTML() {
     return `
-    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg ${getDisplayMode().show_dice_buttons ? "" : "hidden"}">
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg ${this.isHidden ? "hidden" : ""}">
         ${this.showIcon ? "⚅" : ""} ${this.text}
     </div>
     `;
@@ -1799,7 +1815,7 @@ class SettingsPanel extends HTMLComponent {
 
   setDisplayMode(displayMode) {
     window.localStorage.setItem(DISPLAY_MODE_STORAGE_KEY, displayMode);
-    renderPage();
+    renderPage(CURRENT_CHARACTER);
   }
 
   getHTML() {
@@ -1956,7 +1972,6 @@ function effectsEntries(characterModel) {
       continue ;
     }
 
-    console.log(effectSource, effectsBySource[effectSource])
     effectsEntries.push(effectEntry(effectSource, effectsBySource[effectSource]));
   }
   return effectsEntries;
@@ -2158,7 +2173,7 @@ function positionTooltips() {
 }
 
 function renderNewCharacterForm() {
-  renderPage();
+  renderPage(null);
 
   const phase1 = new FormSection({
     formName: "cs-new-character",
@@ -2296,12 +2311,13 @@ function renderNewCharacterForm() {
 function renderPage(characterName) {
   // Clear out component store
   COMPONENT_STORE = {};
+  CURRENT_CHARACTER = characterName;
 
   const characterListingsDiv = document.getElementById("cs-character-listings");
   const navHTML = new CharacterListings(listCharacters(), characterName).getHTML();
   characterListingsDiv.innerHTML = navHTML;
 
-  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton(`d${die}`, `1d${die}`, false));
+  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton(`d${die}`, `1d${die}`, false, true));
   document.getElementById("cs-die-rolls").innerHTML = dieRolls.map(dieRoll => dieRoll.getHTML()).join("");
 
   document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
@@ -2381,7 +2397,7 @@ function renderPage(characterName) {
     );
   }
 
-  const panes = [
+  let panes = [
 
     // Pane 1 of 3 Core gameplay info and Actions
     new Pane([
@@ -2507,6 +2523,12 @@ function renderPage(characterName) {
     ]),
   ];
 
+  if (COLUMN_MODE === 2) {
+    panes = [panes[0].combine(panes[1]), panes[2]];
+  } else if (COLUMN_MODE === 1) {
+    panes = [panes[0].combine(panes[1]).combine(panes[2])];
+  }
+
   document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.meta.color);
   document.documentElement.style.setProperty("--cs-color-character-faded-bg", characterModel.meta.color + '26');
   document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.meta.color));
@@ -2518,6 +2540,22 @@ function renderPage(characterName) {
     `;
 
   postRender();
+}
+
+function resizePage(event) {
+  const previousColumnMode = COLUMN_MODE;
+  if (window.innerWidth >= 1510) {
+    COLUMN_MODE = 3;
+  } else if (window.innerWidth < 1510 && window.innerWidth >= 1121) {
+    COLUMN_MODE = 2;
+  } else if (window.innerWidth < 1121) {
+    COLUMN_MODE = 1;
+  }
+
+  if (previousColumnMode != COLUMN_MODE) {
+    document.documentElement.style.setProperty("--cs-panel-max-width", COLUMN_MODES[COLUMN_MODE]);
+    renderPage(CURRENT_CHARACTER);
+  }
 }
 
 function postRender() {
@@ -2535,5 +2573,8 @@ window.onload = function () {
   document.getElementById("cs-new-character-button").addEventListener("click", renderNewCharacterForm);
 
   setAppearance();
+  resizePage();
   renderPage(null);
+
+  addEventListener("resize", resizePage);
 };
