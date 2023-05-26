@@ -1355,7 +1355,11 @@ class PaneSection extends HTMLComponent {
           e.preventDefault();
           e.stopPropagation();
           CURRENT_NEXT_SIBLING = e.target.closest(".cs-section");
-          CURRENT_NEXT_SIBLING.parentNode.insertBefore(PLACEHOLDER_ELEMENT, CURRENT_NEXT_SIBLING);
+          if (CURRENT_NEXT_SIBLING != DRAGGED_ELEMENT) {
+            CURRENT_NEXT_SIBLING.parentNode.insertBefore(PLACEHOLDER_ELEMENT, CURRENT_NEXT_SIBLING);
+          } else {
+            PLACEHOLDER_ELEMENT.remove();
+          }
         },
         "dragstart": function(e) {
           DRAGGED_ELEMENT = e.target;
