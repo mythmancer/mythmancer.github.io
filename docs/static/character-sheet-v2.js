@@ -302,6 +302,10 @@ COLUMN_MODE = 3;
 
 CURRENT_CHARACTER = null;
 
+DRAGGED_ELEMENT = null;
+CURRENT_NEXT_SIBLING = null;
+PLACEHOLDER_ELEMENT = null;
+
 function setAppearance() {
   const colorMode = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY) || "light";
   for (let prop in COLOR_MODES[colorMode]) {
@@ -1309,7 +1313,15 @@ class Pane extends HTMLComponent {
    * @param {PaneSection[]} sections List items within the pane
    */
   constructor(sections) {
-    super({});
+    super({
+      "listeners": {
+        "dragover": function(e) {
+          // to avoid snap back animations on finishing dragging a section
+          e.preventDefault();
+          e.stopPropagation();
+        },
+      },
+    });
     this.sections = sections;
   }
 
@@ -1320,7 +1332,7 @@ class Pane extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-panel cs-col cs-padding-v">
+    <div id="${this.id}" class="cs-panel cs-col cs-padding-v">
         ${this.sections.map((section) => section.getHTML()).join("")}
     </div>
     `;
@@ -1337,14 +1349,39 @@ class PaneSection extends HTMLComponent {
                 divider = null,
                 entries = []
               }) {
-    super({});
+    super({
+      "listeners": {
+        "dragover": function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          CURRENT_NEXT_SIBLING = e.target.closest(".cs-section");
+          CURRENT_NEXT_SIBLING.parentNode.insertBefore(PLACEHOLDER_ELEMENT, CURRENT_NEXT_SIBLING);
+        },
+        "dragstart": function(e) {
+          DRAGGED_ELEMENT = e.target;
+          PLACEHOLDER_ELEMENT = document.createElement("div");
+          PLACEHOLDER_ELEMENT.style.width = `${DRAGGED_ELEMENT.offsetWidth}px`;
+          PLACEHOLDER_ELEMENT.style.height = `${DRAGGED_ELEMENT.offsetHeight}px`;
+          PLACEHOLDER_ELEMENT.style.minHeight = `${DRAGGED_ELEMENT.offsetHeight}px`;
+        },
+        "dragend": function(e) {
+          if (CURRENT_NEXT_SIBLING != DRAGGED_ELEMENT) {
+            CURRENT_NEXT_SIBLING.parentNode.insertBefore(DRAGGED_ELEMENT, CURRENT_NEXT_SIBLING);
+          }
+          PLACEHOLDER_ELEMENT.remove();
+          DRAGGED_ELEMENT = null;
+          CURRENT_NEXT_SIBLING = null;
+          PLACEHOLDER_ELEMENT = null;
+        },
+      },
+    });
     this.divider = divider;
     this.entries = entries;
   }
 
   getHTML() {
     return `
-    <div class="cs-col cs-section">
+    <div id="${this.id}" class="cs-col cs-section" draggable="true">
         ${this.divider == null ? "" : this.divider.getHTML()}
         <div class="cs-col">
             ${this.entries.map((entry) => entry.getHTML()).join("")}
@@ -1382,7 +1419,7 @@ class FormSection extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col cs-section ${this.isFirstPhase ? "" : "hidden"}">
+    <div class="cs-col cs-section ${this.isFirstPhase ? "" : "hidden"}" draggable="true">
         ${this.divider == null ? "" : this.divider.getHTML()}
         <div class="cs-col">
             ${this.entries.map((entry) => entry.getHTML()).join("")}
