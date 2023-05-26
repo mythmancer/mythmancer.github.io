@@ -312,6 +312,14 @@ body.character-sheet {
     border-radius: 5px;
 }
 
+.cs-drag-handle > svg {
+    stroke: var(--cs-color-character-bg);
+    fill: var(--cs-color-character-bg);
+    height: var(--cs-font-size-sm);
+    width: var(--cs-font-size-sm);
+    padding-right: var(--cs-gap);
+}
+
 .cs-section-entry {
     gap: calc(var(--cs-gap) / 2);
 }
