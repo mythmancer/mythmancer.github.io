@@ -219,6 +219,7 @@ const CHARACTER_MODELS = {
 CHARACTER_SHEET_STORAGE_KEY = "character_sheets_v2";
 COLOR_MODE_STORAGE_KEY = "color_mode";
 DISPLAY_MODE_STORAGE_KEY = "display_mode";
+ARRANGEMENT_STORAGE_KEY = "arrangement";
 DEFAULT_CHARACTER_COLOR = "#8386cc",
 DEFAULT_FADED_BG_OPACITY = "26";  // in hex
 DEFAULT_FADED_TEXT_OPACITY = "7f";  // in hex
@@ -291,6 +292,15 @@ DISPLAY_MODES = {
     show_dice_buttons: true,
   },
 };
+
+// Pane 1 of 3 Core gameplay info and Actions
+// Pane 2 of 3 Equipment and Effects
+// Pane 3 of 3 Character Bio and Class Details
+DEFAULT_ARRANGEMENT = [
+  ["basics", "abilities", "save_throws", "skills", "weapons_attacks"],
+  ["armor", "effects"],
+  ["levelling", "fighter", "rogue", "mage", "warlock"],
+];
 
 COLUMN_MODES = {
   1: "100%",
@@ -1346,6 +1356,7 @@ class PaneSection extends HTMLComponent {
    * @param {SectionEntry[]} entries List items within the section
    */
   constructor({
+                name = "",
                 divider = null,
                 entries = []
               }) {
@@ -1376,11 +1387,26 @@ class PaneSection extends HTMLComponent {
           DRAGGED_ELEMENT = null;
           CURRENT_NEXT_SIBLING = null;
           PLACEHOLDER_ELEMENT = null;
+
+          const arrangement = [];
+          const panels = document.getElementsByClassName("cs-panel");
+          // TODO: if rearragement is done is 1-panel mode, how should we handle it?
+          for (let i = 0; i < panels.length; i++) {
+            const panelSections = panels[i].getElementsByClassName("cs-section");
+            const panelArrangement = [];
+            for (let j = 0; j < panelSections.length; j++) {
+              panelArrangement.push(COMPONENT_STORE[panelSections[j].id].name);
+            }
+            arrangement.push(panelArrangement);
+          }
+
+          window.localStorage.setItem(ARRANGEMENT_STORAGE_KEY, JSON.stringify(arrangement));
         },
       },
     });
     this.divider = divider;
     this.entries = entries;
+    this.name = name;
   }
 
   getHTML() {
@@ -1481,7 +1507,7 @@ class SectionDivider extends HTMLComponent {
 
 class SectionEntry extends HTMLComponent {
   /**
-   * List item within a {@link PaneSection}. Composed of two rows, the main containing various buttons and labels to
+   * List item within a {@link PaneSerction}. Composed of two rows, the main containing various buttons and labels to
    * serve as the primary descriptor of the entry, and the second being a vertical list of {@link SectionSubEntry}.
    *
    * Either provide (characterModel, attribute) or (value, tooltip).
@@ -1717,6 +1743,29 @@ class FinishButton extends HTMLComponent {
   }
 }
 
+class ActionButton extends HTMLComponent {
+  /**
+   * Button used for generic actions
+   * @param {string} text Button text
+   * @param {function} action The action
+   */
+  constructor(text, action) {
+    super({
+      "listeners": {
+        "click": action,
+      },
+    });
+    this.text = text;
+  }
+
+  getHTML() {
+    return `
+    <div id="${this.id}" class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
+        ${this.text}
+    </div>
+    `;
+  }
+}
 
 class EditButton extends HTMLComponent {
   /**
@@ -1801,14 +1850,8 @@ class DieLogEntry extends HTMLComponent {
   }
 }
 
-class SettingDropDown extends HTMLComponent {
-  /**
-   * A label and a dropdown next to it
-   * @param {string} label The label to be displayed
-   * @param {map} setting The setting this modifies
-   * @param {function} callback Callback on option selection
-   */
-  constructor(label, setting, initialValue, callback) {
+class Dropdown extends HTMLComponent {
+  constructor(setting, initialValue, callback) {
     super({
       "listeners": {
         "change": function() {
@@ -1821,19 +1864,36 @@ class SettingDropDown extends HTMLComponent {
         this.getUIElement().value = initialValue;
       },
     });
-    this.label = label;
     this.setting = setting;
     this.callback = callback;
   }
 
   getHTML() {
     return `
-<div class="cs-setting-dropdown">
+<select id="${this.id}">
+  ${Object.keys(this.setting).map(entry => `<option value="${entry}">${entry}</option>`).join("")}
+</select>`;
+  }
+}
+
+class SettingControl extends HTMLComponent {
+  /**
+   * A label and a dropdown next to it
+   * @param {string} label The label to be displayed
+   * @param {object} control The controller for the setting - button, dropdown, etc
+   */
+  constructor(label, control) {
+    super({});
+    this.label = label;
+    this.control = control;
+  }
+
+  getHTML() {
+    return `
+<div class="cs-setting-control">
   <div class="cs-label">${this.label}</div>
   <div class="cs-filler-h"></div>
-  <select id="${this.id}">
-    ${Object.keys(this.setting).map(entry => `<option value="${entry}">${entry}</option>`).join("")}
-  </select>
+  ${this.control.getHTML()}
 </div>
     `;
   }
@@ -1859,11 +1919,17 @@ class SettingsPanel extends HTMLComponent {
     renderPage(CURRENT_CHARACTER);
   }
 
+  resetArrangement() {
+    window.localStorage.removeItem(ARRANGEMENT_STORAGE_KEY);
+    renderPage(CURRENT_CHARACTER);
+  }
+
   getHTML() {
     return `
-${new SettingDropDown("Color Mode", COLOR_MODES, window.localStorage.getItem(COLOR_MODE_STORAGE_KEY), this.setColorTheme).getHTML()}
-${new SettingDropDown("Display Mode", DISPLAY_MODES, window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY), this.setDisplayMode).getHTML()}
-${new SettingDropDown("Theme", THEMES, window.localStorage.getItem(THEME_STORAGE_KEY), this.setTheme).getHTML()}`;
+${new SettingControl("Color Mode", new Dropdown(COLOR_MODES, window.localStorage.getItem(COLOR_MODE_STORAGE_KEY), this.setColorTheme)).getHTML()}
+${new SettingControl("Display Mode", new Dropdown(DISPLAY_MODES, window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY), this.setDisplayMode)).getHTML()}
+${new SettingControl("Theme", new Dropdown(THEMES, window.localStorage.getItem(THEME_STORAGE_KEY), this.setTheme)).getHTML()}
+${new SettingControl("Reset Arrangement", new ActionButton("Reset", e => this.resetArrangement())).getHTML()}`;
   }
 }
 
@@ -2381,188 +2447,192 @@ function renderPage(characterName) {
   const characterModel = buildFinalizedCharacterModel(baseCharacterModel);
   let html = "";
 
-  const classesSections = [];
+  const sections = {
+    basics: new PaneSection({
+      name: "basics",
+      entries: [
+        new SectionEntry({
+          mainKeyText: "Name",
+          characterModel: characterModel,
+          attribute: "name",
+        }),
+        new SectionEntry({
+          mainKeyText: "Title",
+          characterModel: characterModel,
+          attribute: "title",
+        }),
+        new SectionEntry({
+          mainKeyText: "Race",
+          characterModel: characterModel,
+          attribute: "race",
+        }),
+        new HitPointsEntry(characterModel),
+        new SectionEntry({
+          mainKeyText: "Armor Class",
+          characterModel: characterModel,
+          attribute: "armor_class",
+        }),
+      ]
+    }),
+    abilities: new PaneSection({
+      name: "abilities",
+      divider: new SectionDivider("Abilities"),
+      entries: [
+        actionKeyValue("Check", "Strength", characterModel, "ability_scores.strength", "", "1d20"),
+        actionKeyValue("Check", "Dexterity", characterModel, "ability_scores.dexterity", "", "1d20"),
+        actionKeyValue("Check", "Constitution", characterModel, "ability_scores.constitution", "", "1d20"),
+        actionKeyValue("Check", "Wisdom", characterModel, "ability_scores.wisdom", "", "1d20"),
+        actionKeyValue("Check", "Intelligence", characterModel, "ability_scores.intelligence", "", "1d20"),
+        actionKeyValue("Check", "Charisma", characterModel, "ability_scores.charisma", "", "1d20"),
+      ]
+    }),
+    save_throws: new PaneSection({
+      name: "save_throws",
+      divider: new SectionDivider("Save Throws"),
+      entries: [
+        actionKeyValue("Save vs", "Reflex", characterModel, "save_throws.dexterity", "", "1d20"),
+        actionKeyValue("Save vs", "Fortitude", characterModel, "save_throws.constitution", "", "1d20"),
+        actionKeyValue("Save vs", "Will", characterModel, "save_throws.wisdom", "", "1d20"),
+      ]
+    }),
+    skills: new PaneSection({
+      name: "skills",
+      divider: new SectionDivider("Skills & Special Abilities"),
+      entries: [
+        actionKeyValue("Perform", "Skill Check", characterModel, "skills.skill_check_bonus", "When attempting: TODO - List of Skills", "1d100"),
+        new SectionEntry({mainKeyText: "TODO - Derive from list of special abilities"}),
+        ...[] // TODO, pull Special Ability info from model
+      ]
+    }),
+    weapons_attacks: new PaneSection({
+      name: "weapons_attacks",
+      divider: new SectionDivider("Weapons & Attacks"),
+      entries: [
+        new SectionEntry({editButton: new EditButton("+ Equip a Weapon")}),
+        weaponAndActions("Pipe Wrench", [
+          new WeaponAttack("Crazy Strike wtf", 1, false, "melee", 1, "1d4 + 3d8 + 5 + 2 + 6d1", ""),
+          new WeaponAttack("Strike vs Heavy Armor", 3, false, "melee", 1, "1d4", "opponent is heavily armored")
+        ]),
+        ...[] // TODO, pull Attack info from model
+      ]
+    }),
+    armor: new PaneSection({
+      name: "armor",
+      divider: new SectionDivider("Armor"),
+      entries: [ // TODO - fix alignment of Equip to align left if possible
+        armor("Chest", characterModel, "equipment.armor.chest"),
+        armor("Shield", characterModel, "equipment.armor.shield"),
+        armor("Gloves", characterModel, "equipment.armor.gloves"),
+        armor("Head", characterModel, "equipment.armor.head"),
+        armor("Cloak", characterModel, "equipment.armor.cloak"),
+        armor("Boots", characterModel, "equipment.armor.boots"),
+        armor("Neck", characterModel, "equipment.armor.neck"),
+        armor("Ring 1", characterModel, "equipment.armor.ring1"),
+        armor("Ring 2", characterModel, "equipment.armor.ring2"),
+        armor("Other", characterModel, "equipment.armor.other"),
+      ]
+    }),
+    effects: new PaneSection({
+      name: "effects",
+      divider: new SectionDivider("Effects"),
+      entries: [
+        new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
+      ].concat(effectsEntries(characterModel)),
+    }),
+    levelling: new PaneSection({
+      name: "levelling",
+      entries: [
+        new SectionEntry({
+          mainKeyText: "Total Character Level",
+          characterModel: characterModel,
+          attribute: "total_character_level",
+          editButton: new EditButton("Level Up / Edit Levels")
+        }), new SectionEntry({
+          mainKeyText: "Base Attack Bonus",
+          characterModel: characterModel,
+          attribute: "attacks.base_bonus",
+        }),
+        new SectionEntry({
+          mainKeyText: "Allowed Weapons",
+          characterModel: characterModel,
+          attribute: "equipment.allowed_weapons",
+        }),
+        new SectionEntry({
+          mainKeyText: "Allowed Armor",
+          characterModel: characterModel,
+          attribute: "equipment.allowed_armor",
+        })
+      ]
+    }),
+  };
+
+  const classesSections = {};
   if (characterModel.fighter.level > 0) {
-    classesSections.push(
-      new PaneSection({
-        divider: new SectionDivider("Fighter"),
-        entries: [
-          classKeyValue("Fighter Level", characterModel, "fighter.level"),
-          classKeyValue("Additional Attacks", characterModel, "fighter.additional_attacks"),
-          classKeyValue("Weapon Specializations", characterModel, "fighter.weapon_specializations", [
-            "Dagger & Sword I - +1 to Hit and Damage",
-            "Dagger & Sword II - Critical hits on 19",
-          ])
-        ]
-      })
-    );
+    sections.fighter = new PaneSection({
+      name: "fighter",
+      divider: new SectionDivider("Fighter"),
+      entries: [
+        classKeyValue("Fighter Level", characterModel, "fighter.level"),
+        classKeyValue("Additional Attacks", characterModel, "fighter.additional_attacks"),
+        classKeyValue("Weapon Specializations", characterModel, "fighter.weapon_specializations", [
+          "Dagger & Sword I - +1 to Hit and Damage",
+          "Dagger & Sword II - Critical hits on 19",
+        ])
+      ]
+    });
   }
   if (characterModel.rogue.level > 0) {
-    classesSections.push(
-      new PaneSection({
-        divider: new SectionDivider("Rogue"),
-        entries: [
-          classKeyValue("Rogue Level", characterModel, "rogue.level"),
-          classKeyValue("Skill Specializations", characterModel, "rogue.skill_specializations", [
-            "Mercantile - Journeyman Merchant",
-          ])
-        ]
-      })
-    );
+    sections.rogue = new PaneSection({
+      name: "rogue",
+      divider: new SectionDivider("Rogue"),
+      entries: [
+        classKeyValue("Rogue Level", characterModel, "rogue.level"),
+        classKeyValue("Skill Specializations", characterModel, "rogue.skill_specializations", [
+          "Mercantile - Journeyman Merchant",
+        ])
+      ]
+    });
   }
   if (characterModel.mage.level > 0) {
-    classesSections.push(
-      new PaneSection({
-        divider: new SectionDivider("Mage"),
-        entries: [
-          classKeyValue("Mage Level", characterModel, "mage.level"),
-          spellSlots("Arcane Spell Slots", characterModel, "mage"),
-          classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
-          classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
-        ]
-      })
-    );
+    sections.mage = new PaneSection({
+      name: "mage",
+      divider: new SectionDivider("Mage"),
+      entries: [
+        classKeyValue("Mage Level", characterModel, "mage.level"),
+        spellSlots("Arcane Spell Slots", characterModel, "mage"),
+        classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
+        classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
+      ]
+    });
   }
   if (characterModel.warlock.level > 0) {
-    classesSections.push(
-      new PaneSection({
-        divider: new SectionDivider("Warlock"),
-        entries: [
-          classKeyValue("Warlock Level", characterModel, "warlock.level"),
-          spellSlots("Occult Spell Slots", characterModel, "warlock"),
-          classKeyValue("Domain", characterModel, "warlock.domain"),
-          classKeyValue("Major Patron", characterModel, "warlock.major_patron"),
-          classKeyValue("Minor Patrons", characterModel, "warlock.max_minor_patrons"),
-        ]
-      })
-    );
+    sections.warlock = new PaneSection({
+      name: "warlock",
+      divider: new SectionDivider("Warlock"),
+      entries: [
+        classKeyValue("Warlock Level", characterModel, "warlock.level"),
+        spellSlots("Occult Spell Slots", characterModel, "warlock"),
+        classKeyValue("Domain", characterModel, "warlock.domain"),
+        classKeyValue("Major Patron", characterModel, "warlock.major_patron"),
+        classKeyValue("Minor Patrons", characterModel, "warlock.max_minor_patrons"),
+      ]
+    });
   }
 
-  let panes = [
+  let panes = [];
 
-    // Pane 1 of 3 Core gameplay info and Actions
-    new Pane([
-      new PaneSection({
-          entries: [
-            // TODO - add editable HP field... though it'll be a unique case :/
-            new SectionEntry({
-              mainKeyText: "Name",
-              characterModel: characterModel,
-              attribute: "name",
-            }),
-            new SectionEntry({
-              mainKeyText: "Title",
-              characterModel: characterModel,
-              attribute: "title",
-            }),
-            new SectionEntry({
-              mainKeyText: "Race",
-              characterModel: characterModel,
-              attribute: "race",
-            }),
-            new HitPointsEntry(characterModel),
-            new SectionEntry({
-              mainKeyText: "Armor Class",
-              characterModel: characterModel,
-              attribute: "armor_class",
-            }),
-          ]
-        }
-      ),
-      new PaneSection({
-        divider: new SectionDivider("Abilities"),
-        entries: [
-          actionKeyValue("Check", "Strength", characterModel, "ability_scores.strength", "", "1d20"),
-          actionKeyValue("Check", "Dexterity", characterModel, "ability_scores.dexterity", "", "1d20"),
-          actionKeyValue("Check", "Constitution", characterModel, "ability_scores.constitution", "", "1d20"),
-          actionKeyValue("Check", "Wisdom", characterModel, "ability_scores.wisdom", "", "1d20"),
-          actionKeyValue("Check", "Intelligence", characterModel, "ability_scores.intelligence", "", "1d20"),
-          actionKeyValue("Check", "Charisma", characterModel, "ability_scores.charisma", "", "1d20"),
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Save Throws"),
-        entries: [
-          actionKeyValue("Save vs", "Reflex", characterModel, "save_throws.dexterity", "", "1d20"),
-          actionKeyValue("Save vs", "Fortitude", characterModel, "save_throws.constitution", "", "1d20"),
-          actionKeyValue("Save vs", "Will", characterModel, "save_throws.wisdom", "", "1d20"),
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Skills & Special Abilities"),
-        entries: [
-          actionKeyValue("Perform", "Skill Check", characterModel, "skills.skill_check_bonus", "When attempting: TODO - List of Skills", "1d100"),
-          new SectionEntry({mainKeyText: "TODO - Derive from list of special abilities"}),
-          ...[] // TODO, pull Special Ability info from model
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Weapons & Attacks"),
-        entries: [
-          new SectionEntry({editButton: new EditButton("+ Equip a Weapon")}),
-          weaponAndActions("Pipe Wrench", [
-            new WeaponAttack("Crazy Strike wtf", 1, false, "melee", 1, "1d4 + 3d8 + 5 + 2 + 6d1", ""),
-            new WeaponAttack("Strike vs Heavy Armor", 3, false, "melee", 1, "1d4", "opponent is heavily armored")
-          ]),
-          ...[] // TODO, pull Attack info from model
-        ]
-      })
-    ]),
+  const arrangement = JSON.parse(window.localStorage.getItem(ARRANGEMENT_STORAGE_KEY)) || DEFAULT_ARRANGEMENT;
 
-    // Pane 2 of 3 Equipment and Effects
-    new Pane([
-      new PaneSection({
-        divider: new SectionDivider("Armor"),
-        entries: [ // TODO - fix alignment of Equip to align left if possible
-          armor("Chest", characterModel, "equipment.armor.chest"),
-          armor("Shield", characterModel, "equipment.armor.shield"),
-          armor("Gloves", characterModel, "equipment.armor.gloves"),
-          armor("Head", characterModel, "equipment.armor.head"),
-          armor("Cloak", characterModel, "equipment.armor.cloak"),
-          armor("Boots", characterModel, "equipment.armor.boots"),
-          armor("Neck", characterModel, "equipment.armor.neck"),
-          armor("Ring 1", characterModel, "equipment.armor.ring1"),
-          armor("Ring 2", characterModel, "equipment.armor.ring2"),
-          armor("Other", characterModel, "equipment.armor.other"),
-        ]
-      }),
-      new PaneSection({
-        divider: new SectionDivider("Effects"),
-        entries: [
-          new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
-        ].concat(effectsEntries(characterModel)),
-      })
-    ]),
-
-    // Pane 3 of 3 Character Bio and Class Details
-    new Pane([
-      new PaneSection({
-        entries: [
-          new SectionEntry({
-            mainKeyText: "Total Character Level",
-            characterModel: characterModel,
-            attribute: "total_character_level",
-            editButton: new EditButton("Level Up / Edit Levels")
-          }), new SectionEntry({
-            mainKeyText: "Base Attack Bonus",
-            characterModel: characterModel,
-            attribute: "attacks.base_bonus",
-          }),
-          new SectionEntry({
-            mainKeyText: "Allowed Weapons",
-            characterModel: characterModel,
-            attribute: "equipment.allowed_weapons",
-          }),
-          new SectionEntry({
-            mainKeyText: "Allowed Armor",
-            characterModel: characterModel,
-            attribute: "equipment.allowed_armor",
-          })
-        ]
-      }),
-      ...classesSections,
-    ]),
-  ];
+  for (let i = 0; i < arrangement.length; i++) {
+    const paneArrangement = arrangement[i];
+    const paneSections = [];
+    for (let j = 0; j < paneArrangement.length; j++) {
+      if (sections[paneArrangement[j]]) {
+        paneSections.push(sections[paneArrangement[j]]);
+      }
+    }
+    panes.push(new Pane(paneSections));
+  }
 
   if (COLUMN_MODE === 2) {
     panes = [panes[0].combine(panes[1]), panes[2]];

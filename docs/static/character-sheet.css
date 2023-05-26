@@ -273,7 +273,7 @@ body.character-sheet {
     gap: var(--cs-gap);
 }
 
-.cs-setting-dropdown {
+.cs-setting-control {
     display: flex;
     flex-direction: row;
 }
