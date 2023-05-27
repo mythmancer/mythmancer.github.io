@@ -1367,7 +1367,7 @@ class Pane extends HTMLComponent {
 class PaneSection extends HTMLComponent {
   /**
    * Vertical list of {@link SectionEntry}
-   * @param {SectionDivider} divider Optional title of the section
+   * @param {SectionDiider} divider Optional title of the section
    * @param {SectionEntry[]} entries List items within the section
    */
   constructor({
@@ -1388,6 +1388,12 @@ class PaneSection extends HTMLComponent {
           }
         },
         "dragstart": function(e) {
+          if (!e.target.getElementsByClassName("cs-grab-cursor")[0].matches(":hover")) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.target.setAttribute('draggable', false);
+            return ;
+          }
           DRAGGED_ELEMENT = e.target;
           PLACEHOLDER_ELEMENT = document.createElement("div");
           PLACEHOLDER_ELEMENT.style.width = `${DRAGGED_ELEMENT.offsetWidth}px`;
@@ -1523,23 +1529,34 @@ class SectionDivider extends HTMLComponent {
    * Optional title of a section
    * @param {string} heading Title text of the section, flanked by horizontal lines
    */
-  constructor(heading) {
-    super({});
+  constructor(heading, draggable = true) {
+    super({
+      "listeners": {
+        "mousedown": e => {
+          e.target.closest(".cs-section").setAttribute('draggable', true);
+        },
+        "mouseup": e => {
+          e.target.closest(".cs-section").setAttribute('draggable', false);
+        }
+      }
+    });
     this.heading = heading;
+    this.draggable = draggable;
   }
 
   getHTML() {
     return `
-    <div class="cs-row cs-elem">
+    <div id="${this.id}" class="cs-row cs-elem ${this.draggable ? "cs-grab-cursor" : ""}">
       <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
       <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading}</div>
       <div class="arrow-line arrow-line-left cs-width-full"></div>
-      <div class="cs-drag-handle">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
-          </path>
-        </svg>
-      </div>
+      ${this.draggable ? 
+       `<div class="cs-drag-handle">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+           <path d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
+           </path>
+         </svg>
+       </div>` : ""}
     </div>
     `;
   }
@@ -2332,7 +2349,7 @@ function renderNewCharacterForm() {
     formName: "cs-new-character",
     hasNext: true,
     isFirstPhase: true,
-    divider: new SectionDivider("Character"),
+    divider: new SectionDivider("Character", false),
     entries: [
       new FormSectionInputEntry({
         formName: "cs-new-character",
@@ -2365,7 +2382,7 @@ function renderNewCharacterForm() {
   const phase2 = new FormSection({
     formName: "cs-new-character",
     hasNext: true,
-    divider: new SectionDivider("Abilities"),
+    divider: new SectionDivider("Abilities", false),
     entries: [
       new FormSectionInputEntry({
         formName: "cs-new-character",
@@ -2409,7 +2426,7 @@ function renderNewCharacterForm() {
   const phase3 = new FormSection({
     formName: "cs-new-character",
     hasNext: false,
-    divider: new SectionDivider("Initial Levels, Hit Points, Experience"),
+    divider: new SectionDivider("Initial Levels, Hit Points, Experience", false),
     entries: [
       new FormSectionInputEntry({
         formName: "cs-new-character",
