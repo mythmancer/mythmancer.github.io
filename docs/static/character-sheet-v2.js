@@ -1415,7 +1415,7 @@ class PaneSection extends HTMLComponent {
             arrangement.push(panelArrangement);
           }
 
-          let newArrangements = JSON.parse(window.localStorage.getItem(ARRANGEMENT_STORAGE_KEY)) || DEFAULT_ARRANGEMENTS;
+          let newArrangements = JSON.parse(window.localStorage.getItem(ARRANGEMENT_STORAGE_KEY)) || structuredClone(DEFAULT_ARRANGEMENTS);
           newArrangements[COLUMN_MODE] = arrangement;
           window.localStorage.setItem(ARRANGEMENT_STORAGE_KEY, JSON.stringify(newArrangements));
         },
