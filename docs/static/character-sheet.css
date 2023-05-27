@@ -374,6 +374,14 @@ input[type="color"]::-moz-color-swatch {
     border-right: var(--cs-arrow-width) solid var(--cs-color-character-bg); /* Adjust the color and size of the arrow */
 }
 
+.cs-grab-cursor {
+    cursor: grab;
+}
+
+.cs-grab-cursor:active {
+    cursor: grabbing;
+}
+
 .cs-btn {
     /* Button, should be paired with a color */
     display: flex;
