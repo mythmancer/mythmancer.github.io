@@ -69,6 +69,32 @@ body.character-sheet {
     font-family: var(--cs-font);
 }
 
+.cs-drag-handle > svg {
+    stroke: var(--cs-color-character-bg);
+    fill: var(--cs-color-character-bg);
+    height: var(--cs-font-size-sm);
+    width: var(--cs-font-size-sm);
+    padding-right: var(--cs-gap);
+}
+
+input[type="color"] {
+    padding: 0 !important;
+    width: 50px !important;
+    min-height: 20px;
+    height: 20px;
+    background-color: transparent !important;
+    border: none !important;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border-radius: 15px;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border-radius: 15px;
+}
+
 /* LAYOUT */
 .cs-col {
     /* Flex Column */
@@ -82,7 +108,7 @@ body.character-sheet {
 .cs-row {
     /* Flex Row */
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: row;
     width: 100%;
     gap: var(--cs-gap);
@@ -310,14 +336,6 @@ body.character-sheet {
     padding-top: var(--cs-gap);
     padding-bottom: var(--cs-gap);
     border-radius: 5px;
-}
-
-.cs-drag-handle > svg {
-    stroke: var(--cs-color-character-bg);
-    fill: var(--cs-color-character-bg);
-    height: var(--cs-font-size-sm);
-    width: var(--cs-font-size-sm);
-    padding-right: var(--cs-gap);
 }
 
 .cs-section-entry {

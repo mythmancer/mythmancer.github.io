@@ -1288,12 +1288,13 @@ COMPONENT_STORE = {};
 
 class HTMLComponent {
   constructor({
+    id = null,
     listeners = null,
     initializer = null,
   }) {
     this.listeners = listeners;
     this.initializer = initializer;
-    this.id = crypto.randomUUID();
+    this.id = id || crypto.randomUUID();
     // if either explicitly asked, or if it has listeners, store the component so that we can
     // manipulate it after creation
     // Note: individual components must decide where to attach the id
@@ -1465,12 +1466,22 @@ class FormSectionInputEntry extends HTMLComponent {
     mainKeyText = "",
     attribute = null,
     numerical = false,
+    inputType = "text",
+    defaultValue = "",
+    onInput = null,
   }) {
-    super({});
+    super({
+      "id": `${formName}-attribute-${attribute}`,
+      "listeners": {
+        "input": onInput,
+      }
+    });
     this.mainKeyText = mainKeyText;
     this.formName = formName;
     this.attribute = attribute;
     this.numerical = numerical;
+    this.inputType = inputType;
+    this.defaultValue = defaultValue;
   }
 
   getHTML() {
@@ -1478,7 +1489,14 @@ class FormSectionInputEntry extends HTMLComponent {
     <div class="cs-col cs-padding-h cs-section-entry">
        <div class="cs-row">
           <div class="cs-elem">${this.mainKeyText}</div>
-          <div class="cs-elem"><input class="${this.formName} ${this.numerical ? "numerical" : ""}" type="text" id="${this.formName}-attribute-${this.attribute}"></div>
+          <div class="cs-elem">
+            <input
+              class="${this.formName} ${this.numerical ? "numerical" : ""}"
+              type="${this.inputType}"
+              id="${this.id}"
+              value="${this.defaultValue}"
+            >
+          </div>
        </div>
     </div>`;
   }
@@ -2285,6 +2303,12 @@ function positionTooltips() {
   });
 }
 
+function setCharacterColor(color) {
+  document.documentElement.style.setProperty("--cs-color-character-bg", color);
+  document.documentElement.style.setProperty("--cs-color-character-faded-bg", color + '26');
+  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(color));
+}
+
 function renderNewCharacterForm() {
   renderPage(null);
 
@@ -2308,6 +2332,16 @@ function renderNewCharacterForm() {
         formName: "cs-new-character",
         mainKeyText: "Race",
         attribute: "race",
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Color",
+        attribute: "meta.color",
+        inputType: "color",
+        defaultValue: DEFAULT_CHARACTER_COLOR,
+        onInput: e => {
+          setCharacterColor(e.target.value);
+        },
       }),
     ]
   });
@@ -2644,9 +2678,7 @@ function renderPage(characterName) {
     panes = [panes[0].combine(panes[1]).combine(panes[2])];
   }
 
-  document.documentElement.style.setProperty("--cs-color-character-bg", characterModel.meta.color);
-  document.documentElement.style.setProperty("--cs-color-character-faded-bg", characterModel.meta.color + '26');
-  document.documentElement.style.setProperty("--cs-color-character-text", getContrastColor(characterModel.meta.color));
+  setCharacterColor(characterModel.meta.color);
 
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
