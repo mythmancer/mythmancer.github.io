@@ -296,19 +296,33 @@ DISPLAY_MODES = {
 // Pane 1 of 3 Core gameplay info and Actions
 // Pane 2 of 3 Equipment and Effects
 // Pane 3 of 3 Character Bio and Class Details
-DEFAULT_ARRANGEMENT = [
-  ["character", "abilities", "save_throws", "skills"],
-  ["weapons_attacks", "armor"],
-  ["fighter", "rogue", "mage", "warlock", "effects"],
-];
-
 COLUMN_MODES = {
-  1: "100%",
-  2: "50%",
-  3: "34%",
+  1: {
+    default_arrangement: [
+      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "fighter", "rogue", "mage", "warlock", "effects"]
+    ],
+    max_panel_width: "100%",
+  },
+  2: {
+    max_panel_width: "50%", 
+    default_arrangement: [
+      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor"],
+      ["fighter", "rogue", "mage", "warlock", "effects"]
+    ],
+  },
+  3: {
+    default_arrangement: [
+      ["character", "abilities", "save_throws", "skills"],
+      ["weapons_attacks", "armor"],
+      ["fighter", "rogue", "mage", "warlock", "effects"]
+    ],
+    max_panel_width: "34%", 
+  },
 };
 
-COLUMN_MODE = 3;
+DEFAULT_ARRANGEMENTS = Object.fromEntries(Object.keys(COLUMN_MODES).map(cm => [cm, COLUMN_MODES[cm].default_arrangement]) );
+
+COLUMN_MODE = null;
 
 CURRENT_CHARACTER = null;
 
@@ -1401,7 +1415,9 @@ class PaneSection extends HTMLComponent {
             arrangement.push(panelArrangement);
           }
 
-          window.localStorage.setItem(ARRANGEMENT_STORAGE_KEY, JSON.stringify(arrangement));
+          let newArrangements = JSON.parse(window.localStorage.getItem(ARRANGEMENT_STORAGE_KEY)) || DEFAULT_ARRANGEMENTS;
+          newArrangements[COLUMN_MODE] = arrangement;
+          window.localStorage.setItem(ARRANGEMENT_STORAGE_KEY, JSON.stringify(newArrangements));
         },
       },
     });
@@ -1424,7 +1440,7 @@ class PaneSection extends HTMLComponent {
 
 class FormSection extends HTMLComponent {
   /**
-   * TODO
+   * TODO docs
    */
   constructor({
     formName = null,
@@ -1450,7 +1466,7 @@ class FormSection extends HTMLComponent {
 
   getHTML() {
     return `
-    <div class="cs-col cs-section ${this.isFirstPhase ? "" : "hidden"}" draggable="true">
+    <div class="cs-col cs-section ${this.isFirstPhase ? "" : "hidden"}">
         ${this.divider == null ? "" : this.divider.getHTML()}
         <div class="cs-col">
             ${this.entries.map((entry) => entry.getHTML()).join("")}
@@ -2657,9 +2673,9 @@ function renderPage(characterName) {
     });
   }
 
-  let panes = [];
+  const panes = [];
 
-  const arrangement = JSON.parse(window.localStorage.getItem(ARRANGEMENT_STORAGE_KEY)) || DEFAULT_ARRANGEMENT;
+  const arrangement = (JSON.parse(window.localStorage.getItem(ARRANGEMENT_STORAGE_KEY)) || DEFAULT_ARRANGEMENTS)[COLUMN_MODE];
 
   for (let i = 0; i < arrangement.length; i++) {
     const paneArrangement = arrangement[i];
@@ -2670,12 +2686,6 @@ function renderPage(characterName) {
       }
     }
     panes.push(new Pane(paneSections));
-  }
-
-  if (COLUMN_MODE === 2) {
-    panes = [panes[0].combine(panes[1]), panes[2]];
-  } else if (COLUMN_MODE === 1) {
-    panes = [panes[0].combine(panes[1]).combine(panes[2])];
   }
 
   setCharacterColor(characterModel.meta.color);
@@ -2700,7 +2710,7 @@ function resizePage(event) {
   }
 
   if (previousColumnMode != COLUMN_MODE) {
-    document.documentElement.style.setProperty("--cs-panel-max-width", COLUMN_MODES[COLUMN_MODE]);
+    document.documentElement.style.setProperty("--cs-panel-max-width", COLUMN_MODES[COLUMN_MODE].max_panel_width);
     renderPage(CURRENT_CHARACTER);
   }
 }
