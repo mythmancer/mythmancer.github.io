@@ -299,24 +299,24 @@ DISPLAY_MODES = {
 COLUMN_MODES = {
   1: {
     default_arrangement: [
-      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "fighter", "rogue", "mage", "warlock", "effects"]
+      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "inventory", "fighter", "rogue", "mage", "warlock", "effects", "notes"]
     ],
     max_panel_width: "100%",
   },
   2: {
-    max_panel_width: "50%", 
+    max_panel_width: "50%",
     default_arrangement: [
-      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor"],
-      ["fighter", "rogue", "mage", "warlock", "effects"]
+      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "inventory"],
+      ["fighter", "rogue", "mage", "warlock", "effects", "notes"]
     ],
   },
   3: {
     default_arrangement: [
       ["character", "abilities", "save_throws", "skills"],
-      ["weapons_attacks", "armor"],
-      ["fighter", "rogue", "mage", "warlock", "effects"]
+      ["weapons_attacks", "armor", "inventory"],
+      ["fighter", "rogue", "mage", "warlock", "effects", "notes"]
     ],
-    max_panel_width: "34%", 
+    max_panel_width: "34%",
   },
 };
 
@@ -364,26 +364,7 @@ SPELL_SLOTS = {
   9: [4, 4, 3, 2, 1],
 };
 
-MODIFIER_TABLE = {
-  2: -4,
-  3: -3,
-  4: -2,
-  5: -2,
-  6: -1,
-  7: -1,
-  8: -1,
-  9: 0,
-  10: 0,
-  11: 0,
-  12: 0,
-  13: 1,
-  14: 1,
-  15: 1,
-  16: 2,
-  17: 2,
-  18: 3,
-  19: 4,
-};
+MODIFIER_TABLE = [null, null, -4, -3, -2, -2, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 4, null];
 
 SKILL_PROFICIENCY_TABLE = {
   rogue: [0, 3, 5, 5, 6, 7, 8, 9, 10],
@@ -392,6 +373,9 @@ SKILL_PROFICIENCY_TABLE = {
   warlock: [0, 1, 1, 1, 2, 2, 2, 3, 3],
 };
 
+// populated when dbs are loaded from assets
+MAGE_SPELLS = {};
+WARLOCK_SPELLS = {};
 
 /**
  * The Effect schema:
@@ -415,7 +399,49 @@ SKILL_PROFICIENCY_TABLE = {
  */
 EFFECTS = {
   "race": {
+    "dwarf": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "adjustment": -1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.constitution",
+        "adjustment": 1,
+        "operation": "add",
+      },
+    ],
+    "elf": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "adjustment": 1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.constitution",
+        "adjustment": -1,
+        "operation": "add",
+      },
+    ],
     "halfling": [
+      {
+        "source": "race",
+        "attribute": "ability_scores.strength",
+        "adjustment": -1,
+        "operation": "add",
+      },
+      {
+        "source": "race",
+        "attribute": "ability_scores.dexterity",
+        "adjustment": 1,
+        "operation": "add",
+      },
+    ],
+    "human": [
       {
         "source": "race",
         "attribute": "ability_scores.strength",
@@ -1550,7 +1576,7 @@ class SectionDivider extends HTMLComponent {
       <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
       <div class="cs-elem cs-width-fill cs-font-size-sm">${this.heading}</div>
       <div class="arrow-line arrow-line-left cs-width-full"></div>
-      ${this.draggable ? 
+      ${this.draggable ?
        `<div class="cs-drag-handle">
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
            <path d="M8.5 17c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 3c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7-14c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
@@ -1575,7 +1601,8 @@ class SectionEntry extends HTMLComponent {
    * @param {object} characterModel Character Model to use for data
    * @param {string} attribute Attribute to fetch from characterModel
    * @param {string} value to be displayed
-   * @param {string} tooltip Optional HTML for the tooltip of this entry
+   * @param {string} tooltip Optional HTML for the tooltip of this entry, displayed on the value
+   * @param {string} tooltip Optional HTML for the tooltip of this entry, displayed on the key
    * @param {EditButton} editButton Optional button to edit this entry on the far right of the main row
    * @param {SectionSubEntry[]} subEntries Optional vertical list of small-text descriptors beneath the main row
    */
@@ -1588,6 +1615,7 @@ class SectionEntry extends HTMLComponent {
                 attribute = null,
                 value = null,
                 tooltip = null,
+                keyTooltip = null,
 
                 editButton = null,
                 subEntries = []
@@ -1598,6 +1626,7 @@ class SectionEntry extends HTMLComponent {
     this.mainKeyText = mainKeyText;
     this.editButton = editButton;
     this.subEntries = subEntries;
+    this.keyTooltip = keyTooltip;
 
     if (value != null) {
       this.value = value;
@@ -1623,7 +1652,10 @@ class SectionEntry extends HTMLComponent {
           ${this.diceButton == null && this.mainKeyText === "" ? "" : `
             <div class="cs-row">
               ${this.diceButton == null ? "" : this.diceButton.getHTML()}
-              <div class="cs-elem">${this.mainKeyText}</div>
+              <div class="cs-elem ${this.keyTooltip ? "cs-has-tooltip" : ""}">
+                ${this.mainKeyText}
+                ${this.keyTooltip ? `<div class="cs-tooltiptext">${this.keyTooltip}</div>` : ""}
+              </div>
             </div>
           `}
           ${this.value === "" ? `
@@ -1667,6 +1699,24 @@ class SectionSubEntry extends HTMLComponent {
     <div class="cs-row">
         ${this.button == null ? "" : this.button.getHTML()}
         <div class="cs-elem cs-font-size-sm">${this.text}</div>
+    </div>
+    `;
+  }
+}
+
+class TextAreaEntry extends HTMLComponent {
+  constructor() {
+    super({});
+  }
+
+  getHTML() {
+    return `
+    <div class="cs-col cs-padding-h cs-section-entry">
+      <div class="cs-row">
+        <div class="cs-row">
+           <div class="cs-elem cs-width-full"><textarea></textarea></div>
+        </div>
+      </div>
     </div>
     `;
   }
@@ -2110,6 +2160,16 @@ function effectEntry(source, effects) {
   });
 }
 
+function spellSlotEntry(characterModel, spellType, spellName) {
+  const spellDb = spellType === "mage" ? MAGE_SPELLS : WARLOCK_SPELLS;
+  const tooltip = getSpellTooltipHTML(spellName, spellDb);
+  return new SectionEntry({
+    mainKeyText: spellName,
+    value: "1",
+    keyTooltip: tooltip,
+  });
+}
+
 function effectsEntries(characterModel) {
   const activeEffects = characterModel.active_effects;
   const effectsBySource = {};
@@ -2268,6 +2328,7 @@ function attachComponentListeners() {
   for (let componentId in COMPONENT_STORE) {
     const div = document.getElementById(componentId);
     for (let event in COMPONENT_STORE[componentId].listeners) {
+      console.log(event, componentId, COMPONENT_STORE[componentId]);
       div.addEventListener(event, COMPONENT_STORE[componentId].listeners[event]);
     }
   }
@@ -2484,6 +2545,26 @@ function renderNewCharacterForm() {
   postRender();
 }
 
+function getSpellTooltipHTML(spellName, spellDb) {
+  const spellInfo = spellDb[spellName];
+  if (spellInfo == null) {
+    return "";
+  }
+
+  const isReversibleStr = spellInfo["Reversible"] ? " | Reversible" : "";
+
+  return `<span>${spellInfo["Type"]}${isReversibleStr}</span></br></br>
+Range: ${spellInfo["Range"]}</br>
+Duration: ${spellInfo["Duration"]}</br>
+Area of Effect: ${spellInfo["Area of Effect"]}</br>
+Components: ${spellInfo["Components"]}</br>
+Casting Time: ${spellInfo["Casting Time"]}</br>
+Saving Throw: ${spellInfo["Saving Throw"]}</br>
+Speed: ${spellInfo["Speed"]}</br></br>
+${spellInfo["Details"]}
+  `;
+}
+
 /**
  * Convert base character model to fully populated character model,
  * and re-render the entire character pane
@@ -2635,6 +2716,23 @@ function renderPage(characterName) {
         new SectionEntry({editButton: new EditButton("+ Add an Effect")}),
       ].concat(effectsEntries(characterModel)),
     }),
+    inventory: new PaneSection({
+      name: "inventory",
+      divider: new SectionDivider("Inventory"),
+      entries: [
+        new SectionEntry({editButton: new EditButton("+ Add a Weapon")}),
+        new SectionEntry({editButton: new EditButton("+ Add Armor")}),
+        new SectionEntry({editButton: new EditButton("+ Add Other Item")}),
+        new TextAreaEntry(),
+      ],
+    }),
+    notes: new PaneSection({
+      name: "notes",
+      divider: new SectionDivider("Notes"),
+      entries: [
+        new TextAreaEntry(),
+      ],
+    }),
   };
 
   const classesSections = {};
@@ -2673,6 +2771,7 @@ function renderPage(characterName) {
         spellSlots("Arcane Spell Slots", characterModel, "mage"),
         classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
         classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
+        spellSlotEntry(characterModel, "mage", "Blindness"),
       ]
     });
   }
@@ -2739,6 +2838,21 @@ function postRender() {
   positionTooltips();
 }
 
+function getJSON(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.responseType = "json";
+  xhr.onload = function() {
+    const status = xhr.status;
+    if (status === 200) {
+      callback(null, xhr.response);
+    } else {
+      callback(status, xhr.response);
+    }
+  };
+  xhr.send();
+};
+
 window.onload = function () {
   // only for the demo
   const existingData = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
@@ -2749,6 +2863,21 @@ window.onload = function () {
   setAppearance();
   resizePage();
   renderPage(null);
+
+  getJSON("https://assets.mythmancer.com/warlock_spells.json", function(err, data) {
+    if (err !== null) {
+      console.log("Unable to load cleric spellbook wizard");
+    } else {
+      WARLOCK_SPELLS = data;
+    }
+  });
+  getJSON("https://assets.mythmancer.com/mage_spells.json", function(err, data) {
+    if (err !== null) {
+      console.log("Unable to load mage spellbook wizard");
+    } else {
+      MAGE_SPELLS = data;
+    }
+  });
 
   addEventListener("resize", resizePage);
 };
