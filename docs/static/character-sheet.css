@@ -77,6 +77,17 @@ body.character-sheet {
     padding-right: var(--cs-gap);
 }
 
+textarea {
+    resize: none;
+    background-color: var(--cs-color-character-faded-bg);
+    color: var(--cs-color-character-bg);
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 300px;
+    border-radius: 5px;
+}
+
 input[type="color"] {
     padding: 0 !important;
     width: 50px !important;
