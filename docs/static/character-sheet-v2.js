@@ -2328,7 +2328,6 @@ function attachComponentListeners() {
   for (let componentId in COMPONENT_STORE) {
     const div = document.getElementById(componentId);
     for (let event in COMPONENT_STORE[componentId].listeners) {
-      console.log(event, componentId, COMPONENT_STORE[componentId]);
       div.addEventListener(event, COMPONENT_STORE[componentId].listeners[event]);
     }
   }
