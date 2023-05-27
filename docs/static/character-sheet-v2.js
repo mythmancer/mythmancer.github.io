@@ -160,7 +160,7 @@ const CHARACTER_MODELS = {
     "race": "Halfling",
     "title": "Old Man",
     "meta": {
-      "color": "#989898",
+      "color": "#c6925f",
     },
     "hit_points": {
       "total": 2,
