@@ -6,6 +6,7 @@ const CHARACTER_MODELS = {
     "title": "Elementalist",
     "meta": {
       "color": "#8386cc",
+      "created_on": "2023-05-11",
     },
     "hit_points": {
       "total": 17,
@@ -107,6 +108,7 @@ const CHARACTER_MODELS = {
     "title": "Grinner",
     "meta": {
       "color": "#7c0a0a",
+      "created_on": "2023-05-11",
     },
     "hit_points": {
       "total": 100000,
@@ -161,6 +163,7 @@ const CHARACTER_MODELS = {
     "title": "Old Man",
     "meta": {
       "color": "#c6925f",
+      "created_on": "2023-05-11",
     },
     "hit_points": {
       "total": 2,
@@ -222,7 +225,6 @@ DISPLAY_MODE_STORAGE_KEY = "display_mode";
 ARRANGEMENT_STORAGE_KEY = "arrangement";
 DEFAULT_CHARACTER_COLOR = "#8386cc",
 DEFAULT_FADED_BG_OPACITY = "26";  // in hex
-DEFAULT_FADED_TEXT_OPACITY = "7f";  // in hex
 THEME_STORAGE_KEY = "theme";
 TOOLTIP_POSITIONS = ["bottomleft", "bottomright", "topleft", "topright"];
 EMPTY_CHARACTER_MODEL =   {
@@ -326,6 +328,7 @@ COLUMN_MODE = null;
 
 CURRENT_CHARACTER = null;
 
+/* to share state during dragging/dropping to rearrange the page */
 DRAGGED_ELEMENT = null;
 CURRENT_NEXT_SIBLING = null;
 PLACEHOLDER_ELEMENT = null;
@@ -592,6 +595,10 @@ NAME_ATTRIBUTE = new Attribute({
 
 COLOR_ATTRIBUTE = new Attribute({
   path: "meta.color",
+  isIntrinsic: true,
+});
+CREATED_ON_ATTRIBUTE = new Attribute({
+  path: "meta.created_on",
   isIntrinsic: true,
 });
 HIT_POINTS_TOTAL_ATTRIBUTE = new Attribute({
@@ -2435,6 +2442,12 @@ function renderNewCharacterForm() {
         onInput: e => {
           setCharacterColor(e.target.value);
         },
+      }),
+      new FormSectionInputEntry({
+        formName: "cs-new-character",
+        mainKeyText: "Created On",
+        attribute: "meta.created_on",
+        defaultValue: new Date().toISOString().substr(0, 10),
       }),
     ]
   });
