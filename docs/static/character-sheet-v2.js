@@ -1769,12 +1769,18 @@ class DiceButton extends HTMLComponent {
    * Button that rolls dice
    * @param {string} text Button text
    */
-  constructor(text, formula, showIcon = true, showAlways = false) {
+  constructor({
+    text = "",
+    dieLogText = null,
+    formula = "",
+    showIcon = true,
+    showAlways = false
+  }) {
     super({
       listeners: {
         "click": function() {
           const result = rollFormula(formula);
-          logDieRoll(text, result);
+          logDieRoll(dieLogText || text, result);
         },
       },
     });
@@ -2064,7 +2070,7 @@ ${new SettingControl("Reset Arrangement", new ActionButton("Reset", e => this.re
  */
 function actionKeyValue(action, key, characterModel, attribute, description = "", diceFormula = "") {
   return new SectionEntry({
-    diceButton: new DiceButton(action, diceFormula),
+    diceButton: new DiceButton({text: action, dieLogText: `${action} (${key})`, formula: diceFormula}),
     mainKeyText: key,
     characterModel: characterModel,
     attribute: attribute,
@@ -2083,7 +2089,7 @@ function weaponAndActions(weapon, attacks) {
     mainKeyText: weapon,
     editButton: new EditButton("Edit / Remove"),
     subEntries: attacks.map((attack) => new SectionSubEntry({
-      button: new DiceButton(attack.verb, attack.damageFormula),
+      button: new DiceButton({text: attack.verb, formula: attack.damageFormula}),
       text: attack.description()
     }))
   });
@@ -2590,7 +2596,7 @@ function renderPage(characterName) {
   const navHTML = new CharacterListings(listCharacters(), characterName).getHTML();
   characterListingsDiv.innerHTML = navHTML;
 
-  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton(`d${die}`, `1d${die}`, false, true));
+  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton({text: `d${die}`, formula: `1d${die}`, showIcon: false, alwaysShow: true}));
   document.getElementById("cs-die-rolls").innerHTML = dieRolls.map(dieRoll => dieRoll.getHTML()).join("");
 
   document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
