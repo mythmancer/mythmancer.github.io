@@ -1774,7 +1774,7 @@ class DiceButton extends HTMLComponent {
     dieLogText = null,
     formula = "",
     showIcon = true,
-    showAlways = false
+    showAlways = false,
   }) {
     super({
       listeners: {
@@ -2596,7 +2596,7 @@ function renderPage(characterName) {
   const navHTML = new CharacterListings(listCharacters(), characterName).getHTML();
   characterListingsDiv.innerHTML = navHTML;
 
-  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton({text: `d${die}`, formula: `1d${die}`, showIcon: false, alwaysShow: true}));
+  const dieRolls = [4, 6, 8, 10, 12, 20, 100].map(die => new DiceButton({text: `d${die}`, formula: `1d${die}`, showIcon: false, showAlways: true}));
   document.getElementById("cs-die-rolls").innerHTML = dieRolls.map(dieRoll => dieRoll.getHTML()).join("");
 
   document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
