@@ -20,48 +20,6 @@ const CHARACTER_MODELS = {
       "intelligence": 16,
       "charisma": 16,
     },
-    "equipment": {
-      "armor": {
-        "chest": {
-          "name": "Wet Suit",
-          "description": "Water I: Bestows Bless - Water Mobility upon the wearer",
-          "equipped": true,
-          "effects": [
-            {
-              "attribute": "misc",
-              "description": "Can attack and perform basic actions unhindered while swimming. Can maintain a consistent swimming speed similar to walking speed and can hold breath for 1 minute without issue.",
-            },
-          ],
-        },
-        "gloves": {
-          "name": "Bracers of Armor",
-          "equipped": true,
-          "effects": [
-            {
-              "attribute": "armor_class",
-              "adjustment": 3,
-              "operation": "add",
-            },
-          ]
-        },
-        "neck": {
-          "name": "Siren's Scale",
-          "equipped": true,
-          "description": "Water I: Grants access to The Siren as a Minor Patron in addition to one 1st Degree Occult Spell Slot",
-          "effects": [
-            {
-              "attribute": "warlock.l1_spell_slots",
-              "adjustment": 2,
-              "operation": "add",
-            },
-            {
-              "attribute": "misc",
-              "description": "Access to The Siren as a Minor Patron",
-            },
-          ],
-        },
-      },
-    },
     "fighter": {
       "level": 5,
     },
@@ -77,14 +35,6 @@ const CHARACTER_MODELS = {
       "major_patron": "Rath - Water Aspect",
     },
     "active_external_effects": [
-      {
-        "source": "Talisman (Inventory)",
-        "attribute": "mage.l1_spell_slots",
-        "adjustment": 1,
-        "operation": "add",
-        "duration": "While equipped",
-        "is_external": true,
-      },
       {
         "source": "Enlarged",
         "attribute": "ability_scores.strength",
@@ -102,7 +52,86 @@ const CHARACTER_MODELS = {
       },
     ],
     "notes": "",
-    "inventory": "",
+    "inventory": {
+      "items": [
+        {
+          "name": "Siren's Scale",
+          "type": "neck",
+          "description": "Water I: Grants access to The Siren as a Minor Patron in addition to one 1st Degree Occult Spell Slot",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "warlock.l1_spell_slots",
+              "adjustment": 2,
+              "operation": "add",
+            },
+            {
+              "attribute": "misc",
+              "description": "Access to The Siren as a Minor Patron",
+            },
+          ],
+        },
+        {
+          "name": "Bracers of Armor",
+          "type": "gloves",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "armor_class",
+              "adjustment": 3,
+              "operation": "add",
+            },
+          ]
+        },
+        {
+          "name": "Wet Suit",
+          "type": "chest",
+          "description": "Water I: Bestows Bless - Water Mobility upon the wearer",
+          "effects": [
+            {
+              "attribute": "misc",
+              "description": "Can attack and perform basic actions unhindered while swimming. Can maintain a consistent swimming speed similar to walking speed and can hold breath for 1 minute without issue.",
+            },
+          ],
+        },
+        {
+          "name": "Pipe Wrench",
+          "type": "weapon",
+          "equipped": true,
+
+          "effects": [],
+          "attacks": [
+            {
+              "name": "Crazy Strike wtf",
+              "damage": "1d4 + 3d8 + 5 + 2 + 6d1",
+              "range": "melee",
+              "bonus_to_hit": 1,
+            },
+            {
+              "name": "Strike vs Heavy Armor",
+              "damage": "1d4",
+              "range": "melee",
+              "number_of_attacks": 3,
+              "bonus_to_hit": 1,
+              "condition": "opponent is heavily armored",
+            }
+          ]
+        },
+        {
+          "name": "Talisman",
+          "equipped": true,
+          "type": "object",
+          "effects": [
+            {
+              "attribute": "mage.l1_spell_slots",
+              "adjustment": 1,
+              "operation": "add",
+            }
+          ],
+        },
+      ],
+      "misc": "",
+    },
   },
   "Herakles": {
     "name": "Herakles",
@@ -124,25 +153,6 @@ const CHARACTER_MODELS = {
       "intelligence": 4,
       "charisma": 5,
     },
-    "equipment": {
-      "armor": {
-        "chest": {
-          "name": "Buff af",
-          "equipped": true,
-        },
-        "gloves": {
-          "name": "Gloooooooves",
-          "equipped": true,
-          "effects": [
-            {
-              "attribute": "armor_class",
-              "adjustment": 1,
-              "operation": "add",
-            },
-          ]
-        },
-      },
-    },
     "fighter": {
       "level": 9,
     },
@@ -159,7 +169,28 @@ const CHARACTER_MODELS = {
     },
     "active_external_effects": [],
     "notes": "",
-    "inventory": "",
+    "inventory": {
+      "items": [
+        {
+          "name": "Buff af",
+          "type": "chest",
+          "equipped": true,
+        },
+        {
+          "name": "Gloooooooves",
+          "type": "gloves",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "armor_class",
+              "adjustment": 1,
+              "operation": "add",
+            },
+          ]
+        },
+      ],
+      "misc": "",
+    },
   },
   "Noam Gnomesky": {
     "name": "Noam Gnomesky",
@@ -181,25 +212,6 @@ const CHARACTER_MODELS = {
       "intelligence": 10,
       "charisma": 15,
     },
-    "equipment": {
-      "armor": {
-        "chest": {
-          "name": "Sunken",
-          "equipped": true,
-        },
-        "gloves": {
-          "name": "Evening soiree gloves",
-          "equipped": true,
-          "effects": [
-            {
-              "attribute": "armor_class",
-              "adjustment": 1,
-              "operation": "add",
-            }
-          ],
-        },
-      },
-    },
     "fighter": {
       "level": 0,
     },
@@ -216,7 +228,28 @@ const CHARACTER_MODELS = {
     },
     "active_external_effects": [],
     "notes": "",
-    "inventory": "",
+    "inventory": {
+      "items": [
+        {
+          "name": "Sunken",
+          "type": "chest",
+          "equipped": true,
+        },
+        {
+          "name": "Evening soiree gloves",
+          "type": "gloves",
+          "equipped": true,
+          "effects": [
+            {
+              "attribute": "armor_class",
+              "adjustment": 1,
+              "operation": "add",
+            }
+          ],
+        },
+      ],
+      "misc": "",
+    },
   },
 };
 
@@ -234,15 +267,19 @@ DEFAULT_FADED_BG_OPACITY = "26";  // in hex
 THEME_STORAGE_KEY = "theme";
 TOOLTIP_POSITIONS = ["bottomleft", "bottomright", "topleft", "topright"];
 EMPTY_CHARACTER_MODEL =   {
-  "meta": {
-    "color": "#8386cc",
-  },
   "hit_points": {
     "current": 0,
   },
+  "warlock": {
+    "domain": "",
+    "major_patron": "",
+  },
   "active_external_effects": [],
   "notes": "",
-  "inventory": "",
+  "inventory": {
+    "items": [],
+    "misc": "",
+  },
 };
 
 /*******************************************************************
@@ -685,56 +722,6 @@ WARLOCK_MAJOR_PATRON_ATTRIBUTE = new Attribute({
   name: "Warlock Major Patron",
   isIntrinsic: true,
 });
-EQUIPMENT_ARMOR_CHEST_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.chest",
-  name: "Chest Armor",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_SHIELD_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.shield",
-  name: "Shield",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_GLOVES_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.gloves",
-  name: "Gloves",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_HEAD_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.head",
-  name: "Head Armor",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_CLOAL_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.cloak",
-  name: "Cloak",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_BOOTS_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.boots",
-  name: "Boots",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_NECK_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.neck",
-  name: "Neck Armor",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_RING_1_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.ring1",
-  name: "Ring #1",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_RING_2_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.ring2",
-  name: "Ring #2",
-  isIntrinsic: true,
-});
-EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
-  path: "equipment.armor.other",
-  name: "Other Armor",
-  isIntrinsic: true,
-});
 ACTIVE_EXTERNAL_EFFECTS_ATTRIBUTE = new Attribute({
   path: "active_external_effects",
   isIntrinsic: true,
@@ -749,8 +736,13 @@ ACTIVE_EFFECTS_ATTRIBUTE = new Attribute({
     };
   }
 });
-INVENTORY_ATTRIBUTE = new Attribute({
-  path: "inventory",
+INVENTORY_ITEMS_ATTRIBUTE = new Attribute({
+  path: "inventory.items",
+  name: "Inventory",
+  isIntrinsic: true,
+});
+INVENTORY_MISC_ATTRIBUTE = new Attribute({
+  path: "inventory.misc",
   name: "Inventory",
   isIntrinsic: true,
 });
@@ -980,6 +972,204 @@ EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
     return {
       value: allowedWeapons,
       tooltip: "ah, a force dyad",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_CHEST_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.chest",
+  name: "Chest Armor",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "chest" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_SHIELD_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.shield",
+  name: "Shield",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "shield" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_GLOVES_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.gloves",
+  name: "Gloves",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "gloves" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_HEAD_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.head",
+  name: "Head Armor",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "head" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_CLOAK_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.cloak",
+  name: "Cloak",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "cloak" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_BOOTS_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.boots",
+  name: "Boots",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "boots" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_NECK_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.neck",
+  name: "Neck Armor",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "neck" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_RING_1_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.ring1",
+  name: "Ring #1",
+  name: "Other Armor",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "ring" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_RING_2_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.ring2",
+  name: "Ring #2",
+  name: "Other Armor",
+  calculateFunction: characterData => {
+    let armor = [];
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "ring" && characterData.inventory.items[i].equipped) {
+        armor.push(characterData.inventory.items[i]);
+      }
+    }
+    return {
+      value: armor.length > 1 ? armor[1] : armor[0],
+      tooltip: "",
+    };
+  },
+});
+
+EQUIPMENT_ARMOR_OTHER_ATTRIBUTE = new Attribute({
+  path: "equipment.armor.other",
+  name: "Other Armor",
+  calculateFunction: characterData => {
+    let armor = null;
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "other" && characterData.inventory.items[i].equipped) {
+        armor = characterData.inventory.items[i];
+        break;
+      }
+    }
+    return {
+      value: armor,
+      tooltip: "",
+    };
+  },
+});
+
+WEAPON_ATTACKS_ATTRIBUTE = new Attribute({
+  path: "weapon_attacks",
+  name: "Weapon Attacks",
+  calculateFunction: characterData => {
+    let weapons = [];
+    for (let i = 0; i < characterData.inventory.items.length; i++) {
+      if (characterData.inventory.items[i].type == "weapon" && characterData.inventory.items[i].equipped) {
+        weapons.push(characterData.inventory.items[i]);
+      }
+    }
+    return {
+      value: weapons,
+      tooltip: "",
     };
   },
 });
@@ -1233,24 +1423,28 @@ function getActiveEffects(characterModel) {
     });
   }
 
-  const equipments = characterModel.equipment;
-  const armor = equipments.armor;
-  for (let armorType in armor) {
-    const equipment = armor[armorType];
-    if (!equipment || !equipment.equipped || !equipment.effects) {
-      // skip if not equipped, or has no effects
+  const equipments = characterModel.inventory.items;
+  for (let i = 0; i < equipments.length; i++) {
+    const equipment = equipments[i];
+    if (!equipment.effects) {
+      // skip if has no effects
       continue ;
     }
-    for (let i = 0; i < equipment.effects.length; i++) {
-      const armorName = ATTRIBUTES[`equipment.armor.${armorType}`].name;
+    for (let j = 0; j < equipment.effects.length; j++) {
+      let sourceName = equipment.name;
+      if (equipment.type === "object") {
+        sourceName += " (inventory)";
+      } else {
+        sourceName += ` (${equipment.type})`;
+      }
       effects.push({
-        source: `${equipment.name} (${armorName})`,
-        attribute: equipment.effects[i].attribute,
-        adjustment: equipment.effects[i].adjustment,
-        description: equipment.effects[i].description,
-        operation: equipment.effects[i].operation,
+        source: sourceName,
+        attribute: equipment.effects[j].attribute,
+        adjustment: equipment.effects[j].adjustment,
+        description: equipment.effects[j].description,
+        operation: equipment.effects[j].operation,
         duration: "While equipped",
-        hide_from_list: equipment.effects[i].attribute === "armor_class",
+        hide_from_list: equipment.effects[j].attribute === "armor_class",
       });
     }
   }
@@ -2152,15 +2346,23 @@ function actionKeyValue(action, key, characterModel, attribute, description = ""
  * @param {string} weapon Name of the weapon
  * @param {WeaponAttack[]} attacks List of attacks that can be performed with this weapon
  */
-function weaponAndActions(weapon, attacks) {
-  return new SectionEntry({
-    mainKeyText: weapon,
-    editButton: new EditButton("Edit / Remove"),
-    subEntries: attacks.map((attack) => new SectionSubEntry({
-      button: new DiceButton({text: attack.verb, formula: attack.damageFormula}),
-      text: attack.description()
-    }))
-  });
+function weaponsEntries(weapons) {
+  const entries = [];
+  for (let i = 0; i < weapons.length; i++) {
+    const weapon = weapons[i];
+    entries.push(new SectionEntry({
+      mainKeyText: weapon.name,
+      editButton: new EditButton("Edit / Remove"),
+      subEntries: weapon.attacks.map((attack) => {
+        const weaponAttack = new WeaponAttack(attack.name, attack.number_of_attacks, attack.is_fast, attack.range, attack.bonus_to_hit, attack.damage, attack.condition);
+        return new SectionSubEntry({
+          button: new DiceButton({text: weaponAttack.verb, formula: weaponAttack.damageFormula}),
+          text: weaponAttack.description(),
+        });
+      })
+    }));
+  }
+  return entries;
 }
 
 function spellSlots(key, characterModel, classType) {
@@ -2193,7 +2395,7 @@ function spellSlots(key, characterModel, classType) {
  */
 function armor(part, characterModel, attribute) {
   const item = ATTRIBUTES[attribute].getValue(characterModel);
-  if (!item || item === undefined || item === {} || !item.equipped) {
+  if (!item || item === undefined || item === {}) {
     return new SectionEntry({
       shortKeyText: part,
       editButton: new EditButton("Equip")
@@ -2334,8 +2536,8 @@ class WeaponAttack {
    */
   constructor(verb, numberOfAttacks, isFast, range, bonusToHit, damageFormula, condition) {
     this.verb = verb;
-    this.numberOfAttacks = numberOfAttacks;
-    this.isFast = isFast;
+    this.numberOfAttacks = numberOfAttacks || 1;
+    this.isFast = isFast || false;
     this.range = range;
     this.bonusToHit = bonusToHit;
     this.damageFormula = damageFormula;
@@ -2767,11 +2969,7 @@ function renderPage(characterName) {
           attribute: "equipment.allowed_weapons",
         }),
         new SectionEntry({editButton: new EditButton("+ Equip a Weapon")}),
-        weaponAndActions("Pipe Wrench", [
-          new WeaponAttack("Crazy Strike wtf", 1, false, "melee", 1, "1d4 + 3d8 + 5 + 2 + 6d1", ""),
-          new WeaponAttack("Strike vs Heavy Armor", 3, false, "melee", 1, "1d4", "opponent is heavily armored")
-        ]),
-        ...[] // TODO, pull Attack info from model
+        ...weaponsEntries(characterModel.weapon_attacks),
       ]
     }),
     armor: new PaneSection({
@@ -2809,7 +3007,7 @@ function renderPage(characterName) {
         new SectionEntry({editButton: new EditButton("+ Add a Weapon")}),
         new SectionEntry({editButton: new EditButton("+ Add Armor")}),
         new SectionEntry({editButton: new EditButton("+ Add Other Item")}),
-        new TextAreaEntry({characterModel: characterModel, attribute: "inventory"}),
+        new TextAreaEntry({characterModel: characterModel, attribute: "inventory.misc"}),
       ],
     }),
     notes: new PaneSection({
