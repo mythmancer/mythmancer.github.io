@@ -101,6 +101,8 @@ const CHARACTER_MODELS = {
         "is_external": true,
       },
     ],
+    "notes": "",
+    "inventory": "",
   },
   "Herakles": {
     "name": "Herakles",
@@ -156,6 +158,8 @@ const CHARACTER_MODELS = {
       "major_patron": "Belch",
     },
     "active_external_effects": [],
+    "notes": "",
+    "inventory": "",
   },
   "Noam Gnomesky": {
     "name": "Noam Gnomesky",
@@ -211,6 +215,8 @@ const CHARACTER_MODELS = {
       "major_patron": "Some old dead thing",
     },
     "active_external_effects": [],
+    "notes": "",
+    "inventory": "",
   },
 };
 
@@ -572,6 +578,12 @@ class Attribute {
   }
 }
 
+function saveToCurrentCharacter(attribute, value) {
+  const characterModel = getCharacterModel(CURRENT_CHARACTER);
+  ATTRIBUTES[attribute].setValue(characterModel, value);
+  updateCharacterModel(characterModel);
+}
+
 NAME_ATTRIBUTE = new Attribute({
   path: "name",
   name: "Name",
@@ -735,6 +747,17 @@ ACTIVE_EFFECTS_ATTRIBUTE = new Attribute({
     };
   }
 });
+INVENTORY_ATTRIBUTE = new Attribute({
+  path: "inventory",
+  name: "Inventory",
+  isIntrinsic: true,
+});
+NOTES_ATTRIBUTE = new Attribute({
+  path: "notes",
+  name: "Notes",
+  isIntrinsic: true,
+});
+
 
 // derived attributes
 CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
@@ -1308,6 +1331,12 @@ function getCharacterModel(characterName) {
   return JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY))[characterName];
 }
 
+function updateCharacterModel(characterModel) {
+  const characters = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
+  characters[characterModel.name] = characterModel;
+  window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(characters));
+}
+
 function addCharacterModel(characterModel) {
   const characters = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
   characters[characterModel.name] = characterModel;
@@ -1712,8 +1741,24 @@ class SectionSubEntry extends HTMLComponent {
 }
 
 class TextAreaEntry extends HTMLComponent {
-  constructor() {
-    super({});
+  /*
+   * @param {string} attribute character attribute to save to
+   */
+  constructor({
+    characterModel = null,
+    attribute = null,
+  }) {
+    super({
+      "listeners": {
+        "input": e => {
+          if (!attribute || !CURRENT_CHARACTER) {
+            return ;
+          }
+          saveToCurrentCharacter(attribute, e.target.value);
+        },
+      },
+    });
+    this.initialValue = ATTRIBUTES[attribute].getValue(characterModel);
   }
 
   getHTML() {
@@ -1721,11 +1766,32 @@ class TextAreaEntry extends HTMLComponent {
     <div class="cs-col cs-padding-h cs-section-entry">
       <div class="cs-row">
         <div class="cs-row">
-           <div class="cs-elem cs-width-full"><textarea></textarea></div>
+           <div class="cs-elem cs-width-full"><textarea id="${this.id}">${this.initialValue}</textarea></div>
         </div>
       </div>
     </div>
     `;
+  }
+}
+
+class InputBox extends HTMLComponent {
+  constructor(initialValue, divClass, attribute) {
+    super({
+      "listeners": {
+        "input": e => {
+          if (!attribute || !CURRENT_CHARACTER) {
+            return ;
+          }
+          saveToCurrentCharacter(attribute, e.target.value);
+        },
+      },
+    });
+    this.divClass = divClass;
+    this.initialValue = initialValue;
+  }
+
+  getHTML() {
+    return `<input class="${this.divClass}" id="${this.id}" type="text" value="${this.initialValue}">`;
   }
 }
 
@@ -1749,7 +1815,7 @@ class HitPointsEntry extends HTMLComponent {
         </div>
         <div class="cs-row">
           <div class="cs-elem ${this.currentTooltip ? "cs-has-tooltip" : ""}">
-            <input class="cs-current-hit-points" type="text" value="${this.current}">
+            ${new InputBox(this.current, "cs-current-hit-points", "hit_points.current").getHTML()}
             ${this.currentTooltip ? `<div class="cs-tooltiptext">${this.currentTooltip}</div>` : ""}
           </div>
           /
@@ -2741,14 +2807,14 @@ function renderPage(characterName) {
         new SectionEntry({editButton: new EditButton("+ Add a Weapon")}),
         new SectionEntry({editButton: new EditButton("+ Add Armor")}),
         new SectionEntry({editButton: new EditButton("+ Add Other Item")}),
-        new TextAreaEntry(),
+        new TextAreaEntry({characterModel: characterModel, attribute: "inventory"}),
       ],
     }),
     notes: new PaneSection({
       name: "notes",
       divider: new SectionDivider("Notes"),
       entries: [
-        new TextAreaEntry(),
+        new TextAreaEntry({characterModel: characterModel, attribute: "notes"}),
       ],
     }),
   };
