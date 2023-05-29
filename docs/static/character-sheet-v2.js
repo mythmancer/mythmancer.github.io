@@ -238,9 +238,11 @@ EMPTY_CHARACTER_MODEL =   {
     "color": "#8386cc",
   },
   "hit_points": {
-    "current": 0
+    "current": 0,
   },
   "active_external_effects": [],
+  "notes": "",
+  "inventory": "",
 };
 
 /*******************************************************************
