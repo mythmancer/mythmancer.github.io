@@ -2461,6 +2461,47 @@ function effectEntry(source, effects) {
   });
 }
 
+function organizedInventoryEntries({characterModel = null}) {
+  const availableItems = characterModel.inventory.items;
+  const organizedItems = {
+    armor: [],
+    objects: [],
+    weapons: [],
+  };
+  for (let i = 0; i < availableItems.length; i++) {
+    const name = availableItems[i].name;
+    if (availableItems[i].type === "weapon") {
+      organizedItems.weapons.push(name);
+    } else if (availableItems[i].type === "object") {
+      organizedItems.objects.push(name);
+    } else {
+      organizedItems.armor.push(name);
+    }
+  }
+
+  const entries = [];
+  if (organizedItems.armor.length > 0) {
+    entries.push(new SectionEntry({
+      mainKeyText: "Armor",
+      value: organizedItems.armor.join(", "),
+    }));
+  }
+  if (organizedItems.weapons.length > 0) {
+    entries.push(new SectionEntry({
+      mainKeyText: "Weapons",
+      value: organizedItems.weapons.join(", "),
+    }));
+  }
+  if (organizedItems.objects.length > 0) {
+    entries.push(new SectionEntry({
+      mainKeyText: "Objects",
+      value: organizedItems.objects.join(", "),
+    }));
+  }
+
+  return entries;
+}
+
 function spellSlotEntry(characterModel, spellType, spellName) {
   const spellDb = spellType === "mage" ? MAGE_SPELLS : WARLOCK_SPELLS;
   const tooltip = getSpellTooltipHTML(spellName, spellDb);
@@ -3030,6 +3071,7 @@ function renderPage(characterName) {
         new SectionEntry({editButton: new EditButton("+ Add a Weapon")}),
         new SectionEntry({editButton: new EditButton("+ Add Armor")}),
         new SectionEntry({editButton: new EditButton("+ Add Other Item")}),
+        ...organizedInventoryEntries({characterModel: characterModel}),
         new TextAreaEntry({characterModel: characterModel, attribute: "inventory.misc"}),
       ],
     }),
