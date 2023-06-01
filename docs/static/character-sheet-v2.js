@@ -302,6 +302,14 @@ COLOR_MODES = {
     "--cs-color-btn": "#989898",
     "--cs-color-btn-text": "#000000",
   },
+  v1: {
+    "--cs-color-bg": "#222033",
+    "--cs-color-section-bg": "#13121d",
+    "--cs-color-text": "#ffffff",
+    "--cs-color-text-deemphasized": "#9f9f9f",
+    "--cs-color-btn": "#52595c",
+    "--cs-color-btn-text": "#ffffff",
+  },
 };
 
 THEMES = {
