@@ -327,16 +327,19 @@ THEMES = {
 
 DISPLAY_MODES = {
   standard: {
-    show_debug: false,
+    show_extraneous_data: false,
     show_dice_buttons: true,
+    show_logs: false,
   },
   advanced: {
-    show_debug: false,
+    show_extraneous_data: false,
     show_dice_buttons: false,
+    show_logs: false,
   },
   debug: {
-    show_debug: true,
+    show_extraneous_data: true,
     show_dice_buttons: true,
+    show_logs: true,
   },
 };
 
@@ -378,6 +381,17 @@ DRAGGED_ELEMENT = null;
 CURRENT_NEXT_SIBLING = null;
 PLACEHOLDER_ELEMENT = null;
 
+function logIfDebug(msg) {
+  if (getDisplayMode().show_logs) {
+    console.log(msg);
+  }
+}
+
+function getDisplayMode() {
+  const displayMode = window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY) || "standard";
+  return DISPLAY_MODES[displayMode];
+}
+
 function setAppearance() {
   const colorMode = window.localStorage.getItem(COLOR_MODE_STORAGE_KEY) || "light";
   for (let prop in COLOR_MODES[colorMode]) {
@@ -388,11 +402,8 @@ function setAppearance() {
   for (let prop in THEMES[theme]) {
     document.documentElement.style.setProperty(prop, THEMES[theme][prop]);
   }
-}
 
-function getDisplayMode() {
-  const displayMode = window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY) || "standard";
-  return DISPLAY_MODES[displayMode];
+  logIfDebug(`Changing appearance to ${theme} theme and ${colorMode} color mode`);
 }
 
 /*******************************************************************
@@ -618,6 +629,7 @@ class Attribute {
 }
 
 function saveToCurrentCharacter(attribute, value) {
+  logIfDebug(`Updating ${CURRENT_CHARACTER}.${attribute} to ${value}`);
   const characterModel = getCharacterModel(CURRENT_CHARACTER);
   ATTRIBUTES[attribute].setValue(characterModel, value);
   updateCharacterModel(characterModel);
@@ -1452,6 +1464,8 @@ function getActiveEffects(characterModel) {
 }
 
 function buildFinalizedCharacterModel(baseCharacterModel) {
+  logIfDebug(`Base character model: ${JSON.stringify(baseCharacterModel)}`);
+
   const finalizedCharacterModel = structuredClone(baseCharacterModel);
   finalizedCharacterModel.tooltips = {};
 
@@ -1520,6 +1534,8 @@ function buildFinalizedCharacterModel(baseCharacterModel) {
       });
     }
   }
+
+  logIfDebug(`Finalized character model: ${JSON.stringify(finalizedCharacterModel)}`);
   return finalizedCharacterModel;
 }
 
@@ -1534,12 +1550,14 @@ function updateCharacterModel(characterModel) {
 }
 
 function addCharacterModel(characterModel) {
+  logIfDebug(`New character added: ${characterModel.name}`);
   const characters = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
   characters[characterModel.name] = characterModel;
   window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(characters));
 }
 
 function deleteCharacterModel(characterName) {
+  logIfDebug(`Character deleted: ${characterModel.name}`);
   const characters = JSON.parse(window.localStorage.getItem(CHARACTER_SHEET_STORAGE_KEY));
   delete characters[characterName];
   window.localStorage.setItem(CHARACTER_SHEET_STORAGE_KEY, JSON.stringify(characters));
@@ -2475,7 +2493,7 @@ function effectsEntries(characterModel) {
       }
     }
 
-    if (!getDisplayMode().show_debug && hideFromList) {
+    if (!getDisplayMode().show_extraneous_data && hideFromList) {
       continue ;
     }
 
@@ -2686,6 +2704,8 @@ function setCharacterColor(color) {
 }
 
 function renderNewCharacterForm() {
+  logIfDebug(`Loading new character form`);
+
   renderPage(null);
 
   const phase1 = new FormSection({
@@ -2872,6 +2892,8 @@ function renderPage(characterName) {
   document.getElementById("cs-settings").innerHTML = new SettingsPanel().getHTML();
 
   if (characterName == null) {
+    logIfDebug(`Not loading any character`);
+
     document.getElementById("cs-right-pane").innerHTML = "";
 
     document.documentElement.style.setProperty("--cs-color-character-bg", DEFAULT_CHARACTER_COLOR);
@@ -2882,6 +2904,7 @@ function renderPage(characterName) {
     return ;
   }
 
+  logIfDebug(`Loading character ${characterName}`);
   document.getElementById("cs-new-character-button").classList.remove("cs-character-listing-current");
 
   const displayMode = getDisplayMode();
@@ -3090,6 +3113,8 @@ function renderPage(characterName) {
 
   setCharacterColor(characterModel.meta.color);
 
+  logIfDebug(`Rendering with arrangement ${JSON.stringify(arrangement)} and color ${characterModel.meta.color}`);
+
   document.getElementById("cs-right-pane").innerHTML = `
       <div id="cs-current-character">
         <div class="cs-panels">${panes.map(pane => pane.getHTML()).join("")}</div>
@@ -3110,6 +3135,7 @@ function resizePage(event) {
   }
 
   if (previousColumnMode != COLUMN_MODE) {
+    logIfDebug(`Switching to ${COLUMN_MODE}-column mode`);
     document.documentElement.style.setProperty("--cs-panel-max-width", COLUMN_MODES[COLUMN_MODE].max_panel_width);
     renderPage(CURRENT_CHARACTER);
   }
@@ -3120,6 +3146,7 @@ function postRender() {
   attachComponentListeners();
   initializeComponents();
   positionTooltips();
+  logIfDebug(`Finished render and post-render`);
 }
 
 function getJSON(url, callback) {
@@ -3164,4 +3191,6 @@ window.onload = function () {
   });
 
   addEventListener("resize", resizePage);
+
+  logIfDebug(`Site is ready to use!`);
 };
