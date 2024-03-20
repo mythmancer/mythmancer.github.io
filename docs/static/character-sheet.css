@@ -125,6 +125,12 @@ input[type="color"]::-moz-color-swatch {
     gap: var(--cs-gap);
 }
 
+.cs-compact-row {
+    align-self: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
 .cs-elem {
     /* Flex Element, should only contain simple contents such as text */
     display: flex;
@@ -168,7 +174,7 @@ input[type="color"]::-moz-color-swatch {
     min-width: var(--cs-width-divider-left);
 }
 
-.cs-current-hit-points {
+.cs-current-hit-points, .cs-current-wound-points {
     /* TODO: Urgh. Figure out why the input css is overriding this, even though it's declared before */
     width: 50px !important;
     padding-left: 0 !important;
