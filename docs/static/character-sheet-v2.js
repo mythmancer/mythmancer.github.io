@@ -10,7 +10,11 @@ const CHARACTER_MODELS = {
     },
     "hit_points": {
       "total": 17,
-      "current": 16
+      "current": 16,
+    },
+    "wound_points": {
+      "total": 4,
+      "current": 3,
     },
     "ability_scores": {
       "strength": 17,
@@ -20,17 +24,8 @@ const CHARACTER_MODELS = {
       "intelligence": 16,
       "charisma": 16,
     },
-    "fighter": {
-      "level": 5,
-    },
-    "rogue": {
-      "level": 5,
-    },
-    "mage": {
-      "level": 5,
-    },
+    "level": 6,
     "warlock": {
-      "level": 5,
       "domain": "Elemental - Water",
       "major_patron": "Rath - Water Aspect",
     },
@@ -145,6 +140,10 @@ const CHARACTER_MODELS = {
       "total": 100000,
       "current": 18
     },
+    "wound_points": {
+      "total": 10000,
+      "current": 10,
+    },
     "ability_scores": {
       "strength": 18,
       "dexterity": 3,
@@ -153,17 +152,8 @@ const CHARACTER_MODELS = {
       "intelligence": 4,
       "charisma": 5,
     },
-    "fighter": {
-      "level": 9,
-    },
-    "rogue": {
-      "level": 1,
-    },
-    "mage": {
-      "level": 2,
-    },
+    "level": 9,
     "warlock": {
-      "level": 3,
       "domain": "Elemental - Ice",
       "major_patron": "Belch",
     },
@@ -204,6 +194,10 @@ const CHARACTER_MODELS = {
       "total": 2,
       "current": 1
     },
+    "wound_points": {
+      "total": 1,
+      "current": 1,
+    },
     "ability_scores": {
       "strength": 3,
       "dexterity": 1,
@@ -212,17 +206,8 @@ const CHARACTER_MODELS = {
       "intelligence": 10,
       "charisma": 15,
     },
-    "fighter": {
-      "level": 0,
-    },
-    "rogue": {
-      "level": 9,
-    },
-    "mage": {
-      "level": 9,
-    },
+    "level": 9,
     "warlock": {
-      "level": 9,
       "domain": "Arcana",
       "major_patron": "Some old dead thing",
     },
@@ -268,6 +253,9 @@ THEME_STORAGE_KEY = "theme";
 TOOLTIP_POSITIONS = ["bottomleft", "bottomright", "topleft", "topright"];
 EMPTY_CHARACTER_MODEL =   {
   "hit_points": {
+    "current": 0,
+  },
+  "wound_points": {
     "current": 0,
   },
   "warlock": {
@@ -357,20 +345,20 @@ DISPLAY_MODES = {
 COLUMN_MODES = {
   1: {
     default_arrangement: [
-      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "inventory", "fighter", "rogue", "mage", "warlock", "effects", "notes"]
+      ["character", "defenses", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "inventory", "fighter", "rogue", "mage", "warlock", "effects", "notes"]
     ],
     max_panel_width: "100%",
   },
   2: {
     max_panel_width: "50%",
     default_arrangement: [
-      ["character", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "inventory"],
+      ["character", "defenses", "abilities", "save_throws", "skills", "weapons_attacks", "armor", "inventory"],
       ["fighter", "rogue", "mage", "warlock", "effects", "notes"]
     ],
   },
   3: {
     default_arrangement: [
-      ["character", "abilities", "save_throws", "skills"],
+      ["character", "defenses", "abilities", "save_throws", "skills"],
       ["weapons_attacks", "armor", "inventory"],
       ["fighter", "rogue", "mage", "warlock", "effects", "notes"]
     ],
@@ -682,6 +670,22 @@ HIT_POINTS_CURRENT_ATTRIBUTE = new Attribute({
   name: "Current Hit Points",
   isIntrinsic: true,
 });
+WOUND_POINTS_TOTAL_ATTRIBUTE = new Attribute({
+  path: "wound_points.total",
+  name: "Total Wound Points",
+  isIntrinsic: true,
+});
+WOUND_POINTS_CURRENT_ATTRIBUTE = new Attribute({
+  path: "wound_points.current",
+  name: "Current Wound Points",
+  isIntrinsic: true,
+  calculateFunction: characterData => {
+    return {
+      value: characterData.wound_points.current,
+      tooltip: "Ooof ouch owie owie I drank bone hurting juice :(",
+    };
+  }
+});
 ABILITY_SCORES_STRENGTH_ATTRIBUTE = new Attribute({
   path: "ability_scores.strength",
   name: "Strength",
@@ -712,24 +716,9 @@ ABILITY_SCORES_CHARISMA_ATTRIBUTE = new Attribute({
   name: "Charisma",
   isIntrinsic: true,
 });
-FIGHTER_LEVEL_ATTRIBUTE = new Attribute({
-  path: "fighter.level",
-  name: "Fighter Level",
-  isIntrinsic: true,
-});
-ROGUE_LEVEL_ATTRIBUTE = new Attribute({
-  path: "rogue.level",
-  name: "Rogue Level",
-  isIntrinsic: true,
-});
-MAGE_LEVEL_ATTRIBUTE = new Attribute({
-  path: "mage.level",
-  name: "Mage Level",
-  isIntrinsic: true,
-});
-WARLOCK_LEVEL_ATTRIBUTE = new Attribute({
-  path: "warlock.level",
-  name: "Warlock Level",
+LEVEL_ATTRIBUTE = new Attribute({
+  path: "level",
+  name: "Level",
   isIntrinsic: true,
 });
 WARLOCK_DOMAIN_ATTRIBUTE = new Attribute({
@@ -774,20 +763,6 @@ NOTES_ATTRIBUTE = new Attribute({
 
 
 // derived attributes
-CHARACTER_LEVEL_ATTRIBUTE = new Attribute({
-  path: "total_character_level",
-  name: "Total Character Level",
-  calculateFunction: characterData => {
-    return {
-      value: getNumericalCharacteristic(characterData.fighter.level)
-        + getNumericalCharacteristic(characterData.mage.level)
-        + getNumericalCharacteristic(characterData.rogue.level)
-        + getNumericalCharacteristic(characterData.warlock.level),
-      tooltip: "force? dyad?",
-    };
-  }
-});
-
 MODIFIERS_CHARISMA_ATTRIBUTE = new Attribute({
   path: "modifiers.charisma",
   name: "Charisma Modifier",
@@ -816,10 +791,10 @@ SAVE_THROWS_CONSTITUTION_ATTRIBUTE = new Attribute({
   calculateFunction: characterData => {
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.constitution)]
-        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 3),
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 3),
       tooltip: "fortitude",
     };
   },
@@ -843,10 +818,10 @@ SAVE_THROWS_DEXTERITY_ATTRIBUTE = new Attribute({
     // DEX + FGT/3 + MAG/3 + ROG/2 + WAR/4
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.dexterity)]
-        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 3)
-        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 3)
-        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 4),
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4),
       tooltip: "A ".repeat(200),
     };
   },
@@ -893,10 +868,10 @@ SAVE_THROWS_WISDOM_ATTRIBUTE = new Attribute({
     // WIS + FGT/4 + MAG/2 + ROG/3 + WAR/2
     return {
       value: MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.wisdom)]
-        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 3)
-        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 2),
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 3)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 2),
       tooltip: "ah, a force dyad",
     };
   },
@@ -908,10 +883,10 @@ HIT_POINTS_HIT_DIE_ATTRIBUTE = new Attribute({
   calculateFunction: characterData => {
     // FGT + MAG + ROG + WAR
     return {
-      value: getNumericalCharacteristic(characterData.fighter.level)
-        + getNumericalCharacteristic(characterData.mage.level)
-        + getNumericalCharacteristic(characterData.rogue.level)
-        + getNumericalCharacteristic(characterData.warlock.level),
+      value: getNumericalCharacteristic(characterData.level)
+        + getNumericalCharacteristic(characterData.level)
+        + getNumericalCharacteristic(characterData.level)
+        + getNumericalCharacteristic(characterData.level),
       tooltip: "ah, a force dyad",
     };
   },
@@ -923,10 +898,10 @@ ATTACKS_BASE_BONUS_ATTRIBUTE = new Attribute({
   calculateFunction: characterData => {
     // FGT + MAG/4 + ROG/2 + WAR/2
     return {
-      value: getNumericalCharacteristic(characterData.fighter.level)
-        + Math.floor(getNumericalCharacteristic(characterData.mage.level) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData.rogue.level) / 2)
-        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 2),
+      value: getNumericalCharacteristic(characterData.level)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 2)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 2),
       tooltip: "ah, a force dyad",
     };
   },
@@ -939,7 +914,7 @@ ATTACKS_NUMBER_OF_ATTACKS_ATTRIBUTE = new Attribute({
     // max(1 + (FGT-1)/4, 1)
     return {
       value: Math.max(
-        Math.floor(1 + (getNumericalCharacteristic(characterData.fighter.level) - 1) / 4),
+        Math.floor(1 + (getNumericalCharacteristic(characterData.level) - 1) / 4),
         1,
       ),
       tooltip: "ah, a force dyad",
@@ -954,11 +929,11 @@ EQUIPMENT_ALLOWED_ARMOR_ATTRIBUTE = new Attribute({
     // if(FGT > 0, "Heavy + Shields", if(WAR > 0, "Medium", if(ROG > 0, "Light", "None")))
     let allowedArmor;
 
-    if (getNumericalCharacteristic(characterData.fighter.level) > 0) {
+    if (getNumericalCharacteristic(characterData.level) > 0) {
       allowedArmor = "Heavy + Shields";
-    } else if (getNumericalCharacteristic(characterData.warlock.level) > 0) {
+    } else if (getNumericalCharacteristic(characterData.level) > 0) {
       allowedArmor = "Medium";
-    } else if (getNumericalCharacteristic(characterData.rogue.level) > 0) {
+    } else if (getNumericalCharacteristic(characterData.level) > 0) {
       allowedArmor = "Light";
     } else {
       allowedArmor = "None";
@@ -979,11 +954,11 @@ EQUIPMENT_ALLOWED_WEAPONS_ATTRIBUTE = new Attribute({
     // if(FGT > 0, "Martial", if(ROG+WAR > 0, "Standard", "Simple"))
     let allowedWeapons;
 
-    if (getNumericalCharacteristic(characterData.fighter.level) > 0) {
+    if (getNumericalCharacteristic(characterData.level) > 0) {
       allowedWeapons = "Martial";
-    } else if (getNumericalCharacteristic(characterData.warlock.level) > 0) {
+    } else if (getNumericalCharacteristic(characterData.level) > 0) {
       allowedWeapons = "Standard";
-    } else if (getNumericalCharacteristic(characterData.rogue.level) > 0) {
+    } else if (getNumericalCharacteristic(characterData.level) > 0) {
       allowedWeapons = "Standard";
     } else {
       allowedWeapons = "Simple";
@@ -1200,10 +1175,10 @@ SKILLS_SKILL_CHECK_BONUS_ATTRIBUTE = new Attribute({
   calculateFunction: characterData => {
     // ROG + MAG/2 + FGT/4 + WAR/4
     return {
-      value: Math.floor(getNumericalCharacteristic(characterData.mage.level) / 2)
-        + getNumericalCharacteristic(characterData.rogue.level)
-        + Math.floor(getNumericalCharacteristic(characterData.fighter.level) / 4)
-        + Math.floor(getNumericalCharacteristic(characterData.warlock.level) / 4),
+      value: Math.floor(getNumericalCharacteristic(characterData.level) / 2)
+        + getNumericalCharacteristic(characterData.level)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4)
+        + Math.floor(getNumericalCharacteristic(characterData.level) / 4),
       tooltip: "ah, a force dyad",
     };
   },
@@ -1215,10 +1190,10 @@ SKILLS_MAX_SKILL_PROFICIENCIES_ATTRIBUTE = new Attribute({
   calculateFunction: characterData => {
     // table
     return {
-      value: SKILL_PROFICIENCY_TABLE.mage[getNumericalCharacteristic(characterData.mage.level) - 1]
-        + SKILL_PROFICIENCY_TABLE.rogue[getNumericalCharacteristic(characterData.rogue.level) - 1]
-        + SKILL_PROFICIENCY_TABLE.fighter[getNumericalCharacteristic(characterData.fighter.level) - 1]
-        + SKILL_PROFICIENCY_TABLE.warlock[getNumericalCharacteristic(characterData.warlock.level) - 1],
+      value: SKILL_PROFICIENCY_TABLE.mage[getNumericalCharacteristic(characterData.level) - 1]
+        + SKILL_PROFICIENCY_TABLE.rogue[getNumericalCharacteristic(characterData.level) - 1]
+        + SKILL_PROFICIENCY_TABLE.fighter[getNumericalCharacteristic(characterData.level) - 1]
+        + SKILL_PROFICIENCY_TABLE.warlock[getNumericalCharacteristic(characterData.level) - 1],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1295,7 +1270,7 @@ WARLOCK_MAX_MINOR_PATRONS_ATTRIBUTE = new Attribute({
     return {
       value: Math.min(
         1 + MODIFIER_TABLE[getNumericalCharacteristic(characterData.ability_scores.charisma)],
-        Math.floor((getNumericalCharacteristic(characterData.warlock.level) + 1) / 2)
+        Math.floor((getNumericalCharacteristic(characterData.level) + 1) / 2)
       ),
       tooltip: "ah, a force dyad",
     };
@@ -1310,7 +1285,7 @@ WARLOCK_L1_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 1 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][0],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][0],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1321,7 +1296,7 @@ WARLOCK_L2_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 2 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][1],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][1],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1332,7 +1307,7 @@ WARLOCK_L3_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 3 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][2],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][2],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1343,7 +1318,7 @@ WARLOCK_L4_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 4 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][3],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][3],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1354,7 +1329,7 @@ WARLOCK_L5_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 5 Occult Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.warlock.level)][4],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][4],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1365,7 +1340,7 @@ MAGE_L1_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 1 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][0],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][0],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1376,7 +1351,7 @@ MAGE_L2_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 2 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][1],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][1],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1387,7 +1362,7 @@ MAGE_L3_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 3 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][2],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][2],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1398,7 +1373,7 @@ MAGE_L4_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 4 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][3],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][3],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1409,7 +1384,7 @@ MAGE_L5_SLOTS_ATTRIBUTE = new Attribute({
   name: "Level 5 Arcane Spell Slots",
   calculateFunction: characterData => {
     return {
-      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.mage.level)][4],
+      value: SPELL_SLOTS[getNumericalCharacteristic(characterData.level)][4],
       tooltip: "ah, a force dyad",
     };
   },
@@ -1609,7 +1584,7 @@ class HTMLComponent {
     return false;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     console.log(`${this.constructor.name} does not have a defined HTML rendering function`);
     alert(`Could not render page`);
     throw new Error(`${this.constructor.name} does not have a defined HTML rendering function`);
@@ -1639,10 +1614,11 @@ class Pane extends HTMLComponent {
     return this;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
+    const colOrRow = compact ? "cs-row" : "cs-col";
     return `
-    <div id="${this.id}" class="cs-panel cs-col cs-padding-v">
-        ${this.sections.map((section) => section.getHTML()).join("")}
+    <div id="${this.id}" class="${colOrRow} cs-panel cs-padding-v">
+        ${this.sections.map((section) => section.getHTML(compact)).join("")}
     </div>
     `;
   }
@@ -1656,8 +1632,10 @@ class PaneSection extends HTMLComponent {
    */
   constructor({
                 name = "",
+                compact = false,
                 divider = null,
-                entries = []
+                entries = [],
+                editButton = null,
               }) {
     super({
       "listeners": {
@@ -1711,18 +1689,24 @@ class PaneSection extends HTMLComponent {
         },
       },
     });
+    this.compact = compact;
     this.divider = divider;
     this.entries = entries;
+    this.editButton = editButton;
     this.name = name;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
+    const colOrRow = this.compact ? "cs-row cs-padding-h cs-compact-row" : "cs-col";
+    const entryJoiner = this.compact ? "<div>·</div>" : "";
     return `
     <div id="${this.id}" class="cs-col cs-section" draggable="true">
         ${this.divider.getHTML()}
-        <div class="cs-col">
-            ${this.entries.map((entry) => entry.getHTML()).join("")}
+        <div class="${colOrRow}">
+            ${this.entries.map((entry) => entry.getHTML(this.compact)).join(entryJoiner)}
+            ${this.compact && this.editButton != null ? this.editButton.getHTML(compact) : ""}
         </div>
+        ${(!this.compact) && this.editButton != null ? this.editButton.getHTML(compact) : ""}
     </div>
     `;
   }
@@ -1754,12 +1738,12 @@ class FormSection extends HTMLComponent {
     }
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div class="cs-col cs-section ${this.isFirstPhase ? "" : "hidden"}">
-        ${this.divider == null ? "" : this.divider.getHTML()}
+        ${this.divider == null ? "" : this.divider.getHTML(compact)}
         <div class="cs-col">
-            ${this.entries.map((entry) => entry.getHTML()).join("")}
+            ${this.entries.map((entry) => entry.getHTML(compact)).join("")}
         </div>
     </div>
     `;
@@ -1790,7 +1774,7 @@ class FormSectionInputEntry extends HTMLComponent {
     this.defaultValue = defaultValue;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div class="cs-col cs-padding-h cs-section-entry">
        <div class="cs-row">
@@ -1828,7 +1812,7 @@ class SectionDivider extends HTMLComponent {
     this.draggable = draggable;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div id="${this.id}" class="cs-row cs-elem ${this.draggable ? "cs-grab-cursor" : ""}">
       <div class="arrow-line arrow-line-right cs-width-divider-left"></div>
@@ -1898,7 +1882,19 @@ class SectionEntry extends HTMLComponent {
     }
   }
 
-  getHTML() {
+  getHTML(compact=false) {
+    if (compact) {
+      console.log("COMPACTTT")
+      return `
+        ${this.value === "" ? "" : `
+        <div class="cs-elem ${this.tooltip ? "cs-has-tooltip" : ""}">
+          ${this.value}
+          ${this.tooltip ? `<div class="cs-tooltiptext">${this.tooltip}</div>` : ""}
+        </div>`
+        }
+        ${this.editButton == null ? "" : this.editButton.getHTML(compact)}
+      `;
+    }
     return `
     <div class="cs-col cs-padding-h cs-section-entry">
       <div class="cs-row">
@@ -1909,7 +1905,7 @@ class SectionEntry extends HTMLComponent {
           `}
           ${this.diceButton == null && this.mainKeyText === "" ? "" : `
             <div class="cs-row">
-              ${this.diceButton == null ? "" : this.diceButton.getHTML()}
+              ${this.diceButton == null ? "" : this.diceButton.getHTML(compact)}
               <div class="cs-elem ${this.keyTooltip ? "cs-has-tooltip" : ""}">
                 ${this.mainKeyText}
                 ${this.keyTooltip ? `<div class="cs-tooltiptext">${this.keyTooltip}</div>` : ""}
@@ -1917,7 +1913,7 @@ class SectionEntry extends HTMLComponent {
             </div>
           `}
           ${this.value === "" ? `
-            ${this.editButton == null ? "" : this.editButton.getHTML()}
+            ${this.editButton == null ? "" : this.editButton.getHTML(compact)}
           ` : `
             <div class="cs-row">
               ${this.value === "" ? "" : `
@@ -1926,12 +1922,12 @@ class SectionEntry extends HTMLComponent {
                 ${this.tooltip ? `<div class="cs-tooltiptext">${this.tooltip}</div>` : ""}
               </div>`
               }
-              ${this.editButton == null ? "" : this.editButton.getHTML()}
+              ${this.editButton == null ? "" : this.editButton.getHTML(compact)}
             </div>
           `}
 
       </div>
-      ${this.subEntries.map((subEntry) => subEntry.getHTML()).join("")}
+      ${this.subEntries.map((subEntry) => subEntry.getHTML(compact)).join("")}
     </div>
     `;
   }
@@ -1952,10 +1948,10 @@ class SectionSubEntry extends HTMLComponent {
     this.text = text;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div class="cs-row">
-        ${this.button == null ? "" : this.button.getHTML()}
+        ${this.button == null ? "" : this.button.getHTML(compact)}
         <div class="cs-elem cs-font-size-sm">${this.text}</div>
     </div>
     `;
@@ -1983,7 +1979,7 @@ class TextAreaEntry extends HTMLComponent {
     this.initialValue = ATTRIBUTES[attribute].getValue(characterModel);
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div class="cs-col cs-padding-h cs-section-entry">
       <div class="cs-row">
@@ -2012,7 +2008,7 @@ class InputBox extends HTMLComponent {
     this.initialValue = initialValue;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `<input class="${this.divClass}" id="${this.id}" type="text" value="${this.initialValue}">`;
   }
 }
@@ -2026,7 +2022,7 @@ class HitPointsEntry extends HTMLComponent {
     this.currentTotal = characterModel.tooltips.hit_points.total;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div class="cs-col cs-padding-h cs-section-entry">
       <div class="cs-row">
@@ -2037,7 +2033,42 @@ class HitPointsEntry extends HTMLComponent {
         </div>
         <div class="cs-row">
           <div class="cs-elem ${this.currentTooltip ? "cs-has-tooltip" : ""}">
-            ${new InputBox(this.current, "cs-current-hit-points", "hit_points.current").getHTML()}
+            ${new InputBox(this.current, "cs-current-hit-points", "hit_points.current").getHTML(compact)}
+            ${this.currentTooltip ? `<div class="cs-tooltiptext">${this.currentTooltip}</div>` : ""}
+          </div>
+          /
+          <div class="cs-elem ${this.totalTooltip ? "cs-has-tooltip" : ""}">
+            ${this.total}
+            ${this.totalTooltip ? `<div class="cs-tooltiptext">${this.totalTooltip}</div>` : ""}
+          </div>
+        </div>
+      </div>
+    </div>
+`;
+  }
+}
+
+class WoundPointsEntry extends HTMLComponent {
+  constructor(characterModel) {
+    super({});
+    this.current = characterModel.wound_points.current;
+    this.total = characterModel.wound_points.total;
+    this.currentTooltip = characterModel.tooltips.wound_points.current;
+    this.currentTotal = characterModel.tooltips.wound_points.total;
+  }
+
+  getHTML(compact=false) {
+    return `
+    <div class="cs-col cs-padding-h cs-section-entry">
+      <div class="cs-row">
+        <div class="cs-row">
+          <div class="cs-elem">
+            Wound Points
+          </div>
+        </div>
+        <div class="cs-row">
+          <div class="cs-elem ${this.currentTooltip ? "cs-has-tooltip" : ""}">
+            ${new InputBox(this.current, "cs-current-wound-points", "wound_points.current").getHTML(compact)}
             ${this.currentTooltip ? `<div class="cs-tooltiptext">${this.currentTooltip}</div>` : ""}
           </div>
           /
@@ -2078,7 +2109,7 @@ class DiceButton extends HTMLComponent {
     this.showIcon = showIcon;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg ${this.isHidden ? "hidden" : ""}">
         ${this.showIcon ? "⚅" : ""} ${this.text}
@@ -2107,7 +2138,7 @@ class NextButton extends HTMLComponent {
     });
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
         Next
@@ -2142,7 +2173,7 @@ class FinishButton extends HTMLComponent {
     });
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div id="${this.id}" class="cs-btn cs-font-size-sm cs-font-color-character cs-padding-h cs-line-height-btn cs-width-fill cs-color-character-bg">
         Finish
@@ -2166,7 +2197,7 @@ class ActionButton extends HTMLComponent {
     this.text = text;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div id="${this.id}" class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
         ${this.text}
@@ -2185,7 +2216,7 @@ class EditButton extends HTMLComponent {
     this.text = text;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
     <div id="${this.id}" class="cs-btn cs-font-size-sm cs-padding-h cs-line-height-btn cs-width-fill cs-color-btn">
         ${this.text}
@@ -2212,11 +2243,10 @@ class CharacterListing extends HTMLComponent {
 
   _getCharacterIdentifier(characterName) {
     const baseCharacterModel = getCharacterModel(characterName);
-    const totalCharacterLevel = CHARACTER_LEVEL_ATTRIBUTE.calculate(baseCharacterModel).value;
-    return `${characterName} - Level ${totalCharacterLevel} ${baseCharacterModel.title}`;
+    return `${characterName} - Level ${baseCharacterModel.level} ${baseCharacterModel.title}`;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `<div id="${this.id}" class="cs-left-pane-listing ${this.isCurrentCharacter ? "cs-character-listing-current" : ""}">${this._getCharacterIdentifier(this.characterName)}</div>`;
   }
 }
@@ -2233,9 +2263,9 @@ class CharacterListings extends HTMLComponent {
     this.currentCharacterName = currentCharacterName;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
-    ${this.characterNames.map(characterName => new CharacterListing(characterName, this.currentCharacterName === characterName).getHTML()).join("")}
+    ${this.characterNames.map(characterName => new CharacterListing(characterName, this.currentCharacterName === characterName).getHTML(compact)).join("")}
     `;
   }
 }
@@ -2253,7 +2283,7 @@ class DieLogEntry extends HTMLComponent {
     this.time = new Date();
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `<div class="cs-die-log-entry">${this.time.toTimeString().substr(0, 8)} - ${this.tag} for ${this.result}</div>`;
   }
 }
@@ -2276,7 +2306,7 @@ class Dropdown extends HTMLComponent {
     this.callback = callback;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
 <select id="${this.id}">
   ${Object.keys(this.setting).map(entry => `<option value="${entry}">${entry}</option>`).join("")}
@@ -2296,12 +2326,12 @@ class SettingControl extends HTMLComponent {
     this.control = control;
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
 <div class="cs-setting-control">
   <div class="cs-label">${this.label}</div>
   <div class="cs-filler-h"></div>
-  ${this.control.getHTML()}
+  ${this.control.getHTML(compact)}
 </div>
     `;
   }
@@ -2332,12 +2362,12 @@ class SettingsPanel extends HTMLComponent {
     renderPage(CURRENT_CHARACTER);
   }
 
-  getHTML() {
+  getHTML(compact=false) {
     return `
-${new SettingControl("Color Mode", new Dropdown(COLOR_MODES, window.localStorage.getItem(COLOR_MODE_STORAGE_KEY), this.setColorTheme)).getHTML()}
-${new SettingControl("Display Mode", new Dropdown(DISPLAY_MODES, window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY), this.setDisplayMode)).getHTML()}
-${new SettingControl("Theme", new Dropdown(THEMES, window.localStorage.getItem(THEME_STORAGE_KEY), this.setTheme)).getHTML()}
-${new SettingControl("Reset Arrangement", new ActionButton("Reset", e => this.resetArrangement())).getHTML()}`;
+${new SettingControl("Color Mode", new Dropdown(COLOR_MODES, window.localStorage.getItem(COLOR_MODE_STORAGE_KEY), this.setColorTheme)).getHTML(compact)}
+${new SettingControl("Display Mode", new Dropdown(DISPLAY_MODES, window.localStorage.getItem(DISPLAY_MODE_STORAGE_KEY), this.setDisplayMode)).getHTML(compact)}
+${new SettingControl("Theme", new Dropdown(THEMES, window.localStorage.getItem(THEME_STORAGE_KEY), this.setTheme)).getHTML(compact)}
+${new SettingControl("Reset Arrangement", new ActionButton("Reset", e => this.resetArrangement())).getHTML(compact)}`;
   }
 }
 
@@ -2854,26 +2884,8 @@ function renderNewCharacterForm() {
       }),
       new FormSectionInputEntry({
         formName: "cs-new-character",
-        mainKeyText: "Fighter Level",
-        attribute: "fighter.level",
-        numerical: true,
-      }),
-      new FormSectionInputEntry({
-        formName: "cs-new-character",
-        mainKeyText: "Rogue Level",
-        attribute: "rogue.level",
-        numerical: true,
-      }),
-      new FormSectionInputEntry({
-        formName: "cs-new-character",
-        mainKeyText: "Mage Level",
-        attribute: "mage.level",
-        numerical: true,
-      }),
-      new FormSectionInputEntry({
-        formName: "cs-new-character",
-        mainKeyText: "Warlock Level",
-        attribute: "warlock.level",
+        mainKeyText: "Level",
+        attribute: "level",
         numerical: true,
       }),
       new FormSectionInputEntry({
@@ -2966,6 +2978,8 @@ function renderPage(characterName) {
     character: new PaneSection({
       name: "character",
       divider: new SectionDivider("Character"),
+      compact: true,
+      editButton: new EditButton("Edit"),
       entries: [
         new SectionEntry({
           mainKeyText: "Name",
@@ -2983,18 +2997,27 @@ function renderPage(characterName) {
           attribute: "race",
         }),
         new SectionEntry({
-          mainKeyText: "Total Character Level",
+          mainKeyText: "Character Level",
           characterModel: characterModel,
-          attribute: "total_character_level",
-          editButton: new EditButton("Level Up / Edit Levels")
+          attribute: "level",
         }),
+      ],
+    }),
+    defenses: new PaneSection({
+      name: "defences",
+      divider: new SectionDivider("Defenses"),
+      entries: [
         new HitPointsEntry(characterModel),
+        new WoundPointsEntry(characterModel),
         new SectionEntry({
           mainKeyText: "Armor Class",
           characterModel: characterModel,
           attribute: "armor_class",
         }),
-      ]
+        actionKeyValue("Save vs", "Reflex", characterModel, "save_throws.dexterity", "", "1d20"),
+        actionKeyValue("Save vs", "Fortitude", characterModel, "save_throws.constitution", "", "1d20"),
+        actionKeyValue("Save vs", "Will", characterModel, "save_throws.wisdom", "", "1d20"),
+      ],
     }),
     abilities: new PaneSection({
       name: "abilities",
@@ -3006,15 +3029,6 @@ function renderPage(characterName) {
         actionKeyValue("Check", "Wisdom", characterModel, "ability_scores.wisdom", "", "1d20"),
         actionKeyValue("Check", "Intelligence", characterModel, "ability_scores.intelligence", "", "1d20"),
         actionKeyValue("Check", "Charisma", characterModel, "ability_scores.charisma", "", "1d20"),
-      ]
-    }),
-    save_throws: new PaneSection({
-      name: "save_throws",
-      divider: new SectionDivider("Save Throws"),
-      entries: [
-        actionKeyValue("Save vs", "Reflex", characterModel, "save_throws.dexterity", "", "1d20"),
-        actionKeyValue("Save vs", "Fortitude", characterModel, "save_throws.constitution", "", "1d20"),
-        actionKeyValue("Save vs", "Will", characterModel, "save_throws.wisdom", "", "1d20"),
       ]
     }),
     skills: new PaneSection({
@@ -3093,12 +3107,11 @@ function renderPage(characterName) {
   };
 
   const classesSections = {};
-  if (characterModel.fighter.level > 0) {
+  if (characterModel.level > 0) {
     sections.fighter = new PaneSection({
       name: "fighter",
       divider: new SectionDivider("Fighter"),
       entries: [
-        classKeyValue("Fighter Level", characterModel, "fighter.level"),
         classKeyValue("Additional Attacks", characterModel, "fighter.additional_attacks"),
         classKeyValue("Weapon Specializations", characterModel, "fighter.weapon_specializations", [
           "Dagger & Sword I - +1 to Hit and Damage",
@@ -3107,24 +3120,22 @@ function renderPage(characterName) {
       ]
     });
   }
-  if (characterModel.rogue.level > 0) {
+  if (characterModel.level > 0) {
     sections.rogue = new PaneSection({
       name: "rogue",
       divider: new SectionDivider("Rogue"),
       entries: [
-        classKeyValue("Rogue Level", characterModel, "rogue.level"),
         classKeyValue("Skill Specializations", characterModel, "rogue.skill_specializations", [
           "Mercantile - Journeyman Merchant",
         ])
       ]
     });
   }
-  if (characterModel.mage.level > 0) {
+  if (characterModel.level > 0) {
     sections.mage = new PaneSection({
       name: "mage",
       divider: new SectionDivider("Mage"),
       entries: [
-        classKeyValue("Mage Level", characterModel, "mage.level"),
         spellSlots("Arcane Spell Slots", characterModel, "mage"),
         classKeyValue("Max Spells per Degree", characterModel, "mage.max_spells_learnable_per_degree"),
         classKeyValue("Arcane Casting in Armor", characterModel, "mage.arcane_casting_in_armor"),
@@ -3132,12 +3143,11 @@ function renderPage(characterName) {
       ]
     });
   }
-  if (characterModel.warlock.level > 0) {
+  if (characterModel.level > 0) {
     sections.warlock = new PaneSection({
       name: "warlock",
       divider: new SectionDivider("Warlock"),
       entries: [
-        classKeyValue("Warlock Level", characterModel, "warlock.level"),
         spellSlots("Occult Spell Slots", characterModel, "warlock"),
         classKeyValue("Domain", characterModel, "warlock.domain"),
         classKeyValue("Major Patron", characterModel, "warlock.major_patron"),
