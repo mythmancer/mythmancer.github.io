@@ -1403,6 +1403,17 @@ ARMOR_CLASS_ATTRIBUTE = new Attribute({
   },
 });
 
+AC_WHEN_BLOCKING_ATTRIBUTE = new Attribute({
+  path: "armor_class_blocking",
+  name: "AC when blocking",
+  calculateFunction: characterData => {
+    return {
+      value: "17 vs 1 Attack",
+      tooltip: "TODO",
+    };
+  },
+});
+
 function getActiveEffects(characterModel) {
   const effects = [];
 
@@ -3013,6 +3024,11 @@ function renderPage(characterName) {
           mainKeyText: "Armor Class",
           characterModel: characterModel,
           attribute: "armor_class",
+        }),
+        new SectionEntry({
+          mainKeyText: "AC when blocking",
+          characterModel: characterModel,
+          attribute: "armor_class_blocking",
         }),
         actionKeyValue("Save vs", "Reflex", characterModel, "save_throws.dexterity", "", "1d20"),
         actionKeyValue("Save vs", "Fortitude", characterModel, "save_throws.constitution", "", "1d20"),
