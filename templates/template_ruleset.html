@@ -1,5 +1,26 @@
 {% include './header.html' %}
 <script>{% include './ruleset_filter.js' %}</script>
+<style>
+  #searchBar {
+    font-family: inherit;
+    font-size: 40px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    color: black;
+    background: #549171;
+    border-bottom: 5px solid #549171;
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 10px 10px 0px 0px;
+    transition: 0.3s;
+  }
+  #searchBar:focus {
+    color: black;
+    background: #80BA50;
+    border-bottom: 5px solid #1B4D3E;
+  }
+</style>
 <div class="writing">
   <input type="text" id="searchBar" placeholder="Search rules...">
   {{ data }}
