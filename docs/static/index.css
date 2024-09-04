@@ -30,11 +30,10 @@
 
 body {
     background-color: var(--bg);
-    box-sizing: border-box; /* include margin in width */
     color: var(--text);
     font-family: var(--font-family);
-    margin: var(--page-margin);
-    width: 84%;
+    width: 100%;
+    margin: 0;
 }
 
 a, a:visited {
@@ -58,8 +57,9 @@ body.character-sheet {
 #main {
     display: flex;
     flex-direction: column;
-    margin-bottom: var(--page-margin);
-    width: 100%;
+    margin: var(--page-margin) auto var(--page-margin) auto;
+    min-width: 300px;
+    max-width: 1350px;
 }
 
 #name {
