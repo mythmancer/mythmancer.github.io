@@ -17,6 +17,12 @@
       "data_type": "json"
     },
     {
+      "route": "play",
+      "title": "play rules",
+      "template": "template_ruleset.html",
+      "data_type": "markdown"
+    },
+    {
       "title": "character creation",
       "route": "character-creation",
       "template": "template_contents.html",
