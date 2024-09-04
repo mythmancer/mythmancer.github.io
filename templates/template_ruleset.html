@@ -1,6 +1,12 @@
 {% include './header.html' %}
 <script>{% include './ruleset_filter.js' %}</script>
 <style>
+  #searchBarDiv {
+      position: sticky;
+      top: 0;
+      padding: 30px;
+      background: black;
+  }
   #searchBar {
     font-family: inherit;
     font-size: 40px;
@@ -8,21 +14,57 @@
     outline: none;
     padding: 10px;
     color: black;
-    background: #549171;
-    border-bottom: 5px solid #549171;
-    width: 100%;
-    margin-bottom: 30px;
+    background: #80BA50;
+    border-bottom: 5px solid transparent;
     border-radius: 10px 10px 0px 0px;
     transition: 0.3s;
+    opacity: 0.7;
+    width: calc(100% - 80px);
   }
   #searchBar:focus {
     color: black;
-    background: #80BA50;
     border-bottom: 5px solid #1B4D3E;
+    opacity: 1;
+  }
+  h1 {
+      width: calc(100% - 10px);
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 5px !important;
+      padding: 5px;
+  }
+  #contents {
+      margin-left: calc(var(--page-margin) * -1);
+      margin-right: calc(var(--page-margin) * -1);
+  }
+  #rulesetpage {
+      background: black;
+  }
+  #ruleset {
+      display: flex;
+      flex-direction: row;
+  }
+  .writing {
+      width: 100%;
+      padding: 0;
+      padding-right: 30px;
+      padding-bottom: 30px;
+  }
+  #navigator {
+      max-width: 370px;
+      margin-right: 30px;
   }
 </style>
-<div class="writing">
-  <input type="text" id="searchBar" placeholder="Search rules...">
-  {{ data }}
+<div id="rulesetpage">
+  <div id="searchBarDiv">
+    <input type="text" id="searchBar" placeholder="Search rules...">
+  </div>
+  <div id="ruleset">
+    <div id="navigator">
+    </div>
+    <div class="writing">
+      {{ data }}
+      <div id="ruleset-no-results">No results. Stop trying to make things up. No, the rules do not say that you're invincible, but good try.</div>
+    </div>
+  </div>
 </div>
 {% include './footer.html' %}
