@@ -1,224 +1,405 @@
-# Landing Page
-this is land.
-## Introductory Poem on Mythmancers (Lore, title TBD)
-we myth and we mance\
-what is a rule anyway?\
-we dith and we dance
-## Description
-i describe now.
-# Character Creation
-how create? read -
-## Character Creation Steps
-step by step
-### Choose a Race
-racist
-### Choose a Class
-classist
-### Assign Abilities
-ableist
-### Choose Skills
-ableist
-### For Warriors - Choose a Fighting Style
-Monkey style?
+# Abilities
 
-Dragon style
+> ### Character Creation Step 1 - Assign initial Modifiers
+> Assign the modifier `[+1, 0, 0, -1, -1, -1]` in any order you want across the six Abilities:
+> Strength (STR), Dexterity (DEX), Constitution (CON), Intelligence (INT), Wisdom (WIS), and
+> Charisma (CHA)
 
-Kung pao
-### For Adepts - Choose Spells
-A-A-R-D-V-A-R-K
+Your character is composed of six core attributes called Abilities. These are Strength, Dexterity,
+Constitution, Intelligence, Wisdom, and Charisma.
 
-W-O-N-T-O-N-L-Y
-## Races
-off to the races!
-### Gaeans
-who are these little green ghouls?
-#### Gaean
-little green ghouls buddy
-#### Cyclopes
-but these ones also one eye
+Each Ability is represented by a single number called an Ability Modifier (e.g. Strength Modifier).
+As your character Levels up, your Ability Modifiers will increase, making your character more
+powerful over time.
+
+## Description of Abilities
+
+---
+
+### Strength (STR)
+
+Strength is your character's physical might. Strength is primarily important for Fighters or
+anyone else who will participate in a lot of melee combat. Strength affects:
+
+* Bonus to Hit and Damage with Melee Weapons
+* Bonus to Damage with Throwing Weapons
+* Effectiveness of Shields (*Evasion*)
+* Total Carrying Capacity
+* **Skills** - Athletics, Swimming
+
+---
+
+### Dexterity (DEX)
+
+Dexterity is your character's hand-to-eye coordination and agility. Dexterity is important for
+Fighters who primarily engage in ranged combat as well as Rogues who employ finesse skills.
+Dexterity affects:
+
+* Bonus to Hit with Ranged Weapons
+* Reflex Save Throws - used to avoid harm from things like falls, traps, and explosions
+* Effectiveness of *Evasion*
+* **Skills** - Locks and Traps, and Stealth
+* **Adept Skills** - Countercast
+
+---
+
+### Constitution (CON)
+
+Constitution is your character's physical durability and endurance. Constitution is very important
+for Fighters who engage in melee, but all characters can benefit greatly from a small investment
+into Constitution. Constitution affects:
+
+* Maximum Hit Points and Wound Points
+* Fortitude Save Throws - used to avoid harm from things like poison and disease
+* Maximum Armor Weight
+* Total Carrying Capacity
+* **Adept Skills**: Concentration
+
+---
+
+### Intelligence (INT)
+
+Intelligence is your character's mental acuity. Intelligence is important for Adepts who want to
+be able to cast many different spells and Rogues who are trained in a variety of knowledge-based
+Skills. Intelligence affects:
+
+* Maximum Spells per Degree Learnable
+* Maximum Spell Complexity
+* **Skills**: Appraisal, History, Husbandry, Literacy, Medicine, Nature, Tactics
+* **Adept Skills**: Spellcraft
+
+---
+
+### Wisdom (WIS)
+
+Wisdom is your character's mental resilience and perceptiveness. Wisdom is important for Adepts
+who want to get the most out of simpler spells and Rogues who utilize keen senses. Wisdom affects:
+
+* Spell Potency and Spell Save DC of many spells
+* Maximum Degree of Spells channeled from Patrons.
+* Will Save Throws - used to avoid harm from things that affect the mind
+* **Skills** - Animism, Perception, Tracking
+
+---
+
+### Charisma (CHA)
+
+Charisma is your character's likeability and expressiveness. Charisma is important for any
+character who wishes to play the role of a team's Face, but is also essential for any Adept who
+wants to specialize in mind-affecting spells. Charisma affects:
+
+* Spell Potency and Spell Save DC of mind-affecting spells such as Illusions and Charms.
+* **Skills** - Influence, Performance
+
+# Races
+
+> ### Character Creation Step 2 - Select a Race
+> Select a Race for your character, the possible races are Telon, Kyma, Gaean, Cyclops, Dendrid, and
+> Orid. Based on your selection, select and copy down the following:
+> 1. Copy down any **Features** associated with your selected race
+> 2. Select a **Skill** from your selected race's list of skills to receive Training in
+> 3. Optionally choose one **Ability Modifier Adjustment**
+
+There are six playable races in Mythmancer, these are Telon, Kyma, Gaean, Cyclops, Dendrid, and
+Orid. All races are capable of excelling at any role within an adventuring party. Still, your choice
+of race can influence a few things about your character, these are:
+
+* **Racial Features** - your choice of race automatically confers a few attributes to your character
+  regardless of any other choice you make.
+* **Racial Skill** - your character will begin trained in one Skill based on their race.
+* **Racial Ability Modifier Adjustment (optional)** - based on your character's race, you may choose
+  a trait typical to that race that increases one Ability by 1 and decreases another by 1.
+
+## Description of Races
+
+---
+
 ### Telon
-nortel
-#### Stream Telon
-if you have bandwidth
-paragraph2
-#### Great River Telon
-the big one over there
-#### Mountain Telon
-mounties! so cute!
-#### Kyma
-comma,,,
-### Oroi
-you or i
 
-me or you
+The Telon are a widespread group of semiaquatic humans who exhibit light builds and inhabit
+communities primarily around lakes and rivers. The height of Telon can vary broadly from populations
+who show average heights of 4' all the way up to 5'6", a fact seemingly associated with the size of
+the body of water which they originate.
 
-beep beep boop
-#### Ceramic Orid
-don't drop them
-#### Metallic Orid
-you can drop them
-### Dendroids
-roided up
-#### Tree Dendrid
-up there
-#### Fern Dendrid
-down there
-## Classes
-K-12. All free.\
-Paid for by K-A-R-S Cars for Kids
-### Warriors
-They do the bing bing bong bong
-#### Fighter
-smash
-melee
-oh, all mario?
-#### Ranger
-bow. arrow. track. look. legolas.
-#### Knight
-can't use in the daylight.
+Telon-majority societies similarly vary, from simple pastoral communities to grand city states such
+as the desert city of Umon.
 
-keeps saying "ni". look into this. bug?
-### Rogues
-bad fellas
-#### Rogue (?)
-bad fella (?)
-#### Scout
-eagle. boy. girl. many!
-#### Seeker
-flappy little thing.
-what a creature!
-### Adepts
-very very very good at what they do
-#### Adept (?)
-very very very good at what it does (?)
-#### Cleric
-like the error
-#### Magician
-pick a card, any card
-## Abilities
-can make you pick a card
-## Skills
-can make you pick a card
-### Athletics (STR)
-run!!!!!
-### Swimming (STR)
-run, in water
-### Lock Picking (DEX)
-run, through a door (once opened)
-### Stealth (DEX)
-run, but no-one knows
-### Appraisal (INT)
-run the numbers
-### Husbandry (INT)
-run the labs and ... uh, oh this what this is?
-### History (INT)
-run down memory lane
-### Literacy (INT)
-ijoijigrunaeijosgdfoiurag
-### Nature (INT)
-can't spell "nature" without "run"
-### Tactics (INT)
-run through the scenarios
-### Animism (WIS)
-tree trunk has life
-### Perception (WIS)
-see someone run
-### Tracking (WIS)
-see if someone has run
-### Influence (CHA)
-run into someone's heart or brain
-### Performance (CHA)
-run well
-### Adepts - Counter Casting (WIS)
-jib
+#### Features
 
-jab
+> ##### Natural Swimmer
+> *Gain Training in the Swimming Skill, can achieve Mastery in Swimming without a requisite Skill
+Mastery*
+>
+> Telon have proportionally long arms, hardy rotator cuffs, minimal body hair, and great lung
+> capacity making them excellent swimmers.
 
-jeb!
-### Adepts - Concentration (CON)
-think thinky...
-### Adepts - Discreet Casting (DEX)
-Diss Crete if you want war
-### Advanced Skill - Medicine (INT)
-Lol like leeches?
-### Advanced Skill - Poisons (INT)
-Bad stuff! Cures COVID.
-### Other Skills
-just some stuff
-## Equipment
-you have these
-### Weapons
-you whack with these
-### Armor
-you get whacked on these
-### Gear
-you you use these. humans use tools. figure it out.
-## Fighting Styles
-good, bad, medium
-### Defensive
-if you're a loser
-### Offensive
-if you're a winner
-### Archery
-if you're a coward. what're you doing back there
-### Special Training
-higher education
-## Spells
-yes i dpo!
-### Patrons and Starting Spells
-god #1
+#### Skills
 
-god #2
+> **Choose 1**: Swimming*, Stealth, Husbandry, Literacy, Medicine, Nature, Animism,
+> Perception
+>
+> \* By choosing Swimming, Telon achieve Mastery in combination with their Natural Swimmer feature
 
-pillbug
-### Further Reading on Patrons and Spells
-you nerd
-## Optional Character Details
-don't read if you don't want to
-### Trade Skills and Professions
-don't trade your skills
-### Wages and Cost of Living
-wage war, not money
-### Origins and Further Reading
-you nerd (again)
-# Experience, Training, and Leveling Up
-happens once in a while
-## Experience Points and Training Points
-goes up one
-## Leveling Up
-goes up one, slower
-## Optional Rule - Talented Characters
-if you're that type A
-## Beyond Level 10 - Heroic Characters
-if you're that old, boomer
-# Spells
-GORDWUORK
+#### Ability Modifier Adjustment (Optional)
 
-WOMPOMLY
-## Spellcasting Basics
-step 1. spell\
-step 2. cast
-## Adept Spellcasting Skills
-If you're really really good!
-## Metamagic
-You can cast the spell on this line if you want.
-## Patrons
-Has this person been to your bar?
-## Spells by Degree
-celsius or fahrenheit? :(
-# Gameplay
-ok finally you go
-## Hit Points and Wounds
-ouchie!
+> ##### Option 1 - Gregarious `CHA+1` `CON-1`
+> The Telon are widespread in spite of their smaller size compared to other Human populations due to
+> a tendency toward large collectivist family units who protect each other.
 
-bone hurting juice!
-## Saving Throws
-will protect you. or not. roll die and see.
-## Skill and Ability Checks
-will help you. or not. roll die and see.
-## Exploration, Turns, and Random Encounters
-this part is fun sometimes.
-## Ambush and Surprise
-this part if fun sometimes.
-## Combat, Rounds, and Initiative
-Wombat, sounds, municipality
+> ##### Option 2 - Instinctive `WIS+1` `INT-1`
+> Telon populations along streams and inland lakes are often simple and agrarian focusing on a
+> harmonious relationship with nature but feature little in the way of organized education.
+
+> ##### Option 3 - Lithe `DEX+1` `STR-1`
+> Telon are seldom clumsy and have a low center of gravity. When Telon communities field a militia,
+> they tend to deploy hit-and-run skirmishers who use slings and bows as opposed to heavily armed
+> infantry.
+
+---
+
+### Kyma
+
+The Kyma are saltwater-dwelling cousins of the Telon, exhibiting average heights between 5' and 5'8"
+and powerful, hardy builds. Kyma societies are found almost exclusively in coastal areas, with many
+Kyma spending a majority of their lives at sea.
+
+With a strong streak of infantry and naval culture, the Kyma have famously constructed and held a
+number of strongholds against impossible odds under years of grueling siege.
+
+#### Features
+
+> ##### Feature - Tough
+> *Increase Max Wound Points by 1*
+>
+> Kyma have thick skin, strong bones, and even the ability to develop blubber, making them
+> notably very difficult to kill.
+
+#### Skills
+
+> **Choose 1**: Athletics, Swimming, Locks and Traps, Appraisal, History, Tactics, Influence
+
+#### Ability Modifier Adjustment (Optional)
+
+> ##### Option 1 - Bulky `STR+1` `DEX-1`
+> Kyma are often very well-muscled, which fits their seafaring lifestyles. They are also often quite
+> heavy and have thick fingers and hands, making delicate tasks a bit more difficult.
+
+> ##### Option 2 - Absorbed `INT+1` `WIS-1`
+> Kyma societies have succeeded on their ability to aggregate knowledge from their many ports,
+> honing their construction techniques especially in shipbuilding. Kyma often have a lot of time to
+> their thoughts thanks to long months at sea giving them time to study many things.
+
+> ##### Option 3 - Stubborn `CON+1` `CHA-1`
+> Kyma are often immovable both physically and socially. Many prominent Kyma figures have elevated
+> spite to an art form, and they are even difficult to ply with alcohol thanks to higher than
+> average tolerance.
+
+---
+
+### Gaean
+
+Gaeans are a widespread race of tall plains-dwelling humans. They are said to have descended from
+the "least of giants" and many possess the sturdiness of their fore bearers. Gaeans are very
+intelligent and gregarious, forming societies that span multiple cities.
+
+Throughout history, the few empires that have formed were composed of significant gaean majorities.
+
+#### Features
+
+> ##### Natural Athlete
+> *Gain Training in the Athletics Skill, can achieve Mastery in Athletics without a requisite Skill
+> Mastery*
+>
+> Gaeans have a long-standing culture of cities competing with each other in athletic events,
+> fostering friendly rivalries and connecting neighbors.
+
+#### Skills
+
+> **Choose 1**: Athletics*, Husbandry, History, Medicine, Tactics, Tracking, Influence, Performance
+>
+> \* By choosing Athletics, Gaeans achieve Mastery in combination with their Natural Athlete feature
+
+#### Ability Modifier Adjustment (Optional)
+
+> ##### Option 1 - Amicable `CHA+1` `WIS-1`
+> Gaeans are generally easy to get along with, and are good team players. They can tend to be a bit
+> gullible however, and are the most likely group of humans to form cults and blindly prop up
+> despots.
+
+> ##### Option 2 - Bookish `INT+1` `STR-1`
+> Gaean don't necessarily exhibit the sheer might of their gigantic progenitors, but they make up
+> for it in ingenuity. Education is actually somewhat common among Gaean cities with nearly double
+> the average literacy rates of other groups of humans.
+
+> ##### Option 3 - Hefty `CON+1` `DEX-1`
+> Gaeans do tend to exhibit similar sturdiness to their giant ancestors, but their height also
+> often makes them top-heavy and comparatively clumsy.
+
+---
+
+### Cyclops
+
+Cyclopes, or more accurately Lesser Cyclopes are one-eyed relatives of the Gaeans. Similarly
+descended from giants, Cyclopes are taller and stronger than other humans with heights of 7' being
+rare but not unheard of. While a significantly diminutive form of the original Cyclopes, they live
+up to their namesake through long traditions of craftsmanship, husbandry, and combat.
+
+Cyclopes are uncommon and relatively long-lived, some growing as old as 200 years. They are found
+wherever Gaeans are found, living fairly old-fashioned lifestyles.
+
+#### Features
+
+> ##### Evil Eye
+> *Learn Evil Eye as a 1st Degree Spell, gain one additional 1st Degree Spell Point*
+>
+> Cyclopes are well-known for their ability to inflict bad luck on anyone who earns their ire with
+> a piercing glare, a gift they retain from their fore bearers.
+
+#### Skills
+
+> **Choose 1**: Appraisal, Husbandry, Nature, Animism, Perception, Tracking, Influence, Performance
+
+#### Ability Modifier Adjustment (Optional)
+
+> ##### Option 1 - Brutish `STR+1` `INT-1`
+> Cyclopes are massive, nearly twice the weight of other humans, and are correspondingly physically
+> powerful. Some groups of Cyclopes see little need to participate in the organized education of
+> Gaeans as there is always a niche for their great strength.
+
+> ##### Option 2 - Hefty `CON+1` `DEX-1`
+> Cyclopes do tend to exhibit similar sturdiness to their giant ancestors, but their height also
+> often makes them top-heavy and comparatively clumsy.
+
+> ##### Option 3 - Reserved `WIS+1` `CHA-1`
+> Cyclopes are long-lived giving them more experience on average to call upon for insight, but also
+> sometimes insular, set in their ways, and inflexible. Some tend to avoid forging deep friendships
+> with non-cyclopes due to the major difference in lifespan making cyclopes seem standoffish.
+
+---
+
+### Dendrid
+
+The Dendroi are humanoid tree-folk. They can be quite short and quite tall, as little as 4' and as
+much as 8' if standing fully up-right, but are nearly universally slim and spindly, like a sapling.
+This is because Dendroi are saplings, sprouted from the seeds of Dryad-inhabited trees that have
+been sown by Satyrs. Dendroi live their lives across 70-year "seasons" in which they gradually
+metamorphose between appearing more sapling-like and more satyr/nymph-like, beginning and ending
+the season in tree form. Their memories don't persist well between seasons so when they emerge,
+a given dendrid might have a completely different personality.
+
+Dendroi are found in most large forests and usually build their settlements near and around the
+stumps of gargantuan "elder trees" leftover from a previous era.
+
+#### Features
+
+> ##### Elemental Alignment - Wood
+> Dendroi always have at least Wood Alignment I, which grants affinity to Water-aligned things and
+> antipathy to Metal-aligned things.
+
+> ##### Plant Biology
+> Dendroi are plants and thus have a very different biology from humans. Some results of this are:
+> * **Ordinary Poison and Disease Immunity** - dendroi are unaffected by most poisons and diseases
+    affecting humans. Dendroi have normal vulnerability to plant poisons and diseases.
+> * **Aging Immunity** - dendroi are not harmed from aging effects due to their tree-scale
+    lifespans
+> * **Plant Medicine** - Husbandry is used in place of Medicine when treating wounds and diseases in
+    dendroi
+
+> ##### Regeneration via Hibernation and Cloning
+> A dendrid can go into hibernation, which after one month they fully metamorphose, becoming
+> indistinguishable from a tree. After 11 months, the dendrid returns with the following affects:
+> * Lose 1 Level of Experience
+> * **Regenerate** - fully regenerate from all grievous injuries
+> * **Randomize Class** - class is potentially partially randomized. Referring to the Class Wheel,
+    change to a class corresponding to the following results on 2d6: [2-3] = 2 Steps CCW, [4-5] - 1
+    Step CCW, [6-8] - No Change, [9-10] - 1 Step CW, [11-12] - 2 Steps CW
+> * **Randomize Ability Modifier Adjustment** - randomly select a new Ability Modifier Adjustment
+>
+> A dendrid can also clone themselves by planting a limb. The clone is complete after 1 year,
+> arriving with the same randomization as hibernation, but loses half the original's levels as
+> opposed to just 1.
+>
+> A dendrid can only hibernate once and can only clone once per 70 years.
+
+#### Skills
+
+> **Choose 1**: Stealth, History, Medicine, Nature, Animism, Tracking, Performance
+
+#### Ability Modifier Adjustment (Optional)
+
+> ##### Option 1 - Delicate `CHA+1` `STR-1`
+> Dendroi often exhibit a glamor of beauty and a tendency toward festivity befitting their Dryad and
+> Satyr "parents". As saplings though, many dendroi have narrow limbs and musculature that are not
+> especially suited to explosive power, preferring gentle and steady approach to things.
+
+> ##### Option 2 - Flighty `DEX+1` `INT-1`
+> Dendroi can have incredibly steady and precise hands and usually are light-footed. Dendroi can
+> hold very still in a meadow against a tree and become nearly invisible to all but the most keen
+> observers. One would think these behaviors would lead to the Dendroi having much time to their
+> thoughts, but Dendroi also have a tendency to think about absolutely nothing for days at a time
+> much like a tree.
+
+> ##### Option 3 - Wizened `WIS+1` `CON-1`
+> Dendroi live for a very long time and often have vague recollections of many past seasons giving
+> them unique perspectives on things. Old as they can be though, Dendroi are still saplings of the
+> great trees they will eventually become and are thus of light and narrow stature.
+
+---
+
+### Orid
+
+The Oroi are humanoid clay-folk. As a rule, all Oroi are exactly 5' tall and weigh 140 pounds. This
+is because they are made to exacting precision by the Craftsman, their god. Long ago, a group
+of Oreades (Mountain Nymphs) desired to live in the mortal world and petitioned the Craftsman to
+make bodies for them to inhabit. They also asked the Craftsman to make caretakers and assistants for
+them. The Craftsman agreed and thus the Orid Queens and Oroi were born. Each time a volcano erupts,
+the Craftsman is firing a great kiln to bake more Oroi who will eventually be unearthed by other
+Oroi.
+
+Oroi physically resemble painted ceramic urns in humanoid shape, with a broad variety of colors,
+patterns, and even decorative features like tails and horns. Oroi Queens have similar features and
+are 10' tall giants, but commonly shrink themselves down to 5'1", an inch higher than their Oroi
+subjects.
+
+Generally, Oroi live on and in hills and mountains in highly organized and industrious guild-based
+societies.
+
+#### Features
+
+> ##### Elemental Alignment - Earth
+> Oroi always have at least Earth Alignment I, which grants affinity to Fire-aligned things and
+> antipathy to Wood-aligned things.
+
+> ##### Constructed Biology
+> Oroi are animate clay constructs, and are thus very atypical in terms of biology:
+> * **Ordinary Poison and Disease Immunity** - Oroi are completely unaffected by all animal and
+    plant poisons and diseases
+> * **Asphyxiation Resistance** - While Oroi can be knocked unconscious through asphyxiation, they
+    can never die from it. Oroi are affected by asphyxiation at 1/4 the ordinary rate.
+> * **Immutable** - Oroi cannot polymorph, shape-shift, or change size
+> * **Crafted Medicine** - Appraisal is used in place of Medicine when treating wounds and diseases
+    in oroi
+
+> ##### Lack of Buoyancy
+> Oroi do not float in water under natural conditions and thus cannot ever attain Training in the
+> Swimming skill. Further Oroi automatically fail all Swimming checks. However, they are quite dense
+> and so unlikely to be carried away by average river currents, so they might usually not need to
+> pass Swimming checks to navigate some bodies of water especially given their Asphyxiation
+> Resistance.
+
+#### Skills
+
+> **Choose 1**: Locks and Traps, Stealth, Appraisal, History, Literacy, Tactics, Perception
+
+#### Ability Modifier Adjustment (Optional)
+
+> ##### Option 1 - Dense `CON+1` `INT-1`
+> Some Oroi are made with very thick skin, leaving less room in the head for sophisticated thoughts.
+
+> ##### Option 2 - Fixated `DEX+1` `WIS-1`
+> Many Oroi are incredibly handy, befitting a group created the Craftsman. Some Oroi are so
+> hyper-focused on their craft at the detriment to their situational awareness.
+
+> ##### Option 3 - Headstrong `STR+1` `CHA-1`
+> Oroi are strong and hardworking, taking on physically arduous trades. They also have a tendency
+> to mannerisms that might seem strange to non-oroi, or even oroi outside their own clan.
