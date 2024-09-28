@@ -90,8 +90,6 @@ Charisma affects:
 * Spell Potency and Spell Save DC of mind-affecting spells such as Illusions and Charms.
 * **Skills** - Influence, Performance
 
----
-
 # Races
 
 > **Character Creation Step 2 - Select a Race**
@@ -123,8 +121,8 @@ All Telon possess the following feature:
 > Gain Training in the Swimming Skill, can achieve Mastery in Swimming without a requisite Skill
 > Mastery.
 >
-> *Telon have proportionally long arms, hardy rotator cuffs, and great lung capacity making them
-> excellent swimmers.*
+> <sub>Telon have proportionally long arms, hardy rotator cuffs, and great lung capacity making
+> them excellent swimmers.</sub>
 
 ### Telon Skills
 
@@ -139,18 +137,19 @@ Optionally choose one of the following Traits:
 
 > **Gregarious** `CHA+1` `CON-1`
 >
-> *The Telon are widespread in spite of their smaller size compared to other Human populations due
-> to a tendency toward large collectivist family units who protect each other.*
+> <sub>The Telon are widespread in spite of their smaller size compared to other Human populations
+> due to a tendency toward large collectivist family units who protect each other.</sub>
 
 > **Instinctive** `WIS+1` `INT-1`
 >
-> *Telon populations along streams and inland lakes are often simple and agrarian focusing on a
-> harmonious relationship with nature but feature little in the way of organized education.*
+> <sub>Telon populations along streams and inland lakes are often simple and agrarian focusing on a
+> harmonious relationship with nature but feature little in the way of organized education.</sub>
 
 > **Lithe** `DEX+1` `STR-1`
 >
-> *Telon are seldom clumsy and have a low center of gravity. When Telon communities field a militia,
-> they tend to deploy hit-and-run skirmishers who use slings and bows as opposed to infantry.*
+> <sub>Telon are seldom clumsy and have a low center of gravity. When Telon communities field a
+> militia, they tend to deploy hit-and-run skirmishers who use slings and bows as opposed to
+> infantry.</sub>
 
 ## Kyma
 
@@ -169,8 +168,8 @@ All Kyma possess the following feature:
 >
 > Increase Max Wound Points by 1.
 >
-> *Kyma have thick skin, strong bones, and even the ability to develop blubber, making them
-> notably very difficult to kill.*
+> <sub>Kyma have thick skin, strong bones, and even the ability to develop blubber, making them
+> notably very difficult to kill.</sub>
 
 ### Kyma Skills
 
@@ -182,20 +181,20 @@ Optionally choose one of the following Traits:
 
 > **Bulky** `STR+1` `DEX-1`
 >
-> *Kyma are often very well-muscled, which fits their seafaring lifestyles. They are also often
-> quite heavy and have thick fingers and hands, making delicate tasks a bit more difficult.*
+> <sub>Kyma are often very well-muscled, which fits their seafaring lifestyles. They are also often
+> quite heavy and have thick fingers and hands, making delicate tasks a bit more difficult.</sub>
 
 > **Absorbed** `INT+1` `WIS-1`
 >
-> *Kyma societies have succeeded on their ability to aggregate knowledge from their many ports,
+> <sub>Kyma societies have succeeded on their ability to aggregate knowledge from their many ports,
 > honing their construction techniques especially in shipbuilding. Kyma often have a lot of time to
-> their thoughts thanks to long months at sea giving them time to study many things.*
+> their thoughts thanks to long months at sea giving them time to study many things.</sub>
 
 > **Stubborn** `CON+1` `CHA-1`
 >
-> *Kyma are often immovable both physically and socially. Many prominent Kyma figures have elevated
-> spite to an art form, and they are even difficult to ply with alcohol thanks to higher than
-> average tolerance.*
+> <sub>Kyma are often immovable both physically and socially. Many prominent Kyma figures have
+> elevated spite to an art form, and they are even difficult to ply with alcohol thanks to higher
+> than average tolerance.</sub>
 
 ## Gaean
 
@@ -214,8 +213,8 @@ All Gaeans possess the following feature:
 > Gain Training in the Athletics Skill, can achieve Mastery in Athletics without a requisite Skill
 > Mastery.
 >
-> *Gaeans have a long-standing culture of cities competing with each other in athletic events,
-> fostering friendly rivalries and connecting neighbors.*
+> <sub>Gaeans have a long-standing culture of cities competing with each other in athletic events,
+> fostering friendly rivalries and connecting neighbors.</sub>
 
 ### Gaean Skills
 
@@ -230,20 +229,20 @@ Optionally choose one of the following Traits:
 
 > **Amicable** `CHA+1` `WIS-1`
 >
-> *Gaeans are generally easy to get along with, and are good team players. They can tend to be a bit
-> gullible however, and are the most likely group of humans to form cults and blindly prop up
-> despots.*
+> <sub>Gaeans are generally easy to get along with, and are good team players. They can tend to be
+> a bit gullible however, and are the most likely group of humans to form cults and blindly prop up
+> despots.</sub>
 
 > **Bookish** `INT+1` `STR-1`
 >
-> *Gaean don't necessarily exhibit the sheer might of their gigantic progenitors, but they make up
-> for it in ingenuity. Education is actually somewhat common among Gaean cities with nearly double
-> the average literacy rates of other groups of humans.*
+> <sub>Gaean don't necessarily exhibit the sheer might of their gigantic progenitors, but they make
+> up for it in ingenuity. Education is actually somewhat common among Gaean cities with nearly
+> double the average literacy rates of other groups of humans.</sub>
 
 > **Hefty** `CON+1` `DEX-1`
 >
-> *Gaeans do tend to exhibit similar sturdiness to their giant ancestors, but their height also
-> often makes them top-heavy and comparatively clumsy.*
+> <sub>Gaeans do tend to exhibit similar sturdiness to their giant ancestors, but their height also
+> often makes them top-heavy and comparatively clumsy.</sub>
 
 ## Cyclops
 
@@ -263,8 +262,8 @@ All Cyclopes possess the following feature:
 >
 > Learn Evil Eye as a 1st Degree Spell, gain one additional 1st Degree Spell Point.
 >
-> *Cyclopes are well-known for their ability to inflict bad luck on anyone who earns their ire with
-> a piercing glare, a gift they retain from their forbearers.*
+> <sub>Cyclopes are well-known for their ability to inflict bad luck on anyone who earns their ire
+> with a piercing glare, a gift they retain from their forbearers.</sub>
 
 ### Cyclops Skills
 
@@ -276,20 +275,21 @@ Optionally choose one of the following Traits:
 
 > **Brutish** `STR+1` `INT-1`
 >
-> *Cyclopes are massive, nearly twice the weight of other humans, and are correspondingly physically
-> powerful. Some groups of Cyclopes see little need to participate in the organized education of
-> Gaeans as there is always a niche for their great strength.*
+> <sub>Cyclopes are massive, nearly twice the weight of other humans, and are correspondingly
+> physically powerful. Some groups of Cyclopes see little need to participate in the organized
+> education of Gaeans as there is always a niche for their great strength.</sub>
 
 > **Hefty** `CON+1` `DEX-1`
 >
-> *Cyclopes do tend to exhibit similar sturdiness to their giant ancestors, but their height also
-> often makes them top-heavy and comparatively clumsy.*
+> <sub>Cyclopes do tend to exhibit similar sturdiness to their giant ancestors, but their height
+> also often makes them top-heavy and comparatively clumsy.</sub>
 
 > **Reserved** `WIS+1` `CHA-1`
 >
-> *Cyclopes are long-lived giving them more experience on average to call upon for insight, but also
-> sometimes insular, set in their ways, and inflexible. Some tend to avoid forging deep friendships
-> with non-cyclopes due to the major difference in lifespan making cyclopes seem standoffish.*
+> <sub>Cyclopes are long-lived giving them more experience on average to call upon for insight, but
+> also sometimes insular, set in their ways, and inflexible. Some tend to avoid forging deep
+> friendships with non-cyclopes due to the major difference in lifespan making cyclopes seem
+> standoffish.</sub>
 
 ## Dendrid
 
@@ -314,7 +314,7 @@ All Dendroi possess the following features:
 >
 > Elemental Alignment causes a variety of effects, see (TODO) for more info.
 >
-> *As tree-folk, Dendroi are inseparable from a fundamental alignment to Elemental Wood.*
+> <sub>As tree-folk, Dendroi are inseparable from a fundamental alignment to Elemental Wood.</sub>
 
 > **Plant Biology**
 >
@@ -328,7 +328,8 @@ All Dendroi possess the following features:
 >
 > Effects that inflict aging do not harm Dendroi.
 >
-> *Dendroi live for a very long time, rendering most aging effects a harmless drop in the bucket.*
+> <sub>Dendroi live for a very long time, rendering most aging effects a harmless drop in the
+> bucket.</sub>
 
 Dendroi also possess less-common abilities of Regeneration and Cloning which is not listed here.
 
@@ -342,23 +343,24 @@ Optionally choose one of the following Traits:
 
 > **Delicate** `CHA+1` `STR-1`
 >
-> *Dendroi often exhibit a glamor of beauty and a tendency toward festivity befitting their Dryad
-> and Satyr "parents". As saplings though, many dendroi have narrow limbs and musculature that are
-> not especially suited to explosive power, preferring gentle and steady approach to things.*
+> <sub>Dendroi often exhibit a glamor of beauty and a tendency toward festivity befitting their
+> Dryad and Satyr "parents". As saplings though, many dendroi have narrow limbs and musculature that
+> are not especially suited to explosive power, preferring gentle and steady approach
+> to things.</sub>
 
 > **Flighty** `DEX+1` `INT-1`
 >
-> *Dendroi can have incredibly steady and precise hands and usually are light-footed. Dendroi can
-> hold very still in a meadow against a tree and become nearly invisible to all but the most keen
-> observers. One would think these behaviors would lead to the Dendroi having much time to their
-> thoughts, but Dendroi also have a tendency to think about absolutely nothing for days at a time
-> much like a tree.*
+> <sub>Dendroi can have incredibly steady and precise hands and usually are light-footed. Dendroi
+> can hold very still in a meadow against a tree and become nearly invisible to all but the most
+> keen observers. One would think these behaviors would lead to the Dendroi having much time to
+> their thoughts, but Dendroi also have a tendency to think about absolutely nothing for days at a
+> time much like a tree.</sub>
 
 > **Wizened** `WIS+1` `CON-1`
 >
-> *Dendroi live for a very long time and often have vague recollections of many past seasons giving
-> them unique perspectives on things. Old as they can be though, Dendroi are still saplings of the
-> great trees they will eventually become and are thus of light and narrow stature.*
+> <sub>Dendroi live for a very long time and often have vague recollections of many past seasons
+> giving them unique perspectives on things. Old as they can be though, Dendroi are still saplings
+> of the great trees they will eventually become and are thus of light and narrow stature.</sub>
 
 ## Orid
 
@@ -388,7 +390,7 @@ All Oroi possess the following features:
 >
 > Elemental Alignment causes a variety of effects, see (TODO) for more info.
 >
-> *Created from the Living Clay, Oroi are inseparably aligned with Elemental Earth*
+> <sub>Created from the Living Clay, Oroi are inseparably aligned with Elemental Earth</sub>
 
 > **Artificial Biology**
 >
@@ -417,15 +419,449 @@ Optionally choose one of the following Traits:
 
 > **Dense** `CON+1` `INT-1`
 >
-> *Some Oroi are made with very thick skin, leaving less room in the head for sophisticated
-> thoughts.*
+> <sub>Some Oroi are made with very thick skin, leaving less room in the head for sophisticated
+> thoughts.</sub>
 
 > **Fixated** `DEX+1` `WIS-1`
 >
-> *Many Oroi are incredibly handy, befitting a group created the Craftsman. Some Oroi are so
-> hyper-focused on their craft at the detriment to their situational awareness.*
+> <sub>Many Oroi are incredibly handy, befitting a group created the Craftsman. Some Oroi are so
+> hyper-focused on their craft at the detriment to their situational awareness.</sub>
 
 > **Headstrong** `STR+1` `CHA-1`
 >
-> *Oroi are strong and hardworking, taking on physically arduous trades. They also have a tendency
-> to mannerisms that might seem strange to non-oroi, or even oroi outside their own clan.*
+> <sub>Oroi are strong and hardworking, taking on physically arduous trades. They also have a
+> tendency to mannerisms that might seem strange to non-oroi, or even oroi outside their
+> own clan.</sub>
+
+# Classes
+
+> **Character Creation Step 3 - Select a Class**
+>
+> Select a class for your character. The possible classes are [Fighter](#fighter),
+> [Ranger](#ranger), [Knight](#knight), [Rogue](#rogue), [Scout](#scout), [Seeker](#seeker),
+> [Adept](#adept), [Cleric](#cleric), and [Magician](#magician). Based on your selection:
+> 1. Copy down your class' **Initial Hit Points** and **Hit Dice**.
+> 2. Note any **Features** your class provides at Level 1.
+> 3. Choose a number of **Skills** determined by your class.
+
+
+Your character's class heavily influences the role they will play in the party. Each Class is
+composed of a Primary Class Type and Secondary Class Type. There are three possible Class Types,
+resulting in nine possible Classes.
+
+The Class' Primary Class Type defines the main role the class fills and Secondary Class Type
+adds variation. The three Class Types are:
+
+- **Fighters**: combatants who attack multiple times per round and specialize in fighting styles
+- **Rogues**: skill generalists who handle a broad variety of common adventuring problems
+- **Adepts**: spell casters who use magic to support allies and destroy enemies
+
+## Fighter
+
+A pure fighter focuses all development into combat skills, reaching unparalleled durability and
+lethality with weapons.
+
+* **Class Types**: Fighter | Fighter
+* **Initial Hit Points**: 10+CON
+* **Hit Dice**: D10
+
+### Fighter Features
+
+[//]: # "Pure Fighter Features"
+
+> **Improved Critical Hit Chance** `Level 1`
+>
+> Decrease the number required to Critically Hit by 1, this effect can stack.
+>
+> <sub>By default, a Natural 12 is required to Critically Hit</sub>
+
+> **Additional Attacks** `Level 1, 4, 8`
+>
+> Gain an additional Attack per Round.
+
+> **Combat Specialization** `Level 1, 2, 3, 5, 6, 7, 9, 10`
+>
+> Increase your Rank in any Fighting Style by 1 or learn a Special Combat Proficiency
+
+[//]: # "====================="
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Fighter Skills
+
+**Choose 1**: Athletics, Swimming, Husbandry, Tactics, Tracking, Influence
+
+## Ranger
+
+Rangers are warriors who round out their combat skills with a number of practical skills useful
+for things like exploration and diplomacy.
+
+* **Class Types**: Fighter | Rogue
+* **Initial Hit Points**: 10+CON
+* **Hit Dice**: D10
+
+### Ranger Features
+
+[//]: # "Primary Fighter Features"
+
+> **Improved Critical Hit Chance** `Level 1`
+>
+> Decrease the number required to Critically Hit by 1, this effect can stack.
+>
+> <sub>By default, a Natural 12 is required to Critically Hit</sub>
+
+> **Additional Attacks** `Level 1, 8`
+>
+> Gain an additional Attack per Round.
+
+> **Combat Specialization** `Level 1, 3, 5, 7, 9`
+>
+> Increase your Rank in any Fighting Style by 1 or learn a Special Combat Proficiency
+
+[//]: # "========================"
+
+[//]: # "Secondary Rogue Features"
+
+> **New Skill Acquisition** `Level 2, 4, 7, 10`
+>
+> Gain Training in any new Skill.
+>
+> Alternatively, gain Mastery in any one Skill in which you are already Trained provided doing
+> so would not exceed your Maximum Skill Masteries.
+
+> **Skill Mastery** `Level 3, 8`
+>
+> Increase Maximum Skill Masteries by 1.
+>
+> <sub>Maximum Skill Masteries begin at 0.</sub>
+
+[//]: # "========================"
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Ranger Skills
+
+**Choose 1**: Athletics, Swimming, Husbandry, Tactics, Tracking, Influence
+
+## Knight
+
+Knights are trained combatants typically from monastic orders who augment their combat skills with
+magic.
+
+* **Class Types**: Fighter | Adept
+* **Initial Hit Points**: 10+CON
+* **Hit Dice**: D10
+
+### Knight Features
+
+[//]: # "Primary Fighter Features"
+
+> **Improved Critical Hit Chance** `Level 1`
+>
+> Decrease the number required to Critically Hit by 1, this effect can stack.
+>
+> <sub>By default, a Natural 12 is required to Critically Hit</sub>
+
+> **Additional Attacks** `Level 1, 8`
+>
+> Gain an additional Attack per Round.
+
+> **Combat Specialization** `Level 1, 3, 5, 7, 9`
+>
+> Increase your Rank in any Fighting Style by 1 or learn a Special Combat Proficiency
+
+[//]: # "========================"
+
+[//]: # "Secondary Adept Features"
+
+> **Secondary Spell Caster** `Level 2`
+>
+> Become a Secondary Spell Caster. See (TODO) for more info.
+
+[//]: # "========================"
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Knight Skills
+
+**Choose 1**: Athletics, Swimming, Husbandry, Tactics, Tracking, Influence
+
+## Rogue
+
+Not only a jack-of-all-trades but also a master of several, Rogues are essential problem-solvers
+for any group.
+
+* **Class Types**: Rogue | Rogue
+* **Initial Hit Points**: 6+CON
+* **Hit Dice**: D6
+
+### Rogue Features
+
+[//]: # "Pure Rogue Features"
+
+> **New Skill Acquisition** `Level 2 - 10`
+>
+> Gain Training in any new Skill.
+>
+> Alternatively, gain Mastery in any one Skill in which you are already Trained provided doing
+> so would not exceed your Maximum Skill Masteries.
+
+> **Skill Mastery** `Level 2, 3, 5, 7, 8, 10`
+>
+> Increase Maximum Skill Masteries by 1.
+>
+> <sub>Maximum Skill Masteries begin at 0.</sub>
+
+[//]: # "==================="
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Rogue Skills
+
+**Choose any 3** Skills except Counterspell, Concentration, or Spellcraft.
+
+## Scout
+
+Scouts are skilled explorers, scholars, and negotiators who can hold their own in a fight.
+
+* **Class Types**: Rogue | Fighter
+* **Initial Hit Points**: 8+CON
+* **Hit Dice**: D8
+
+### Scout Features
+
+[//]: # "Primary Rogue Features"
+
+> **New Skill Acquisition** `Level 3, 5, 6, 8, 9`
+>
+> Gain Training in any new Skill.
+>
+> Alternatively, gain Mastery in any one Skill in which you are already Trained provided doing
+> so would not exceed your Maximum Skill Masteries.
+
+> **Skill Mastery** `Level 2, 5, 7, 10`
+>
+> Increase Maximum Skill Masteries by 1.
+>
+> <sub>Maximum Skill Masteries begin at 0.</sub>
+
+[//]: # "======================"
+
+[//]: # "Secondary Fighter Features"
+
+> **Additional Attack** `Level 4`
+>
+> Gain an additional Attack per Round.
+
+> **Improved Critical Hit Chance** `Level 5`
+>
+> Decrease the number required to Critically Hit by 1, this effect can stack.
+>
+> <sub>By default, a Natural 12 is required to Critically Hit</sub>
+
+> **Combat Specialization** `Level 2, 6, 10`
+>
+> Increase your Rank in any Fighting Style by 1 or learn a Special Combat Proficiency
+
+[//]: # "=========================="
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Scout Skills
+
+**Choose any 3** Skills except Counterspell, Concentration, or Spellcraft.
+
+## Seeker
+
+Seekers dabble in many fields with an array of skills suitable for all occasions including some
+proficiency in arcane and occult arts.
+
+* **Class Types**: Rogue | Adept
+* **Initial Hit Points**: 6+CON
+* **Hit Dice**: D6
+
+### Seeker Features
+
+[//]: # "Primary Rogue Features"
+
+> **New Skill Acquisition** `Level 3, 5, 6, 8, 9`
+>
+> Gain Training in any new Skill.
+>
+> Alternatively, gain Mastery in any one Skill in which you are already Trained provided doing
+> so would not exceed your Maximum Skill Masteries.
+
+> **Skill Mastery** `Level 2, 5, 7, 10`
+>
+> Increase Maximum Skill Masteries by 1.
+>
+> <sub>Maximum Skill Masteries begin at 0.</sub>
+
+[//]: # "======================"
+
+[//]: # "Secondary Adept Features"
+
+> **Secondary Spell Caster** `Level 2`
+>
+> Become a Secondary Spell Caster. See (TODO) for more info.
+
+[//]: # "========================"
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Seeker Skills
+
+**Choose any 3** skills.
+
+## Adept
+
+Adepts are peerless masters of magic. Some choose to study the secrets of the universe for
+themselves to manifest arcane might, and others channel the occult and divine power of otherworldly
+patrons.
+
+* **Class Types**: Adept | Adept
+* **Initial Hit Points**: 6+CON
+* **Hit Dice**: D6
+
+### Adept Features
+
+[//]: # "Pure Adept Features"
+
+> **Pure Spell Caster** `Level 1`
+>
+> Become a Pure Spell Caster. See (TODO) for more info.
+
+[//]: # "==================="
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Adept Skills
+
+**Choose 1**: Appraisal, History, Literacy, Medicine, Performance, Countercast, Concentrate,
+Spellcraft
+
+## Cleric
+
+Clerics are adepts, typically of monastic orders, who also train physically to to better survive
+the rigors of frequent battle.
+
+* **Class Types**: Adept | Fighter
+* **Initial Hit Points**: 8+CON
+* **Hit Dice**: D8
+
+### Cleric Features
+
+[//]: # "Primary Adept Features"
+
+> **Primary Spell Caster** `Level 1`
+>
+> Become a Primary Spell Caster. See (TODO) for more info.
+
+[//]: # "======================"
+
+[//]: # "Secondary Fighter Features"
+
+> **Additional Attack** `Level 4`
+>
+> Gain an additional Attack per Round.
+
+> **Improved Critical Hit Chance** `Level 5`
+>
+> Decrease the number required to Critically Hit by 1, this effect can stack.
+>
+> <sub>By default, a Natural 12 is required to Critically Hit</sub>
+
+> **Combat Specialization** `Level 2, 6, 10`
+>
+> Increase your Rank in any Fighting Style by 1 or learn a Special Combat Proficiency
+
+[//]: # "=========================="
+
+> **Ability Modifier Improvement** `Level 2 - 10`
+>
+> Increase one Ability modifier by 1.
+>
+> <sub>Ability Modifiers may not exceed half your current level rounded up. This limit is increased
+> by 1 for an Ability boosted by a Racial Trait.</sub>
+
+### Cleric Skills
+
+**Choose 1**: Appraisal, History, Literacy, Medicine, Performance, Countercast, Concentrate,
+Spellcraft
+
+## Magician
+
+Magicians are spell casters who also study practical skills, especially if those skills pertain to
+specialized methods of casting such as incorporating sleight of hand, creating variants of spells
+on the fly, and stealing the techniques of others through careful observation.
+
+* **Class Types**: Adept | Rogue
+* **Initial Hit Points**: 6+CON
+* **Hit Dice**: D6
+
+### Magician Features
+
+[//]: # "Primary Adept Features"
+
+> **Primary Spell Caster** `Level 1`
+>
+> Become a Primary Spell Caster. See (TODO) for more info.
+
+[//]: # "======================"
+
+[//]: # "Secondary Rogue Features"
+
+> **New Skill Acquisition** `Level 2, 4, 7, 10`
+>
+> Gain Training in any new Skill.
+>
+> Alternatively, gain Mastery in any one Skill in which you are already Trained provided doing
+> so would not exceed your Maximum Skill Masteries.
+
+> **Skill Mastery** `Level 3, 8`
+>
+> Increase Maximum Skill Masteries by 1.
+>
+> <sub>Maximum Skill Masteries begin at 0.</sub>
+
+[//]: # "========================"
+
+### Magician Skills
+
+**Choose 1**: Appraisal, History, Literacy, Medicine, Performance, Countercast, Concentrate,
+Spellcraft
